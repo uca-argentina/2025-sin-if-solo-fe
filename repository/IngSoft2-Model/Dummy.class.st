@@ -8,5 +8,5 @@ Class {
 { #category : 'testing' }
 Dummy >> isDummy [
 
-	^true
+	^ true
 ]
