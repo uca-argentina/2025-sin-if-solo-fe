@@ -1,1 +1,1 @@
-Package { #name : #'IngSoft2-Model' }
+Package { #name : 'IngSoft2-Model' }
