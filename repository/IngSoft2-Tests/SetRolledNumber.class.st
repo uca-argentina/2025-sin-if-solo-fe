@@ -18,6 +18,12 @@ SetRolledNumber class >> isBiger: aNumberToRoll than:aNumberOfFaces [
 		Error signal: 'The number to roll should be smaller than the number of faces']
 ]
 
+{ #category : 'instance creation' }
+SetRolledNumber class >> of: aDice as:aNumber [
+self isBiger: aNumber than:(aDice numberOfFaces). 
+^self new initializeWith: aNumber.
+]
+
 { #category : 'converting' }
 SetRolledNumber class >> with: aNumber [
 "NO BORRAR : no esta siendo usado pero queremos borrarlo solo el metodo en SetRolledNumber"
