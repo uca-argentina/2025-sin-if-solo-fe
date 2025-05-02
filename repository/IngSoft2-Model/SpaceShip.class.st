@@ -13,6 +13,11 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'initialization' }
+SpaceShip class >> inInitialPosition: aPosition [
+^self new initializePosition:aPosition.
+]
+
 { #category : 'accessing' }
 SpaceShip >> currentPosition [
 ^currentPosition .
