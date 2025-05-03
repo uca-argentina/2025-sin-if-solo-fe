@@ -30,6 +30,16 @@ Board >> initializationBoardGame: aNumber [
 	maximumSquares:= aNumber.
 ]
 
+{ #category : 'action' }
+Board >> move:aSpaceShip with:dices [
+self validateIsGameOver:aSpaceShip .
+aSpaceShip rolls:dices.
+
+
+
+
+]
+
 { #category : 'accessing' }
 Board >> numberOfSquares [
 	^maximumSquares .
@@ -46,4 +56,11 @@ Board >> theWinnerIs [
 
    ^(spaceShips select: [:spaceShip | spaceShip currentPosition >= self numberOfSquares]) anyOne.
 
+]
+
+{ #category : 'event testing' }
+Board >> validateIsGameOver:aSpaceShip [ 
+
+(aSpaceShip currentPosition >=maximumSquares) ifTrue:[
+	Error signal: 'Game is Over']
 ]
