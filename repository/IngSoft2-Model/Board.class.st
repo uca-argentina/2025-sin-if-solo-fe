@@ -43,6 +43,7 @@ Board >> positionOf: aPlayer [
 
 { #category : 'accessing' }
 Board >> theWinnerIs [
-^(spaceShips select:[:spaceShip | spaceShip currentPosition = self numberOfSquares]) at: 1.
+
+   ^(spaceShips select: [:spaceShip | spaceShip currentPosition >= self numberOfSquares]) anyOne.
 
 ]
