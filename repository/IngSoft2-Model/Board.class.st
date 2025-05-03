@@ -5,7 +5,8 @@ Class {
 	#name : 'Board',
 	#superclass : 'Object',
 	#instVars : [
-		'maximumSquares'
+		'maximumSquares',
+		'spaceShips'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -14,6 +15,14 @@ Class {
 { #category : 'instance creation' }
 Board class >> withNumberOfSquares: aNumber [ 
 	^self new initializationBoardGame: aNumber .
+]
+
+{ #category : 'accessing' }
+Board >> has: players [
+
+spaceShips := OrderedCollection new.
+
+spaceShips := players.
 ]
 
 { #category : 'initialization' }
@@ -30,4 +39,10 @@ Board >> numberOfSquares [
 Board >> positionOf: aPlayer [
 ^ aPlayer currentPosition.
  
+]
+
+{ #category : 'accessing' }
+Board >> theWinnerIs [
+^(spaceShips select:[:spaceShip | spaceShip currentPosition = self numberOfSquares]) at: 1.
+
 ]
