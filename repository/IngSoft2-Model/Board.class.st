@@ -58,6 +58,12 @@ Board >> theWinnerIs [
 
 ]
 
+{ #category : 'validating existence' }
+Board >> thereIsAWinner [
+^ spaceShips anySatisfy: [:spaceShip | spaceShip currentPosition >= self numberOfSquares].
+
+]
+
 { #category : 'event testing' }
 Board >> validateIsGameOver:aSpaceShip [ 
 
