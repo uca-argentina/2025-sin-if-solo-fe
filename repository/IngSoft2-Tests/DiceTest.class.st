@@ -59,3 +59,31 @@ DiceTest >> test3WhenRolledNumberIsBigerThanNumberOfFacesThenCreationFails [
 
 	
 ]
+
+{ #category : 'tests' }
+DiceTest >> test4WhenARealDiceIsRolledThenTheRolledNumberIsAtRandom [
+   | aDice  |
+   
+    aDice :=RealDice withNumberOfFaces: 1.
+
+	self assert: (aDice rolledNumber) equals: 1.
+]
+
+{ #category : 'tests' }
+DiceTest >> test5WhenARealDiceIsRolledWithNumberOfFacesThenTheRolledNumberIsAtRandomInARange [
+   | aDice numberOfFaces |
+   numberOfFaces := 5.
+   aDice := RealDice withNumberOfFaces: numberOfFaces.
+   self assert:[ (1 to: numberOfFaces) includes: (aDice rolledNumber)].
+
+
+]
+
+{ #category : 'tests' }
+DiceTest >> test6WhenARealDiceIsRolledWithNumberOfFacesNegativeThenCreationFails [
+   | numberOfFaces |
+   numberOfFaces := -1.
+   self should:[ RealDice withNumberOfFaces: numberOfFaces] raise:Error withMessageText: 'A Dice has to have at least 1 face'.
+
+
+]
