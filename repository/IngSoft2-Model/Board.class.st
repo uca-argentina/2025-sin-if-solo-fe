@@ -61,6 +61,6 @@ Board >> theWinnerIs [
 { #category : 'event testing' }
 Board >> validateIsGameOver:aSpaceShip [ 
 
-(aSpaceShip currentPosition >=maximumSquares) ifTrue:[
+(self thereIsAWinner  ) ifTrue: [
 	Error signal: 'Game is Over']
 ]

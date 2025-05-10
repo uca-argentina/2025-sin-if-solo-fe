@@ -123,7 +123,7 @@ self assert: (aBoard positionOf: aPlayer2 ) equals: 8.
 ]
 
 { #category : 'tests' }
-GameBoardTest >> test6WhenWhenASpaceShipCrossesFinishLineThenItCantMoveAgain [
+GameBoardTest >> test6WhenASpaceShipCrossesFinishLineThenItCantMoveAgain [
 | aBoard aPlayer1 aDice aDiceNumberProvider aPlayer2 |
 	
 	aBoard:= Board withNumberOfSquares: 6.
@@ -150,4 +150,34 @@ GameBoardTest >> test6WhenWhenASpaceShipCrossesFinishLineThenItCantMoveAgain [
 		withMessageText: 'Game is Over'.
 
 	self assert: (aBoard positionOf: aPlayer2 ) equals: 8.
+]
+
+{ #category : 'tests' }
+GameBoardTest >> test7WhenThePlayerCrossesTheFinishLineThenTheOtherPlayerCantMove [
+| aBoard aPlayer1 aDice aDiceNumberProvider aPlayer2 |
+	
+	aBoard:= Board withNumberOfSquares: 6.
+	
+  	aPlayer1:=SpaceShip inInitialPosition: 0.	
+	aPlayer2:=SpaceShip inInitialPosition: 0.	
+	aBoard has: { aPlayer1 . aPlayer2 }.
+
+   aDice := Dice withNumberOfFaces: 10.
+	
+   aDiceNumberProvider := SetRolledNumber of: aDice as:4.
+	aDice rollWith: (aDiceNumberProvider rolledNumber ).
+	aBoard move:aPlayer1 with:{aDice}.
+	
+	aDiceNumberProvider := SetRolledNumber of: aDice as:8.
+	aDice rollWith: (aDiceNumberProvider rolledNumber ).
+	
+	aBoard move:aPlayer2 with:{aDice}.
+	
+	self assert: (aBoard positionOf: aPlayer2 ) equals: 8.
+	self
+    should: [aBoard move:aPlayer1 with:{aDice}.]
+		raise: Error
+		withMessageText: 'Game is Over'.
+
+	self assert: (aBoard positionOf: aPlayer1 ) equals: 4.
 ]
