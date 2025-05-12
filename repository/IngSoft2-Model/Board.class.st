@@ -15,98 +15,95 @@ Class {
 }
 
 { #category : 'testing' }
-Board class >> hasTheMinimumAmountOfSquares:aNumber [
+Board class >> hasTheMinimumAmountOfSquares: aNumber [
 
-(aNumber <3 )ifTrue:[
-	Error signal:'Should have at least 3 squares']
+	aNumber < 3 ifTrue: [ Error signal: 'Should have at least 3 squares' ]
 ]
 
 { #category : 'testing' }
-Board class >> isANegativeNumber:aNumber [
+Board class >> isANegativeNumber: aNumber [
 
-(aNumber negative )ifTrue:[
-	Error signal:'Should be a positive number']
-
+	aNumber negative ifTrue: [
+		Error signal: 'Should be a positive number' ]
 ]
 
 { #category : 'instance creation' }
-Board class >> withNumberOfSquares: aNumber withWormHoleFrom: aY to:aZ [
-	self isANegativeNumber:aNumber.
-	self hasTheMinimumAmountOfSquares:aNumber.
-	self isANegativeNumber:aY.
-	self isANegativeNumber:aZ.
-	^self new initializationBoardGame: aNumber withWormHoleFrom:aY to: aZ .
+Board class >> withNumberOfSquares: aNumber withWormHoleFrom: aY to: aZ [
+
+	self isANegativeNumber: aNumber.
+	self hasTheMinimumAmountOfSquares: aNumber.
+	self isANegativeNumber: aY.
+	self isANegativeNumber: aZ.
+	^ self new
+		  initializationBoardGame: aNumber
+		  withWormHoleFrom: aY
+		  to: aZ
 ]
 
 { #category : 'accessing' }
 Board >> has: players [
 
-spaceShips := OrderedCollection new.
-
-spaceShips := players.
+	spaceShips := OrderedCollection new.
+	spaceShips := players
 ]
 
 { #category : 'initialization' }
-Board >> initializationBoardGame: aNumber withWormHoleFrom:aY to: aZ [
-	maximumSquares:= aNumber.
-	entranceOfWormHole:= aY.
-	exitOfWormHole:=aZ.
+Board >> initializationBoardGame: aNumber withWormHoleFrom: aY to: aZ [
+
+	maximumSquares := aNumber.
+	entranceOfWormHole := aY.
+	exitOfWormHole := aZ
 ]
 
 { #category : 'action' }
-Board >> move:aSpaceShip with:dices [
-self validateIsGameOver:aSpaceShip.
-aSpaceShip rolls:dices.
-self validateInWormHole:aSpaceShip .
+Board >> move: aSpaceShip with: dices [
 
-
-
-
-
-
+	self validateIsGameOver: aSpaceShip.
+	aSpaceShip rolls: dices.
+	self validateInWormHole: aSpaceShip
 ]
 
 { #category : 'accessing' }
 Board >> numberOfSquares [
-	^maximumSquares .
+
+	^ maximumSquares
 ]
 
 { #category : 'accessing' }
 Board >> positionOf: aPlayer [
-^ aPlayer currentPosition.
- 
+
+	^ aPlayer currentPosition
 ]
 
 { #category : 'accessing' }
-Board >> theWinnerIs [
+Board >> theWinnerIs [ 
 
-   ^(spaceShips select: [:spaceShip | spaceShip currentPosition >= self numberOfSquares]) anyOne.
-
+	^ (spaceShips select: [ :spaceShip |
+		   spaceShip currentPosition >= self numberOfSquares ]) anyOne.
 ]
 
 { #category : 'validating existence' }
 Board >> thereIsAWinner [
-^ spaceShips anySatisfy: [:spaceShip | spaceShip currentPosition >= self numberOfSquares].
 
+	^ spaceShips anySatisfy: [ :spaceShip |
+		  spaceShip currentPosition >= self numberOfSquares ]
 ]
 
 { #category : 'validating' }
 Board >> validateInWormHole: aSpaceShip [
-| posOriginal |
-posOriginal := aSpaceShip currentPosition.
 
-(posOriginal = entranceOfWormHole)
-    ifTrue: [ aSpaceShip teletransportsTo: exitOfWormHole ].
+	| originalPosition |
+	originalPosition := aSpaceShip currentPosition.
 
-(posOriginal = exitOfWormHole)
-    ifTrue: [ aSpaceShip teletransportsTo: entranceOfWormHole ].
+	originalPosition = entranceOfWormHole ifTrue: [
+		aSpaceShip teletransportsTo: exitOfWormHole ].
 
+	originalPosition = exitOfWormHole ifTrue: [
+		aSpaceShip teletransportsTo: entranceOfWormHole ]
 ]
 
 { #category : 'event testing' }
-Board >> validateIsGameOver:aSpaceShip [ 
+Board >> validateIsGameOver: aSpaceShip [
 
-(self thereIsAWinner  ) ifTrue: [
-	
-	Error signal: 'Game is Over'.]
+	self thereIsAWinner ifTrue: [ Error signal: 'Game is Over' ]
 ]

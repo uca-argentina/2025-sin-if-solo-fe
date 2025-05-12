@@ -18,7 +18,7 @@ self assert:aPlayer1 currentPosition equals: 0.
 SpaceShipMovementsTest >> test1WhenTheDiceIsRolledThenTheSpaceShipsPositionChangesToTheRolledNumber [
 
  | aPlayer1 aDice aDiceNumberProvider |
-   aDice := Dice withNumberOfFaces: 6.
+   aDice := RiggedDice withNumberOfFaces: 6.
    aDiceNumberProvider := SetRolledNumber of: aDice as:3.
 	aDice rollWith: (aDiceNumberProvider rolledNumber ).
 	aPlayer1:=SpaceShip inInitialPosition: 0.
@@ -31,11 +31,11 @@ SpaceShipMovementsTest >> test1WhenTheDiceIsRolledThenTheSpaceShipsPositionChang
 SpaceShipMovementsTest >> test2WhenMultipleDicesAreRolledThenSpaceShipMovesTheSumRolled [
 
  | aPlayer1 aDice aDiceNumberProvider aDice2|
-   aDice := Dice withNumberOfFaces: 6.
+   aDice := RiggedDice withNumberOfFaces: 6.
    aDiceNumberProvider := SetRolledNumber of: aDice as:3.
 	aDice rollWith: (aDiceNumberProvider rolledNumber ).
 
-	aDice2 := Dice withNumberOfFaces: 3.
+	aDice2 := RiggedDice withNumberOfFaces: 3.
    aDiceNumberProvider := SetRolledNumber of: aDice2 as:1.
 
 	aDice2 rollWith: (aDiceNumberProvider rolledNumber ).
@@ -50,8 +50,8 @@ SpaceShipMovementsTest >> test2WhenMultipleDicesAreRolledThenSpaceShipMovesTheSu
 SpaceShipMovementsTest >> test3WhenThereAreMultipleDicesthenAllSpaceshipsUseAllOfThemToAdvance [
 
  | aPlayer1 aPlayer2 aDice aDiceNumberProvider aDice2|
-   aDice := Dice withNumberOfFaces: 6.
-	aDice2 := Dice withNumberOfFaces: 3.
+   aDice := RiggedDice withNumberOfFaces: 6.
+	aDice2 := RiggedDice withNumberOfFaces: 3.
 	
 	aPlayer1:=SpaceShip inInitialPosition: 0.
 	aDiceNumberProvider := SetRolledNumber of: aDice as:3.

@@ -15,31 +15,31 @@ Class {
 
 { #category : 'initialization' }
 SpaceShip class >> inInitialPosition: aPosition [
-^self new initializePosition:aPosition.
+
+	^ self new initializePosition: aPosition
 ]
 
 { #category : 'accessing' }
 SpaceShip >> currentPosition [
 
-^currentPosition .
-
+	^ currentPosition
 ]
 
 { #category : 'initialization' }
-SpaceShip >> initializePosition:aPosition [
-currentPosition:=aPosition.
+SpaceShip >> initializePosition: aPosition [
+
+	currentPosition := aPosition
 ]
 
 { #category : 'action' }
 SpaceShip >> rolls: dices [
 
-dices do:[:aDice|currentPosition :=currentPosition +aDice rolledNumber]
-
-
+	dices do: [ :aDice |
+		currentPosition := currentPosition + aDice rolledNumber ]
 ]
 
 { #category : 'action' }
-SpaceShip >> teletransportsTo:aWormHoleSquare [
+SpaceShip >> teletransportsTo: aWormHoleSquare [
 
-currentPosition :=aWormHoleSquare.
+	currentPosition := aWormHoleSquare
 ]

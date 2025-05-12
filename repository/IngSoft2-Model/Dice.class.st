@@ -1,5 +1,5 @@
 "
-""La clase Dado permite crear un dado de N caras y lanzarlo para obtener un numero dentro del rango""
+A Dice that is always rolled
 "
 Class {
 	#name : 'Dice',
@@ -19,27 +19,19 @@ Dice class >> hasAtLeastOneFace:aNumber [
 ]
 
 { #category : 'instance creation' }
-Dice class >> withNumberOfFaces: aNumber [
-	self hasAtLeastOneFace:aNumber .
-	^self new initializeNumberOfFaces: aNumber.
+Dice class >> withNumberOfFaces:aNumber [
+self hasAtLeastOneFace:aNumber.
+^self new initializeNumberOfFaces: aNumber .
 ]
 
 { #category : 'initialization' }
 Dice >> initializeNumberOfFaces: aNumber [
+
 	numberOfFaces := aNumber
 ]
 
 { #category : 'accessing' }
-Dice >> numberOfFaces [
-	^numberOfFaces 
-]
-
-{ #category : 'instance creation' }
-Dice >> rollWith: aDiceNumberProvider [
-	rolledNumber:=aDiceNumberProvider.
-]
-
-{ #category : 'accessing' }
 Dice >> rolledNumber [
-	^rolledNumber
+self subclassResponsibility .
+
 ]

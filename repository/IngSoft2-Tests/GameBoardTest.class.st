@@ -26,7 +26,7 @@ GameBoardTest >> test010WhenASpaceShipFallsInAWormHoleWhichExitIsTheFinishLineTh
 	aPlayer2:=SpaceShip inInitialPosition: 0.	
 	aBoard has: { aPlayer1 . aPlayer2 }.
 
-   aDice := Dice withNumberOfFaces: 10.
+   aDice := RiggedDice withNumberOfFaces: 10.
 	
    aDiceNumberProvider := SetRolledNumber of: aDice as:2.
 	aDice rollWith: (aDiceNumberProvider rolledNumber ).
@@ -86,7 +86,7 @@ GameBoardTest >> test2WhenADiceIsRolledThenTheSpaceShipsPositionInTheBoardChange
 	
 	aBoard:= Board withNumberOfSquares: 64 withWormHoleFrom: 2 to:5.
 	
-   aDice := Dice withNumberOfFaces: 6.
+   aDice := RiggedDice withNumberOfFaces: 6.
    aDiceNumberProvider := SetRolledNumber of: aDice as:3.
 	aDice rollWith: (aDiceNumberProvider rolledNumber ).
 	aPlayer1:=SpaceShip inInitialPosition: 0.
@@ -104,7 +104,7 @@ GameBoardTest >> test3WhenASpaceShipGetsToTheFinishLineThenItsWinner [
 	aBoard:= Board withNumberOfSquares: 6 withWormHoleFrom: 2 to:5.
   	aPlayer1:=SpaceShip inInitialPosition: 0.
 	aBoard has: { aPlayer1 }.	
-   aDice := Dice withNumberOfFaces: 6.
+   aDice := RiggedDice withNumberOfFaces: 6.
 	
    aDiceNumberProvider := SetRolledNumber of: aDice as:6.
 	aDice rollWith: (aDiceNumberProvider rolledNumber ).
@@ -124,7 +124,7 @@ GameBoardTest >> test4WhenTheFirstSpaceShipGetsToTheFinishLineThenItsTheWinner [
   	aPlayer1:=SpaceShip inInitialPosition: 0.	
 	aPlayer2:=SpaceShip inInitialPosition: 0.	
 	aBoard has: { aPlayer1 . aPlayer2 }.
-   aDice := Dice withNumberOfFaces: 10.
+   aDice := RiggedDice withNumberOfFaces: 10.
 	
    aDiceNumberProvider := SetRolledNumber of: aDice as:4.
 	aDice rollWith: (aDiceNumberProvider rolledNumber ).
@@ -150,7 +150,7 @@ GameBoardTest >> test5WhenSpaceshipRolledNumberExceedsRemainingDistanceToFinishL
 	aPlayer2:=SpaceShip inInitialPosition: 0.	
 	aBoard has: { aPlayer1 . aPlayer2 }.
 
-   aDice := Dice withNumberOfFaces: 10.
+   aDice := RiggedDice withNumberOfFaces: 10.
 	
    aDiceNumberProvider := SetRolledNumber of: aDice as:4.
 	aDice rollWith: (aDiceNumberProvider rolledNumber ).
@@ -177,7 +177,7 @@ GameBoardTest >> test6WhenASpaceShipCrossesFinishLineThenItCantMoveAgain [
 	aPlayer2:=SpaceShip inInitialPosition: 0.	
 	aBoard has: { aPlayer1 . aPlayer2 }.
 
-   aDice := Dice withNumberOfFaces: 10.
+   aDice := RiggedDice withNumberOfFaces: 10.
 	
    aDiceNumberProvider := SetRolledNumber of: aDice as:4.
 	aDice rollWith: (aDiceNumberProvider rolledNumber ).
@@ -207,7 +207,7 @@ GameBoardTest >> test7WhenTheSpaceShipCrossesTheFinishLineThenTheOtherSpaceShipC
 	aPlayer2:=SpaceShip inInitialPosition: 0.	
 	aBoard has: { aPlayer1 . aPlayer2 }.
 
-   aDice := Dice withNumberOfFaces: 10.
+   aDice := RiggedDice withNumberOfFaces: 10.
 	
    aDiceNumberProvider := SetRolledNumber of: aDice as:4.
 	aDice rollWith: (aDiceNumberProvider rolledNumber ).
@@ -237,7 +237,7 @@ GameBoardTest >> test8WhenTheSpaceShipFallsIntoTheWormHoleEntranceThenItMovesToT
 	aPlayer2:=SpaceShip inInitialPosition: 0.	
 	aBoard has: { aPlayer1 . aPlayer2 }.
 
-   aDice := Dice withNumberOfFaces: 10.
+   aDice := RiggedDice withNumberOfFaces: 10.
 	
    aDiceNumberProvider := SetRolledNumber of: aDice as:2.
 	aDice rollWith: (aDiceNumberProvider rolledNumber ).
@@ -256,7 +256,7 @@ GameBoardTest >> test9WhenTheSpaceShipFallsIntoWormHoleExitThenItMovesToTheWormH
 	aPlayer2:=SpaceShip inInitialPosition: 0.	
 	aBoard has: { aPlayer1 . aPlayer2 }.
 
-   aDice := Dice withNumberOfFaces: 10.
+   aDice := RiggedDice withNumberOfFaces: 10.
 	
    aDiceNumberProvider := SetRolledNumber of: aDice as:5.
 	aDice rollWith: (aDiceNumberProvider rolledNumber ).

@@ -19,7 +19,7 @@ DiceTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessa
 { #category : 'tests' }
 DiceTest >> test0WhenADiceGetsInitializedThenItsReadyToBeUsed [  
     | aDice |
-aDice := Dice withNumberOfFaces: 6. 
+aDice := RiggedDice withNumberOfFaces: 6. 
 self assert: aDice numberOfFaces equals: 6.
 
 
@@ -28,7 +28,7 @@ self assert: aDice numberOfFaces equals: 6.
 { #category : 'tests' }
 DiceTest >> test1WhenADiceItsReadyToBeUsedThenItCanBeRolled [ 
     | aDice aDiceNumberProvider |
-    aDice := Dice withNumberOfFaces: 6.
+    aDice := RiggedDice withNumberOfFaces: 6.
     aDiceNumberProvider := SetRolledNumber of: aDice as:3.
 
     aDice rollWith: (aDiceNumberProvider rolledNumber ).
@@ -40,7 +40,7 @@ DiceTest >> test1WhenADiceItsReadyToBeUsedThenItCanBeRolled [
 DiceTest >> test2WhenADiceHasNegativeNumberOfFacesThenCreationFails [ 
    
    self
-    should: [Dice withNumberOfFaces: -1 ]
+    should: [RiggedDice withNumberOfFaces: -1 ]
 		raise: Error
 		withMessageText: 'A Dice has to have at least 1 face'
 
@@ -51,7 +51,7 @@ DiceTest >> test2WhenADiceHasNegativeNumberOfFacesThenCreationFails [
 DiceTest >> test3WhenRolledNumberIsBigerThanNumberOfFacesThenCreationFails [
     | aDice  |
    
-    aDice := Dice withNumberOfFaces: 6.
+    aDice := RiggedDice withNumberOfFaces: 6.
    self
     should: [SetRolledNumber of: aDice as:10. ]
 		raise: Error
