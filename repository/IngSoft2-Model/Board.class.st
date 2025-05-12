@@ -14,8 +14,27 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'testing' }
+Board class >> hasTheMinimumAmountOfSquares:aNumber [
+
+(aNumber <3 )ifTrue:[
+	Error signal:'Should have at least 3 squares']
+]
+
+{ #category : 'testing' }
+Board class >> isANegativeNumber:aNumber [
+
+(aNumber negative )ifTrue:[
+	Error signal:'Should be a positive number']
+
+]
+
 { #category : 'instance creation' }
 Board class >> withNumberOfSquares: aNumber withWormHoleFrom: aY to:aZ [
+	self isANegativeNumber:aNumber.
+	self hasTheMinimumAmountOfSquares:aNumber.
+	self isANegativeNumber:aY.
+	self isANegativeNumber:aZ.
 	^self new initializationBoardGame: aNumber withWormHoleFrom:aY to: aZ .
 ]
 

@@ -38,6 +38,30 @@ GameBoardTest >> test010WhenASpaceShipFallsInAWormHoleWhichExitIsTheFinishLineTh
 ]
 
 { #category : 'tests' }
+GameBoardTest >> test011WhenABoardWithAWormHoleInANegativePositionThenCreationFails [
+
+	
+	self should: [Board withNumberOfSquares: 6 withWormHoleFrom: -1 to:6] raise:Error withMessageText:'Should be a positive number'.
+	
+]
+
+{ #category : 'tests' }
+GameBoardTest >> test012WhenABoardWithNumberOfSquaresIsNegativeThenCreationFails [
+
+	
+	self should: [Board withNumberOfSquares: -1 withWormHoleFrom: 3 to:6] raise:Error withMessageText:'Should be a positive number'.
+	
+]
+
+{ #category : 'tests' }
+GameBoardTest >> test013WhenABoardHasLessThanThreeSquaresThenCreationFails [
+
+	
+	self should: [Board withNumberOfSquares: 2 withWormHoleFrom: 3 to:6] raise:Error withMessageText:'Should have at least 3 squares'.
+	
+]
+
+{ #category : 'tests' }
 GameBoardTest >> test0WhenTheBoardIsInitializeItHasACertainNumberOfSquaresAndAWormHole [
 
 | aBoard |
