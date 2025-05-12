@@ -8,9 +8,9 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'initialization' }
+{ #category : 'accessing' }
 RealDice >> rolledNumber [
-rolledNumber :=(1 to: numberOfFaces) atRandom.
-^rolledNumber .
 
+	rolledNumber := (1 to: numberOfFaces) atRandom.
+	^ rolledNumber
 ]
