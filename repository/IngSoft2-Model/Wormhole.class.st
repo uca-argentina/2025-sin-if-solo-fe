@@ -18,6 +18,12 @@ Wormhole class >> from: aPosition to: anotherPosition [
 		initializeFrom: aPosition to: anotherPosition.
 ]
 
+{ #category : 'accessing' }
+Wormhole >> hasEndAt: aPosition [
+	^ aPosition = pointA or: [ aPosition = pointB ].
+	
+]
+
 { #category : 'initialize' }
 Wormhole >> initializeFrom: aPosition to: anotherPosition [
 	pointA := aPosition.

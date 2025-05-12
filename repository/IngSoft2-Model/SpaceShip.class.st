@@ -29,6 +29,12 @@ currentPosition:=aPosition.
 ]
 
 { #category : 'action' }
+SpaceShip >> moveTo: aPosition [
+	
+	currentPosition := aPosition.
+]
+
+{ #category : 'action' }
 SpaceShip >> rolls: dices [
 
 dices do:[:aDice|currentPosition :=currentPosition +aDice rolledNumber]

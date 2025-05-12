@@ -181,3 +181,18 @@ GameBoardTest >> test7WhenThePlayerCrossesTheFinishLineThenTheOtherPlayerCantMov
 
 	self assert: (aBoard positionOf: aPlayer1 ) equals: 4.
 ]
+
+{ #category : 'tests' }
+GameBoardTest >> test8ApplyWormholeToSpaceship [
+
+	| aBoard aSpaceship aWormhole |
+	aBoard := Board withNumberOfSquares: 20.
+	aSpaceship := SpaceShip inInitialPosition: 3.
+	aWormhole := Wormhole from: 3 to: 19.
+	
+	aBoard setWormhole: aWormhole.
+	
+	aBoard applyWormholeTo: aSpaceship.
+	
+	self assert: aSpaceship currentPosition equals: 19.
+]

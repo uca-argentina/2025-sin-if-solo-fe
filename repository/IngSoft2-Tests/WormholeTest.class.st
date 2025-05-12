@@ -6,6 +6,15 @@ Class {
 }
 
 { #category : 'tests' }
+WormholeTest >> testWormholeHasEndAt [
+
+	| validate |
+	validate := Wormhole from: 3 to: 9.
+	
+	self assert: ((validate hasEndAt: 9) and: (validate hasEndAt: 3)).
+]
+
+{ #category : 'tests' }
 WormholeTest >> testWormholePointToPoint [
 	
 	| validate |

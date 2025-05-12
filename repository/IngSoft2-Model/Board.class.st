@@ -6,7 +6,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'maximumSquares',
-		'spaceShips'
+		'spaceShips',
+		'wormhole'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -15,6 +16,18 @@ Class {
 { #category : 'instance creation' }
 Board class >> withNumberOfSquares: aNumber [ 
 	^self new initializationBoardGame: aNumber .
+]
+
+{ #category : 'wormhole' }
+Board >> applyWormholeTo: aSpaceship [
+	| position newPosition |
+	wormhole ifNil: [ ^ self ].
+	
+	position := aSpaceship currentPosition.
+	(wormhole hasEndAt: position) ifFalse: [ ^ self ].
+	
+	newPosition := wormhole transportFrom: position.
+	aSpaceship moveTo: newPosition.
 ]
 
 { #category : 'accessing' }
@@ -28,16 +41,15 @@ spaceShips := players.
 { #category : 'initialization' }
 Board >> initializationBoardGame: aNumber [
 	maximumSquares:= aNumber.
+	wormhole := nil.
 ]
 
 { #category : 'action' }
-Board >> move:aSpaceShip with:dices [
-self validateIsGameOver:aSpaceShip .
-aSpaceShip rolls:dices.
+Board >> move: aSpaceShip with: dices [
 
-
-
-
+	self validateIsGameOver: aSpaceShip.
+	aSpaceShip rolls: dices.
+	self applyWormholeTo: aSpaceShip.
 ]
 
 { #category : 'accessing' }
@@ -49,6 +61,11 @@ Board >> numberOfSquares [
 Board >> positionOf: aPlayer [
 ^ aPlayer currentPosition.
  
+]
+
+{ #category : 'wormhole' }
+Board >> setWormhole: aWormhole [
+	wormhole := aWormhole.
 ]
 
 { #category : 'accessing' }
