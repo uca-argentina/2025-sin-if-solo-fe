@@ -6,15 +6,17 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'maximumSquares',
-		'spaceShips'
+		'spaceShips',
+		'entranceOfWormHole',
+		'exitOfWormHole'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'instance creation' }
-Board class >> withNumberOfSquares: aNumber [ 
-	^self new initializationBoardGame: aNumber .
+Board class >> withNumberOfSquares: aNumber withWormHoleFrom: aY to:aZ [
+	^self new initializationBoardGame: aNumber withWormHoleFrom:aY to: aZ .
 ]
 
 { #category : 'accessing' }
@@ -26,14 +28,19 @@ spaceShips := players.
 ]
 
 { #category : 'initialization' }
-Board >> initializationBoardGame: aNumber [
+Board >> initializationBoardGame: aNumber withWormHoleFrom:aY to: aZ [
 	maximumSquares:= aNumber.
+	entranceOfWormHole:= aY.
+	exitOfWormHole:=aZ.
 ]
 
 { #category : 'action' }
 Board >> move:aSpaceShip with:dices [
-self validateIsGameOver:aSpaceShip .
+self validateIsGameOver:aSpaceShip.
 aSpaceShip rolls:dices.
+self validateInWormHole:aSpaceShip .
+
+
 
 
 
@@ -64,9 +71,23 @@ Board >> thereIsAWinner [
 
 ]
 
+{ #category : 'validating' }
+Board >> validateInWormHole: aSpaceShip [
+| posOriginal |
+posOriginal := aSpaceShip currentPosition.
+
+(posOriginal = entranceOfWormHole)
+    ifTrue: [ aSpaceShip teletransportsTo: exitOfWormHole ].
+
+(posOriginal = exitOfWormHole)
+    ifTrue: [ aSpaceShip teletransportsTo: entranceOfWormHole ].
+
+]
+
 { #category : 'event testing' }
 Board >> validateIsGameOver:aSpaceShip [ 
 
 (self thereIsAWinner  ) ifTrue: [
-	Error signal: 'Game is Over']
+	
+	Error signal: 'Game is Over'.]
 ]
