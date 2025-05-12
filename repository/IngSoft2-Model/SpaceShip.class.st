@@ -20,7 +20,9 @@ SpaceShip class >> inInitialPosition: aPosition [
 
 { #category : 'accessing' }
 SpaceShip >> currentPosition [
+
 ^currentPosition .
+
 ]
 
 { #category : 'initialization' }
@@ -34,4 +36,10 @@ SpaceShip >> rolls: dices [
 dices do:[:aDice|currentPosition :=currentPosition +aDice rolledNumber]
 
 
+]
+
+{ #category : 'action' }
+SpaceShip >> teletransportsTo:aWormHoleSquare [
+
+currentPosition :=aWormHoleSquare.
 ]

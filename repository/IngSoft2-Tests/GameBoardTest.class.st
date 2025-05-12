@@ -17,29 +17,50 @@ GameBoardTest >> should: anErrorBlock raise: anErrorClass withMessageText: error
 ]
 
 { #category : 'tests' }
-GameBoardTest >> test0WhenTheBoardIsInitializeItHasACertainNumberOfSquares [
+GameBoardTest >> test010WhenASpaceShipFallsInAWormHoleWhichExitIsTheFinishLineThenWins [
+| aBoard aPlayer1 aDice aDiceNumberProvider aPlayer2 |
+	
+	aBoard:= Board withNumberOfSquares: 6 withWormHoleFrom: 2 to:6.
+	
+  	aPlayer1:=SpaceShip inInitialPosition: 0.	
+	aPlayer2:=SpaceShip inInitialPosition: 0.	
+	aBoard has: { aPlayer1 . aPlayer2 }.
+
+   aDice := Dice withNumberOfFaces: 10.
+	
+   aDiceNumberProvider := SetRolledNumber of: aDice as:2.
+	aDice rollWith: (aDiceNumberProvider rolledNumber ).
+	aBoard move:aPlayer1 with:{aDice}.
+	
+	self assert: (aBoard positionOf: aPlayer1 ) equals: 6.
+	self assert: (aBoard theWinnerIs) equals: aPlayer1.
+
+]
+
+{ #category : 'tests' }
+GameBoardTest >> test0WhenTheBoardIsInitializeItHasACertainNumberOfSquaresAndAWormHole [
 
 | aBoard |
-aBoard:= Board withNumberOfSquares: 64.
+aBoard:= Board withNumberOfSquares: 64 withWormHoleFrom: 1 to:2.
 
 self assert: aBoard numberOfSquares equals: 64
 ]
 
 { #category : 'tests' }
-GameBoardTest >> test1WhenTheGameBeginsTheBoardKnowsThePlayersInitialPosition [
+GameBoardTest >> test1WhenTheGameBeginsTheBoardKnowsTheSpaceShipsInitialPosition [
 | aPlayer1 aBoard |
 
 	aPlayer1:=SpaceShip inInitialPosition: 0.
-	aBoard:= Board withNumberOfSquares: 60.
+	aBoard:= Board withNumberOfSquares: 60 withWormHoleFrom: 2 to:5.
 	
 self assert: (aBoard positionOf: aPlayer1) equals: 0.
 ]
 
 { #category : 'tests' }
-GameBoardTest >> test2WhenADiceIsRolledThenThePlayersPositionInTheBoardChanges [
+GameBoardTest >> test2WhenADiceIsRolledThenTheSpaceShipsPositionInTheBoardChanges [
 | aBoard aPlayer1 aDice aDiceNumberProvider |
 	
-	aBoard:= Board withNumberOfSquares: 64.
+	aBoard:= Board withNumberOfSquares: 64 withWormHoleFrom: 2 to:5.
 	
    aDice := Dice withNumberOfFaces: 6.
    aDiceNumberProvider := SetRolledNumber of: aDice as:3.
@@ -56,7 +77,7 @@ self assert: (aBoard positionOf: aPlayer1) equals: 3.
 GameBoardTest >> test3WhenASpaceShipGetsToTheFinishLineThenItsWinner [
 | aBoard aPlayer1 aDice aDiceNumberProvider |
 	
-	aBoard:= Board withNumberOfSquares: 6.
+	aBoard:= Board withNumberOfSquares: 6 withWormHoleFrom: 2 to:5.
   	aPlayer1:=SpaceShip inInitialPosition: 0.
 	aBoard has: { aPlayer1 }.	
    aDice := Dice withNumberOfFaces: 6.
@@ -75,7 +96,7 @@ GameBoardTest >> test3WhenASpaceShipGetsToTheFinishLineThenItsWinner [
 GameBoardTest >> test4WhenTheFirstSpaceShipGetsToTheFinishLineThenItsTheWinner [
 | aBoard aPlayer1 aDice aDiceNumberProvider aPlayer2 |
 	
-	aBoard:= Board withNumberOfSquares: 6.
+	aBoard:= Board withNumberOfSquares: 6 withWormHoleFrom: 2 to:5.
   	aPlayer1:=SpaceShip inInitialPosition: 0.	
 	aPlayer2:=SpaceShip inInitialPosition: 0.	
 	aBoard has: { aPlayer1 . aPlayer2 }.
@@ -99,7 +120,7 @@ self assert: (aBoard positionOf: aPlayer2 ) equals: 6.
 GameBoardTest >> test5WhenSpaceshipRolledNumberExceedsRemainingDistanceToFinishLineThenItWins [
 | aBoard aPlayer1 aDice aDiceNumberProvider aPlayer2 |
 	
-	aBoard:= Board withNumberOfSquares: 6.
+	aBoard:= Board withNumberOfSquares: 6 withWormHoleFrom: 2 to:5.
 	
   	aPlayer1:=SpaceShip inInitialPosition: 0.	
 	aPlayer2:=SpaceShip inInitialPosition: 0.	
@@ -126,7 +147,7 @@ self assert: (aBoard positionOf: aPlayer2 ) equals: 8.
 GameBoardTest >> test6WhenASpaceShipCrossesFinishLineThenItCantMoveAgain [
 | aBoard aPlayer1 aDice aDiceNumberProvider aPlayer2 |
 	
-	aBoard:= Board withNumberOfSquares: 6.
+	aBoard:= Board withNumberOfSquares: 6 withWormHoleFrom: 2 to:5.
 	
   	aPlayer1:=SpaceShip inInitialPosition: 0.	
 	aPlayer2:=SpaceShip inInitialPosition: 0.	
@@ -153,10 +174,10 @@ GameBoardTest >> test6WhenASpaceShipCrossesFinishLineThenItCantMoveAgain [
 ]
 
 { #category : 'tests' }
-GameBoardTest >> test7WhenThePlayerCrossesTheFinishLineThenTheOtherPlayerCantMove [
+GameBoardTest >> test7WhenTheSpaceShipCrossesTheFinishLineThenTheOtherSpaceShipCantMove [
 | aBoard aPlayer1 aDice aDiceNumberProvider aPlayer2 |
 	
-	aBoard:= Board withNumberOfSquares: 6.
+	aBoard:= Board withNumberOfSquares: 6 withWormHoleFrom: 2 to:5.
 	
   	aPlayer1:=SpaceShip inInitialPosition: 0.	
 	aPlayer2:=SpaceShip inInitialPosition: 0.	
@@ -180,4 +201,43 @@ GameBoardTest >> test7WhenThePlayerCrossesTheFinishLineThenTheOtherPlayerCantMov
 		withMessageText: 'Game is Over'.
 
 	self assert: (aBoard positionOf: aPlayer1 ) equals: 4.
+]
+
+{ #category : 'tests' }
+GameBoardTest >> test8WhenTheSpaceShipFallsIntoTheWormHoleEntranceThenItMovesToTheWormHoleExit [ 
+| aBoard aPlayer1 aDice aDiceNumberProvider aPlayer2 |
+	
+	aBoard:= Board withNumberOfSquares: 6 withWormHoleFrom: 2 to:5.
+	
+  	aPlayer1:=SpaceShip inInitialPosition: 0.	
+	aPlayer2:=SpaceShip inInitialPosition: 0.	
+	aBoard has: { aPlayer1 . aPlayer2 }.
+
+   aDice := Dice withNumberOfFaces: 10.
+	
+   aDiceNumberProvider := SetRolledNumber of: aDice as:2.
+	aDice rollWith: (aDiceNumberProvider rolledNumber ).
+	aBoard move:aPlayer1 with:{aDice}.
+	
+	self assert: (aBoard positionOf: aPlayer1 ) equals: 5.
+]
+
+{ #category : 'tests' }
+GameBoardTest >> test9WhenTheSpaceShipFallsIntoWormHoleExitThenItMovesToTheWormHoleEntrance [
+| aBoard aPlayer1 aDice aDiceNumberProvider aPlayer2 |
+	
+	aBoard:= Board withNumberOfSquares: 6 withWormHoleFrom: 2 to:5.
+	
+  	aPlayer1:=SpaceShip inInitialPosition: 0.	
+	aPlayer2:=SpaceShip inInitialPosition: 0.	
+	aBoard has: { aPlayer1 . aPlayer2 }.
+
+   aDice := Dice withNumberOfFaces: 10.
+	
+   aDiceNumberProvider := SetRolledNumber of: aDice as:5.
+	aDice rollWith: (aDiceNumberProvider rolledNumber ).
+	aBoard move:aPlayer1 with:{aDice}.
+	
+	self assert: (aBoard positionOf: aPlayer1 ) equals: 2.
+
 ]
