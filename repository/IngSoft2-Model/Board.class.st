@@ -70,6 +70,13 @@ Board >> numberOfSquares [
 	^ maximumSquares
 ]
 
+{ #category : 'action' }
+Board >> playTurn [
+
+
+self move:(spaceShips at:1 )with:dicesInGameBoard.
+]
+
 { #category : 'accessing' }
 Board >> positionOf: aPlayer [
 
@@ -107,4 +114,9 @@ Board >> validateInWormHole: aSpaceShip [
 Board >> validateIsGameOver: aSpaceShip [
 
 	self thereIsAWinner ifTrue: [ Error signal: 'Game is Over' ]
+]
+
+{ #category : 'accessing' }
+Board >> withDices:dices [
+dicesInGameBoard:=dices.
 ]
