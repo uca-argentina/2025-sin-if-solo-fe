@@ -8,7 +8,8 @@ Class {
 		'maximumSquares',
 		'spaceShips',
 		'entranceOfWormHole',
-		'exitOfWormHole'
+		'exitOfWormHole',
+		'dicesInGameBoard'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -28,16 +29,16 @@ Board class >> isANegativeNumber: aNumber [
 ]
 
 { #category : 'instance creation' }
-Board class >> withNumberOfSquares: aNumber withWormHoleFrom: aY to: aZ [
+Board class >> withNumberOfSquares: aMaximumSquares withWormHoleFrom: anEntranceOfWormHole to: anExitOfTheWormHole [
 
-	self isANegativeNumber: aNumber.
-	self hasTheMinimumAmountOfSquares: aNumber.
-	self isANegativeNumber: aY.
-	self isANegativeNumber: aZ.
+	self isANegativeNumber: aMaximumSquares.
+	self hasTheMinimumAmountOfSquares: aMaximumSquares.
+	self isANegativeNumber: anEntranceOfWormHole.
+	self isANegativeNumber: anExitOfTheWormHole.
 	^ self new
-		  initializationBoardGame: aNumber
-		  withWormHoleFrom: aY
-		  to: aZ
+		  initializationBoardGame: aMaximumSquares
+		  withWormHoleFrom: anEntranceOfWormHole
+		  to: anExitOfTheWormHole
 ]
 
 { #category : 'accessing' }

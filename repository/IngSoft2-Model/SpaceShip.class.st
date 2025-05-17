@@ -35,7 +35,7 @@ SpaceShip >> initializePosition: aPosition [
 SpaceShip >> rolls: dices [
 
 	dices do: [ :aDice |
-		currentPosition := currentPosition + aDice rolledNumber ]
+		currentPosition := currentPosition + aDice rolledNumber ] 
 ]
 
 { #category : 'action' }
