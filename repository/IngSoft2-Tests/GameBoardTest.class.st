@@ -18,7 +18,7 @@ GameBoardTest >> should: anErrorBlock raise: anErrorClass withMessageText: error
 
 { #category : 'tests' }
 GameBoardTest >> test010WhenASpaceShipFallsInAWormHoleWhichExitIsTheFinishLineThenWins [
-| aBoard aPlayer1 aDice aDiceNumberProvider aPlayer2 |
+| aBoard aPlayer1 aDice  aPlayer2 |
 	
 	aBoard:= Board withNumberOfSquares: 6 withWormHoleFrom: 2 to:6.
 	
@@ -28,8 +28,8 @@ GameBoardTest >> test010WhenASpaceShipFallsInAWormHoleWhichExitIsTheFinishLineTh
 
    aDice := RiggedDice withNumberOfFaces: 10.
 	
-   aDiceNumberProvider := SetRolledNumber of: aDice as:2.
-	aDice rollWith: (aDiceNumberProvider rolledNumber ).
+  aDice setNumbersProvider: { 2. 3. 3. 4 }.
+
 	aBoard move:aPlayer1 with:{aDice}.
 
 	self assert: (aBoard positionOf: aPlayer1 ) equals: 6.
@@ -82,13 +82,12 @@ self assert: (aBoard positionOf: aPlayer1) equals: 0.
 
 { #category : 'tests' }
 GameBoardTest >> test2WhenADiceIsRolledThenTheSpaceShipsPositionInTheBoardChanges [
-| aBoard aPlayer1 aDice aDiceNumberProvider |
+| aBoard aPlayer1 aDice  |
 	
 	aBoard:= Board withNumberOfSquares: 64 withWormHoleFrom: 2 to:5.
    aDice := RiggedDice withNumberOfFaces: 6.
-   aDiceNumberProvider := SetRolledNumber of: aDice as:3.
-	aDice rollWith: (aDiceNumberProvider rolledNumber ).
-	
+   aDice setNumbersProvider: { 3. 3. 3. 4 }.
+
 	aPlayer1:=SpaceShip inInitialPosition: 0.
 	aBoard has:{aPlayer1 }.
 	aBoard withDices: {aDice}.
@@ -99,15 +98,14 @@ self assert: (aBoard positionOf: aPlayer1) equals: 3.
 
 { #category : 'tests' }
 GameBoardTest >> test3WhenASpaceShipGetsToTheFinishLineThenItsWinner [
-| aBoard aPlayer1 aDice aDiceNumberProvider |
+| aBoard aPlayer1 aDice  |
 	
 	aBoard:= Board withNumberOfSquares: 6 withWormHoleFrom: 2 to:5.
   	aPlayer1:=SpaceShip inInitialPosition: 0.
 
    aDice := RiggedDice withNumberOfFaces: 6.
-	
-   aDiceNumberProvider := SetRolledNumber of: aDice as:6.
-	aDice rollWith: (aDiceNumberProvider rolledNumber ).
+	aDice setNumbersProvider: { 6. 3. 3. 4 }.
+
 	
 	aBoard has: { aPlayer1 }.	
 	aBoard withDices: { aDice }.
@@ -121,26 +119,23 @@ GameBoardTest >> test3WhenASpaceShipGetsToTheFinishLineThenItsWinner [
 
 { #category : 'tests' }
 GameBoardTest >> test4WhenTheFirstSpaceShipGetsToTheFinishLineThenItsTheWinner [
-| aBoard aPlayer1 aDice aDiceNumberProvider aPlayer2 |
-	
-	aBoard:= Board withNumberOfSquares: 6 withWormHoleFrom: 2 to:5.
-  	aPlayer1:=SpaceShip inInitialPosition: 0.	
-	aPlayer2:=SpaceShip inInitialPosition: 0.	
-	aBoard has: { aPlayer1 . aPlayer2 }.
-   aDice := RiggedDice withNumberOfFaces: 10.
-	
-   aDiceNumberProvider := SetRolledNumber of: aDice as:4.
-	aDice rollWith: (aDiceNumberProvider rolledNumber ).
-	aBoard move: aPlayer1 with: {aDice}.
-	
-	aDiceNumberProvider := SetRolledNumber of: aDice as:6.
-	aDice rollWith: (aDiceNumberProvider rolledNumber ).
-	aBoard move: aPlayer2 with: {aDice}.
-	
 
-self assert: (aBoard theWinnerIs) equals: aPlayer2.
-self assert: (aBoard positionOf: aPlayer2 ) equals: 6.
+	| aBoard aPlayer1 aDice aPlayer2 |
+	aBoard := Board withNumberOfSquares: 6 withWormHoleFrom: 2 to: 5.
+	aPlayer1 := SpaceShip inInitialPosition: 0.
+	aPlayer2 := SpaceShip inInitialPosition: 0.
+	aBoard has: {
+			aPlayer1.
+			aPlayer2 }.
+	aDice := RiggedDice withNumberOfFaces: 10.
+	aDice setNumbersProvider: { 4. 6. 3. 4 }.
 
+	aBoard move: aPlayer1 with: { aDice }.
+
+	aBoard move: aPlayer2 with: { aDice }.
+
+	self assert: aBoard theWinnerIs equals: aPlayer2.
+	self assert: (aBoard positionOf: aPlayer2) equals: 6
 ]
 
 { #category : 'tests' }
@@ -232,7 +227,7 @@ GameBoardTest >> test7WhenTheSpaceShipCrossesTheFinishLineThenTheOtherSpaceShipC
 
 { #category : 'tests' }
 GameBoardTest >> test8WhenTheSpaceShipFallsIntoTheWormHoleEntranceThenItMovesToTheWormHoleExit [ 
-| aBoard aPlayer1 aDice aDiceNumberProvider aPlayer2 |
+| aBoard aPlayer1 aDice  aPlayer2 |
 	
 	aBoard:= Board withNumberOfSquares: 6 withWormHoleFrom: 2 to:5.
 	
@@ -242,8 +237,8 @@ GameBoardTest >> test8WhenTheSpaceShipFallsIntoTheWormHoleEntranceThenItMovesToT
 
    aDice := RiggedDice withNumberOfFaces: 10.
 	
-   aDiceNumberProvider := SetRolledNumber of: aDice as:2.
-	aDice rollWith: (aDiceNumberProvider rolledNumber ).
+  aDice setNumbersProvider: { 2. 3. 3. 4 }.
+	
 	aBoard move:aPlayer1 with:{aDice}.
 	
 	self assert: (aBoard positionOf: aPlayer1 ) equals: 5.
@@ -251,7 +246,7 @@ GameBoardTest >> test8WhenTheSpaceShipFallsIntoTheWormHoleEntranceThenItMovesToT
 
 { #category : 'tests' }
 GameBoardTest >> test9WhenTheSpaceShipFallsIntoWormHoleExitThenItMovesToTheWormHoleEntrance [
-| aBoard aPlayer1 aDice aDiceNumberProvider aPlayer2 |
+| aBoard aPlayer1 aDice  aPlayer2 |
 	
 	aBoard:= Board withNumberOfSquares: 6 withWormHoleFrom: 2 to:5.
 	
@@ -261,8 +256,8 @@ GameBoardTest >> test9WhenTheSpaceShipFallsIntoWormHoleExitThenItMovesToTheWormH
 
    aDice := RiggedDice withNumberOfFaces: 10.
 	
-   aDiceNumberProvider := SetRolledNumber of: aDice as:5.
-	aDice rollWith: (aDiceNumberProvider rolledNumber ).
+   aDice setNumbersProvider: { 5. 3. 3. 4 }.
+
 	aBoard move:aPlayer1 with:{aDice}.
 	
 	self assert: (aBoard positionOf: aPlayer1 ) equals: 2.

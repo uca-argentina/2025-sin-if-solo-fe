@@ -26,14 +26,13 @@ self assert: aDice numberOfFaces equals: 6.
 ]
 
 { #category : 'tests' }
-DiceTest >> test1WhenADiceItsReadyToBeUsedThenItCanBeRolled [ 
-    | aDice aDiceNumberProvider |
-    aDice := RiggedDice withNumberOfFaces: 6.
-    aDiceNumberProvider := SetRolledNumber of: aDice as:3.
+DiceTest >> test1WhenADiceItsReadyToBeUsedThenItCanBeRolled [
 
-    aDice rollWith: (aDiceNumberProvider rolledNumber ).
-    self assert: aDice rolledNumber equals: 3.
+	| aDice  |
+	aDice := RiggedDice withNumberOfFaces: 6.
+	aDice setNumbersProvider:{1. 2. 3. 4}.
 
+	self assert: aDice rolledNumber equals: 1
 ]
 
 { #category : 'tests' }
@@ -43,19 +42,6 @@ DiceTest >> test2WhenADiceHasNegativeNumberOfFacesThenCreationFails [
     should: [RiggedDice withNumberOfFaces: -1 ]
 		raise: Error
 		withMessageText: 'A Dice has to have at least 1 face'
-
-	
-]
-
-{ #category : 'tests' }
-DiceTest >> test3WhenRolledNumberIsBigerThanNumberOfFacesThenCreationFails [
-    | aDice  |
-   
-    aDice := RiggedDice withNumberOfFaces: 6.
-   self
-    should: [SetRolledNumber of: aDice as:10. ]
-		raise: Error
-		withMessageText: 'The number to roll should be smaller than the number of faces'
 
 	
 ]

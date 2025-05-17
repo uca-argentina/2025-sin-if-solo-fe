@@ -17,28 +17,25 @@ self assert:aPlayer1 currentPosition equals: 0.
 { #category : 'tests' }
 SpaceShipMovementsTest >> test1WhenTheDiceIsRolledThenTheSpaceShipsPositionChangesToTheRolledNumber [
 
- | aPlayer1 aDice aDiceNumberProvider |
+ | aPlayer1 aDice  |
    aDice := RiggedDice withNumberOfFaces: 6.
-   aDiceNumberProvider := SetRolledNumber of: aDice as:3.
-	aDice rollWith: (aDiceNumberProvider rolledNumber ).
+  	aDice setNumbersProvider:{1. 2. 3. 4}.
 	aPlayer1:=SpaceShip inInitialPosition: 0.
 	aPlayer1 rolls: {aDice}.
 	
-	self assert:aPlayer1 currentPosition equals: 3.
+	self assert:aPlayer1 currentPosition equals: 1.
 ]
 
 { #category : 'tests' }
 SpaceShipMovementsTest >> test2WhenMultipleDicesAreRolledThenSpaceShipMovesTheSumRolled [
 
- | aPlayer1 aDice aDiceNumberProvider aDice2|
+ | aPlayer1 aDice aDice2|
    aDice := RiggedDice withNumberOfFaces: 6.
-   aDiceNumberProvider := SetRolledNumber of: aDice as:3.
-	aDice rollWith: (aDiceNumberProvider rolledNumber ).
 
+	aDice setNumbersProvider:{3. 2. 3. 4}.
 	aDice2 := RiggedDice withNumberOfFaces: 3.
-   aDiceNumberProvider := SetRolledNumber of: aDice2 as:1.
+	aDice2 setNumbersProvider:{1. 2. 3. 4}.
 
-	aDice2 rollWith: (aDiceNumberProvider rolledNumber ).
 	aPlayer1:=SpaceShip inInitialPosition: 0.
 	
 	aPlayer1 rolls: {aDice.aDice2}.
@@ -49,30 +46,24 @@ SpaceShipMovementsTest >> test2WhenMultipleDicesAreRolledThenSpaceShipMovesTheSu
 { #category : 'tests' }
 SpaceShipMovementsTest >> test3WhenThereAreMultipleDicesthenAllSpaceshipsUseAllOfThemToAdvance [
 
- | aPlayer1 aPlayer2 aDice aDiceNumberProvider aDice2|
-   aDice := RiggedDice withNumberOfFaces: 6.
-	aDice2 := RiggedDice withNumberOfFaces: 3.
-	
-	aPlayer1:=SpaceShip inInitialPosition: 0.
-	aDiceNumberProvider := SetRolledNumber of: aDice as:3.
-	aDice rollWith: (aDiceNumberProvider rolledNumber ).
-   
-	aDiceNumberProvider:= SetRolledNumber of: aDice2 as:1.
-	aDice2 rollWith: (aDiceNumberProvider rolledNumber ).
-	
-	aPlayer1 rolls: {aDice.aDice2}.
-	
-	aPlayer2:=SpaceShip inInitialPosition: 0.
-	aDiceNumberProvider := SetRolledNumber of: aDice as:4.
-	aDice rollWith: (aDiceNumberProvider rolledNumber ).
-	
-	aDiceNumberProvider := SetRolledNumber of: aDice2 as:3.
-	aDice2 rollWith: (aDiceNumberProvider rolledNumber ).
-	
-	aPlayer2 rolls: {aDice.aDice2}.
-	
-	
-	self assert:aPlayer1 currentPosition equals: 4.
-	self assert:aPlayer2 currentPosition equals: 7. 	
+	| aPlayer1 aPlayer2 aDice aDice2 |
+	aDice := RiggedDice withNumberOfFaces: 6.
 
+	aDice setNumbersProvider: { 3. 3. 3. 4 }.
+	aDice2 := RiggedDice withNumberOfFaces: 3.
+	aDice2 setNumbersProvider: { 1. 2. 3. 4 }.
+
+	aPlayer1 := SpaceShip inInitialPosition: 0.
+	aPlayer2 := SpaceShip inInitialPosition: 0.
+
+	aPlayer1 rolls: {
+			aDice.
+			aDice2 }.
+	aPlayer2 rolls: {
+			aDice.
+			aDice2 }.
+
+
+	self assert: aPlayer1 currentPosition equals: 4.
+	self assert: aPlayer2 currentPosition equals: 5.
 ]
