@@ -140,7 +140,7 @@ GameBoardTest >> test4WhenTheFirstSpaceShipGetsToTheFinishLineThenItsTheWinner [
 
 { #category : 'tests' }
 GameBoardTest >> test5WhenSpaceshipRolledNumberExceedsRemainingDistanceToFinishLineThenItWins [
-| aBoard aPlayer1 aDice aDiceNumberProvider aPlayer2 |
+| aBoard aPlayer1 aDice  aPlayer2 |
 	
 	aBoard:= Board withNumberOfSquares: 6 withWormHoleFrom: 2 to:5.
 	
@@ -150,12 +150,10 @@ GameBoardTest >> test5WhenSpaceshipRolledNumberExceedsRemainingDistanceToFinishL
 
    aDice := RiggedDice withNumberOfFaces: 10.
 	
-   aDiceNumberProvider := SetRolledNumber of: aDice as:4.
-	aDice rollWith: (aDiceNumberProvider rolledNumber ).
+  aDice setNumbersProvider: { 4. 8. 3. 4 }.
+
 	aBoard move:aPlayer1 with:{aDice}.
-	
-	aDiceNumberProvider := SetRolledNumber of: aDice as:8.
-	aDice rollWith: (aDiceNumberProvider rolledNumber ).
+
 	
 	aBoard move:aPlayer2 with:{aDice}.
 	
@@ -167,7 +165,7 @@ self assert: (aBoard positionOf: aPlayer2 ) equals: 8.
 
 { #category : 'tests' }
 GameBoardTest >> test6WhenASpaceShipCrossesFinishLineThenItCantMoveAgain [
-| aBoard aPlayer1 aDice aDiceNumberProvider aPlayer2 |
+| aBoard aPlayer1 aDice  aPlayer2 |
 	
 	aBoard:= Board withNumberOfSquares: 6 withWormHoleFrom: 2 to:5.
 	
@@ -177,16 +175,13 @@ GameBoardTest >> test6WhenASpaceShipCrossesFinishLineThenItCantMoveAgain [
 
    aDice := RiggedDice withNumberOfFaces: 10.
 	
-   aDiceNumberProvider := SetRolledNumber of: aDice as:4.
-	aDice rollWith: (aDiceNumberProvider rolledNumber ).
+   aDice setNumbersProvider: { 4. 8. 3. 4 }.
+
 	aBoard move:aPlayer1 with:{aDice}.
-	
-	aDiceNumberProvider := SetRolledNumber of: aDice as:8.
-	aDice rollWith: (aDiceNumberProvider rolledNumber ).
-	
+
 	aBoard move:aPlayer2 with:{aDice}.
 	
-	self assert: (aBoard positionOf: aPlayer2 ) equals: 8.
+
 	self
     should: [aBoard move:aPlayer2 with:{aDice}.]
 		raise: Error
@@ -197,7 +192,7 @@ GameBoardTest >> test6WhenASpaceShipCrossesFinishLineThenItCantMoveAgain [
 
 { #category : 'tests' }
 GameBoardTest >> test7WhenTheSpaceShipCrossesTheFinishLineThenTheOtherSpaceShipCantMove [
-| aBoard aPlayer1 aDice aDiceNumberProvider aPlayer2 |
+| aBoard aPlayer1 aDice  aPlayer2 |
 	
 	aBoard:= Board withNumberOfSquares: 6 withWormHoleFrom: 2 to:5.
 	
@@ -207,12 +202,9 @@ GameBoardTest >> test7WhenTheSpaceShipCrossesTheFinishLineThenTheOtherSpaceShipC
 
    aDice := RiggedDice withNumberOfFaces: 10.
 	
-   aDiceNumberProvider := SetRolledNumber of: aDice as:4.
-	aDice rollWith: (aDiceNumberProvider rolledNumber ).
-	aBoard move:aPlayer1 with:{aDice}.
+   aDice setNumbersProvider: { 4. 8. 3. 4 }.
 	
-	aDiceNumberProvider := SetRolledNumber of: aDice as:8.
-	aDice rollWith: (aDiceNumberProvider rolledNumber ).
+	aBoard move:aPlayer1 with:{aDice}.
 	
 	aBoard move:aPlayer2 with:{aDice}.
 	

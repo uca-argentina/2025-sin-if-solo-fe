@@ -19,6 +19,12 @@ RealDice class >> hasAtLeastOneFace:aNumber [
 ]
 
 { #category : 'initialization' }
+RealDice class >> withNumberOfFaces:aNumber [
+self hasAtLeastOneFace:aNumber.
+^self new initializeNumberOfFaces: aNumber .
+]
+
+{ #category : 'initialization' }
 RealDice >> initializeNumberOfFaces: aNumber [
 
 	numberOfFaces := aNumber

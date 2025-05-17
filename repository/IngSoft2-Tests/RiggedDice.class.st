@@ -19,6 +19,12 @@ RiggedDice class >> hasAtLeastOneFace:aNumber [
 ]
 
 { #category : 'initialization' }
+RiggedDice class >> withNumberOfFaces:aNumber [
+self hasAtLeastOneFace:aNumber.
+^self new initializeNumberOfFaces: aNumber .
+]
+
+{ #category : 'initialization' }
 RiggedDice >> initializeNumberOfFaces: aNumber [
 
 	numberOfFaces := aNumber
@@ -37,4 +43,13 @@ RiggedDice >> rolledNumber [
     numbersToBeRolles add: nextNumber.
     numbersToBeRolles removeFirst.
     ^ nextNumber
+]
+
+{ #category : 'initialization' }
+RiggedDice >> setNumbersProvider: numbersToRoll [
+numbersToBeRolles := OrderedCollection new.
+numbersToBeRolles addAll: numbersToRoll.
+
+
+
 ]
