@@ -47,10 +47,15 @@ BoardGame class >> withNumberOfSquares: aMaximumSquares withWormHoleFrom: anEntr
 
 { #category : 'accessing' }
 BoardGame >> has: players [
+    spaceShips := players collect: [ :player | 
+        | copyOfSpaceships |
+        copyOfSpaceships := player copy.
+        copyOfSpaceships originalSpaceShip: player.
+        copyOfSpaceships
+    ].
+    aCopyOfSpaceships := OrderedCollection new.
+    aCopyOfSpaceships addAll: spaceShips.
 
-	spaceShips := OrderedCollection new.
-	spaceShips addAll: players.
-	aCopyOfSpaceships:=spaceShips.
 ]
 
 { #category : 'initialization' }
@@ -64,7 +69,9 @@ BoardGame >> initializationBoardGame: aNumber withWormHoleFrom: aY to: aZ [
 { #category : 'action' }
 BoardGame >> move: aSpaceShip with: dices [
 
-	aSpaceShip rolls: dices.
+	| rolledNumber |
+	rolledNumber:= self  rolledNumberSumOf: dices.
+	aSpaceShip moves: rolledNumber.
 	self validateInWormHole: aSpaceShip
 ]
 
@@ -75,10 +82,22 @@ BoardGame >> numberOfSquares [
 ]
 
 { #category : 'action' }
-BoardGame >> playTurn [
+BoardGame >> playOneRound [
 
 	aCopyOfSpaceships do: [ :aCopyOfSpaceship |
 		self move: self spaceshipWhosTurnItIs with: dicesInGameBoard ]
+]
+
+{ #category : 'accessing' }
+BoardGame >> positionOf: aPlayer [
+    ^ (aCopyOfSpaceships detect: [ :copyOfSpaceship | copyOfSpaceship isCopyOf: aPlayer ]) currentPosition.
+
+]
+
+{ #category : 'accessing' }
+BoardGame >> rolledNumberSumOf: dices [
+
+ ^(dices collect: [ :dice | dice rolledNumber ]) sum
 ]
 
 { #category : 'accessing' }
@@ -92,10 +111,10 @@ BoardGame >> spaceshipWhosTurnItIs [
 ]
 
 { #category : 'accessing' }
-BoardGame >> theWinnerIs [ 
+BoardGame >> theWinnerIs [
+    ^ (aCopyOfSpaceships select: [ :spaceShip | 
+        spaceShip currentPosition >= self numberOfSquares ]) anyOne asOriginalSpaceShip.
 
-	^ (spaceShips select: [ :spaceShip |
-		   spaceShip currentPosition >= self numberOfSquares ]) anyOne.
 ]
 
 { #category : 'validating' }

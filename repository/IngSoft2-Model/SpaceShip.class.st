@@ -7,7 +7,8 @@ Class {
 	#name : 'SpaceShip',
 	#superclass : 'Object',
 	#instVars : [
-		'currentPosition'
+		'currentPosition',
+		'originalSpaceShip'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -17,6 +18,11 @@ Class {
 SpaceShip class >> inInitialPosition: aPosition [
 
 	^ self new initializePosition: aPosition
+]
+
+{ #category : 'accessing' }
+SpaceShip >> asOriginalSpaceShip [
+^originalSpaceShip.
 ]
 
 { #category : 'accessing' }
@@ -31,12 +37,22 @@ SpaceShip >> initializePosition: aPosition [
 	currentPosition := aPosition
 ]
 
+{ #category : 'testing' }
+SpaceShip >> isCopyOf: aPlayer [
+    ^ originalSpaceShip == aPlayer.
+]
+
 { #category : 'action' }
-SpaceShip >> rolls: dices [
+SpaceShip >> moves: rolledNumber [
 
 	currentPosition := currentPosition
 	                   +
-	                   (dices collect: [ :dado | dado rolledNumber ]) sum
+	                   rolledNumber.
+]
+
+{ #category : 'accessing' }
+SpaceShip >> originalSpaceShip: aPlayer [
+    originalSpaceShip := aPlayer.
 ]
 
 { #category : 'action' }

@@ -29,9 +29,9 @@ GameBoardTest >> test010WhenASpaceShipFallsInAWormHoleWhichExitIsTheFinishLineTh
 	aBoard has: { aPlayer1 . aPlayer2 }.
 	aBoard withDices: { aDice }.
 
-	aBoard playTurn.
+	aBoard playOneRound.
 
-	self assert: (aPlayer1 currentPosition) equals: 6.
+	self assert: (aBoard positionOf: aPlayer1) equals: 6.
 	self assert: (aBoard theWinnerIs) equals: aPlayer1.
 
 ]
@@ -70,6 +70,32 @@ self assert: aBoard numberOfSquares equals: 64
 ]
 
 { #category : 'tests' }
+GameBoardTest >> test14WhenSpaceshipTriesToMoveOutsideBoardThenNothingChanges [
+| aBoard aPlayer1 aDice  aPlayer2 |
+	
+	aBoard:= BoardGame withNumberOfSquares: 6 withWormHoleFrom: 1 to:1.
+	
+  	aPlayer1:=SpaceShip inInitialPosition: 0.	
+	aPlayer2:=SpaceShip inInitialPosition: 0.
+	aDice := RiggedDice withNumberOfFaces: 10.	
+	aDice setNumbersProvider: { 2. 1. 1. 6 }.
+	
+	aBoard has: { aPlayer1 . aPlayer2 }.
+	aBoard withDices: { aDice }.
+
+	aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer1) equals: 2.
+	self assert: (aBoard positionOf: aPlayer2) equals: 1.
+	aPlayer1 moves: 4.
+	aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer1) equals: 3.
+	self assert: (aBoard positionOf: aPlayer2) equals: 7.
+	
+  self assert: (aBoard theWinnerIs) equals: aPlayer2.
+
+]
+
+{ #category : 'tests' }
 GameBoardTest >> test1WhenTheGameBeginsTheBoardKnowsTheSpaceShipsInitialPosition [
 | aPlayer1 aBoard |
 
@@ -90,9 +116,9 @@ GameBoardTest >> test2WhenADiceIsRolledThenTheSpaceShipsPositionInTheBoardChange
 	aPlayer1:=SpaceShip inInitialPosition: 0.
 	aBoard has:{aPlayer1 }.
 	aBoard withDices: {aDice}.
-
-	aBoard playTurn.
-self assert: (aPlayer1 currentPosition) equals: 3.
+	
+	aBoard playOneRound.
+  self assert: (aBoard positionOf: aPlayer1) equals: 3.
 ]
 
 { #category : 'tests' }
@@ -108,11 +134,11 @@ GameBoardTest >> test3WhenASpaceShipGetsToTheFinishLineThenItsWinner [
 	
 	aBoard has: { aPlayer1 }.	
 	aBoard withDices: { aDice }.
-	aBoard playTurn .
+	aBoard playOneRound .
 	
 	 
 	self assert: aBoard theWinnerIs equals: aPlayer1.
-	self assert: (aPlayer1 currentPosition) equals: 6.
+	self assert: (aBoard positionOf: aPlayer1) equals: 6.
 
 ]
 
@@ -131,32 +157,31 @@ GameBoardTest >> test4WhenTheFirstSpaceShipGetsToTheFinishLineThenItsTheWinner [
 			aPlayer1.
 			aPlayer2 }.
 	aBoard withDices: { aDice }.
-	aBoard playTurn.
+	aBoard playOneRound.
 
 	self assert: aBoard theWinnerIs equals: aPlayer2.
-	self assert: (aPlayer2 currentPosition) equals: 6
+	self assert: (aBoard positionOf: aPlayer2) equals: 6.
 ]
 
 { #category : 'tests' }
 GameBoardTest >> test5WhenSpaceshipRolledNumberExceedsRemainingDistanceToFinishLineThenItWins [
 | aBoard aPlayer1 aDice  aPlayer2 |
-	
-	aBoard:= BoardGame withNumberOfSquares: 6 withWormHoleFrom: 2 to:5.
-	
-  	aPlayer1:=SpaceShip inInitialPosition: 0.	
-	aPlayer2:=SpaceShip inInitialPosition: 0.
-	aDice := RiggedDice withNumberOfFaces: 10.	
-	aDice setNumbersProvider: { 4. 8. 3. 4 }.
-	
-	aBoard has: { aPlayer1 . aPlayer2 }.
-	aBoard withDices: { aDice }.
 
-	aBoard playTurn.
-	
+    aBoard:= BoardGame withNumberOfSquares: 6 withWormHoleFrom: 2 to:5.
 
-self assert: (aBoard theWinnerIs) equals: aPlayer2.
-self assert: (aPlayer2 currentPosition) equals: 8.
+      aPlayer1:=SpaceShip inInitialPosition: 0.
+    aPlayer2:=SpaceShip inInitialPosition: 0.
+    aDice := RiggedDice withNumberOfFaces: 10.
+    aDice setNumbersProvider: { 4. 8. 3. 4 }.
 
+    aBoard has: { aPlayer1 . aPlayer2 }.
+    aBoard withDices: { aDice }.
+
+    aBoard playOneRound.
+
+
+	self assert: aBoard theWinnerIs equals: aPlayer2.
+	self assert: (aBoard positionOf: aPlayer2) equals: 8.
 ]
 
 { #category : 'tests' }
@@ -173,10 +198,10 @@ GameBoardTest >> test6WhenASpaceShipCrossesFinishLineThenNoMoreTurnsArePlayed [
 	aBoard has: { aPlayer1 . aPlayer2 }.
 	aBoard withDices: { aDice }.
 
-	aBoard playTurn.
+	aBoard playOneRound.
 	
-	self assert: (aPlayer1 currentPosition ) equals: 4.
-	self assert: (aPlayer2 currentPosition) equals: 8.
+	self assert: (aBoard positionOf: aPlayer1 ) equals: 4.
+	self assert: (aBoard positionOf: aPlayer2) equals: 8.
 ]
 
 { #category : 'tests' }
@@ -192,9 +217,9 @@ GameBoardTest >> test8WhenTheSpaceShipFallsIntoTheWormHoleEntranceThenItMovesToT
 	aBoard has: { aPlayer1 . aPlayer2 }.
 	aBoard withDices: { aDice }.
 	
-	aBoard playTurn .
+	aBoard playOneRound .
 	
-	self assert: (aPlayer1 currentPosition) equals: 5.
+	self assert: (aBoard positionOf: aPlayer1) equals: 5.
 ]
 
 { #category : 'tests' }
@@ -211,8 +236,8 @@ GameBoardTest >> test9WhenTheSpaceShipFallsIntoWormHoleExitThenItMovesToTheWormH
 	aBoard withDices: { aDice }.
 
 
-	aBoard playTurn.
+	aBoard playOneRound.
 	
-	self assert: (aPlayer1 currentPosition) equals: 2.
+	self assert: (aBoard positionOf: aPlayer1) equals: 2.
 
 ]
