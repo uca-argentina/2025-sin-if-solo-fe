@@ -81,7 +81,7 @@ GameBoardTest >> test014WhenSpaceshipTriesToMoveOutsideBoardThenNothingChanges [
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 3.
 	self assert: (aBoard positionOf: aPlayer2) equals: 1.
-	self assert: aBoard theWinnerIs equals: aPlayer2
+	self assert: aBoard theGoldWinnerIs equals: aPlayer2
 ]
 
 { #category : 'tests' }
@@ -123,7 +123,7 @@ GameBoardTest >> test16WhenTheExitOfTheWormHoleIsGreaterThanTheNumbersOfSqueareO
 ]
 
 { #category : 'tests' }
-GameBoardTest >> test17Banana [
+GameBoardTest >> test17WhenSpaceShipDoesMultipleLapsInOneRollThenWins [
 
 	| aBoard aPlayer1 aDice aRuleBook |
 	aRuleBook := RuleBook withLapsToWin: 2.
@@ -137,7 +137,61 @@ GameBoardTest >> test17Banana [
 	aBoard follows: aRuleBook.
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 2.
-	self assert: aBoard theWinnerIs equals: aPlayer1
+	self assert: aBoard theGoldWinnerIs equals: aPlayer1
+]
+
+{ #category : 'tests' }
+GameBoardTest >> test18WhenASpaeShipWInsTheGameThenTheBoardKnowsTheLapsCompleted [
+
+	| aBoard aPlayer1 aDice aRuleBook aPlayer2 aPlayer3 |
+	aRuleBook := RuleBook withLapsToWin: 2.
+	aBoard := BoardGame withNumberOfSquares: 5 withWormHoleFrom: 1 to: 1.
+	aDice := RiggedDice withNumberOfFaces: 8.
+	aDice setNumbersProvider: { 5. 3. 3. 7 }.
+
+	aPlayer1 := SpaceShip inInitialPosition: 0.
+	aPlayer2 := SpaceShip inInitialPosition: 0.
+	aPlayer3 := SpaceShip inInitialPosition: 0.
+	
+	aBoard has: { aPlayer1.aPlayer2.aPlayer3}.
+	aBoard withDices: { aDice }.
+	aBoard follows: aRuleBook.
+	aBoard playOneRound.
+	aBoard playOneRound.
+	
+	self assert: (aBoard positionOf: aPlayer1) equals: 2.
+	self assert: aBoard theGoldWinnerIs equals: aPlayer1.
+	self assert: (aBoard completedLapsBy: aPlayer1 )equals: 2.
+	self assert: (aBoard completedLapsBy: aPlayer2 )equals: 0.
+	self assert: (aBoard completedLapsBy: aPlayer3 )equals: 0.
+]
+
+{ #category : 'tests' }
+GameBoardTest >> test19Banana [
+
+	| aBoard aPlayer1 aDice aRuleBook aPlayer2 aPlayer3 aPlayer4|
+	aRuleBook := RuleBook withLapsToWin: 2.
+	aBoard := BoardGame withNumberOfSquares: 5 withWormHoleFrom: 1 to: 1.
+	aDice := RiggedDice withNumberOfFaces: 8.
+	aDice setNumbersProvider: { 5. 3. 4. 1. 7 }.
+
+	aPlayer1 := SpaceShip inInitialPosition: 0.
+	aPlayer2 := SpaceShip inInitialPosition: 0.
+	aPlayer3 := SpaceShip inInitialPosition: 0.
+	aPlayer4 := SpaceShip inInitialPosition: 0.
+	
+	aBoard has: { aPlayer1.aPlayer2.aPlayer3.aPlayer4}.
+	aBoard withDices: { aDice }.
+	aBoard follows: aRuleBook.
+	aBoard playOneRound.
+	aBoard playOneRound.
+	
+	self assert: (aBoard positionOf: aPlayer1) equals: 2.
+
+	self assert: aBoard theGoldWinnerIs equals: aPlayer1 .
+	self assert: aBoard theSilverWinnerIs equals: aPlayer3 .
+	self assert: aBoard theBronzeWinnerIs equals: aPlayer2 .
+	
 ]
 
 { #category : 'tests' }
@@ -186,7 +240,7 @@ GameBoardTest >> test3WhenASpaceShipCompletesTheLapThenItsTheWinner [
 	aBoard playOneRound.
 
 
-	self assert: aBoard theWinnerIs equals: aPlayer1.
+	self assert: aBoard theGoldWinnerIs equals: aPlayer1.
 	self assert: (aBoard positionOf: aPlayer1) equals: 6
 ]
 
@@ -209,7 +263,7 @@ GameBoardTest >> test4WhenTheFirstSpaceShipCompletesTheLapThenItsTheWinner [
 
 	aBoard playOneRound.
 
-	self assert: aBoard theWinnerIs equals: aPlayer2.
+	self assert: aBoard theGoldWinnerIs equals: aPlayer2.
 	self assert: (aBoard positionOf: aPlayer2) equals: 6
 ]
 
@@ -232,7 +286,7 @@ GameBoardTest >> test5WhenSpaceshipRolledNumberExceedsRemainingDistanceToFinishL
 	aBoard playOneRound.
 
 
-	self assert: aBoard theWinnerIs equals: aPlayer2.
+	self assert: aBoard theGoldWinnerIs equals: aPlayer2.
 	self assert: (aBoard positionOf: aPlayer2) equals: 2
 ]
 
@@ -256,32 +310,7 @@ aBoard follows: aRuleBook .
 	aBoard playOneRound. 
 	self assert: (aBoard positionOf: aPlayer1 ) equals: 4.
 	self assert: (aBoard positionOf: aPlayer2) equals: 2.
-	self assert: aBoard theWinnerIs equals: aPlayer2.
-]
-
-{ #category : 'tests' }
-GameBoardTest >> test6WhenThereIsAWinnerThenNoMoreTurnsArePlayed [
-
-	| aBoard aPlayer1 aDice aPlayer2 aRuleBook |
-	aBoard := BoardGame withNumberOfSquares: 6 withWormHoleFrom: 3 to: 5.
-	aRuleBook := RuleBook withLapsToWin: 1.
-	aPlayer1 := SpaceShip inInitialPosition: 0.
-	aPlayer2 := SpaceShip inInitialPosition: 0.
-	aDice := RiggedDice withNumberOfFaces: 10.
-	aDice setNumbersProvider: { 4. 8. 3. 4 }.
-
-	aBoard has: {
-			aPlayer1.
-			aPlayer2 }.
-	aBoard withDices: { aDice }.
-
-	aBoard follows: aRuleBook.
-	aBoard playOneRound.
-	aBoard playOneRound.
-	aBoard playOneRound.
-	self assert: (aBoard positionOf: aPlayer1) equals: 4.
-	self assert: (aBoard positionOf: aPlayer2) equals: 2.
-	self assert: aBoard theWinnerIs equals: aPlayer2
+	self assert: aBoard theGoldWinnerIs equals: aPlayer2.
 ]
 
 { #category : 'tests' }

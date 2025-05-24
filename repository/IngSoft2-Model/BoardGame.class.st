@@ -54,6 +54,11 @@ BoardGame class >> withNumberOfSquares: aMaximumSquares withWormHoleFrom: anEntr
 ]
 
 { #category : 'accessing' }
+BoardGame >> completedLapsBy: aSpaceShip [
+ ^(aCopyOfSpaceships detect: [ :copyOfSpaceship | copyOfSpaceship isCopyOf: aSpaceShip ]) currentLap.
+]
+
+{ #category : 'accessing' }
 BoardGame >> follows:aRuleBook [
 ruleBook:=aRuleBook.
 ]
@@ -82,15 +87,17 @@ BoardGame >> initializationBoardGame: aNumber withWormHoleFrom: aY to: aZ [
 { #category : 'action' }
 BoardGame >> move: aSpaceShip with: dices [
 
-	| rolledNumber newPosition newPositionToMove lapsCompleted|
+	| rolledNumber |
 	self thereIsAWinner ifTrue: [ ^ self ].
 	rolledNumber := self rolledNumberSumOf: dices.
+	aSpaceShip moveWith:rolledNumber onBoardOfSize: maximumSquares.
+	"rolledNumber := self rolledNumberSumOf: dices.
 	newPosition := aSpaceShip currentPosition + rolledNumber.
 	lapsCompleted := newPosition // maximumSquares.
 	aSpaceShip incrementLapsBy: lapsCompleted.
 	
 	newPositionToMove := ((newPosition - 1) \\ maximumSquares) + 1.
-	aSpaceShip movesTo: newPositionToMove.
+	aSpaceShip movesTo: newPositionToMove."
 	self validateInWormHole: aSpaceShip
 ]
 
@@ -113,6 +120,17 @@ BoardGame >> positionOf: aPlayer [
 
 ]
 
+{ #category : 'sorting' }
+BoardGame >> ranking [
+|sortedSpaceships|
+sortedSpaceships := aCopyOfSpaceships copy.
+sortedSpaceships sort: [:spaceShip1 :spaceShip2 | 
+  (spaceShip1 currentLap > spaceShip2 currentLap) 
+  or: [(spaceShip1 currentLap = spaceShip2 currentLap) and: [spaceShip1 currentPosition > spaceShip2 currentPosition]]
+].
+^sortedSpaceships .
+]
+
 { #category : 'accessing' }
 BoardGame >> rolledNumberSumOf: dices [
 
@@ -130,15 +148,24 @@ BoardGame >> spaceshipWhosTurnItIs [
 ]
 
 { #category : 'accessing' }
-BoardGame >> theWinnerIs [
-    ^ (aCopyOfSpaceships select: [ :spaceShip | 
-        ruleBook hasReachedWinningLapCount:(spaceShip lapsCount ) ]) anyOne asOriginalSpaceShip.
+BoardGame >> theBronzeWinnerIs [
+^(self ranking third)asOriginalSpaceShip.
+]
 
+{ #category : 'accessing' }
+BoardGame >> theGoldWinnerIs [
+    ^ (self ranking first) asOriginalSpaceShip.
+
+]
+
+{ #category : 'accessing' }
+BoardGame >> theSilverWinnerIs [
+^(self ranking second) asOriginalSpaceShip.
 ]
 
 { #category : 'validating' }
 BoardGame >> thereIsAWinner [
- ^ spaceShips anySatisfy: [:spaceShip | ruleBook hasReachedWinningLapCount:(spaceShip lapsCount )]
+ ^ spaceShips anySatisfy: [:spaceShip | ruleBook hasReachedWinningLapCount:(spaceShip currentLap )]
 ]
 
 { #category : 'validating' }
