@@ -8,7 +8,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'currentPosition',
-		'originalSpaceShip'
+		'originalSpaceShip',
+		'laps'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -33,7 +34,7 @@ SpaceShip >> currentPosition [
 
 { #category : 'initialization' }
 SpaceShip >> initializePosition: aPosition [
-
+	laps:=0.
 	currentPosition := aPosition
 ]
 
@@ -43,11 +44,11 @@ SpaceShip >> isCopyOf: aPlayer [
 ]
 
 { #category : 'action' }
-SpaceShip >> moves: rolledNumber [
+SpaceShip >> movesTo: newPosition [
+   
+    currentPosition := newPosition.
 
-	currentPosition := currentPosition
-	                   +
-	                   rolledNumber.
+
 ]
 
 { #category : 'accessing' }

@@ -10,7 +10,8 @@ Class {
 		'entranceOfWormHole',
 		'exitOfWormHole',
 		'dicesInGameBoard',
-		'aCopyOfSpaceships'
+		'aCopyOfSpaceships',
+		'ruleBook'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -20,6 +21,12 @@ Class {
 BoardGame class >> hasTheMinimumAmountOfSquares: aNumber [
 
 	aNumber < 3 ifTrue: [ Error signal: 'Should have at least 3 squares' ]
+]
+
+{ #category : 'testing' }
+BoardGame class >> is:anExitOfTheWormHole smallerThan:aMaximumSquares [
+(anExitOfTheWormHole >=aMaximumSquares )ifTrue: [ 
+	Error signal:'The worm hole exit must be smaller than the number of squares' ]
 ]
 
 { #category : 'testing' }
@@ -36,6 +43,7 @@ BoardGame class >> withNumberOfSquares: aMaximumSquares withWormHoleFrom: anEntr
 	self hasTheMinimumAmountOfSquares: aMaximumSquares.
 	self isANegativeNumber: anEntranceOfWormHole.
 	self isANegativeNumber: anExitOfTheWormHole.
+	self is:anExitOfTheWormHole smallerThan:aMaximumSquares.
 	^ self new
 		  initializationBoardGame: aMaximumSquares
 		  withWormHoleFrom: anEntranceOfWormHole
@@ -69,9 +77,15 @@ BoardGame >> initializationBoardGame: aNumber withWormHoleFrom: aY to: aZ [
 { #category : 'action' }
 BoardGame >> move: aSpaceShip with: dices [
 
-	| rolledNumber |
-	rolledNumber:= self  rolledNumberSumOf: dices.
-	aSpaceShip moves: rolledNumber.
+	| rolledNumber newPosition newPositionToMove lapsCompleted|
+	self thereIsAWinner ifTrue: [ ^ self ].
+	rolledNumber := self rolledNumberSumOf: dices.
+	newPosition := aSpaceShip currentPosition + rolledNumber.
+	lapsCompleted := newPosition // maximumSquares.
+	aSpaceShip incrementLapsBy: lapsCompleted.
+	
+	newPositionToMove := ((newPosition - 1) \\ maximumSquares) + 1.
+	aSpaceShip movesTo: newPositionToMove.
 	self validateInWormHole: aSpaceShip
 ]
 
@@ -113,7 +127,7 @@ BoardGame >> spaceshipWhosTurnItIs [
 { #category : 'accessing' }
 BoardGame >> theWinnerIs [
     ^ (aCopyOfSpaceships select: [ :spaceShip | 
-        spaceShip currentPosition >= self numberOfSquares ]) anyOne asOriginalSpaceShip.
+        ruleBook hasReachedWinningLapCount:(spaceShip lapsCount ) ]) anyOne asOriginalSpaceShip.
 
 ]
 

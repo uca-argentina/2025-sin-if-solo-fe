@@ -19,7 +19,7 @@ SpaceShipMovementsTest >> test1WhenTheSpaceShipMovesThenItsPositionChanges [
 
  | aPlayer1   |
 	aPlayer1:=SpaceShip inInitialPosition: 0.
-	aPlayer1 moves: 1.
+	aPlayer1 movesTo: 1.
 	
 	self assert:aPlayer1 currentPosition equals: 1.
 ]
@@ -32,8 +32,8 @@ SpaceShipMovementsTest >> test2WhenTwoSpaceShipsMoveThenTheirPositionChanges [
 	aPlayer1 := SpaceShip inInitialPosition: 0.
 	aPlayer2 := SpaceShip inInitialPosition: 0.
 
-	aPlayer1 moves: 4.
-	aPlayer2 moves: 5.
+	aPlayer1 movesTo: 4.
+	aPlayer2 movesTo: 5.
 
 
 	self assert: aPlayer1 currentPosition equals: 4.
