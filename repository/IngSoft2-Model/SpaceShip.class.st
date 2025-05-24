@@ -32,6 +32,11 @@ SpaceShip >> currentPosition [
 	^ currentPosition
 ]
 
+{ #category : 'action' }
+SpaceShip >> incrementLapsBy: lapsCompleted [
+laps:=laps+ lapsCompleted .
+]
+
 { #category : 'initialization' }
 SpaceShip >> initializePosition: aPosition [
 	laps:=0.
@@ -41,6 +46,11 @@ SpaceShip >> initializePosition: aPosition [
 { #category : 'testing' }
 SpaceShip >> isCopyOf: aPlayer [
     ^ originalSpaceShip == aPlayer.
+]
+
+{ #category : 'accessing' }
+SpaceShip >> lapsCount [
+^laps
 ]
 
 { #category : 'action' }

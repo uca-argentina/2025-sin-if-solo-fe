@@ -11,6 +11,11 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'intialization' }
+RuleBook class >> withLapsToWin:lapsNumberToWin [
+^self new initializeRuleBookwith:lapsNumberToWin.
+]
+
 { #category : 'testing' }
 RuleBook >> hasReachedWinningLapCount:aLapCount [
 

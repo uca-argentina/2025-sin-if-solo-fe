@@ -54,6 +54,11 @@ BoardGame class >> withNumberOfSquares: aMaximumSquares withWormHoleFrom: anEntr
 ]
 
 { #category : 'accessing' }
+BoardGame >> follows:aRuleBook [
+ruleBook:=aRuleBook.
+]
+
+{ #category : 'accessing' }
 BoardGame >> has: players [
     spaceShips := players collect: [ :player | 
         | copyOfSpaceships |
@@ -129,6 +134,11 @@ BoardGame >> theWinnerIs [
     ^ (aCopyOfSpaceships select: [ :spaceShip | 
         ruleBook hasReachedWinningLapCount:(spaceShip lapsCount ) ]) anyOne asOriginalSpaceShip.
 
+]
+
+{ #category : 'validating' }
+BoardGame >> thereIsAWinner [
+ ^ spaceShips anySatisfy: [:spaceShip | ruleBook hasReachedWinningLapCount:(spaceShip lapsCount )]
 ]
 
 { #category : 'validating' }
