@@ -49,6 +49,18 @@ SpaceShip >> isCopyOf: aPlayer [
 ]
 
 { #category : 'action' }
+SpaceShip >> moveWith:rolledNumber onBoardOfSize: maximumSquares [
+| totalPosition lapsDone newPosition |
+
+	totalPosition := currentPosition + rolledNumber.
+	lapsDone := totalPosition quo: maximumSquares.
+	
+	laps:= lapsDone .
+	newPosition := ((totalPosition - 1) rem: maximumSquares) + 1.
+	self movesTo: newPosition.
+]
+
+{ #category : 'action' }
 SpaceShip >> movesTo: newPosition [
    
     currentPosition := newPosition.
