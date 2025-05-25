@@ -11,7 +11,7 @@ Class {
 		'exitOfWormHole',
 		'dicesInGameBoard',
 		'aCopyOfSpaceships',
-		'ruleBook'
+		'winnerSystem'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -59,8 +59,11 @@ BoardGame >> completedLapsBy: aSpaceShip [
 ]
 
 { #category : 'accessing' }
-BoardGame >> follows:aRuleBook [
-ruleBook:=aRuleBook.
+BoardGame >> follows:aWinnerSystem [
+
+winnerSystem:=aWinnerSystem .
+
+winnerSystem withPotentialWinner: aCopyOfSpaceships .
 ]
 
 { #category : 'accessing' }
@@ -73,6 +76,8 @@ BoardGame >> has: players [
     ].
     aCopyOfSpaceships := OrderedCollection new.
     aCopyOfSpaceships addAll: spaceShips.
+ 	
+	
 
 ]
 
@@ -88,16 +93,10 @@ BoardGame >> initializationBoardGame: aNumber withWormHoleFrom: aY to: aZ [
 BoardGame >> move: aSpaceShip with: dices [
 
 	| rolledNumber |
-	self thereIsAWinner ifTrue: [ ^ self ].
+	winnerSystem thereIsAWinner ifTrue:  [ ^ self] .
 	rolledNumber := self rolledNumberSumOf: dices.
 	aSpaceShip moveWith:rolledNumber onBoardOfSize: maximumSquares.
-	"rolledNumber := self rolledNumberSumOf: dices.
-	newPosition := aSpaceShip currentPosition + rolledNumber.
-	lapsCompleted := newPosition // maximumSquares.
-	aSpaceShip incrementLapsBy: lapsCompleted.
-	
-	newPositionToMove := ((newPosition - 1) \\ maximumSquares) + 1.
-	aSpaceShip movesTo: newPositionToMove."
+
 	self validateInWormHole: aSpaceShip
 ]
 
@@ -120,17 +119,6 @@ BoardGame >> positionOf: aPlayer [
 
 ]
 
-{ #category : 'sorting' }
-BoardGame >> ranking [
-|sortedSpaceships|
-sortedSpaceships := aCopyOfSpaceships copy.
-sortedSpaceships sort: [:spaceShip1 :spaceShip2 | 
-  (spaceShip1 currentLap > spaceShip2 currentLap) 
-  or: [(spaceShip1 currentLap = spaceShip2 currentLap) and: [spaceShip1 currentPosition > spaceShip2 currentPosition]]
-].
-^sortedSpaceships .
-]
-
 { #category : 'accessing' }
 BoardGame >> rolledNumberSumOf: dices [
 
@@ -145,27 +133,6 @@ BoardGame >> spaceshipWhosTurnItIs [
 	aCopyOfSpaceships add: nextSpaceship.
 	aCopyOfSpaceships removeFirst.
 	^nextSpaceship.
-]
-
-{ #category : 'accessing' }
-BoardGame >> theBronzeWinnerIs [
-^(self ranking third)asOriginalSpaceShip.
-]
-
-{ #category : 'accessing' }
-BoardGame >> theGoldWinnerIs [
-    ^ (self ranking first) asOriginalSpaceShip.
-
-]
-
-{ #category : 'accessing' }
-BoardGame >> theSilverWinnerIs [
-^(self ranking second) asOriginalSpaceShip.
-]
-
-{ #category : 'validating' }
-BoardGame >> thereIsAWinner [
- ^ spaceShips anySatisfy: [:spaceShip | ruleBook hasReachedWinningLapCount:(spaceShip currentLap )]
 ]
 
 { #category : 'validating' }
