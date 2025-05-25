@@ -79,3 +79,13 @@ SpaceShip >> teletransportsTo: aWormHoleSquare [
 
 	currentPosition := aWormHoleSquare
 ]
+
+{ #category : 'accessing' }
+SpaceShip >> turnOrder [
+^numberOfOrderToPlay
+]
+
+{ #category : 'assignments' }
+SpaceShip >> turnOrder: aNumberOfOrderToPlay [
+numberOfOrderToPlay:=aNumberOfOrderToPlay.
+]
