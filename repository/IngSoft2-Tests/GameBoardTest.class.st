@@ -232,9 +232,9 @@ GameBoardTest >> test20WhenASpaceShipFinallyPositionIsLessThanOtherSpaceShipButC
 ]
 
 { #category : 'tests' }
-GameBoardTest >> test21Banana [
+GameBoardTest >> test21WhenThereIsADrawForSecondPlaceThenTheSilverIsTheFirstPlayerToMove [
 
-	| aBoard aPlayer1 aDice  aPlayer2 aPlayer3 aPlayer4 aWinnerSystem|
+	| aBoard aPlayer1 aDice aPlayer2 aPlayer3 aPlayer4 aWinnerSystem |
 	aWinnerSystem := WinnerSystem withMaximunLaps: 1.
 	aBoard := BoardGame withNumberOfSquares: 5 withWormHoleFrom: 1 to: 1.
 	aDice := RiggedDice withNumberOfFaces: 8.
@@ -244,21 +244,28 @@ GameBoardTest >> test21Banana [
 	aPlayer2 := SpaceShip inInitialPosition: 0.
 	aPlayer3 := SpaceShip inInitialPosition: 0.
 	aPlayer4 := SpaceShip inInitialPosition: 0.
-	
-	aBoard has: { aPlayer1.aPlayer2.aPlayer3.aPlayer4}.
-	aBoard withDices: { aDice }.
-	aBoard follows: aWinnerSystem .
-	aBoard playOneRound.
-	
-	self assert: (aBoard positionOf: aPlayer3 ) equals: 1.
 
-	self assert: aWinnerSystem theGoldWinnerIs equals: aPlayer3 .
-	self deny: aWinnerSystem theSilverWinnerIs equals: aPlayer2 .
-	self deny: aWinnerSystem theSilverWinnerIs equals: aPlayer1 .
-	"
-	self assert: aWinnerSystem theSilverWinnerIs equals:aPlayer1.
-	self assert: aWinnerSystem theBronzeWinnerIs equals: aPlayer2 .
-	"
+	aBoard has: {
+			aPlayer1.
+			aPlayer2.
+			aPlayer3.
+			aPlayer4 }.
+	aBoard withDices: { aDice }.
+	aBoard follows: aWinnerSystem.
+	aBoard playOneRound.
+
+	self assert: (aBoard positionOf: aPlayer3) equals: 1.
+	self assert: (aBoard positionOf: aPlayer2) equals: 3.
+	self assert: (aBoard positionOf: aPlayer1) equals: 3.
+	
+	self assert: (aBoard completedLapsBy: aPlayer3) equals: 1.
+	self assert: (aBoard completedLapsBy: aPlayer2) equals: 0.
+	self assert: (aBoard completedLapsBy: aPlayer1) equals: 0.
+	
+	self assert: aWinnerSystem theGoldWinnerIs equals: aPlayer3.
+	self assert: aWinnerSystem theSilverWinnerIs equals: aPlayer1. 	
+	self assert: aWinnerSystem theBronzeWinnerIs equals: aPlayer2.
+	
 ]
 
 { #category : 'tests' }

@@ -76,7 +76,10 @@ BoardGame >> has: players [
     ].
     aCopyOfSpaceships := OrderedCollection new.
     aCopyOfSpaceships addAll: spaceShips.
- 	
+ 
+	aCopyOfSpaceships withIndexDo: [:spaceShip :orderToPlay |
+    spaceShip turnOrder: orderToPlay.
+].
 	
 
 ]
@@ -108,6 +111,7 @@ BoardGame >> numberOfSquares [
 
 { #category : 'action' }
 BoardGame >> playOneRound [
+
 
 	aCopyOfSpaceships do: [ :aCopyOfSpaceship |
 		self move: self spaceshipWhosTurnItIs with: dicesInGameBoard ]

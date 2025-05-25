@@ -9,7 +9,8 @@ Class {
 	#instVars : [
 		'currentPosition',
 		'originalSpaceShip',
-		'laps'
+		'laps',
+		'numberOfOrderToPlay'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
