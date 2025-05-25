@@ -13,6 +13,13 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'class initialization' }
+WinnerSystem class >> withMaximunLaps: aNumberOfLaps [
+
+^self new intializeWinnerSystemWith: aNumberOfLaps .
+
+]
+
 { #category : 'testing' }
 WinnerSystem >> hasReachedWinningLapCount:aLapCount [
 
