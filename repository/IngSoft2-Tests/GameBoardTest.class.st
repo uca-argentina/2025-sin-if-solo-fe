@@ -143,8 +143,8 @@ GameBoardTest >> test17WhenSpaceShipDoesMultipleLapsInOneRollThenWins [
 { #category : 'tests' }
 GameBoardTest >> test18WhenASpaceShipWinsTheGameThenTheBoardKnowsTheLapsCompleted [
 
-	| aBoard aPlayer1 aDice aPlayer2 aPlayer3 aWinnerSystem |
-	aWinnerSystem := WinnerSystem withMaximunLaps: 2.
+	|aGameSetUp aBoard aPlayer1  aPlayer2 aPlayer3 aWinnerSystem |
+	"aWinnerSystem := WinnerSystem withMaximunLaps: 2.
 	aBoard := BoardGame withNumberOfSquares: 5 withWormHoleFrom: 1 to: 1.
 	aDice := RiggedDice withNumberOfFaces: 8.
 	aDice setNumbersProvider: { 5. 3. 3. 7 }.
@@ -157,7 +157,26 @@ GameBoardTest >> test18WhenASpaceShipWinsTheGameThenTheBoardKnowsTheLapsComplete
 	aBoard withDices: { aDice }.
 	aBoard follows: aWinnerSystem.
 	aBoard playOneRound.
+	aBoard playOneRound."
+	
+	aGameSetUp:= GameSetup new.
+	
+	
+	aGameSetUp withNumberOfPlayers:3.
+	aGameSetUp withRiggedDiceNumbers:{ 5. 3. 3. 7 } andNumberOfFaces:8 .
+	aGameSetUp withABoardNumberOfSquares: 5 andWithWormHoleFrom:1 to: 1.
+	aGameSetUp withMaximumLapsToWin: 2.
+	
+	aPlayer1:=(aGameSetUp spaceShips) first.
+	aPlayer2:=(aGameSetUp spaceShips) second.
+	aPlayer3:=(aGameSetUp spaceShips) third.
+	
+	aBoard:= (aGameSetUp board).
+	aWinnerSystem:= aGameSetUp winnerSystem.
+	
 	aBoard playOneRound.
+	aBoard playOneRound.
+	
 	
 	self assert: (aBoard positionOf: aPlayer1) equals: 2.
 	self assert: aWinnerSystem theGoldWinnerIs equals: aPlayer1.

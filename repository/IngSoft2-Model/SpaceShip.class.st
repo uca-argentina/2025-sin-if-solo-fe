@@ -10,7 +10,8 @@ Class {
 		'currentPosition',
 		'originalSpaceShip',
 		'laps',
-		'numberOfOrderToPlay'
+		'numberOfOrderToPlay',
+		'currentFule'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -28,6 +29,11 @@ SpaceShip >> asOriginalSpaceShip [
 ]
 
 { #category : 'accessing' }
+SpaceShip >> currentFule [
+^currentFule 
+]
+
+{ #category : 'accessing' }
 SpaceShip >> currentLap [
 ^laps
 ]
@@ -36,6 +42,11 @@ SpaceShip >> currentLap [
 SpaceShip >> currentPosition [
 
 	^ currentPosition
+]
+
+{ #category : 'accessing' }
+SpaceShip >> initialFule:initialFule [
+currentFule:=initialFule .
 ]
 
 { #category : 'initialization' }

@@ -11,7 +11,8 @@ Class {
 		'exitOfWormHole',
 		'dicesInGameBoard',
 		'aCopyOfSpaceships',
-		'winnerSystem'
+		'winnerSystem',
+		'maxNumberOfDiceFaces'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -68,20 +69,20 @@ winnerSystem withPotentialWinner: aCopyOfSpaceships .
 
 { #category : 'accessing' }
 BoardGame >> has: players [
-    spaceShips := players collect: [ :player | 
-        | copyOfSpaceships |
-        copyOfSpaceships := player copy.
-        copyOfSpaceships originalSpaceShip: player.
-        copyOfSpaceships
-    ].
-    aCopyOfSpaceships := OrderedCollection new.
-    aCopyOfSpaceships addAll: spaceShips.
- 
-	aCopyOfSpaceships withIndexDo: [:spaceShip :orderToPlay |
-    spaceShip turnOrder: orderToPlay.
-].
-	
 
+	spaceShips := players collect: [ :player |
+		              | copyOfSpaceships |
+		              copyOfSpaceships := player copy.
+		              copyOfSpaceships originalSpaceShip: player.
+		              copyOfSpaceships ].
+	aCopyOfSpaceships := OrderedCollection new.
+	aCopyOfSpaceships addAll: spaceShips.
+
+	aCopyOfSpaceships withIndexDo: [ :spaceShip :orderToPlay |
+		spaceShip turnOrder: orderToPlay ].
+
+	
+	
 ]
 
 { #category : 'initialization' }
@@ -154,5 +155,7 @@ BoardGame >> validateInWormHole: aSpaceShip [
 
 { #category : 'accessing' }
 BoardGame >> withDices:dices [
+
 dicesInGameBoard:=dices.
+maxNumberOfDiceFaces := (dicesInGameBoard collect: [:dice | dice numberOfFaces]) max.
 ]
