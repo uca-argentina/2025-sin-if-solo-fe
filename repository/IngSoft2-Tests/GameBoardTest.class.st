@@ -22,7 +22,9 @@ GameBoardTest >> test010WhenAWormHoleWhichExitIsTheFinishLineThenCreationFails [
 	 
 	aGameSetUp:= GameSetup new.
 	aGameSetUp withNumberOfPlayers:4.
-	aGameSetUp withRiggedDiceNumbers:{  3. 3. 6. 1. 7} andNumberOfFaces:8 .
+			
+	aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  { 3. 3. 6. 1. 7 } andNumberOfFaces: 8.}.
 	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom:2 to: 6.
 	aGameSetUp withMaximumLapsToWin: 1. 
 
@@ -41,7 +43,12 @@ GameBoardTest >> test011WhenABoardWithAWormHoleInANegativePositionThenCreationFa
 
 	aGameSetUp:= GameSetup new.
 	aGameSetUp withNumberOfPlayers:3.
-	aGameSetUp withRiggedDiceNumbers:{ 5. 3. 3. 7 } andNumberOfFaces:8 .
+	
+	aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {5. 3. 3. 7 } andNumberOfFaces: 8.}.
+	
+	
+	
 	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom:-1 to: 1.
 	aGameSetUp withMaximumLapsToWin: 2. 
 	  
@@ -61,7 +68,10 @@ GameBoardTest >> test012WhenABoardWithNumberOfSquaresIsNegativeThenCreationFails
 
 	aGameSetUp:= GameSetup new.
 	aGameSetUp withNumberOfPlayers:3.
-	aGameSetUp withRiggedDiceNumbers:{ 5. 3. 3. 7 } andNumberOfFaces:8 . 
+	
+	aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {5. 3. 3. 7 } andNumberOfFaces: 8.}.
+	
 	aGameSetUp withABoardNumberOfSquares: -1 andWithWormHoleFrom:-1 to: 1.
 	aGameSetUp withMaximumLapsToWin: 2. 
 	
@@ -78,7 +88,9 @@ GameBoardTest >> test013WhenABoardHasLessThanThreeSquaresThenCreationFails [
 
 	aGameSetUp:= GameSetup new.
 	aGameSetUp withNumberOfPlayers:3. 
-	aGameSetUp withRiggedDiceNumbers:{ 5. 3. 3. 7 } andNumberOfFaces:8 .
+	
+	aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {5. 3. 3. 7 } andNumberOfFaces: 8.}.
 	aGameSetUp withABoardNumberOfSquares: 2 andWithWormHoleFrom:3 to: 6.
 	aGameSetUp withMaximumLapsToWin: 2. 
 	
@@ -96,7 +108,10 @@ GameBoardTest >> test014WhenSpaceshipTriesToMoveOutsideBoardThenNothingChanges [
 
 	aGameSetUp:= GameSetup new.
 	aGameSetUp withNumberOfPlayers:2.
-	aGameSetUp withRiggedDiceNumbers:{  2. 1. 1. 6 } andNumberOfFaces:10 .
+	
+	aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {2. 1. 1. 6 } andNumberOfFaces: 10.}.
+	
 	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom:1 to: 1.
 	aGameSetUp withMaximumLapsToWin: 2. 
 	aGameSetUp createGameInstance. 
@@ -127,7 +142,9 @@ GameBoardTest >> test015WhenTheSpaceShipGetsToTheMaximumOfSquaresThenSpaceShipGo
 
 	aGameSetUp:= GameSetup new.
 	aGameSetUp withNumberOfPlayers:1. 
-	aGameSetUp withRiggedDiceNumbers:{ 7. 3. 3. 4 } andNumberOfFaces:8 .
+	
+	aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {7. 3. 3. 4 } andNumberOfFaces: 8.}.
 	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom:1 to: 1.
 	aGameSetUp withMaximumLapsToWin: 2. 
 	aGameSetUp createGameInstance. 
@@ -146,7 +163,10 @@ GameBoardTest >> test016WhenTheExitOfTheWormHoleIsGreaterThanTheNumbersOfSqueare
 
 	aGameSetUp:= GameSetup new.
 	aGameSetUp withNumberOfPlayers:3.
-	aGameSetUp withRiggedDiceNumbers:{ 5. 3. 3. 7 } andNumberOfFaces:8 . 
+	
+	aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {5. 3. 3. 7 } andNumberOfFaces: 8.}.
+	
 	aGameSetUp withABoardNumberOfSquares: 10 andWithWormHoleFrom:6 to: 12.
 	aGameSetUp withMaximumLapsToWin: 2.  
 	
@@ -164,7 +184,9 @@ GameBoardTest >> test017WhenSpaceShipDoesMultipleLapsInOneRollThenWins [
 
 	aGameSetUp:= GameSetup new.
 	aGameSetUp withNumberOfPlayers:1 .
-	aGameSetUp withRiggedDiceNumbers:{ 12. 3. 3. 4 } andNumberOfFaces:8 .
+	
+	aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {12. 3. 3. 4 } andNumberOfFaces: 8.}.
 	aGameSetUp withABoardNumberOfSquares: 5 andWithWormHoleFrom:1 to: 1.
 	aGameSetUp withMaximumLapsToWin: 2. 
 	aGameSetUp createGameInstance.
@@ -189,7 +211,9 @@ GameBoardTest >> test018WhenASpaceShipWinsTheGameThenTheBoardKnowsTheLapsComplet
 
 	aGameSetUp:= GameSetup new.
 	aGameSetUp withNumberOfPlayers:3. 
-	aGameSetUp withRiggedDiceNumbers:{ 5. 3. 3. 7 } andNumberOfFaces:8 .
+	aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {5. 3. 3. 7 } andNumberOfFaces: 8.}.
+
 	aGameSetUp withABoardNumberOfSquares: 5 andWithWormHoleFrom:1 to: 1.
 	aGameSetUp withMaximumLapsToWin: 2. 
 	aGameSetUp createGameInstance.
@@ -220,7 +244,9 @@ GameBoardTest >> test019WhenTheGameEndsThenThereIsARanking [
 
 	aGameSetUp:= GameSetup new.
 	aGameSetUp withNumberOfPlayers:4. 
-	aGameSetUp withRiggedDiceNumbers:{ 5. 3. 4. 1. 7 } andNumberOfFaces:8 .
+	
+	aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {5. 3. 4. 1 . 7 } andNumberOfFaces: 8.}.
 	aGameSetUp withABoardNumberOfSquares: 5 andWithWormHoleFrom:1 to: 1.
 	aGameSetUp withMaximumLapsToWin: 2. 
 	aGameSetUp createGameInstance.
@@ -255,7 +281,10 @@ GameBoardTest >> test020WhenASpaceShipFinallyPositionIsLessThanOtherSpaceShipBut
 
 	aGameSetUp:= GameSetup new.
 	aGameSetUp withNumberOfPlayers:4. 
-	aGameSetUp withRiggedDiceNumbers: { 1. 3. 8. 1. 7 } andNumberOfFaces:8 .
+	
+	aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {1. 3. 8. 1 . 7 } andNumberOfFaces: 8.}.
+	
 	aGameSetUp withABoardNumberOfSquares: 5 andWithWormHoleFrom:1 to: 1.
 	aGameSetUp withMaximumLapsToWin: 1. 
 	aGameSetUp createGameInstance.
@@ -288,7 +317,10 @@ GameBoardTest >> test021WhenThereIsADrawForSecondPlaceThenTheSilverIsTheFirstPla
 
 	aGameSetUp:= GameSetup new.
 	aGameSetUp withNumberOfPlayers:3. 
-	aGameSetUp withRiggedDiceNumbers: {  3. 3. 6. 1. 7} andNumberOfFaces:8 .
+	
+	aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {3. 3. 6. 1. 7 } andNumberOfFaces: 8.}.
+
 	aGameSetUp withABoardNumberOfSquares: 5 andWithWormHoleFrom:1 to: 1.
 	aGameSetUp withMaximumLapsToWin: 1. 
 	aGameSetUp createGameInstance.
@@ -345,7 +377,9 @@ GameBoardTest >> test2WhenADiceIsRolledThenTheSpaceShipsPositionInTheBoardChange
 	| aGameSetUp aBoard aPlayer1 |
 	aGameSetUp := GameSetup new.
 	aGameSetUp withNumberOfPlayers: 1. 
-	aGameSetUp withRiggedDiceNumbers: { 3. 3. 3. 4 } andNumberOfFaces: 6.
+	
+	aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {3. 3. 3. 4 } andNumberOfFaces: 6.}.
 	aGameSetUp withABoardNumberOfSquares: 64 andWithWormHoleFrom: 2 to: 5.
 	aGameSetUp withMaximumLapsToWin: 1.
 	aGameSetUp createGameInstance.
@@ -364,7 +398,8 @@ GameBoardTest >> test3WhenASpaceShipCompletesTheLapThenItsTheWinner [
 	| aGameSetUp aBoard aPlayer1 aWinnerSystem |
 	aGameSetUp := GameSetup new.
 	aGameSetUp withNumberOfPlayers: 1.
-	aGameSetUp withRiggedDiceNumbers: { 6. 3. 3. 4 } andNumberOfFaces: 6.
+	aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {6. 3. 3. 4 } andNumberOfFaces: 6.}.
 	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: 2 to: 5.
 	aGameSetUp withMaximumLapsToWin: 1.
 	aGameSetUp createGameInstance.
@@ -385,8 +420,17 @@ GameBoardTest >> test4WhenTheFirstSpaceShipCompletesTheLapThenItsTheWinner [
 
 	| aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem |
 	aGameSetUp := GameSetup new.
+	
+		
+	aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {2. 3. 3. 4 } andNumberOfFaces: 6.
+			 aGameSetUp withRiggedDiceNumbers:  {2. 3. 3. 4 } andNumberOfFaces: 6.
+    }.
+
+	
 	aGameSetUp withNumberOfPlayers: 2.
-	aGameSetUp withRiggedDiceNumbers: { 4. 6. 3. 4 } andNumberOfFaces: 6.
+	
+	
 	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: 2 to: 5.
 	aGameSetUp withMaximumLapsToWin: 1.
 	aGameSetUp createGameInstance.
@@ -410,7 +454,10 @@ GameBoardTest >> test5WhenSpaceshipRolledNumberExceedsRemainingDistanceToFinishL
 	| aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem |
 	aGameSetUp := GameSetup new.
 	aGameSetUp withNumberOfPlayers: 2.
-	aGameSetUp withRiggedDiceNumbers: { 4. 8. 3. 4 } andNumberOfFaces: 6.
+	
+	aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {4. 8. 3. 4 } andNumberOfFaces: 6.}.
+	
 	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: 3 to: 5.
 	aGameSetUp withMaximumLapsToWin: 1.
 	aGameSetUp createGameInstance.
@@ -432,7 +479,10 @@ GameBoardTest >> test6WhenThereIsAWinnerThenNoMoreRoundsArePlayed [
 	| aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem |
 	aGameSetUp := GameSetup new.
 	aGameSetUp withNumberOfPlayers: 2.
-	aGameSetUp withRiggedDiceNumbers: { 4. 8. 3. 4 } andNumberOfFaces: 6.
+	
+	aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {4. 8. 3. 4 } andNumberOfFaces: 6.}.
+
 	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: 3 to: 5.
 	aGameSetUp withMaximumLapsToWin: 1.
 	aGameSetUp createGameInstance.
@@ -456,7 +506,10 @@ GameBoardTest >> test8WhenTheSpaceShipFallsIntoTheWormHoleEntranceThenItMovesToT
 	| aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem |
 	aGameSetUp := GameSetup new.
 	aGameSetUp withNumberOfPlayers: 2.
-	aGameSetUp withRiggedDiceNumbers: { 2. 3. 3. 4 } andNumberOfFaces: 10.
+	
+	aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {2. 3. 3. 4 } andNumberOfFaces: 10.}.
+
 	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: 2 to: 5.
 	aGameSetUp withMaximumLapsToWin: 1.
 	aGameSetUp createGameInstance.
@@ -477,7 +530,9 @@ GameBoardTest >> test9WhenTheSpaceShipFallsIntoWormHoleExitThenItMovesToTheWormH
 | aGameSetUp aBoard aPlayer1  aWinnerSystem |
 	aGameSetUp := GameSetup new.
 	aGameSetUp withNumberOfPlayers: 2.
-	aGameSetUp withRiggedDiceNumbers: { 5. 3. 3. 4 } andNumberOfFaces: 10.
+
+	aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {5. 3. 3. 4 } andNumberOfFaces: 10.}.
 	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: 2 to: 5.
 	aGameSetUp withMaximumLapsToWin: 1.
 	aGameSetUp createGameInstance.

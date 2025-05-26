@@ -6,15 +6,15 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'numberOfPlayers',
-		'riggedNumbers',
-		'numberOfFaces',
 		'boardSize',
 		'wormholeEntrance',
 		'wormholeExit',
 		'lapsToWin',
 		'board',
 		'spaceShips',
-		'winnerSystem'
+		'winnerSystem',
+		'riggedDiceConfigs',
+		'maximumRolledNumber'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -26,13 +26,13 @@ GameSetup >> board [
 ]
 
 { #category : 'creation' }
-GameSetup >> createBoardInstanceWith: aDice andWith: aSpaceShips andWith: aWinnerSystem [
+GameSetup >> createBoardInstanceWith: aDices andWith: aSpaceShips andWith: aWinnerSystem [
 	|aBoard aCopyOfSpaceships |
 	aBoard := BoardGame
 		          withNumberOfSquares: boardSize
 		          withWormHoleFrom: wormholeEntrance
 		          to: wormholeExit.
-	aBoard withDices: { aDice }.
+	aBoard withDices: aDices .
 	
 	aCopyOfSpaceships := OrderedCollection new.
 	aCopyOfSpaceships addAll:  (aSpaceShips collect: [ :player |
@@ -50,13 +50,14 @@ GameSetup >> createBoardInstanceWith: aDice andWith: aSpaceShips andWith: aWinne
 { #category : 'creation' }
 GameSetup >> createGameInstance [
 
-	| aDice aBoard aSpaceShips aWinnerSystem |
-	aDice := RiggedDice withNumberOfFaces: numberOfFaces.
-	aDice setNumbersProvider: riggedNumbers.
-	
+	| aDices aBoard aSpaceShips aWinnerSystem |
+	"aDices := RiggedDice withNumberOfFaces: numberOfFaces.
+	aDices setNumbersProvider: riggedNumbers."
+	aDices:= self createDiceInstance.
+
 	aSpaceShips := self createSpaceShipsInstance.
 	aWinnerSystem := WinnerSystem withMaximunLaps: lapsToWin.
-	aBoard:= self createBoardInstanceWith: aDice andWith: aSpaceShips andWith: aWinnerSystem.
+	aBoard:= self createBoardInstanceWith: aDices andWith: aSpaceShips andWith: aWinnerSystem.
 	
 	board := aBoard.
 	spaceShips := aSpaceShips.
@@ -72,7 +73,7 @@ GameSetup >> createSpaceShipsInstance [
 	aSpaceShips := (1 to: numberOfPlayers) collectWithIndex: [ :i :index |
 		| spaceShip |
 		spaceShip := SpaceShip inInitialPosition: 0.
-		spaceShip initialFule: 8.
+		spaceShip initialFule: (maximumRolledNumber*2 ).
 		spaceShip turnOrder: index.
 		spaceShip
 	].
@@ -115,6 +116,6 @@ GameSetup >> withNumberOfPlayers: aNumber [
 { #category : 'initialization' }
 GameSetup >> withRiggedDiceNumbers: aRiggedNumbers andNumberOfFaces: aNumberOfFaces [
 
-	riggedNumbers := aRiggedNumbers.
-	numberOfFaces := aNumberOfFaces.
+	^ { aRiggedNumbers . aNumberOfFaces }.
+	
 ]
