@@ -103,6 +103,11 @@ SpaceShip >> originalSpaceShip: aPlayer [
     originalSpaceShip := aPlayer.
 ]
 
+{ #category : 'action' }
+SpaceShip >> rechargeFule [
+currentFule :=initialFule .
+]
+
 { #category : 'accessing' }
 SpaceShip >> turnOrder [
 ^numberOfOrderToPlay

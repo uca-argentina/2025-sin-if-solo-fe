@@ -132,6 +132,16 @@ BoardGame >> rolledNumberSumOf: dices [
  ^(dices collect: [ :dice | dice rolledNumber ]) sum
 ]
 
+{ #category : 'action' }
+BoardGame >> skipRoundFor: aSpaceShip [
+
+	| spaceShipCopy |
+	spaceShipCopy := aCopyOfSpaceships detect: [ :copy |
+		                 copy isCopyOf: aSpaceShip ].
+	spaceShipCopy losesTurn.
+	spaceShipCopy rechargeFule
+]
+
 { #category : 'validating' }
 BoardGame >> validateInWormHole: aSpaceShip [
 
