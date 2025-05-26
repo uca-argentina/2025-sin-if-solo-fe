@@ -50,8 +50,8 @@ FuleTest >> test1WhenASpaceShipDoesntMoveThenItHasTheDoubleOfTheMaximumRolledNum
 ]
 
 { #category : 'tests' }
-FuleTest >> test2Banana [
-| aGameSetUp aPlayer1|
+FuleTest >> test2WhenASpaceShipMovesThenFuelDecreasesByTheAmountMoved [
+| aGameSetUp aPlayer1 aBoard |
 
 	
 	aGameSetUp:= GameSetup new.
@@ -68,6 +68,40 @@ FuleTest >> test2Banana [
 	aGameSetUp createGameInstance .
 	
 	
+	
+	
 	aPlayer1:=(aGameSetUp spaceShips) first.
-	self assert: (aPlayer1 currentFule ) equals: 24.
+	aBoard:=(aGameSetUp board).
+	aBoard playOneRound.
+	self assert: (aBoard currentFuleOf: aPlayer1 ) equals: 16.
+]
+
+{ #category : 'tests' }
+FuleTest >> test3WhenASpaceShipDoesntHaveAnyFuleLeftThenItGoesBackToTheInitialPosition [
+| aGameSetUp aPlayer1 aBoard |
+
+	
+	aGameSetUp:= GameSetup new.
+	
+
+	aGameSetUp withNumberOfPlayers:1.
+	aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {8. 7. 2} andNumberOfFaces: 8.
+			aGameSetUp withRiggedDiceNumbers:  {2. 3. 2} andNumberOfFaces: 4.}.
+			
+	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom:1 to: 1.
+	aGameSetUp withMaximumLapsToWin: 6.
+	
+	aGameSetUp createGameInstance .
+	
+	
+	
+	
+	aPlayer1:=(aGameSetUp spaceShips) first.
+	aBoard:=(aGameSetUp board).
+	aBoard playOneRound.
+	aBoard playOneRound.
+	aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer1 ) equals: 0.
+	self assert: (aBoard currentFuleOf: aPlayer1 ) equals: 0.
 ]

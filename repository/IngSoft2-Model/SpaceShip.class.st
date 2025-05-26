@@ -65,11 +65,13 @@ SpaceShip >> moveWith:rolledNumber onBoardOfSize: maximumSquares [
 | totalPosition lapsDone newPosition |
 
 	totalPosition := currentPosition + rolledNumber.
+	currentFule :=currentFule - rolledNumber.
 	lapsDone := totalPosition quo: maximumSquares.
 	
 	laps:= lapsDone .
 	newPosition := ((totalPosition - 1) rem: maximumSquares) + 1.
 	self movesTo: newPosition.
+	self validateCurrentFule.
 ]
 
 { #category : 'action' }
