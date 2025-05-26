@@ -48,6 +48,25 @@ GameSetup >> createBoardInstanceWith: aDices andWith: aSpaceShips andWith: aWinn
 ]
 
 { #category : 'creation' }
+GameSetup >> createDiceInstance [
+
+maximumRolledNumber:=0.
+
+    ^ riggedDiceConfigs collect: [:riggedDiceConfig |
+        | aRiggedNumbers aNumberOfFaces aDice |
+        aRiggedNumbers := riggedDiceConfig first.
+        aNumberOfFaces := riggedDiceConfig second.
+			 maximumRolledNumber := maximumRolledNumber +aNumberOfFaces .
+        aDice := RiggedDice withNumberOfFaces: aNumberOfFaces.
+        aDice setNumbersProvider: aRiggedNumbers.
+ 			 aDice
+    ].
+
+
+
+]
+
+{ #category : 'creation' }
 GameSetup >> createGameInstance [
 
 	| aDices aBoard aSpaceShips aWinnerSystem |
@@ -111,6 +130,12 @@ GameSetup >> withNumberOfPlayers: aNumber [
 	 numberOfPlayers := aNumber.
  
 
+]
+
+{ #category : 'accessing' }
+GameSetup >> withRiggedDiceConfigs: diceConfigs [
+    riggedDiceConfigs := diceConfigs.
+  
 ]
 
 { #category : 'initialization' }
