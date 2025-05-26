@@ -71,6 +71,15 @@ SpaceShip >> isCopyOf: aPlayer [
     ^ originalSpaceShip == aPlayer.
 ]
 
+{ #category : 'accessing' }
+SpaceShip >> losesTurn [
+
+	numberOfLostTurns := numberOfLostTurns + 1.
+	numberOfLostTurns = 2 ifFalse: [ ^ self ].
+	numberOfLostTurns := 0.
+	currentFule := initialFule
+]
+
 { #category : 'action' }
 SpaceShip >> moveWith:rolledNumber onBoardOfSize: maximumSquares [
 | totalPosition lapsDone newPosition |
@@ -96,6 +105,14 @@ SpaceShip >> movesTo: newPosition [
 { #category : 'accessing' }
 SpaceShip >> originalSpaceShip: aPlayer [
     originalSpaceShip := aPlayer.
+]
+
+{ #category : 'action' }
+SpaceShip >> skipTurnIfNeeded [
+
+	numberOfLostTurns > 0 ifFalse: [ ^ self ].
+    numberOfLostTurns := numberOfLostTurns - 1.
+    numberOfLostTurns = 0 ifTrue: [ currentFule := initialFule ]
 ]
 
 { #category : 'action' }
