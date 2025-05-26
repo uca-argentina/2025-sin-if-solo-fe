@@ -18,6 +18,9 @@ FuleTest >> test0Banan [
 	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom:2 to: 5.
 	aGameSetUp withMaximumLapsToWin: 1.
 	
+	aGameSetUp createGameInstance .
+	
+	
 	aPlayer1:=(aGameSetUp spaceShips) first.
 	self assert: (aPlayer1 currentFule ) equals: 8.
 ]

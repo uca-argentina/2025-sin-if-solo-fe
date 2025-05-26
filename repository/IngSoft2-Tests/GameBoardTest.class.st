@@ -17,11 +17,19 @@ GameBoardTest >> should: anErrorBlock raise: anErrorClass withMessageText: error
 ]
 
 { #category : 'tests' }
-GameBoardTest >> test010WhenASpaceShipFallsInAWormHoleWhichExitIsTheFinishLineThenWins [
+GameBoardTest >> test010WhenAWormHoleWhichExitIsTheFinishLineThenCreationFails [
+| aGameSetUp | 
+	 
+	aGameSetUp:= GameSetup new.
+	aGameSetUp withNumberOfPlayers:4.
+	aGameSetUp withRiggedDiceNumbers:{  3. 3. 6. 1. 7} andNumberOfFaces:8 .
+	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom:2 to: 6.
+	aGameSetUp withMaximumLapsToWin: 1. 
+
 
 	self
 		should: [
-		BoardGame withNumberOfSquares: 6 withWormHoleFrom: 2 to: 6 ]
+			aGameSetUp createGameInstance.]
 		raise: Error
 		withMessageText:
 		'The worm hole exit must be smaller than the number of squares'
@@ -29,10 +37,19 @@ GameBoardTest >> test010WhenASpaceShipFallsInAWormHoleWhichExitIsTheFinishLineTh
 
 { #category : 'tests' }
 GameBoardTest >> test011WhenABoardWithAWormHoleInANegativePositionThenCreationFails [
+	|aGameSetUp  |
+
+	aGameSetUp:= GameSetup new.
+	aGameSetUp withNumberOfPlayers:3.
+	aGameSetUp withRiggedDiceNumbers:{ 5. 3. 3. 7 } andNumberOfFaces:8 .
+	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom:-1 to: 1.
+	aGameSetUp withMaximumLapsToWin: 2. 
+	  
+	
+
 
 	self
-		should: [
-		BoardGame withNumberOfSquares: 6 withWormHoleFrom: -1 to: 6 ]
+		should: [ aGameSetUp createGameInstance ]
 		raise: Error
 		withMessageText: 'Should be a positive number'
 ]
@@ -40,19 +57,34 @@ GameBoardTest >> test011WhenABoardWithAWormHoleInANegativePositionThenCreationFa
 { #category : 'tests' }
 GameBoardTest >> test012WhenABoardWithNumberOfSquaresIsNegativeThenCreationFails [
 
+	|aGameSetUp  |
+
+	aGameSetUp:= GameSetup new.
+	aGameSetUp withNumberOfPlayers:3.
+	aGameSetUp withRiggedDiceNumbers:{ 5. 3. 3. 7 } andNumberOfFaces:8 . 
+	aGameSetUp withABoardNumberOfSquares: -1 andWithWormHoleFrom:-1 to: 1.
+	aGameSetUp withMaximumLapsToWin: 2. 
+	
 	self
 		should: [
-		BoardGame withNumberOfSquares: -1 withWormHoleFrom: 3 to: 6 ]
+		aGameSetUp createGameInstance ]
 		raise: Error
 		withMessageText: 'Should be a positive number'
 ]
 
 { #category : 'tests' }
 GameBoardTest >> test013WhenABoardHasLessThanThreeSquaresThenCreationFails [
+	|aGameSetUp  |
 
+	aGameSetUp:= GameSetup new.
+	aGameSetUp withNumberOfPlayers:3. 
+	aGameSetUp withRiggedDiceNumbers:{ 5. 3. 3. 7 } andNumberOfFaces:8 .
+	aGameSetUp withABoardNumberOfSquares: 2 andWithWormHoleFrom:3 to: 6.
+	aGameSetUp withMaximumLapsToWin: 2. 
+	
 	self
 		should: [
-		BoardGame withNumberOfSquares: 2 withWormHoleFrom: 3 to: 6 ]
+		aGameSetUp createGameInstance ]
 		raise: Error
 		withMessageText: 'Should have at least 3 squares'
 ]
@@ -60,20 +92,23 @@ GameBoardTest >> test013WhenABoardHasLessThanThreeSquaresThenCreationFails [
 { #category : 'tests' }
 GameBoardTest >> test014WhenSpaceshipTriesToMoveOutsideBoardThenNothingChanges [
 
-	| aBoard aPlayer1 aDice aPlayer2  aWinnerSystem |
-	aBoard := BoardGame withNumberOfSquares: 6 withWormHoleFrom: 1 to: 1.
+	|aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem |
 
-	aPlayer1 := SpaceShip inInitialPosition: 0.
-	aPlayer2 := SpaceShip inInitialPosition: 0.
-	aDice := RiggedDice withNumberOfFaces: 10.
-	aDice setNumbersProvider: { 2. 1. 1. 6 }.
-
-	aBoard has: {
-			aPlayer1.
-			aPlayer2 }.
-	aBoard withDices: { aDice }.
-	aWinnerSystem := WinnerSystem withMaximunLaps: 1.
-	aBoard follows: aWinnerSystem .
+	aGameSetUp:= GameSetup new.
+	aGameSetUp withNumberOfPlayers:2.
+	aGameSetUp withRiggedDiceNumbers:{  2. 1. 1. 6 } andNumberOfFaces:10 .
+	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom:1 to: 1.
+	aGameSetUp withMaximumLapsToWin: 2. 
+	aGameSetUp createGameInstance. 
+	
+	aPlayer1:=(aGameSetUp spaceShips) first.
+	aPlayer2:=(aGameSetUp spaceShips) second.
+	
+	aBoard:= (aGameSetUp board).
+	aWinnerSystem:= aGameSetUp winnerSystem. 
+	
+	
+	
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 2.
 	self assert: (aBoard positionOf: aPlayer2) equals: 1.
@@ -85,87 +120,79 @@ GameBoardTest >> test014WhenSpaceshipTriesToMoveOutsideBoardThenNothingChanges [
 ]
 
 { #category : 'tests' }
-GameBoardTest >> test0WhenTheBoardIsInitializeItHasACertainNumberOfSquaresAndAWormHole [
+GameBoardTest >> test015WhenTheSpaceShipGetsToTheMaximumOfSquaresThenSpaceShipGoesToInitialPosition [
 
-	| aBoard aWinnerSystem |
-	aBoard := BoardGame withNumberOfSquares: 64 withWormHoleFrom: 1 to: 2.
-	aWinnerSystem := WinnerSystem withMaximunLaps: 1.
-	aBoard follows: aWinnerSystem .
-	self assert: aBoard numberOfSquares equals: 64
-]
 
-{ #category : 'tests' }
-GameBoardTest >> test15WhenTheSpaceShipGetsToTheMaximumOfSquaresThenSpaceShipGoesToInitialPosition [
+	|aGameSetUp aBoard aPlayer1  |
 
-	| aBoard aPlayer1 aDice aWinnerSystem |
-	aBoard := BoardGame withNumberOfSquares: 6 withWormHoleFrom: 2 to: 5.
-	aDice := RiggedDice withNumberOfFaces: 8.
-	aDice setNumbersProvider: { 7. 3. 3. 4 }.
-
-	aPlayer1 := SpaceShip inInitialPosition: 0.
-	aBoard has: { aPlayer1 }.
-	aBoard withDices: { aDice }.
-	aWinnerSystem := WinnerSystem withMaximunLaps: 2.
-	aBoard follows: aWinnerSystem.
+	aGameSetUp:= GameSetup new.
+	aGameSetUp withNumberOfPlayers:1. 
+	aGameSetUp withRiggedDiceNumbers:{ 7. 3. 3. 4 } andNumberOfFaces:8 .
+	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom:1 to: 1.
+	aGameSetUp withMaximumLapsToWin: 2. 
+	aGameSetUp createGameInstance. 
+	
+	aPlayer1:=(aGameSetUp spaceShips) first.
+	aBoard := aGameSetUp board.
+	
+	
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 1
 ]
 
 { #category : 'tests' }
-GameBoardTest >> test16WhenTheExitOfTheWormHoleIsGreaterThanTheNumbersOfSqueareOfTheBoardThenBoardCreationFails [
+GameBoardTest >> test016WhenTheExitOfTheWormHoleIsGreaterThanTheNumbersOfSqueareOfTheBoardThenBoardCreationFails [
+	|aGameSetUp  |
 
+	aGameSetUp:= GameSetup new.
+	aGameSetUp withNumberOfPlayers:3.
+	aGameSetUp withRiggedDiceNumbers:{ 5. 3. 3. 7 } andNumberOfFaces:8 . 
+	aGameSetUp withABoardNumberOfSquares: 10 andWithWormHoleFrom:6 to: 12.
+	aGameSetUp withMaximumLapsToWin: 2.  
+	
 	self
 		should: [
-		BoardGame withNumberOfSquares: 10 withWormHoleFrom: 6 to: 12 ]
+		aGameSetUp createGameInstance ]
 		raise: Error
 		withMessageText:
 		'The worm hole exit must be smaller than the number of squares'
 ]
 
 { #category : 'tests' }
-GameBoardTest >> test17WhenSpaceShipDoesMultipleLapsInOneRollThenWins [
+GameBoardTest >> test017WhenSpaceShipDoesMultipleLapsInOneRollThenWins [
+|aGameSetUp aBoard aPlayer1 aWinnerSystem |
 
-	| aBoard aPlayer1 aDice aWinnerSystem |
-	aWinnerSystem := WinnerSystem withMaximunLaps: 2.
-	aBoard := BoardGame withNumberOfSquares: 5 withWormHoleFrom: 1 to: 1.
-	aDice := RiggedDice withNumberOfFaces: 8.
-	aDice setNumbersProvider: { 12. 3. 3. 4 }.
+	aGameSetUp:= GameSetup new.
+	aGameSetUp withNumberOfPlayers:1 .
+	aGameSetUp withRiggedDiceNumbers:{ 12. 3. 3. 4 } andNumberOfFaces:8 .
+	aGameSetUp withABoardNumberOfSquares: 5 andWithWormHoleFrom:1 to: 1.
+	aGameSetUp withMaximumLapsToWin: 2. 
+	aGameSetUp createGameInstance.
+	
+	aPlayer1:=(aGameSetUp spaceShips) first.
 
-	aPlayer1 := SpaceShip inInitialPosition: 0.
-	aBoard has: { aPlayer1 }.
-	aBoard withDices: { aDice }.
-	aBoard follows: aWinnerSystem .
+	
+	aBoard:= (aGameSetUp board).
+	aWinnerSystem:= aGameSetUp winnerSystem.
+	
+
+	
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 2.
 	self assert: aWinnerSystem theGoldWinnerIs equals: aPlayer1
 ]
 
 { #category : 'tests' }
-GameBoardTest >> test18WhenASpaceShipWinsTheGameThenTheBoardKnowsTheLapsCompleted [
+GameBoardTest >> test018WhenASpaceShipWinsTheGameThenTheBoardKnowsTheLapsCompleted [
 
 	|aGameSetUp aBoard aPlayer1  aPlayer2 aPlayer3 aWinnerSystem |
-	"aWinnerSystem := WinnerSystem withMaximunLaps: 2.
-	aBoard := BoardGame withNumberOfSquares: 5 withWormHoleFrom: 1 to: 1.
-	aDice := RiggedDice withNumberOfFaces: 8.
-	aDice setNumbersProvider: { 5. 3. 3. 7 }.
 
-	aPlayer1 := SpaceShip inInitialPosition: 0.
-	aPlayer2 := SpaceShip inInitialPosition: 0.
-	aPlayer3 := SpaceShip inInitialPosition: 0.
-	
-	aBoard has: { aPlayer1.aPlayer2.aPlayer3}.
-	aBoard withDices: { aDice }.
-	aBoard follows: aWinnerSystem.
-	aBoard playOneRound.
-	aBoard playOneRound."
-	
 	aGameSetUp:= GameSetup new.
-	
-	
-	aGameSetUp withNumberOfPlayers:3.
+	aGameSetUp withNumberOfPlayers:3. 
 	aGameSetUp withRiggedDiceNumbers:{ 5. 3. 3. 7 } andNumberOfFaces:8 .
 	aGameSetUp withABoardNumberOfSquares: 5 andWithWormHoleFrom:1 to: 1.
-	aGameSetUp withMaximumLapsToWin: 2.
+	aGameSetUp withMaximumLapsToWin: 2. 
+	aGameSetUp createGameInstance.
 	
 	aPlayer1:=(aGameSetUp spaceShips) first.
 	aPlayer2:=(aGameSetUp spaceShips) second.
@@ -186,22 +213,28 @@ GameBoardTest >> test18WhenASpaceShipWinsTheGameThenTheBoardKnowsTheLapsComplete
 ]
 
 { #category : 'tests' }
-GameBoardTest >> test19WhenTheGameEndsThenThereIsARanking [
+GameBoardTest >> test019WhenTheGameEndsThenThereIsARanking [
 
-	| aBoard aPlayer1 aDice  aPlayer2 aPlayer3 aPlayer4 aWinnerSystem|
-	aWinnerSystem := WinnerSystem withMaximunLaps: 2.
-	aBoard := BoardGame withNumberOfSquares: 5 withWormHoleFrom: 1 to: 1.
-	aDice := RiggedDice withNumberOfFaces: 8.
-	aDice setNumbersProvider: { 5. 3. 4. 1. 7 }.
-
-	aPlayer1 := SpaceShip inInitialPosition: 0.
-	aPlayer2 := SpaceShip inInitialPosition: 0.
-	aPlayer3 := SpaceShip inInitialPosition: 0.
-	aPlayer4 := SpaceShip inInitialPosition: 0.
 	
-	aBoard has: { aPlayer1.aPlayer2.aPlayer3.aPlayer4}.
-	aBoard withDices: { aDice }.
-	aBoard follows: aWinnerSystem .
+	|aGameSetUp aBoard aPlayer1  aPlayer2 aPlayer3 aPlayer4 aWinnerSystem |
+
+	aGameSetUp:= GameSetup new.
+	aGameSetUp withNumberOfPlayers:4. 
+	aGameSetUp withRiggedDiceNumbers:{ 5. 3. 4. 1. 7 } andNumberOfFaces:8 .
+	aGameSetUp withABoardNumberOfSquares: 5 andWithWormHoleFrom:1 to: 1.
+	aGameSetUp withMaximumLapsToWin: 2. 
+	aGameSetUp createGameInstance.
+	
+	aPlayer1:=(aGameSetUp spaceShips) first.
+	aPlayer2:=(aGameSetUp spaceShips) second.
+	aPlayer3:=(aGameSetUp spaceShips) third.
+	aPlayer4:=(aGameSetUp spaceShips) fourth.
+	aBoard:= (aGameSetUp board).
+	aWinnerSystem:= aGameSetUp winnerSystem.
+	
+	
+	
+	
 	aBoard playOneRound.
 	aBoard playOneRound.
 	
@@ -214,33 +247,30 @@ GameBoardTest >> test19WhenTheGameEndsThenThereIsARanking [
 ]
 
 { #category : 'tests' }
-GameBoardTest >> test1WhenTheGameBeginsTheBoardKnowsTheSpaceShipsInitialPosition [
+GameBoardTest >> test020WhenASpaceShipFinallyPositionIsLessThanOtherSpaceShipButCompletedTheMaximumLapsThenIsTheWinner [
 
-	| aPlayer1 aBoard|
-	aPlayer1 := SpaceShip inInitialPosition: 0.
-	aBoard := BoardGame withNumberOfSquares: 60 withWormHoleFrom: 2 to: 5.
 
-	self assert: aPlayer1 currentPosition equals: 0
-]
+	 
+		|aGameSetUp aBoard aPlayer1  aPlayer2 aPlayer3 aPlayer4 aWinnerSystem |
 
-{ #category : 'tests' }
-GameBoardTest >> test20WhenASpaceShipFinallyPositionIsLessThanOtherSpaceShipButCompletedTheMaximumLapsThenIsTheWinner [
-
-	| aBoard aPlayer1 aDice  aPlayer2 aPlayer3 aPlayer4 aWinnerSystem|
-	aWinnerSystem := WinnerSystem withMaximunLaps: 1.
-	aBoard := BoardGame withNumberOfSquares: 5 withWormHoleFrom: 1 to: 1.
-	aDice := RiggedDice withNumberOfFaces: 8.
-	aDice setNumbersProvider: { 1. 3. 8. 1. 7 }.
-
-	aPlayer1 := SpaceShip inInitialPosition: 0.
-	aPlayer2 := SpaceShip inInitialPosition: 0.
-	aPlayer3 := SpaceShip inInitialPosition: 0.
-	aPlayer4 := SpaceShip inInitialPosition: 0.
+	aGameSetUp:= GameSetup new.
+	aGameSetUp withNumberOfPlayers:4. 
+	aGameSetUp withRiggedDiceNumbers: { 1. 3. 8. 1. 7 } andNumberOfFaces:8 .
+	aGameSetUp withABoardNumberOfSquares: 5 andWithWormHoleFrom:1 to: 1.
+	aGameSetUp withMaximumLapsToWin: 1. 
+	aGameSetUp createGameInstance.
 	
-	aBoard has: { aPlayer1.aPlayer2.aPlayer3.aPlayer4}.
-	aBoard withDices: { aDice }.
-	aBoard follows: aWinnerSystem .
+	aPlayer1:=(aGameSetUp spaceShips) first.
+	aPlayer2:=(aGameSetUp spaceShips) second.
+	aPlayer3:=(aGameSetUp spaceShips) third.
+	aPlayer4:=(aGameSetUp spaceShips) fourth.
+	aBoard:= (aGameSetUp board).
+	aWinnerSystem:= aGameSetUp winnerSystem.
+	
+
 	aBoard playOneRound.
+	
+	
 	
 	self assert: (aBoard positionOf: aPlayer3 ) equals: 3.
 
@@ -251,26 +281,27 @@ GameBoardTest >> test20WhenASpaceShipFinallyPositionIsLessThanOtherSpaceShipButC
 ]
 
 { #category : 'tests' }
-GameBoardTest >> test21WhenThereIsADrawForSecondPlaceThenTheSilverIsTheFirstPlayerToMove [
+GameBoardTest >> test021WhenThereIsADrawForSecondPlaceThenTheSilverIsTheFirstPlayerToMove [
+ 
+	
+		|aGameSetUp aBoard aPlayer1  aPlayer2 aPlayer3 aWinnerSystem |
 
-	| aBoard aPlayer1 aDice aPlayer2 aPlayer3 aPlayer4 aWinnerSystem |
-	aWinnerSystem := WinnerSystem withMaximunLaps: 1.
-	aBoard := BoardGame withNumberOfSquares: 5 withWormHoleFrom: 1 to: 1.
-	aDice := RiggedDice withNumberOfFaces: 8.
-	aDice setNumbersProvider: { 3. 3. 6. 1. 7 }.
-
-	aPlayer1 := SpaceShip inInitialPosition: 0.
-	aPlayer2 := SpaceShip inInitialPosition: 0.
-	aPlayer3 := SpaceShip inInitialPosition: 0.
-	aPlayer4 := SpaceShip inInitialPosition: 0.
-
-	aBoard has: {
-			aPlayer1.
-			aPlayer2.
-			aPlayer3.
-			aPlayer4 }.
-	aBoard withDices: { aDice }.
-	aBoard follows: aWinnerSystem.
+	aGameSetUp:= GameSetup new.
+	aGameSetUp withNumberOfPlayers:3. 
+	aGameSetUp withRiggedDiceNumbers: {  3. 3. 6. 1. 7} andNumberOfFaces:8 .
+	aGameSetUp withABoardNumberOfSquares: 5 andWithWormHoleFrom:1 to: 1.
+	aGameSetUp withMaximumLapsToWin: 1. 
+	aGameSetUp createGameInstance.
+	
+	aPlayer1:=(aGameSetUp spaceShips) first.
+	aPlayer2:=(aGameSetUp spaceShips) second.
+	aPlayer3:=(aGameSetUp spaceShips) third.
+	
+	aBoard:= (aGameSetUp board).
+	aWinnerSystem:= aGameSetUp winnerSystem.
+	
+	
+	
 	aBoard playOneRound.
 
 	self assert: (aBoard positionOf: aPlayer3) equals: 1.
@@ -288,18 +319,41 @@ GameBoardTest >> test21WhenThereIsADrawForSecondPlaceThenTheSilverIsTheFirstPlay
 ]
 
 { #category : 'tests' }
+GameBoardTest >> test0WhenTheBoardIsInitializeItHasACertainNumberOfSquaresAndAWormHole [
+ 
+| aBoard aWinnerSystem |
+	aBoard := BoardGame withNumberOfSquares: 64 withWormHoleFrom: 1 to: 2.
+	aWinnerSystem := WinnerSystem withMaximunLaps: 1. 
+	aBoard follows: aWinnerSystem .
+	self assert: aBoard numberOfSquares equals: 64
+]
+
+{ #category : 'tests' }
+GameBoardTest >> test1WhenTheGameBeginsTheBoardKnowsTheSpaceShipsInitialPosition [
+
+	| aPlayer1 aBoard|
+	aPlayer1 := SpaceShip inInitialPosition: 0.
+	aBoard := BoardGame withNumberOfSquares: 60 withWormHoleFrom: 2 to: 5.
+
+
+	self assert: aPlayer1 currentPosition equals: 0
+]
+
+{ #category : 'tests' }
 GameBoardTest >> test2WhenADiceIsRolledThenTheSpaceShipsPositionInTheBoardChanges [
 
-	| aBoard aPlayer1 aDice aWinnerSystem |
-	aWinnerSystem := WinnerSystem withMaximunLaps: 1.
-	aBoard := BoardGame withNumberOfSquares: 64 withWormHoleFrom: 2 to: 5.
-	aDice := RiggedDice withNumberOfFaces: 6.
-	aDice setNumbersProvider: { 3. 3. 3. 4 }.
+	| aGameSetUp aBoard aPlayer1 |
+	aGameSetUp := GameSetup new.
+	aGameSetUp withNumberOfPlayers: 1. 
+	aGameSetUp withRiggedDiceNumbers: { 3. 3. 3. 4 } andNumberOfFaces: 6.
+	aGameSetUp withABoardNumberOfSquares: 64 andWithWormHoleFrom: 2 to: 5.
+	aGameSetUp withMaximumLapsToWin: 1.
+	aGameSetUp createGameInstance.
 
-	aPlayer1 := SpaceShip inInitialPosition: 0.
-	aBoard has: { aPlayer1 }.
-	aBoard withDices: { aDice }.
-	aBoard follows: aWinnerSystem.
+	aPlayer1 := aGameSetUp spaceShips first.
+	aBoard := aGameSetUp board.
+
+
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 3
 ]
@@ -307,18 +361,18 @@ GameBoardTest >> test2WhenADiceIsRolledThenTheSpaceShipsPositionInTheBoardChange
 { #category : 'tests' }
 GameBoardTest >> test3WhenASpaceShipCompletesTheLapThenItsTheWinner [
 
-	| aBoard aPlayer1 aDice aWinnerSystem |
-	aWinnerSystem := WinnerSystem withMaximunLaps: 1.
-	aBoard := BoardGame withNumberOfSquares: 6 withWormHoleFrom: 2 to: 5.
-	aPlayer1 := SpaceShip inInitialPosition: 0.
+	| aGameSetUp aBoard aPlayer1 aWinnerSystem |
+	aGameSetUp := GameSetup new.
+	aGameSetUp withNumberOfPlayers: 1.
+	aGameSetUp withRiggedDiceNumbers: { 6. 3. 3. 4 } andNumberOfFaces: 6.
+	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: 2 to: 5.
+	aGameSetUp withMaximumLapsToWin: 1.
+	aGameSetUp createGameInstance.
 
-	aDice := RiggedDice withNumberOfFaces: 6.
-	aDice setNumbersProvider: { 6. 3. 3. 4 }.
+	aPlayer1 := aGameSetUp spaceShips first. 
+	aBoard := aGameSetUp board.
+	aWinnerSystem := aGameSetUp winnerSystem.
 
-
-	aBoard has: { aPlayer1 }.
-	aBoard withDices: { aDice }.
-	aBoard follows: aWinnerSystem .
 	aBoard playOneRound.
 
 
@@ -329,19 +383,20 @@ GameBoardTest >> test3WhenASpaceShipCompletesTheLapThenItsTheWinner [
 { #category : 'tests' }
 GameBoardTest >> test4WhenTheFirstSpaceShipCompletesTheLapThenItsTheWinner [
 
-	| aBoard aPlayer1 aDice aPlayer2 aWinnerSystem |
-	aBoard := BoardGame withNumberOfSquares: 6 withWormHoleFrom: 2 to: 5.
-	aPlayer1 := SpaceShip inInitialPosition: 0.
-	aPlayer2 := SpaceShip inInitialPosition: 0.
-	aWinnerSystem := WinnerSystem withMaximunLaps: 1.
-	aDice := RiggedDice withNumberOfFaces: 10.
-	aDice setNumbersProvider: { 4. 6. 3. 4 }.
+	| aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem |
+	aGameSetUp := GameSetup new.
+	aGameSetUp withNumberOfPlayers: 2.
+	aGameSetUp withRiggedDiceNumbers: { 4. 6. 3. 4 } andNumberOfFaces: 6.
+	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: 2 to: 5.
+	aGameSetUp withMaximumLapsToWin: 1.
+	aGameSetUp createGameInstance.
 
-	aBoard has: {
-			aPlayer1.
-			aPlayer2 }.
-	aBoard withDices: { aDice }.
-	aBoard follows: aWinnerSystem .
+	aPlayer1 := aGameSetUp spaceShips first.
+	aPlayer2 := aGameSetUp spaceShips second.
+	aBoard := aGameSetUp board.
+	aWinnerSystem := aGameSetUp winnerSystem.
+
+
 
 	aBoard playOneRound.
 
@@ -352,19 +407,18 @@ GameBoardTest >> test4WhenTheFirstSpaceShipCompletesTheLapThenItsTheWinner [
 { #category : 'tests' }
 GameBoardTest >> test5WhenSpaceshipRolledNumberExceedsRemainingDistanceToFinishLineAndCompletesTheLapThenItWins [
 
-	| aBoard aPlayer1 aDice aPlayer2 aWinnerSystem |
-	aBoard := BoardGame withNumberOfSquares: 6 withWormHoleFrom: 3 to: 5.
-	aWinnerSystem := WinnerSystem withMaximunLaps: 1.
-	aPlayer1 := SpaceShip inInitialPosition: 0.
-	aPlayer2 := SpaceShip inInitialPosition: 0.
-	aDice := RiggedDice withNumberOfFaces: 10.
-	aDice setNumbersProvider: { 4. 8. 3. 4 }.
+	| aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem |
+	aGameSetUp := GameSetup new.
+	aGameSetUp withNumberOfPlayers: 2.
+	aGameSetUp withRiggedDiceNumbers: { 4. 8. 3. 4 } andNumberOfFaces: 6.
+	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: 3 to: 5.
+	aGameSetUp withMaximumLapsToWin: 1.
+	aGameSetUp createGameInstance.
 
-	aBoard has: {
-			aPlayer1.
-			aPlayer2 }.
-	aBoard withDices: { aDice }.
-	aBoard follows: aWinnerSystem .
+	aPlayer1 := aGameSetUp spaceShips first.
+	aPlayer2 := aGameSetUp spaceShips second.
+	aBoard := aGameSetUp board.
+	aWinnerSystem := aGameSetUp winnerSystem.
 	aBoard playOneRound.
 
 
@@ -374,43 +428,44 @@ GameBoardTest >> test5WhenSpaceshipRolledNumberExceedsRemainingDistanceToFinishL
 
 { #category : 'tests' }
 GameBoardTest >> test6WhenThereIsAWinnerThenNoMoreRoundsArePlayed [
-| aBoard aPlayer1 aDice  aPlayer2 aWinnerSystem |
-	
-	aBoard:= BoardGame withNumberOfSquares: 6 withWormHoleFrom: 3 to:5.
-	aWinnerSystem := WinnerSystem withMaximunLaps: 1.
-  	aPlayer1:=SpaceShip inInitialPosition: 0.	
-	aPlayer2:=SpaceShip inInitialPosition: 0.	
-	aDice := RiggedDice withNumberOfFaces: 10.
-  	aDice setNumbersProvider: { 4. 8. 3. 4 }.
-	 
-	aBoard has: { aPlayer1 . aPlayer2 }.
-	aBoard withDices: { aDice }.
-	
-	aBoard follows: aWinnerSystem .
+
+	| aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem |
+	aGameSetUp := GameSetup new.
+	aGameSetUp withNumberOfPlayers: 2.
+	aGameSetUp withRiggedDiceNumbers: { 4. 8. 3. 4 } andNumberOfFaces: 6.
+	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: 3 to: 5.
+	aGameSetUp withMaximumLapsToWin: 1.
+	aGameSetUp createGameInstance.
+
+	aPlayer1 := aGameSetUp spaceShips first.
+	aPlayer2 := aGameSetUp spaceShips second.
+	aBoard := aGameSetUp board.
+	aWinnerSystem := aGameSetUp winnerSystem.
+
 	aBoard playOneRound.
 	aBoard playOneRound.
-	aBoard playOneRound. 
-	self assert: (aBoard positionOf: aPlayer1 ) equals: 4.
+	aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer1) equals: 4.
 	self assert: (aBoard positionOf: aPlayer2) equals: 2.
-	self assert: aWinnerSystem theGoldWinnerIs equals: aPlayer2.
+	self assert: aWinnerSystem theGoldWinnerIs equals: aPlayer2
 ]
 
 { #category : 'tests' }
 GameBoardTest >> test8WhenTheSpaceShipFallsIntoTheWormHoleEntranceThenItMovesToTheWormHoleExit [
 
-	| aBoard aPlayer1 aDice aPlayer2 aWinnerSystem |
-	aBoard := BoardGame withNumberOfSquares: 6 withWormHoleFrom: 2 to: 5.
+	| aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem |
+	aGameSetUp := GameSetup new.
+	aGameSetUp withNumberOfPlayers: 2.
+	aGameSetUp withRiggedDiceNumbers: { 2. 3. 3. 4 } andNumberOfFaces: 10.
+	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: 2 to: 5.
+	aGameSetUp withMaximumLapsToWin: 1.
+	aGameSetUp createGameInstance.
 
-	aPlayer1 := SpaceShip inInitialPosition: 0.
-	aPlayer2 := SpaceShip inInitialPosition: 0.
-	aDice := RiggedDice withNumberOfFaces: 10.
-	aDice setNumbersProvider: { 2. 3. 3. 4 }.
-	aBoard has: {
-			aPlayer1.
-			aPlayer2 }.
-	aBoard withDices: { aDice }.
-	aWinnerSystem := WinnerSystem withMaximunLaps: 1.
-	aBoard follows: aWinnerSystem .
+	aPlayer1 := aGameSetUp spaceShips first.
+	aPlayer2 := aGameSetUp spaceShips second.
+	aBoard := aGameSetUp board.
+	aWinnerSystem := aGameSetUp winnerSystem.
+
 	aBoard playOneRound.
 
 	self assert: (aBoard positionOf: aPlayer1) equals: 5
@@ -419,20 +474,19 @@ GameBoardTest >> test8WhenTheSpaceShipFallsIntoTheWormHoleEntranceThenItMovesToT
 { #category : 'tests' }
 GameBoardTest >> test9WhenTheSpaceShipFallsIntoWormHoleExitThenItMovesToTheWormHoleEntrance [
 
-	| aBoard aPlayer1 aDice aPlayer2 aWinnerSystem |
-	aBoard := BoardGame withNumberOfSquares: 6 withWormHoleFrom: 2 to: 5.
- 
-	aPlayer1 := SpaceShip inInitialPosition: 0.
-	aPlayer2 := SpaceShip inInitialPosition: 0.
-	aDice := RiggedDice withNumberOfFaces: 10.
-	aDice setNumbersProvider: { 5. 3. 3. 4 }.
-	aBoard has: {
-			aPlayer1.
-			aPlayer2 }.
-	aBoard withDices: { aDice }.
-	aWinnerSystem := WinnerSystem withMaximunLaps: 1.
-	aBoard follows: aWinnerSystem .
+| aGameSetUp aBoard aPlayer1  aWinnerSystem |
+	aGameSetUp := GameSetup new.
+	aGameSetUp withNumberOfPlayers: 2.
+	aGameSetUp withRiggedDiceNumbers: { 5. 3. 3. 4 } andNumberOfFaces: 10.
+	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: 2 to: 5.
+	aGameSetUp withMaximumLapsToWin: 1.
+	aGameSetUp createGameInstance.
 
+	aPlayer1:= aGameSetUp spaceShips first.
+
+	aBoard := aGameSetUp board.
+	aWinnerSystem := aGameSetUp winnerSystem.
+	
 
 	aBoard playOneRound.
 

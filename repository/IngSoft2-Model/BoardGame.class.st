@@ -6,7 +6,6 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'maximumSquares',
-		'spaceShips',
 		'entranceOfWormHole',
 		'exitOfWormHole',
 		'dicesInGameBoard',
@@ -63,23 +62,13 @@ BoardGame >> completedLapsBy: aSpaceShip [
 BoardGame >> follows:aWinnerSystem [
 
 winnerSystem:=aWinnerSystem .
-
 winnerSystem withPotentialWinner: aCopyOfSpaceships .
 ]
 
 { #category : 'accessing' }
 BoardGame >> has: players [
+aCopyOfSpaceships :=players .
 
-	spaceShips := players collect: [ :player |
-		              | copyOfSpaceships |
-		              copyOfSpaceships := player copy.
-		              copyOfSpaceships originalSpaceShip: player.
-		              copyOfSpaceships ].
-	aCopyOfSpaceships := OrderedCollection new.
-	aCopyOfSpaceships addAll: spaceShips.
-
-	aCopyOfSpaceships withIndexDo: [ :spaceShip :orderToPlay |
-		spaceShip turnOrder: orderToPlay ].
 
 	
 	

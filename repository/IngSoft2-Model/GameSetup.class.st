@@ -5,9 +5,15 @@ Class {
 	#name : 'GameSetup',
 	#superclass : 'Object',
 	#instVars : [
-		'spaceShips',
+		'numberOfPlayers',
+		'riggedNumbers',
+		'numberOfFaces',
+		'boardSize',
+		'wormholeEntrance',
+		'wormholeExit',
+		'lapsToWin',
 		'board',
-		'dices',
+		'spaceShips',
 		'winnerSystem'
 	],
 	#category : 'IngSoft2-Model',
@@ -16,46 +22,42 @@ Class {
 
 { #category : 'accessing' }
 GameSetup >> board [
-^board.
+    ^ board
 ]
 
 { #category : 'accessing' }
 GameSetup >> spaceShips [
-^spaceShips.
+^spaceShips
 ]
 
 { #category : 'accessing' }
 GameSetup >> winnerSystem [
-^winnerSystem.
+^winnerSystem
 ]
 
 { #category : 'initialization' }
-GameSetup >> withABoardNumberOfSquares: maximumSquares andWithWormHoleFrom:entry to: exit [
+GameSetup >> withABoardNumberOfSquares: maximumSquares andWithWormHoleFrom: entry to: exit [
 
-board := BoardGame withNumberOfSquares: maximumSquares withWormHoleFrom: entry to: exit.
-board has:spaceShips .
-board withDices: dices.
+	boardSize := maximumSquares.
+	wormholeEntrance := entry.
+	wormholeExit := exit.
 ]
 
 { #category : 'initialization' }
-GameSetup >> withMaximumLapsToWin: lapsToWin [
-winnerSystem:=WinnerSystem withMaximunLaps: lapsToWin.
-board follows: (winnerSystem ).
+GameSetup >> withMaximumLapsToWin: aLapsToWin [
+  lapsToWin := aLapsToWin.
 ]
 
 { #category : 'initialization' }
-GameSetup >> withNumberOfPlayers: numberOfPlayers [
+GameSetup >> withNumberOfPlayers: aNumber [
+	 numberOfPlayers := aNumber.
+ 
 
-	spaceShips := (1 to: numberOfPlayers) collect: [:numberOfSpaceShips |( SpaceShip inInitialPosition: 0) ].
-	
-	spaceShips do:[:spaceShip| spaceShip initialFule:8].
 ]
 
 { #category : 'initialization' }
-GameSetup >> withRiggedDiceNumbers:riggedNumbers andNumberOfFaces:numberOfFaces [
-| dice |
-	dice := RiggedDice withNumberOfFaces: numberOfFaces .
-	dice setNumbersProvider: riggedNumbers .
-	dices := { dice }.
-	^ self
+GameSetup >> withRiggedDiceNumbers: aRiggedNumbers andNumberOfFaces: aNumberOfFaces [
+
+	riggedNumbers := aRiggedNumbers.
+	numberOfFaces := aNumberOfFaces.
 ]
