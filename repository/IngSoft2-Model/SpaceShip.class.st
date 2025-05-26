@@ -127,5 +127,5 @@ SpaceShip >> verifyCanPlayAgain [
 
 	numberOfLostTurns = 2 ifFalse: [ ^ self ].
 	numberOfLostTurns := 0.
-	currentFule := initialFule
+	self rechargeFule.
 ]

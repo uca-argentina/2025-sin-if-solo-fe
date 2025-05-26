@@ -66,7 +66,7 @@ BoardGame >> currentFuleOf: aPlayer [
 
 { #category : 'action' }
 BoardGame >> distanceFrom: origin to: destination [
-    ^ ((destination - origin + maximumSquares) rem: maximumSquares)
+    ^ (((destination - origin)abs + maximumSquares) rem: maximumSquares).
 ]
 
 { #category : 'accessing' }

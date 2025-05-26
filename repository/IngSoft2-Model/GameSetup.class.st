@@ -41,7 +41,6 @@ GameSetup >> createBoardInstanceWith: aDices andWith: aSpaceShips andWith: aWinn
 		              copyOfSpaceships originalSpaceShip: player.
 		              copyOfSpaceships ]).
 	
-	
 	aBoard has: aCopyOfSpaceships .
 	aBoard follows: aWinnerSystem.
 	^aBoard.
