@@ -72,13 +72,11 @@ SpaceShip >> isCopyOf: aPlayer [
     ^ originalSpaceShip == aPlayer.
 ]
 
-{ #category : 'accessing' }
+{ #category : 'action' }
 SpaceShip >> losesTurn [
-
+	
 	numberOfLostTurns := numberOfLostTurns + 1.
-	numberOfLostTurns = 2 ifFalse: [ ^ self ].
-	numberOfLostTurns := 0.
-	currentFule := initialFule
+
 ]
 
 { #category : 'action' }
