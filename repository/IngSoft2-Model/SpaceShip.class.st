@@ -11,7 +11,9 @@ Class {
 		'originalSpaceShip',
 		'laps',
 		'numberOfOrderToPlay',
-		'currentFule'
+		'currentFule',
+		'numberOfLostTurns',
+		'initialFule'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -26,6 +28,12 @@ SpaceShip class >> inInitialPosition: aPosition [
 { #category : 'accessing' }
 SpaceShip >> asOriginalSpaceShip [
 ^originalSpaceShip.
+]
+
+{ #category : 'testing' }
+SpaceShip >> canPlay [
+    ^ currentFule > 0 and: [ numberOfLostTurns = 0 ]
+
 ]
 
 { #category : 'accessing' }
@@ -45,14 +53,17 @@ SpaceShip >> currentPosition [
 ]
 
 { #category : 'accessing' }
-SpaceShip >> initialFule:initialFule [
-currentFule:=initialFule .
+SpaceShip >> initialFule: ainitialFule [
+	currentFule := ainitialFule.
+	initialFule := ainitialFule.
+
 ]
 
 { #category : 'initialization' }
 SpaceShip >> initializePosition: aPosition [
 	laps:=0.
-	currentPosition := aPosition
+	currentPosition := aPosition.
+	numberOfLostTurns:=0.
 ]
 
 { #category : 'testing' }
@@ -107,6 +118,6 @@ numberOfOrderToPlay:=aNumberOfOrderToPlay.
 SpaceShip >> validateCurrentFule [
 
 	(currentFule <= 0) ifFalse: [ ^ self ].
-	self movesTo: 0.
-	currentFule := 0
+    self movesTo: 0.
+    currentFule := 0.
 ]

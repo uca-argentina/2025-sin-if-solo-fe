@@ -109,8 +109,14 @@ BoardGame >> numberOfSquares [
 BoardGame >> playOneRound [
 
 
-	aCopyOfSpaceships do: [ :aCopyOfSpaceship |
-		self move: self spaceshipWhosTurnItIs with: dicesInGameBoard ]
+	"aCopyOfSpaceships do: [ :aCopyOfSpaceship |
+		self move: self spaceshipWhosTurnItIs with: dicesInGameBoard ]"
+    aCopyOfSpaceships do: [ :aSpaceShip | 
+        aSpaceShip canPlay 
+            ifTrue: [ self move: aSpaceShip with: dicesInGameBoard ]
+            ifFalse: [ aSpaceShip losesTurn ].
+    ].
+
 ]
 
 { #category : 'accessing' }
@@ -129,10 +135,14 @@ BoardGame >> rolledNumberSumOf: dices [
 BoardGame >> spaceshipWhosTurnItIs [ 
 
 	| nextSpaceship |
-	nextSpaceship:=aCopyOfSpaceships first.
+	
+	nextSpaceship:=aCopyOfSpaceships first.  
 	aCopyOfSpaceships add: nextSpaceship.
 	aCopyOfSpaceships removeFirst.
+
 	^nextSpaceship.
+	
+
 ]
 
 { #category : 'validating' }
