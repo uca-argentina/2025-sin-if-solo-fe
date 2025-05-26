@@ -59,6 +59,12 @@ BoardGame >> completedLapsBy: aSpaceShip [
 ]
 
 { #category : 'accessing' }
+BoardGame >> currentFuleOf: aPlayer [
+    ^ (aCopyOfSpaceships detect: [ :copyOfSpaceship | copyOfSpaceship isCopyOf: aPlayer ]) currentFule.
+
+]
+
+{ #category : 'accessing' }
 BoardGame >> follows:aWinnerSystem [
 
 winnerSystem:=aWinnerSystem .

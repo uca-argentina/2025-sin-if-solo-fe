@@ -102,3 +102,11 @@ SpaceShip >> turnOrder [
 SpaceShip >> turnOrder: aNumberOfOrderToPlay [
 numberOfOrderToPlay:=aNumberOfOrderToPlay.
 ]
+
+{ #category : 'validating' }
+SpaceShip >> validateCurrentFule [
+
+	(currentFule <= 0) ifFalse: [ ^ self ].
+	self movesTo: 0.
+	currentFule := 0
+]
