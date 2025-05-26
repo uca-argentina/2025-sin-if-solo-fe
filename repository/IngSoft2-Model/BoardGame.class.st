@@ -64,6 +64,11 @@ BoardGame >> currentFuleOf: aPlayer [
 
 ]
 
+{ #category : 'action' }
+BoardGame >> distanceFrom: origin to: destination [
+    ^ ((destination - origin + maximumSquares) rem: maximumSquares)
+]
+
 { #category : 'accessing' }
 BoardGame >> follows:aWinnerSystem [
 
@@ -108,15 +113,11 @@ BoardGame >> numberOfSquares [
 { #category : 'action' }
 BoardGame >> playOneRound [
 
-
-	"aCopyOfSpaceships do: [ :aCopyOfSpaceship |
-		self move: self spaceshipWhosTurnItIs with: dicesInGameBoard ]"
-    aCopyOfSpaceships do: [ :aSpaceShip | 
-        aSpaceShip canPlay 
-            ifTrue: [ self move: aSpaceShip with: dicesInGameBoard ]
-            ifFalse: [ aSpaceShip losesTurn ].
-    ].
-
+	aCopyOfSpaceships do: [ :aSpaceShip |
+		aSpaceShip verifyCanPlayAgain.
+		aSpaceShip canPlay
+			ifTrue: [ self move: aSpaceShip with: dicesInGameBoard ]
+			ifFalse: [ aSpaceShip losesTurn ] ]
 ]
 
 { #category : 'accessing' }
@@ -131,31 +132,20 @@ BoardGame >> rolledNumberSumOf: dices [
  ^(dices collect: [ :dice | dice rolledNumber ]) sum
 ]
 
-{ #category : 'accessing' }
-BoardGame >> spaceshipWhosTurnItIs [ 
-
-	| nextSpaceship |
-	
-	nextSpaceship:=aCopyOfSpaceships first.  
-	aCopyOfSpaceships add: nextSpaceship.
-	aCopyOfSpaceships removeFirst.
-
-	^nextSpaceship.
-	
-
-]
-
 { #category : 'validating' }
 BoardGame >> validateInWormHole: aSpaceShip [
 
-	| originalPosition |
+	| originalPosition destination distance |
 	originalPosition := aSpaceShip currentPosition.
-
 	originalPosition = entranceOfWormHole ifTrue: [
-		aSpaceShip teletransportsTo: exitOfWormHole ].
+		destination := exitOfWormHole.
+		distance := self distanceFrom: originalPosition to: destination.
+		aSpaceShip moveTo: destination consuming: distance ].
 
-	originalPosition = exitOfWormHole ifTrue: [
-		aSpaceShip teletransportsTo: entranceOfWormHole ]
+	originalPosition = exitOfWormHole ifFalse: [ ^ self ].
+	destination := entranceOfWormHole.
+	distance := self distanceFrom: originalPosition to: destination.
+	aSpaceShip moveTo: destination consuming: distance
 ]
 
 { #category : 'accessing' }

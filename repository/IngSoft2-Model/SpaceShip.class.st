@@ -22,7 +22,7 @@ Class {
 { #category : 'initialization' }
 SpaceShip class >> inInitialPosition: aPosition [
 
-	^ self new initializePosition: aPosition
+	^ self new initializeSpaceShip: aPosition
 ]
 
 { #category : 'accessing' }
@@ -32,6 +32,7 @@ SpaceShip >> asOriginalSpaceShip [
 
 { #category : 'testing' }
 SpaceShip >> canPlay [
+
     ^ currentFule > 0 and: [ numberOfLostTurns = 0 ]
 
 ]
@@ -60,7 +61,7 @@ SpaceShip >> initialFule: ainitialFule [
 ]
 
 { #category : 'initialization' }
-SpaceShip >> initializePosition: aPosition [
+SpaceShip >> initializeSpaceShip: aPosition [
 	laps:=0.
 	currentPosition := aPosition.
 	numberOfLostTurns:=0.
@@ -81,44 +82,27 @@ SpaceShip >> losesTurn [
 ]
 
 { #category : 'action' }
-SpaceShip >> moveWith:rolledNumber onBoardOfSize: maximumSquares [
-| totalPosition lapsDone newPosition |
+SpaceShip >> moveTo: newPosition consuming: aDistance [
 
-	totalPosition := currentPosition + rolledNumber.
-	currentFule :=currentFule - rolledNumber.
-	lapsDone := totalPosition quo: maximumSquares.
-	
-	laps:= lapsDone .
-	newPosition := ((totalPosition - 1) rem: maximumSquares) + 1.
-	self movesTo: newPosition.
-	self validateCurrentFule.
+	currentFule := currentFule - aDistance.
+	currentPosition := newPosition
 ]
 
 { #category : 'action' }
-SpaceShip >> movesTo: newPosition [
-   
-    currentPosition := newPosition.
+SpaceShip >> moveWith: rolledNumber onBoardOfSize: maximumSquares [
 
-
+	| totalPosition lapsDone newPosition  |
+	totalPosition := currentPosition + rolledNumber.
+	lapsDone := totalPosition quo: maximumSquares.
+	laps := lapsDone.
+	newPosition := (totalPosition - 1 rem: maximumSquares) + 1.
+	self moveTo: newPosition consuming: rolledNumber.	
+	self validateCurrentFule
 ]
 
 { #category : 'accessing' }
 SpaceShip >> originalSpaceShip: aPlayer [
     originalSpaceShip := aPlayer.
-]
-
-{ #category : 'action' }
-SpaceShip >> skipTurnIfNeeded [
-
-	numberOfLostTurns > 0 ifFalse: [ ^ self ].
-    numberOfLostTurns := numberOfLostTurns - 1.
-    numberOfLostTurns = 0 ifTrue: [ currentFule := initialFule ]
-]
-
-{ #category : 'action' }
-SpaceShip >> teletransportsTo: aWormHoleSquare [
-
-	currentPosition := aWormHoleSquare
 ]
 
 { #category : 'accessing' }
@@ -134,7 +118,16 @@ numberOfOrderToPlay:=aNumberOfOrderToPlay.
 { #category : 'validating' }
 SpaceShip >> validateCurrentFule [
 
-	(currentFule <= 0) ifFalse: [ ^ self ].
-    self movesTo: 0.
+(currentFule <= 0) ifFalse: [ ^ self ].
+    self moveTo: 0 consuming:0.
     currentFule := 0.
+
+]
+
+{ #category : 'action' }
+SpaceShip >> verifyCanPlayAgain [
+
+	numberOfLostTurns = 2 ifFalse: [ ^ self ].
+	numberOfLostTurns := 0.
+	currentFule := initialFule
 ]

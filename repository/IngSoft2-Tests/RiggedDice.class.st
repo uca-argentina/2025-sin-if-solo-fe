@@ -39,6 +39,7 @@ RiggedDice >> numberOfFaces [
 { #category : 'accessing' }
 RiggedDice >> rolledNumber [
     | nextNumber |
+
     nextNumber := numbersToBeRolles first.
     numbersToBeRolles add: nextNumber.
     numbersToBeRolles removeFirst.

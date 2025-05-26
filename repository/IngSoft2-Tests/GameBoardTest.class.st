@@ -127,7 +127,7 @@ GameBoardTest >> test014WhenSpaceshipTriesToMoveOutsideBoardThenNothingChanges [
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 2.
 	self assert: (aBoard positionOf: aPlayer2) equals: 1.
-	aPlayer1 movesTo: 4.
+	aPlayer1 moveTo: 4 consuming:1000.
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 3.
 	self assert: (aBoard positionOf: aPlayer2) equals: 1.
