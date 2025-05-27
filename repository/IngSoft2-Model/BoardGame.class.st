@@ -122,12 +122,16 @@ BoardGame >> numberOfSquares [
 
 { #category : 'action' }
 BoardGame >> playOneRound [
-
+	
 	aCopyOfSpaceships do: [ :aSpaceShip |
 		aSpaceShip verifyCanPlayAgain.
 		aSpaceShip canPlay
 			ifTrue: [ self move: aSpaceShip with: dicesInGameBoard ]
-			ifFalse: [ self skipRoundAndRechargeFor: (aSpaceShip asOriginalSpaceShip )] ]
+			ifFalse: [ self skipRoundAndRechargeFor: (aSpaceShip asOriginalSpaceShip )]. 
+			
+]
+		
+	
 ]
 
 { #category : 'accessing' }
