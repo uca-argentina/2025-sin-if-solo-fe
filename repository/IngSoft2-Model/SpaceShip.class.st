@@ -45,6 +45,12 @@ SpaceShip >> canPlay [
 ]
 
 { #category : 'accessing' }
+SpaceShip >> checkcurrentPosition [
+
+^(self currentPosition <0 and: self currentLap>=1)
+]
+
+{ #category : 'accessing' }
 SpaceShip >> currentFule [
 ^currentFule 
 ]
