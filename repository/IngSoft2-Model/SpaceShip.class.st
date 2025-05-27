@@ -81,13 +81,7 @@ SpaceShip >> isCopyOf: aPlayer [
 ]
 
 { #category : 'action' }
-SpaceShip >> losesOneTurn [ 
-	numberOfLostTurns := numberOfLostTurns + 2.
-
-]
-
-{ #category : 'action' }
-SpaceShip >> losesTurn [
+SpaceShip >> losesRound [
 	
 	numberOfLostTurns := numberOfLostTurns + 1.
 

@@ -106,7 +106,7 @@ BoardGame >> move: aSpaceShip with: dices [
 	winnerSystem thereIsAWinner ifTrue:  [ ^ self] .
 	rolledNumber := self rolledNumberSumOf: dices.
 	
-	(aSpaceShip canMoveWith: rolledNumber) ifFalse: [^aSpaceShip losesOneTurn. ].
+	(aSpaceShip canMoveWith: rolledNumber) ifFalse: [^[aSpaceShip losesRound. aSpaceShip losesRound. ]].
 	aSpaceShip moveWith:rolledNumber onBoardOfSize: maximumSquares.
 	
 	(self validateInSpecialTile: aSpaceShip) ifTrue:[(self specialTileAt: (aSpaceShip currentPosition )) applyConsequenceTo:aSpaceShip ].
@@ -148,7 +148,7 @@ BoardGame >> skipRoundAndRechargeFor: aSpaceShip [
 	| spaceShipCopy |
 	spaceShipCopy := aCopyOfSpaceships detect: [ :copy |
 		                 copy isCopyOf: aSpaceShip ].
-	spaceShipCopy losesTurn.
+	spaceShipCopy losesRound.
 	spaceShipCopy rechargeFule.
 	
 ]

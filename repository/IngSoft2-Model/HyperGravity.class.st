@@ -14,6 +14,7 @@ Class {
 
 { #category : 'initialization' }
 HyperGravity class >> in: aPosition requiringMinimumRoll: aValue [
+
 ^self new initializeHyperGravityWith:aPosition requiringMinimumRoll: aValue.
 ]
 

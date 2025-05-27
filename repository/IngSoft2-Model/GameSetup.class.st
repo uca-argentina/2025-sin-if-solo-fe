@@ -79,11 +79,10 @@ GameSetup >> createGameInstance [
 	aSpaceShips := self createSpaceShipsInstance.
 	aWinnerSystem := WinnerSystem withMaximunLaps: lapsToWin.
 	aBoard:= self createBoardInstanceWith: aDices andWith: aSpaceShips andWith: aWinnerSystem.
-	
 	board := aBoard.
 	spaceShips := aSpaceShips.
 	winnerSystem := aWinnerSystem.
-	
+	specialTiles ifNotNil: [ self validateSpecialTile. ].
 ]
 
 { #category : 'creation' }
@@ -149,6 +148,7 @@ GameSetup >> withRiggedDiceNumbers: aRiggedNumbers andNumberOfFaces: aNumberOfFa
 
 { #category : 'initialization' }
 GameSetup >> withSpecialTiles:aSpecialTiles [
+
 specialTiles:=aSpecialTiles.
 
 ]
