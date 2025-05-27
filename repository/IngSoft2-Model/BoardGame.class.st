@@ -11,7 +11,8 @@ Class {
 		'dicesInGameBoard',
 		'aCopyOfSpaceships',
 		'winnerSystem',
-		'maxNumberOfDiceFaces'
+		'maxNumberOfDiceFaces',
+		'specialTiles'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -58,6 +59,11 @@ BoardGame >> completedLapsBy: aSpaceShip [
  ^(aCopyOfSpaceships detect: [ :copyOfSpaceship | copyOfSpaceship isCopyOf: aSpaceShip ]) currentLap.
 ]
 
+{ #category : 'comparing' }
+BoardGame >> contains:aSpecialTiles [
+specialTiles :=aSpecialTiles.
+]
+
 { #category : 'accessing' }
 BoardGame >> currentFuleOf: aPlayer [
     ^ (aCopyOfSpaceships detect: [ :copyOfSpaceship | copyOfSpaceship isCopyOf: aPlayer ]) currentFule.
@@ -99,9 +105,13 @@ BoardGame >> move: aSpaceShip with: dices [
 	| rolledNumber |
 	winnerSystem thereIsAWinner ifTrue:  [ ^ self] .
 	rolledNumber := self rolledNumberSumOf: dices.
-	aSpaceShip moveWith:rolledNumber onBoardOfSize: maximumSquares.
+	"self validateSpecialTile:aSpaceShip whenMoveA:rolledNumber."
+	"aSpaceShip canMoveWith: rolledNumber ifFalse: [ ^self ]."
+	"(self validateInSpecialTile: aSpaceShip withRolledNumber: rolledNumber) ifFalse: [ ^ self ]."
 
-	self validateInWormHole: aSpaceShip
+	aSpaceShip moveWith:rolledNumber onBoardOfSize: maximumSquares.
+	
+	self validateInWormHole: aSpaceShip.
 ]
 
 { #category : 'accessing' }

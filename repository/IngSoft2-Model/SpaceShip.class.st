@@ -88,14 +88,17 @@ SpaceShip >> moveTo: newPosition consuming: aDistance [
 
 { #category : 'action' }
 SpaceShip >> moveWith: rolledNumber onBoardOfSize: maximumSquares [
+ | totalPosition lapsDone newPosition  |
 
-	| totalPosition lapsDone newPosition  |
+
 	totalPosition := currentPosition + rolledNumber.
 	lapsDone := totalPosition quo: maximumSquares.
 	laps := lapsDone.
+	
 	newPosition := (totalPosition - 1 rem: maximumSquares) + 1.
+	
 	self moveTo: newPosition consuming: rolledNumber.	
-	self validateCurrentFule
+	self validateCurrentFule.
 ]
 
 { #category : 'accessing' }

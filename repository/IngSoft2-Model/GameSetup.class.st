@@ -14,7 +14,8 @@ Class {
 		'spaceShips',
 		'winnerSystem',
 		'riggedDiceConfigs',
-		'maximumRolledNumber'
+		'maximumRolledNumber',
+		'specialTiles'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -43,6 +44,8 @@ GameSetup >> createBoardInstanceWith: aDices andWith: aSpaceShips andWith: aWinn
 	
 	aBoard has: aCopyOfSpaceships .
 	aBoard follows: aWinnerSystem.
+
+	aBoard contains:specialTiles .
 	^aBoard.
 ]
 
