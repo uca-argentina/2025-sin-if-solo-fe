@@ -12,6 +12,11 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'initialization' }
+HyperGravity class >> in: aPosition requiringMinimumRoll: aValue [
+^self new initializeHyperGravityWith:aPosition requiringMinimumRoll: aValue.
+]
+
 { #category : 'abstract' }
 HyperGravity >> applyTo: aSpaceShip on: aGameBoard [
 	^ 3.

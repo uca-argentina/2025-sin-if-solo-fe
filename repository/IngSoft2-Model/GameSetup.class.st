@@ -146,3 +146,9 @@ GameSetup >> withRiggedDiceNumbers: aRiggedNumbers andNumberOfFaces: aNumberOfFa
 	^ { aRiggedNumbers . aNumberOfFaces }.
 	
 ]
+
+{ #category : 'initialization' }
+GameSetup >> withSpecialTiles:aSpecialTiles [
+specialTiles:=aSpecialTiles.
+
+]
