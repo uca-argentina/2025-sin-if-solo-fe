@@ -19,7 +19,10 @@ HyperGravity class >> in: aPosition requiringMinimumRoll: aValue [
 ]
 
 { #category : 'action' }
-HyperGravity >> applyConsequenceTo:aSpaceShip [
+HyperGravity >> applyConsequenceTo:allSpaceShips [
+
+| aSpaceShip |
+aSpaceShip:= allSpaceShips detect:[:spaceShip | spaceShip currentPosition = tilePosition ].
 aSpaceShip preventMovingUntilRollsAtLeast: minimumRollValue.
 
 ]

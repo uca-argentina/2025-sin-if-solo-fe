@@ -109,7 +109,7 @@ BoardGame >> move: aSpaceShip with: dices [
 	(aSpaceShip canMoveWith: rolledNumber) ifFalse: [^[aSpaceShip losesRound. aSpaceShip losesRound. ]].
 	aSpaceShip moveWith:rolledNumber onBoardOfSize: maximumSquares.
 	
-	(self validateInSpecialTile: aSpaceShip) ifTrue:[(self specialTileAt: (aSpaceShip currentPosition )) applyConsequenceTo:aSpaceShip ].
+	(self validateInSpecialTile: aSpaceShip) ifTrue:[(self specialTileAt: (aSpaceShip currentPosition )) applyConsequenceTo:aCopyOfSpaceships].
 
 	self validateInWormHole: aSpaceShip.
 ]

@@ -146,6 +146,44 @@ TileTest >> test4WhenAHyperGravityPositionIsOutOfTheBoardMaximumSizeThenTheGameC
    
 ]
 
+{ #category : 'tests' }
+TileTest >> test5WhenASpaceShipFallsToTheAtomicBombThenAllSpaceShipsMoveToTheStart [
+
+
+    | aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem |
+    aGameSetUp := GameSetup new.
+    aGameSetUp withNumberOfPlayers: 2.
+
+    aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {2. 4. 5. 9 } andNumberOfFaces: 10.}.
+
+    aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
+
+    aGameSetUp withSpecialTiles: {AtomicBomb in: 7}.
+
+    aGameSetUp withMaximumLapsToWin: 100.
+    aGameSetUp createGameInstance.
+
+    aPlayer1 := aGameSetUp spaceShips first.
+	aPlayer2 := aGameSetUp spaceShips second.
+
+    aBoard := aGameSetUp board.
+    aWinnerSystem := aGameSetUp winnerSystem.
+    aBoard playOneRound.
+    self assert: (aBoard positionOf: aPlayer1) equals: 2.
+    self assert: (aBoard currentFuleOf: aPlayer1) equals: 18.
+    self assert: (aBoard positionOf: aPlayer2) equals: 4.
+    self assert: (aBoard currentFuleOf: aPlayer2) equals: 16.
+    aBoard playOneRound.
+    self assert: (aBoard positionOf: aPlayer1) equals: 0.
+    self assert: (aBoard currentFuleOf: aPlayer1) equals: 13.
+    self assert: (aBoard positionOf: aPlayer2) equals: 9.
+    self assert: (aBoard currentFuleOf: aPlayer2) equals: 7.
+
+
+   
+]
+
 { #category : 'TileDistributorTest' }
 TileTest >> testReturnsADictionary [
 
