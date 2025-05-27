@@ -17,6 +17,12 @@ HyperGravity class >> in: aPosition requiringMinimumRoll: aValue [
 ^self new initializeHyperGravityWith:aPosition requiringMinimumRoll: aValue.
 ]
 
+{ #category : 'action' }
+HyperGravity >> applyConsequenceTo:aSpaceShip [
+aSpaceShip preventMovingUntilRollsAtLeast: minimumRollValue.
+
+]
+
 { #category : 'abstract' }
 HyperGravity >> applyTo: aSpaceShip on: aGameBoard [
 	^ 3.

@@ -121,6 +121,12 @@ SpaceShip >> originalSpaceShip: aPlayer [
 ]
 
 { #category : 'action' }
+SpaceShip >> preventMovingUntilRollsAtLeast: aNumber [
+    minimumRollRequired := aNumber.
+
+]
+
+{ #category : 'action' }
 SpaceShip >> rechargeFule [
 currentFule :=initialFule .
 ]

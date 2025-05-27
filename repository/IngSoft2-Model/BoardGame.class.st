@@ -160,6 +160,13 @@ BoardGame >> specialTileAt: aPosition [
 ]
 
 { #category : 'validating' }
+BoardGame >> validateInSpecialTile: aSpaceShip [
+    specialTiles ifNil: [ ^false ].
+
+    ^ specialTiles anySatisfy: [:tile | tile position = aSpaceShip currentPosition ]
+]
+
+{ #category : 'validating' }
 BoardGame >> validateInWormHole: aSpaceShip [
 
 	| originalPosition destination distance |
