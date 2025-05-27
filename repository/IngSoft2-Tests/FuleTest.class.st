@@ -29,7 +29,7 @@ FuleTest >> test010WhenASpaceShipSkipsATurnThenTheNextSpaceShipPlays [
 	self assert: (aBoard positionOf: aPlayer2) equals: 10.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 14.
 	
-	aBoard skipRoundFor: aPlayer1.
+	aBoard skipRoundAndRechargeFor: aPlayer1.
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 24.
@@ -169,10 +169,10 @@ FuleTest >> test4WhenSpaceShipDoesntHaveFuleThenLosesTwoTurnsAndThenItCanMoveAga
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 0.
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 0.
-	self assert: (aBoard currentFuleOf: aPlayer1) equals: 0.
+	self assert: (aBoard currentFuleOf: aPlayer1) equals: 24.
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 0.
-	self assert: (aBoard currentFuleOf: aPlayer1) equals: 0.
+	self assert: (aBoard currentFuleOf: aPlayer1) equals: 24.
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 10.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 14
@@ -209,14 +209,14 @@ FuleTest >> test5WhenMoreThanOneSpaceShipDoesntHaveFuleThenBothCantMoveForTwoTur
     self assert: (aBoard currentFuleOf: aPlayer2 ) equals: 0.
     aBoard playOneRound.
     self assert: (aBoard positionOf: aPlayer1 ) equals: 0.
-    self assert: (aBoard currentFuleOf: aPlayer1 ) equals: 0.
+    self assert: (aBoard currentFuleOf: aPlayer1 ) equals: 24.
     self assert: (aBoard positionOf: aPlayer2 ) equals: 0.
-    self assert: (aBoard currentFuleOf: aPlayer2 ) equals: 0.
+    self assert: (aBoard currentFuleOf: aPlayer2 ) equals: 24.
     aBoard playOneRound.
  self assert: (aBoard positionOf: aPlayer1 ) equals: 0.
-    self assert: (aBoard currentFuleOf: aPlayer1 ) equals: 0.
+    self assert: (aBoard currentFuleOf: aPlayer1 ) equals: 24.
     self assert: (aBoard positionOf: aPlayer2 ) equals: 0.
-    self assert: (aBoard currentFuleOf: aPlayer2 ) equals: 0.
+    self assert: (aBoard currentFuleOf: aPlayer2 ) equals: 24.
   aBoard playOneRound.
     self assert: (aBoard positionOf: aPlayer1 ) equals: 10.
     self assert: (aBoard currentFuleOf: aPlayer1 ) equals: 14.
@@ -297,7 +297,7 @@ FuleTest >> test8WhenASpaceShipChoosesToSkipARoundThenDosentMoveAndRechargesTheF
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 19.
-	aBoard skipRoundFor: aPlayer1.
+	aBoard skipRoundAndRechargeFor: aPlayer1.
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 24.
@@ -332,8 +332,8 @@ FuleTest >> test9WhenBothSpaceShipsSkipRoundThenTheyRechargeAllTheirFule [
 	self assert: (aBoard positionOf: aPlayer2) equals: 10.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 14.
 	
-	aBoard skipRoundFor: aPlayer1.
-	aBoard skipRoundFor: aPlayer2.
+	aBoard skipRoundAndRechargeFor: aPlayer1.
+	aBoard skipRoundAndRechargeFor: aPlayer2.
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 24.

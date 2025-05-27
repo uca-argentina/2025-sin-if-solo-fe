@@ -102,15 +102,15 @@ BoardGame >> initializationBoardGame: aNumber withWormHoleFrom: aY to: aZ [
 { #category : 'action' }
 BoardGame >> move: aSpaceShip with: dices [
 
-	| rolledNumber |
+	| rolledNumber  |
 	winnerSystem thereIsAWinner ifTrue:  [ ^ self] .
 	rolledNumber := self rolledNumberSumOf: dices.
-	"self validateSpecialTile:aSpaceShip whenMoveA:rolledNumber."
-	"aSpaceShip canMoveWith: rolledNumber ifFalse: [ ^self ]."
-	"(self validateInSpecialTile: aSpaceShip withRolledNumber: rolledNumber) ifFalse: [ ^ self ]."
-
+	
+	(aSpaceShip canMoveWith: rolledNumber) ifFalse: [^aSpaceShip losesOneTurn. ].
 	aSpaceShip moveWith:rolledNumber onBoardOfSize: maximumSquares.
 	
+	(self validateInSpecialTile: aSpaceShip) ifTrue:[(self specialTileAt: (aSpaceShip currentPosition )) applyConsequenceTo:aSpaceShip ].
+
 	self validateInWormHole: aSpaceShip.
 ]
 
@@ -127,7 +127,7 @@ BoardGame >> playOneRound [
 		aSpaceShip verifyCanPlayAgain.
 		aSpaceShip canPlay
 			ifTrue: [ self move: aSpaceShip with: dicesInGameBoard ]
-			ifFalse: [ aSpaceShip losesTurn ] ]
+			ifFalse: [ self skipRoundAndRechargeFor: (aSpaceShip asOriginalSpaceShip )] ]
 ]
 
 { #category : 'accessing' }
@@ -143,13 +143,20 @@ BoardGame >> rolledNumberSumOf: dices [
 ]
 
 { #category : 'action' }
-BoardGame >> skipRoundFor: aSpaceShip [
+BoardGame >> skipRoundAndRechargeFor: aSpaceShip [
 
 	| spaceShipCopy |
 	spaceShipCopy := aCopyOfSpaceships detect: [ :copy |
 		                 copy isCopyOf: aSpaceShip ].
 	spaceShipCopy losesTurn.
-	spaceShipCopy rechargeFule
+	spaceShipCopy rechargeFule.
+	
+]
+
+{ #category : 'accessing' }
+BoardGame >> specialTileAt: aPosition [
+    specialTiles ifNil: [ ^false ].
+    ^ specialTiles detect: [:tile | tile position = aPosition ] ifNone: [ false ].
 ]
 
 { #category : 'validating' }

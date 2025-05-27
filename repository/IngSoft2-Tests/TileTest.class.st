@@ -5,6 +5,41 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'tests' }
+TileTest >> testBanana [
+
+
+    | aGameSetUp aBoard aPlayer1  aWinnerSystem |
+    aGameSetUp := GameSetup new.
+    aGameSetUp withNumberOfPlayers: 1.
+
+    aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {2. 1. 5. 4 } andNumberOfFaces: 10.}.
+
+    aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
+
+    aGameSetUp withSpecialTiles:{(HyperGravity in: 2 requiringMinimumRoll: 4)}.
+
+    aGameSetUp withMaximumLapsToWin: 100.
+    aGameSetUp createGameInstance.
+
+    aPlayer1 := aGameSetUp spaceShips first.
+
+    aBoard := aGameSetUp board.
+    aWinnerSystem := aGameSetUp winnerSystem.
+    aBoard playOneRound.
+    self assert: (aBoard positionOf: aPlayer1) equals: 2.
+    self assert: (aBoard currentFuleOf: aPlayer1) equals: 18.
+    aBoard playOneRound.
+    self assert: (aBoard positionOf: aPlayer1) equals: 2.
+    self assert: (aBoard currentFuleOf: aPlayer1) equals: 18.
+    aBoard playOneRound.
+    self assert: (aBoard positionOf: aPlayer1) equals: 7.
+    self assert: (aBoard currentFuleOf: aPlayer1) equals: 13.
+
+   
+]
+
 { #category : 'TileDistributorTest' }
 TileTest >> testReturnsADictionary [
 

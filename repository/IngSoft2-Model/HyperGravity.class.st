@@ -27,3 +27,8 @@ HyperGravity >> initializeHyperGravityWith:aPosition requiringMinimumRoll: aValu
 tilePosition:=aPosition .
 minimumRollValue:=aValue .
 ]
+
+{ #category : 'accessing' }
+HyperGravity >> position [
+^tilePosition .
+]

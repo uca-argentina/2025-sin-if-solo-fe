@@ -13,7 +13,8 @@ Class {
 		'numberOfOrderToPlay',
 		'currentFule',
 		'numberOfLostTurns',
-		'initialFule'
+		'initialFule',
+		'minimumRollRequired'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -28,6 +29,12 @@ SpaceShip class >> inInitialPosition: aPosition [
 { #category : 'accessing' }
 SpaceShip >> asOriginalSpaceShip [
 ^originalSpaceShip.
+]
+
+{ #category : 'testing' }
+SpaceShip >> canMoveWith: rolledNumber [
+
+    ^ rolledNumber >= minimumRollRequired .
 ]
 
 { #category : 'testing' }
@@ -65,11 +72,18 @@ SpaceShip >> initializeSpaceShip: aPosition [
 	laps:=0.
 	currentPosition := aPosition.
 	numberOfLostTurns:=0.
+	minimumRollRequired := 0.
 ]
 
 { #category : 'testing' }
 SpaceShip >> isCopyOf: aPlayer [
     ^ originalSpaceShip == aPlayer.
+]
+
+{ #category : 'action' }
+SpaceShip >> losesOneTurn [ 
+	numberOfLostTurns := numberOfLostTurns + 2.
+
 ]
 
 { #category : 'action' }
@@ -132,8 +146,8 @@ SpaceShip >> validateCurrentFule [
 
 { #category : 'action' }
 SpaceShip >> verifyCanPlayAgain [
-
 	numberOfLostTurns = 2 ifFalse: [ ^ self ].
 	numberOfLostTurns := 0.
-	self rechargeFule.
+	"self rechargeFule."
+
 ]
