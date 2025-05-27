@@ -95,32 +95,6 @@ TileTest >> test2WhenThereAreDifferentHyperGravityTilesThenEachHeldsTheSpaceShip
 ]
 
 { #category : 'tests' }
-TileTest >> test3WhenAHyperGravityHasAGreaterRequiringRollThanTheMaximumRolledNumberThenTheGameCreationFails [
-
-
-    | aGameSetUp  |
-    aGameSetUp := GameSetup new.
-    aGameSetUp withNumberOfPlayers: 1.
-
-    aGameSetUp withRiggedDiceConfigs: {
-        aGameSetUp withRiggedDiceNumbers:  {2. 1. 5. 4 . 9 } andNumberOfFaces: 10.}.
-
-    aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
-
-    aGameSetUp withSpecialTiles:{(HyperGravity in: 2 requiringMinimumRoll: 11) .}.
-
-
-    aGameSetUp withMaximumLapsToWin: 100.
-
-	self should:[aGameSetUp createGameInstance ] 
-	raise: Error
-	withMessageText: 'The Requiring Minimum Roll Must Be Less Than Maximum Rolled Number'.
- 
-
-   
-]
-
-{ #category : 'tests' }
 TileTest >> test4WhenAHyperGravityPositionIsOutOfTheBoardMaximumSizeThenTheGameCreationFails [
 
 
@@ -180,6 +154,135 @@ TileTest >> test5WhenASpaceShipFallsToTheAtomicBombThenAllSpaceShipsMoveToTheSta
     self assert: (aBoard positionOf: aPlayer2) equals: 9.
     self assert: (aBoard currentFuleOf: aPlayer2) equals: 7.
 
+
+   
+]
+
+{ #category : 'tests' }
+TileTest >> test6WhenASpaceShipFallsInToTheBlackHoleThenItMoves4StepsBack [
+
+
+    | aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem |
+    aGameSetUp := GameSetup new.
+    aGameSetUp withNumberOfPlayers: 2.
+
+    aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {2. 4. 5. 9 } andNumberOfFaces: 10.}.
+
+    aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
+
+    aGameSetUp withSpecialTiles: {BlackHole in: 7}.
+
+    aGameSetUp withMaximumLapsToWin: 100.
+    aGameSetUp createGameInstance.
+
+    aPlayer1 := aGameSetUp spaceShips first.
+	 aPlayer2 := aGameSetUp spaceShips second.
+
+    aBoard := aGameSetUp board.
+    aWinnerSystem := aGameSetUp winnerSystem.
+    aBoard playOneRound.
+    self assert: (aBoard positionOf: aPlayer1) equals: 2.
+    self assert: (aBoard currentFuleOf: aPlayer1) equals: 18.
+    self assert: (aBoard positionOf: aPlayer2) equals: 4.
+    self assert: (aBoard currentFuleOf: aPlayer2) equals: 16.
+    aBoard playOneRound.
+    self assert: (aBoard positionOf: aPlayer1) equals: 3.
+    self assert: (aBoard currentFuleOf: aPlayer1) equals: 9.
+    self assert: (aBoard positionOf: aPlayer2) equals: 13.
+    self assert: (aBoard currentFuleOf: aPlayer2) equals: 7.
+
+
+   
+]
+
+{ #category : 'tests' }
+TileTest >> test7WhenASpaceShipFallsInToTheBlackHoleAndDoesntHaveEnoughFuleToBackThenItLoses2Turns [
+
+
+   | aGameSetUp aPlayer1 aBoard |
+
+	
+	aGameSetUp:= GameSetup new.
+	
+
+	aGameSetUp withNumberOfPlayers:1.
+	aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {8. 7. 1 . 1 . 4} andNumberOfFaces: 8.
+			aGameSetUp withRiggedDiceNumbers:  {2. 4. 1 . 2 . 1} andNumberOfFaces: 4.}.
+			
+	aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom:1 to: 1.
+	aGameSetUp withMaximumLapsToWin: 6.
+	aGameSetUp withSpecialTiles: {BlackHole in: 23}.
+	
+	aGameSetUp createGameInstance .
+
+	aPlayer1:=(aGameSetUp spaceShips) first.
+	aBoard:=(aGameSetUp board).
+	aBoard playOneRound.
+	aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer1 ) equals: 21.
+	self assert: (aBoard currentFuleOf: aPlayer1 ) equals: 3.
+	aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer1 ) equals: 0.
+	self assert: (aBoard currentFuleOf: aPlayer1 ) equals: 0.
+	aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer1 ) equals: 0.
+	aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer1 ) equals: 0.
+	aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer1 ) equals: 3.
+	self assert: (aBoard currentFuleOf: aPlayer1 ) equals: 21.
+]
+
+{ #category : 'tests' }
+TileTest >> testF1WhenAHyperGravityHasAGreaterRequiringRollThanTheMaximumRolledNumberThenTheGameCreationFails [
+
+
+    | aGameSetUp  |
+    aGameSetUp := GameSetup new.
+    aGameSetUp withNumberOfPlayers: 1.
+
+    aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {2. 1. 5. 4 . 9 } andNumberOfFaces: 10.}.
+
+    aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
+
+    aGameSetUp withSpecialTiles:{(HyperGravity in: 2 requiringMinimumRoll: 11) .}.
+
+
+    aGameSetUp withMaximumLapsToWin: 100.
+
+	self should:[aGameSetUp createGameInstance ] 
+	raise: Error
+	withMessageText: 'The Requiring Minimum Roll Must Be Less Than Maximum Rolled Number'.
+ 
+
+   
+]
+
+{ #category : 'tests' }
+TileTest >> testF2WhenASpecialTilePositionIsOutOfTheBoardMaximumSizeThenTheGameCreationFails [
+
+
+    | aGameSetUp  |
+    aGameSetUp := GameSetup new.
+    aGameSetUp withNumberOfPlayers: 1.
+
+    aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {2. 1. 5. 4 . 9 } andNumberOfFaces: 10.}.
+
+    aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
+
+    aGameSetUp withSpecialTiles:{(AtomicBomb in: 101) .}.
+
+
+    aGameSetUp withMaximumLapsToWin: 100.
+
+	self should:[aGameSetUp createGameInstance ] 
+	raise: Error
+	withMessageText: 'Tile position is out of board bounds.'.
+ 
 
    
 ]

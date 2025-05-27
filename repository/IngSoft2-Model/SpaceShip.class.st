@@ -89,9 +89,10 @@ SpaceShip >> losesRound [
 
 { #category : 'action' }
 SpaceShip >> moveTo: newPosition consuming: aDistance [
-
+	
 	currentFule := currentFule - aDistance.
-	currentPosition := newPosition
+	currentPosition := newPosition.
+	(currentFule <=0) ifTrue: [self losesRound].
 ]
 
 { #category : 'action' }
