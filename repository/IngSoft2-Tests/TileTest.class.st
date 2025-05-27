@@ -236,6 +236,34 @@ TileTest >> test7WhenASpaceShipFallsInToTheBlackHoleAndDoesntHaveEnoughFuleToBac
 ]
 
 { #category : 'tests' }
+TileTest >> test8Banana [
+|aGameSetUp aBoard aPlayer1 aWinnerSystem |
+
+	aGameSetUp:= GameSetup new.
+	aGameSetUp withNumberOfPlayers:1 .
+	
+	aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {5. 3. 3. 4 } andNumberOfFaces: 8.}.
+	aGameSetUp withABoardNumberOfSquares: 5 andWithWormHoleFrom:1 to: 1.
+	aGameSetUp withMaximumLapsToWin: 3. 
+	aGameSetUp withSpecialTiles: {BlackHole in: 3}.
+	aGameSetUp createGameInstance.
+
+	
+	aPlayer1:=(aGameSetUp spaceShips) first.
+
+	
+	aBoard:= (aGameSetUp board).
+	aWinnerSystem:= aGameSetUp winnerSystem.
+	
+	aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer1) equals: 5.
+	self assert: (aBoard completedLapsBy: aPlayer1) equals: 1.
+   aBoard playOneRound.
+   self assert: (aBoard positionOf: aPlayer1) equals: 4.
+]
+
+{ #category : 'tests' }
 TileTest >> testF1WhenAHyperGravityHasAGreaterRequiringRollThanTheMaximumRolledNumberThenTheGameCreationFails [
 
 
