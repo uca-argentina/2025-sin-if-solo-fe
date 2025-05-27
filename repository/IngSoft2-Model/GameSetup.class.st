@@ -108,6 +108,12 @@ GameSetup >> spaceShips [
 ^spaceShips
 ]
 
+{ #category : 'validating' }
+GameSetup >> validateSpecialTile [
+
+specialTiles do:[:specialTile|specialTile validateCreationIn: boardSize and: maximumRolledNumber].
+]
+
 { #category : 'accessing' }
 GameSetup >> winnerSystem [
 ^winnerSystem
