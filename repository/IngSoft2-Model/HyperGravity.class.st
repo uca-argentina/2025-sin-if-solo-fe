@@ -32,6 +32,11 @@ tilePosition:=aPosition .
 minimumRollValue:=aValue .
 ]
 
+{ #category : 'testing' }
+HyperGravity >> isHyperGravity [
+^true.
+]
+
 { #category : 'accessing' }
 HyperGravity >> position [
 ^tilePosition .

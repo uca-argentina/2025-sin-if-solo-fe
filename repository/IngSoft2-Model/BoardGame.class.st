@@ -159,6 +159,22 @@ amountOfAtomicBomb:= (specialTiles select: [:specialTile | specialTile isAtomicB
 ]
 
 { #category : 'validating' }
+BoardGame >> percentageOfBlackHole: aPercentage [
+| amountOfAtomicBomb |
+amountOfAtomicBomb:= (specialTiles select: [:specialTile | specialTile isBlackHole]) size.
+
+^amountOfAtomicBomb = ((aPercentage / 100) * maximumSquares )floor.
+]
+
+{ #category : 'validating' }
+BoardGame >> percentageOfHyperGravity: aPercentage [
+| amountOfAtomicBomb |
+amountOfAtomicBomb:= (specialTiles select: [:specialTile | specialTile isHyperGravity]) size.
+
+^amountOfAtomicBomb = ((aPercentage / 100) * maximumSquares )floor.
+]
+
+{ #category : 'validating' }
 BoardGame >> percentageOfHyperJump: aPercentage [
 | amountOfAtomicBomb |
 amountOfAtomicBomb:= (specialTiles select: [:specialTile | specialTile isHyperJump]) size.

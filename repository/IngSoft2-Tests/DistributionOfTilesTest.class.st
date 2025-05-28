@@ -110,3 +110,73 @@ DistributionOfTilesTest >> test3WhenABoardIsCreatedThen10PercentOfSquaresAreMoon
 
    
 ]
+
+{ #category : 'tests' }
+DistributionOfTilesTest >> test4WhenABoardIsCreatedThen20PercentOfSquaresAreHyperGravity [
+
+
+    | aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem |
+    aGameSetUp := GameSetup new.
+    aGameSetUp withNumberOfPlayers: 2.
+
+    aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {5. 2. 5. 9 } andNumberOfFaces: 10.}.
+
+    aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
+
+	 aGameSetUp withAdistribution.
+
+
+    aGameSetUp withMaximumLapsToWin: 100.
+    aGameSetUp createGameInstance.
+
+    aPlayer1 := aGameSetUp spaceShips first.
+	aPlayer2 := aGameSetUp spaceShips second.
+
+    aBoard := aGameSetUp board.
+    aWinnerSystem := aGameSetUp winnerSystem.
+    aBoard playOneRound.
+	
+	self assert: (aBoard percentageOfHyperGravity: 20).
+	
+	
+
+
+
+   
+]
+
+{ #category : 'tests' }
+DistributionOfTilesTest >> test5WhenABoardIsCreatedThen20PercentOfSquaresAreBlackHole [
+
+
+    | aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem |
+    aGameSetUp := GameSetup new.
+    aGameSetUp withNumberOfPlayers: 2.
+
+    aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {5. 2. 5. 9 } andNumberOfFaces: 10.}.
+
+    aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
+
+	 aGameSetUp withAdistribution.
+
+
+    aGameSetUp withMaximumLapsToWin: 100.
+    aGameSetUp createGameInstance.
+
+    aPlayer1 := aGameSetUp spaceShips first.
+	aPlayer2 := aGameSetUp spaceShips second.
+
+    aBoard := aGameSetUp board.
+    aWinnerSystem := aGameSetUp winnerSystem.
+    aBoard playOneRound.
+	
+	self assert: (aBoard percentageOfBlackHole: 20).
+	
+	
+
+
+
+   
+]

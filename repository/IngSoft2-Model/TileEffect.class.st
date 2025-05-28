@@ -22,6 +22,16 @@ TileEffect >> isAtomicBomb [
 ]
 
 { #category : 'testing' }
+TileEffect >> isBlackHole [
+^false.
+]
+
+{ #category : 'testing' }
+TileEffect >> isHyperGravity [
+^false.
+]
+
+{ #category : 'testing' }
 TileEffect >> isHyperJump [
 
 ^false.

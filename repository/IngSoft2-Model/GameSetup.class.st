@@ -134,14 +134,17 @@ GameSetup >> withABoardNumberOfSquares: maximumSquares andWithWormHoleFrom: entr
 { #category : 'initialization' }
 GameSetup >> withAdistribution [ 
 
-| avaliblePosition atomicCount hyperJumpCount moonWalkCount |
+| avaliblePosition atomicCount hyperJumpCount moonWalkCount hyperGravityCount blackHoleCount |
 
 avaliblePosition := OrderedCollection new.
 1 to: boardSize do: [:aNumber | avaliblePosition add: aNumber ].
 
+avaliblePosition := avaliblePosition shuffle .
 atomicCount := (boardSize * 0.02) floor.
 hyperJumpCount := (boardSize * 0.08) floor.
 moonWalkCount := (boardSize * 0.10) floor.
+hyperGravityCount := (boardSize * 0.20) floor.
+blackHoleCount := (boardSize * 0.20) floor.
 
 specialTiles := OrderedCollection new.
 
@@ -161,6 +164,17 @@ specialTiles := OrderedCollection new.
     | pos |
     pos := avaliblePosition removeFirst.
     specialTiles add: (MoonWalk in: pos moveBack:aCount).
+].
+
+1 to: hyperGravityCount do: [:aCount |
+    | pos |
+    pos := avaliblePosition removeFirst.
+    specialTiles add: (HyperGravity in: pos requiringMinimumRoll:1 ).
+].
+1 to: blackHoleCount do: [:aCount |
+    | pos |
+    pos := avaliblePosition removeFirst.
+    specialTiles add: (BlackHole in: pos).
 ].
 
 

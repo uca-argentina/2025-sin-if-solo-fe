@@ -29,6 +29,11 @@ BlackHole >> initializeBlackHoleIn: aPosition [
 tilePosition:=aPosition.
 ]
 
+{ #category : 'testing' }
+BlackHole >> isBlackHole [
+^true.
+]
+
 { #category : 'accessing' }
 BlackHole >> position [
 ^tilePosition.
