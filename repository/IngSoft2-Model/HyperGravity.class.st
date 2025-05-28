@@ -27,6 +27,15 @@ aSpaceShip preventMovingUntilRollsAtLeast: minimumRollValue.
 
 ]
 
+{ #category : 'action' }
+HyperGravity >> applyConsequenceTo:allSpaceShips onBoardOfSize: maximumSquares [
+
+| aSpaceShip |
+aSpaceShip:= allSpaceShips detect:[:spaceShip | spaceShip currentPosition = tilePosition ].
+aSpaceShip preventMovingUntilRollsAtLeast: minimumRollValue.
+
+]
+
 { #category : 'abstract' }
 HyperGravity >> applyTo: aSpaceShip on: aGameBoard [
 	^ 3.

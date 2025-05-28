@@ -98,7 +98,7 @@ SpaceShip >> moveTo: newPosition consuming: aDistance [
 	
 	currentFule := currentFule - aDistance.
 	currentPosition := newPosition.
-	self checkcurrentPosition ifTrue:[currentPosition := 4].
+	
 	(currentFule <=0) ifTrue: [self losesRound].
 ]
 

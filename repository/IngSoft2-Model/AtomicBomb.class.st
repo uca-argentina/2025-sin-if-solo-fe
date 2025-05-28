@@ -24,6 +24,13 @@ allSpaceShips do:[:spaceShip|spaceShip moveTo: 0 consuming: 0].
 
 ]
 
+{ #category : 'action' }
+AtomicBomb >> applyConsequenceTo:allSpaceShips onBoardOfSize: maximumSquares [
+allSpaceShips do:[:spaceShip|spaceShip moveTo: 0 consuming: 0].
+
+
+]
+
 { #category : 'abstract' }
 AtomicBomb >> applyTo: aSpaceShip on: aGameBoard [
 	^ 5.

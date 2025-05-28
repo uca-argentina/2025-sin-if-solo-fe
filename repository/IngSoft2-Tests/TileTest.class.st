@@ -236,7 +236,7 @@ TileTest >> test7WhenASpaceShipFallsInToTheBlackHoleAndDoesntHaveEnoughFuleToBac
 ]
 
 { #category : 'tests' }
-TileTest >> test8Banana [
+TileTest >> test8WhenSpaceshipFallsInBlackHoleOfLaterLapThenItGoesToPreviousLap [
 |aGameSetUp aBoard aPlayer1 aWinnerSystem |
 
 	aGameSetUp:= GameSetup new.
@@ -258,9 +258,40 @@ TileTest >> test8Banana [
 	
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 5.
+	self assert: (aBoard currentFuleOf: aPlayer1 ) equals:11. 
 	self assert: (aBoard completedLapsBy: aPlayer1) equals: 1.
    aBoard playOneRound.
    self assert: (aBoard positionOf: aPlayer1) equals: 4.
+	self assert: (aBoard completedLapsBy: aPlayer1) equals: 0.
+	self assert: (aBoard currentFuleOf: aPlayer1 ) equals:4.
+]
+
+{ #category : 'tests' }
+TileTest >> test9WhenSpaceShipFallsInBlackHoleAtTheBeginingOfTheGameThenItGoesBackToInitialPosition [
+|aGameSetUp aBoard aPlayer1 aWinnerSystem |
+
+	aGameSetUp:= GameSetup new.
+	aGameSetUp withNumberOfPlayers:1 .
+	
+	aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {3. 1. 3. 4 } andNumberOfFaces: 8.}.
+	aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom:1 to: 1.
+	aGameSetUp withMaximumLapsToWin: 3. 
+	aGameSetUp withSpecialTiles: {BlackHole in: 3}.
+	aGameSetUp createGameInstance.
+
+	
+	aPlayer1:=(aGameSetUp spaceShips) first.
+
+	
+	aBoard:= (aGameSetUp board).
+	aWinnerSystem:= aGameSetUp winnerSystem.
+	
+	aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer1) equals: 0.
+	self assert: (aBoard completedLapsBy: aPlayer1) equals: 0.
+	self assert: (aBoard currentFuleOf: aPlayer1) equals: 10.
+
 ]
 
 { #category : 'tests' }
