@@ -131,6 +131,12 @@ GameSetup >> withABoardNumberOfSquares: maximumSquares andWithWormHoleFrom: entr
 ]
 
 { #category : 'initialization' }
+GameSetup >> withBoardsLengthInParsec:aBoardSizeInParsec [
+
+boardSizeInParsec:=aBoardSizeInParsec.
+]
+
+{ #category : 'initialization' }
 GameSetup >> withMaximumLapsToWin: aLapsToWin [
   lapsToWin := aLapsToWin.
 ]

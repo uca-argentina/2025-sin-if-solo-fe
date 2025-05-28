@@ -41,6 +41,24 @@ HyperJump >> calculateParsecDistribution: boardLength [
 	
 ]
 
+{ #category : 'accessing' }
+HyperJump >> getParsecToMove [
+
+ | nextParsec |
+    nextParsec := parsecsToMove first.
+    parsecsToMove removeFirst.
+    parsecsToMove add: nextParsec.
+    ^ nextParsec
+]
+
+{ #category : 'initialization' }
+HyperJump >> initializeHyperJumpIn: aPosition parsecToMove: someParsecsToMove [
+tilePosition:=aPosition .
+parsecsToMove :=OrderedCollection new.
+parsecsToMove addAll:((someParsecsToMove)sort: [:aParsec :anotherParsec | aParsec> anotherParsec]).
+
+]
+
 { #category : 'creation' }
 HyperJump >> initializeWithBoardLength: boardLength [
 	super initialize.
@@ -56,4 +74,13 @@ HyperJump >> parsecDestinations [
 { #category : 'accessing' }
 HyperJump >> position [
 ^tilePosition .
+]
+
+{ #category : 'validating' }
+HyperJump >> validateCreationIn: boardSize and: maximumRolledNumber [
+
+tilePosition > boardSize ifTrue: [
+   Error signal: 'Tile position is out of board bounds.'.
+].
+
 ]
