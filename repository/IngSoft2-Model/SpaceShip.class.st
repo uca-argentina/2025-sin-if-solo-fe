@@ -71,12 +71,6 @@ SpaceShip >> currentPosition [
 	^ currentPosition
 ]
 
-{ #category : 'action' }
-SpaceShip >> goBack:amountToMoveBack [ 
-
-self moveTo: (currentPosition - amountToMoveBack ) consuming:amountToMoveBack . 
-]
-
 { #category : 'accessing' }
 SpaceShip >> initialFule: ainitialFule [
 	currentFule := ainitialFule.

@@ -96,6 +96,45 @@ TileTest >> test11WhenASpaceShipDoesntHaveEnoughFuelToMoveBackThenLosesTurnsAndG
 ]
 
 { #category : 'tests' }
+TileTest >> test12Banana [
+
+
+   | aGameSetUp aPlayer1 aPlayer2 aBoard |
+	aGameSetUp:= GameSetup new.
+	
+	aGameSetUp withNumberOfPlayers:2.
+	aGameSetUp withRiggedDiceConfigs: {
+       aGameSetUp withRiggedDiceNumbers:  {1. 2. 1 . 1 . 8. 5. 1. 1 } andNumberOfFaces: 8.
+		aGameSetUp withRiggedDiceNumbers:  {1. 3. 1 . 2 . 3. 2. 1 . 1 } andNumberOfFaces: 4.}.
+			
+	aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom:1 to: 1.
+	aGameSetUp withMaximumLapsToWin: 6.
+	aGameSetUp withSpecialTiles: {MoonWalk in: 5 moveBack: 4}.
+	aGameSetUp createGameInstance .
+	aPlayer1:=(aGameSetUp spaceShips) first.
+	aPlayer2:=(aGameSetUp spaceShips) second.
+	
+	aBoard:=(aGameSetUp board).
+	aBoard playOneRound.
+
+	self assert: (aBoard positionOf: aPlayer1 ) equals: 0.
+	self assert: (aBoard currentFuleOf: aPlayer1 ) equals: 20.
+	self assert: (aBoard completedLapsBy: aPlayer1 ) equals: 0.
+	
+	self assert: (aBoard positionOf: aPlayer2 ) equals: 5.
+	self assert: (aBoard currentFuleOf: aPlayer2 ) equals: 19.
+	self assert: (aBoard completedLapsBy: aPlayer2 ) equals: 0.
+	aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer1 ) equals: 2.
+	self assert: (aBoard currentFuleOf: aPlayer1 ) equals: 18.
+	self assert: (aBoard completedLapsBy: aPlayer1 ) equals: 0.
+	self assert: (aBoard positionOf: aPlayer2 ) equals: 8.
+	self assert: (aBoard currentFuleOf: aPlayer2 ) equals: 16.
+	self assert: (aBoard completedLapsBy: aPlayer2 ) equals: 0.
+	
+]
+
+{ #category : 'tests' }
 TileTest >> test1WhenMinimumRollIsntMetThenTheSpaceshipIsHeldByTheHyperGravity [
 
 
