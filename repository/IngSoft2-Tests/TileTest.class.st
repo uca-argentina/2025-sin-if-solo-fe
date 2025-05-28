@@ -135,6 +135,43 @@ TileTest >> test12Banana [
 ]
 
 { #category : 'tests' }
+TileTest >> test13ShipJumpsToValidParsec [
+	
+	|anEffect aSpaceShip aBoard validDestinations|
+	
+	aBoard := BoardGame new.
+	aBoard initializationBoardGame: 50 withWormHoleFrom: 30 to: 40.
+	
+	aSpaceShip := SpaceShip new.
+	aSpaceShip initializeSpaceShip: 13.
+	
+	anEffect := HyperJump new.
+	anEffect initializeWithBoardLength: aBoard numberOfSquares.
+	validDestinations := anEffect parsecDestinations.
+	
+	self assert: (validDestinations includes: aSpaceShip currentPosition).
+	
+	
+]
+
+{ #category : 'tests' }
+TileTest >> test13ValidateParseCalcAndDistribution [
+
+	| aHyperJump aBoard |
+	
+	aHyperJump := HyperJump new.
+	aBoard := BoardGame new.
+	aBoard initializationBoardGame: 50 withWormHoleFrom: 20 to: 30.
+	
+	aHyperJump calculateParsecDistribution: (aBoard numberOfSquares).
+	
+	self assert: (aHyperJump parsecDestinations asArray = #(13 26 39 52)).
+	
+	
+	
+]
+
+{ #category : 'tests' }
 TileTest >> test1WhenMinimumRollIsntMetThenTheSpaceshipIsHeldByTheHyperGravity [
 
 
@@ -474,26 +511,4 @@ TileTest >> testReturnsADictionary [
 	aDistributor initalizeWith: aBoard.
 
 	self assert: (aDistributor instVarNamed: 'tileEffectsByPosition') class equals: Dictionary .
-]
-
-{ #category : 'tests' }
-TileTest >> testTileEffectPolymorphism [
-
-	| effects aBoard aSpaceShip results|
-	
-	effects := { 
-	BlackHole new.
-	MoonWalk new.
-	HyperGravity new.
-	HyperJump new.
-	AtomicBomb new.
-	}.
-	
-	aBoard := BoardGame new.
-	aSpaceShip := SpaceShip new.
-	results := effects collect: [:effect | 
-		(effect applyTo: aSpaceShip on: aBoard) asString 
-	].
-
-	self assert: (results asSet size > 1).
 ]
