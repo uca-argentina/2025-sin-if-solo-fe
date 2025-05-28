@@ -26,6 +26,11 @@ SpaceShip class >> inInitialPosition: aPosition [
 	^ self new initializeSpaceShip: aPosition
 ]
 
+{ #category : 'action' }
+SpaceShip >> adjustLapBy: anAmount [
+laps:=laps+anAmount.
+]
+
 { #category : 'accessing' }
 SpaceShip >> asOriginalSpaceShip [
 ^originalSpaceShip.
