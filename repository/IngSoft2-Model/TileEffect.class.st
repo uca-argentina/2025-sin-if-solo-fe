@@ -16,6 +16,22 @@ TileEffect >> applyConsequenceTo: allSpaceShips onBoardOfSize: aBoard [
 	^ self subclassResponsibility
 ]
 
+{ #category : 'testing' }
+TileEffect >> isAtomicBomb [
+^ false.
+]
+
+{ #category : 'testing' }
+TileEffect >> isHyperJump [
+
+^false.
+]
+
+{ #category : 'testing' }
+TileEffect >> isMoonWalk [
+^false.
+]
+
 { #category : 'accessing' }
 TileEffect >> position [
 	^ self subclassResponsibility

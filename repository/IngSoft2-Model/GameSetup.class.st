@@ -16,7 +16,8 @@ Class {
 		'riggedDiceConfigs',
 		'maximumRolledNumber',
 		'boardSizeInParsec',
-		'specialTiles'
+		'specialTiles',
+		'tilesSetedPositions'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -131,6 +132,42 @@ GameSetup >> withABoardNumberOfSquares: maximumSquares andWithWormHoleFrom: entr
 ]
 
 { #category : 'initialization' }
+GameSetup >> withAdistribution [ 
+
+| avaliblePosition atomicCount hyperJumpCount moonWalkCount |
+
+avaliblePosition := OrderedCollection new.
+1 to: boardSize do: [:aNumber | avaliblePosition add: aNumber ].
+
+atomicCount := (boardSize * 0.02) floor.
+hyperJumpCount := (boardSize * 0.08) floor.
+moonWalkCount := (boardSize * 0.10) floor.
+
+specialTiles := OrderedCollection new.
+
+1 to: atomicCount do: [:aCount |
+    | pos |
+    pos := avaliblePosition removeFirst.
+    specialTiles add: (AtomicBomb in: pos).
+].
+
+1 to: hyperJumpCount do: [:aCount |
+    | pos |
+    pos := avaliblePosition removeFirst.
+    specialTiles add: (HyperJump in: pos parsecToMove: {1. 9 .7}).
+].
+
+1 to: moonWalkCount do: [:aCount |
+    | pos |
+    pos := avaliblePosition removeFirst.
+    specialTiles add: (MoonWalk in: pos moveBack:aCount).
+].
+
+
+
+]
+
+{ #category : 'initialization' }
 GameSetup >> withBoardsLengthInParsec:aBoardSizeInParsec [
 
 boardSizeInParsec:=aBoardSizeInParsec.
@@ -165,6 +202,17 @@ GameSetup >> withRiggedDiceNumbers: aRiggedNumbers andNumberOfFaces: aNumberOfFa
 GameSetup >> withSpecialTiles:aSpecialTiles [
 
 specialTiles:=aSpecialTiles.
+
+
+
+]
+
+{ #category : 'initialization' }
+GameSetup >> withSpecialTilesPosition: positions [
+
+tilesSetedPositions:= OrderedCollection new.
+tilesSetedPositions:= positions.
+
 
 
 

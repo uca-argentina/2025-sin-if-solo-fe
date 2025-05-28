@@ -28,6 +28,11 @@ AtomicBomb >> initializeAtomicBombIn: aPosition [
 tilePosition:= aPosition.
 ]
 
+{ #category : 'testing' }
+AtomicBomb >> isAtomicBomb [
+^ true.
+]
+
 { #category : 'accessing' }
 AtomicBomb >> position [
 ^tilePosition .
