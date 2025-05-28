@@ -4,11 +4,45 @@ Moves the spaceship 4 spaces back. In the case that it doesn't have enough fuel,
 Class {
 	#name : 'MoonWalk',
 	#superclass : 'TileEffect',
+	#instVars : [
+		'amountToMoveBack',
+		'tilePosition'
+	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'action' }
+MoonWalk >> applyConsequenceTo: allSpaceShips onBoardOfSize: maximumSquares [
+
+
+	(allSpaceShips reject: [ :spaceShip |
+		 spaceShip currentPosition = tilePosition ]) do: [ :spaceShip |
+		spaceShip goBack: amountToMoveBack ]
+]
+
 { #category : 'abstract' }
 MoonWalk >> applyTo: aSpaceShip on: aGameBoard [
 	^ 2.
+]
+
+{ #category : 'initialization' }
+MoonWalk >> initializeMoonWalkIn: aPosition moveBack:anAmount [
+tilePosition:=aPosition .
+amountToMoveBack:=anAmount.
+
+]
+
+{ #category : 'accessing' }
+MoonWalk >> position [
+^tilePosition .
+]
+
+{ #category : 'validating' }
+MoonWalk >> validateCreationIn: boardSize and: maximumRolledNumber [
+
+tilePosition > boardSize ifTrue: [
+   Error signal: 'Tile position is out of board bounds.'.
+].
+
 ]

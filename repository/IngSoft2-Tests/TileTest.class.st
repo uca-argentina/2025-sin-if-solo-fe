@@ -17,6 +17,85 @@ TileTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessa
 ]
 
 { #category : 'tests' }
+TileTest >> test10WhenTheSpaceShipFallsInMoonWalkThenAllTheOtherSpaceShipsMoveBack [
+
+|aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem |
+
+	aGameSetUp:= GameSetup new.
+	aGameSetUp withNumberOfPlayers:2 .
+	
+	aGameSetUp withRiggedDiceConfigs: {
+        aGameSetUp withRiggedDiceNumbers:  {7. 5. 3. 4 } andNumberOfFaces: 8.}.
+	aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom:1 to: 2.
+	aGameSetUp withMaximumLapsToWin: 3. 
+	aGameSetUp withSpecialTiles: {MoonWalk in: 5 moveBack:2 }.
+	aGameSetUp createGameInstance.
+	aPlayer1:=(aGameSetUp spaceShips) first.
+	aPlayer2:=(aGameSetUp spaceShips) second.
+	
+	aBoard:= (aGameSetUp board).
+	aWinnerSystem:= aGameSetUp winnerSystem.
+	
+	aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer1) equals: 5.
+	self assert: (aBoard currentFuleOf: aPlayer1) equals: 7.
+	self assert: (aBoard positionOf: aPlayer2) equals: 5.
+	self assert: (aBoard currentFuleOf: aPlayer2) equals: 11.
+	
+	aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer1) equals: 8.
+	self assert: (aBoard currentFuleOf: aPlayer1) equals: 4.
+	self assert: (aBoard positionOf: aPlayer2) equals: 9.
+	self assert: (aBoard currentFuleOf: aPlayer2) equals: 7.
+
+]
+
+{ #category : 'tests' }
+TileTest >> test11WhenASpaceShipDoesntHaveEnoughFuelToMoveBackThenLosesTurnsAndGoBackToInitialPosition [
+
+   | aGameSetUp aPlayer1 aPlayer2 aBoard |
+	aGameSetUp:= GameSetup new.
+	
+	aGameSetUp withNumberOfPlayers:2.
+	aGameSetUp withRiggedDiceConfigs: {
+       aGameSetUp withRiggedDiceNumbers:  {8. 7. 1 . 1 . 8. 5. 1. 1 } andNumberOfFaces: 8.
+		aGameSetUp withRiggedDiceNumbers:  {2. 4. 1 . 2 . 3. 2. 1 . 1 } andNumberOfFaces: 4.}.
+			
+	aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom:1 to: 1.
+	aGameSetUp withMaximumLapsToWin: 6.
+	aGameSetUp withSpecialTiles: {MoonWalk in: 23 moveBack: 4}.
+	aGameSetUp createGameInstance .
+	aPlayer1:=(aGameSetUp spaceShips) first.
+	aPlayer2:=(aGameSetUp spaceShips) second.
+	
+	aBoard:=(aGameSetUp board).
+	aBoard playOneRound.
+	aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer1 ) equals: 12.
+	self assert: (aBoard currentFuleOf: aPlayer1 ) equals: 12.
+	self assert: (aBoard positionOf: aPlayer2 ) equals: 14.
+	self assert: (aBoard currentFuleOf: aPlayer2 ) equals: 10.
+	aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer1 ) equals: 23.
+	self assert: (aBoard currentFuleOf: aPlayer1 ) equals: 1.
+	self assert: (aBoard positionOf: aPlayer2 ) equals: 0.
+	self assert: (aBoard currentFuleOf: aPlayer2 ) equals: 0.
+	aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer2 ) equals: 0.
+	self assert: (aBoard currentFuleOf: aPlayer2 ) equals: 24.
+	aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer2 ) equals: 0.
+	self assert: (aBoard currentFuleOf: aPlayer2 ) equals: 24.
+	aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer2 ) equals: 2.
+	self assert: (aBoard currentFuleOf: aPlayer2 ) equals: 22.
+
+	
+	
+	
+]
+
+{ #category : 'tests' }
 TileTest >> test1WhenMinimumRollIsntMetThenTheSpaceshipIsHeldByTheHyperGravity [
 
 
