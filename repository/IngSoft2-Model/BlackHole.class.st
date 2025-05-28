@@ -4,9 +4,6 @@ Moves the spaceship 4 spaces back. In the case that it doesn't have enough fuel,
 Class {
 	#name : 'BlackHole',
 	#superclass : 'TileEffect',
-	#instVars : [
-		'tilePosition'
-	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
@@ -17,12 +14,12 @@ BlackHole class >> in: aPosition [
 ]
 
 { #category : 'action' }
-BlackHole >> applyConsequenceTo: allSpaceShips onBoardOfSize: maximumSquares [
+BlackHole >> applyConsequenceTo: allSpaceShips onBoardOfSize: aBoard [
     
 | aSpaceShip|
     
     aSpaceShip := allSpaceShips detect: [ :spaceShip | spaceShip currentPosition = tilePosition ].
-	aSpaceShip goBack: 4 onBoardOfSize: maximumSquares.
+	aSpaceShip goBack: 4 onBoardOfSize: (aBoard numberOfSquares ).
   
 ]
 

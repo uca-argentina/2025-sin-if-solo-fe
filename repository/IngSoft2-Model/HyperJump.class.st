@@ -6,8 +6,8 @@ Class {
 	#superclass : 'TileEffect',
 	#instVars : [
 		'parsecDestinations',
-		'tilePosition',
-		'parsecsToMove'
+		'parsecsToMove',
+		'aParsecToMove'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -19,24 +19,24 @@ HyperJump class >> in: aPosition parsecToMove: someParsecsToMove [
 ]
 
 { #category : 'action' }
-HyperJump >> applyConsequenceTo:allSpaceShips onBoardOfSize: maximumSquares [
+HyperJump >> applyConsequenceTo:allSpaceShips onBoardOfSize: aBoard [
 
-|  aSpaceShip aParsecToMove|
+|  aSpaceShip  squaresToMove|
 aParsecToMove:= self getParsecToMove.
 
 aSpaceShip:= allSpaceShips detect:[:spaceShip | spaceShip currentPosition = tilePosition ].
-aSpaceShip moveTo:(aParsecToMove +aSpaceShip currentPosition )consuming: aParsecToMove.
+
+squaresToMove:=aSpaceShip currentPosition + (self calculateParsecDistribution: aBoard).
+
+
+aSpaceShip moveTo:(squaresToMove)consuming: (self calculateParsecDistribution: aBoard).
 ]
 
 { #category : 'calculation' }
-HyperJump >> calculateParsecDistribution: boardLength [
-	| jump numberOfHyperJumps |
+HyperJump >> calculateParsecDistribution: aBoard [
 	
-	numberOfHyperJumps := (boardLength*0.08) rounded .
+	^ aBoard squaresInParsec:aParsecToMove.
 	
-	jump := (boardLength/numberOfHyperJumps) rounded .
-	
-	parsecDestinations := (1 to: numberOfHyperJumps) collect: [ :i | i * jump ].
 
 	
 ]
@@ -57,13 +57,6 @@ tilePosition:=aPosition .
 parsecsToMove :=OrderedCollection new.
 parsecsToMove addAll:((someParsecsToMove)sort: [:aParsec :anotherParsec | aParsec> anotherParsec]).
 
-]
-
-{ #category : 'creation' }
-HyperJump >> initializeWithBoardLength: boardLength [
-	super initialize.
-	self calculateParsecDistribution: boardLength.
-	^ self.
 ]
 
 { #category : 'accessing' }

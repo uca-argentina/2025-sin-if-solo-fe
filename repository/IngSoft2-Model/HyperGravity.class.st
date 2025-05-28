@@ -5,7 +5,6 @@ Class {
 	#name : 'HyperGravity',
 	#superclass : 'TileEffect',
 	#instVars : [
-		'tilePosition',
 		'minimumRollValue'
 	],
 	#category : 'IngSoft2-Model',
@@ -19,7 +18,7 @@ HyperGravity class >> in: aPosition requiringMinimumRoll: aValue [
 ]
 
 { #category : 'action' }
-HyperGravity >> applyConsequenceTo:allSpaceShips onBoardOfSize: maximumSquares [
+HyperGravity >> applyConsequenceTo:allSpaceShips onBoardOfSize: aBoard [
 
 | aSpaceShip |
 aSpaceShip:= allSpaceShips detect:[:spaceShip | spaceShip currentPosition = tilePosition ].

@@ -210,6 +210,37 @@ TileTest >> test14WhenSpaceShipFallsInHyperJumpThenItAdvancesTheAmountOfParsecs 
 ]
 
 { #category : 'tests' }
+TileTest >> test15Banana [
+
+	| aGameSetUp aPlayer1  aBoard |
+	aGameSetUp := GameSetup new.
+
+	aGameSetUp withNumberOfPlayers: 2.
+	aGameSetUp withRiggedDiceConfigs: {
+			(aGameSetUp
+				 withRiggedDiceNumbers: { 2. 5. 8. 2. 5. 5. 5. 5 }
+				 andNumberOfFaces: 8).
+			(aGameSetUp
+				 withRiggedDiceNumbers: { 2. 1. 4. 1. 1. 1. 1. 1 }
+				 andNumberOfFaces: 4) }.
+
+	aGameSetUp withABoardNumberOfSquares: 10 andWithWormHoleFrom: 1 to: 1.
+	aGameSetUp withBoardsLengthInParsec:20. "1 cuadrados son 2 parsec"
+	aGameSetUp withMaximumLapsToWin: 6.
+	aGameSetUp withSpecialTiles: { (HyperJump in: 4 parsecToMove: {2 .1 .1 .1}) }.
+	aGameSetUp createGameInstance.
+	aPlayer1 := aGameSetUp spaceShips first.
+	aBoard := aGameSetUp board.
+	aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer1) equals: 5.
+	self assert:(aBoard currentFuleOf:aPlayer1 )equals: 19.
+	
+	
+
+
+]
+
+{ #category : 'tests' }
 TileTest >> test1WhenMinimumRollIsntMetThenTheSpaceshipIsHeldByTheHyperGravity [
 
 

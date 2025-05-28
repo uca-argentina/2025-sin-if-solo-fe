@@ -4,9 +4,6 @@ Moves the spaceship 4 spaces back. In the case that it doesn't have enough fuel,
 Class {
 	#name : 'AtomicBomb',
 	#superclass : 'TileEffect',
-	#instVars : [
-		'tilePosition'
-	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
@@ -18,7 +15,8 @@ AtomicBomb class >> in: aPosition [
 ]
 
 { #category : 'action' }
-AtomicBomb >> applyConsequenceTo:allSpaceShips onBoardOfSize: maximumSquares [
+AtomicBomb >> applyConsequenceTo:allSpaceShips onBoardOfSize: aBoard [
+
 allSpaceShips do:[:spaceShip|spaceShip moveTo: 0 consuming: 0].
 
 

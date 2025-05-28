@@ -5,8 +5,7 @@ Class {
 	#name : 'MoonWalk',
 	#superclass : 'TileEffect',
 	#instVars : [
-		'amountToMoveBack',
-		'tilePosition'
+		'amountToMoveBack'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -18,14 +17,14 @@ MoonWalk class >> in:aPosition moveBack:anAmount [
 ]
 
 { #category : 'action' }
-MoonWalk >> applyConsequenceTo: allSpaceShips onBoardOfSize: maximumSquares [
+MoonWalk >> applyConsequenceTo: allSpaceShips onBoardOfSize: aBoard [
 
 | affectedShips |
 
 	affectedShips := allSpaceShips reject: [ :ship | ship currentPosition = tilePosition ].
 
 	affectedShips do: [ :ship |
-		ship goBack: amountToMoveBack onBoardOfSize: maximumSquares ].
+		ship goBack: amountToMoveBack onBoardOfSize: (aBoard numberOfSquares) ].
 
 ]
 

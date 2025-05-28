@@ -15,8 +15,8 @@ Class {
 		'winnerSystem',
 		'riggedDiceConfigs',
 		'maximumRolledNumber',
-		'specialTiles',
-		'boardSizeInParsec'
+		'boardSizeInParsec',
+		'specialTiles'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -165,5 +165,7 @@ GameSetup >> withRiggedDiceNumbers: aRiggedNumbers andNumberOfFaces: aNumberOfFa
 GameSetup >> withSpecialTiles:aSpecialTiles [
 
 specialTiles:=aSpecialTiles.
+
+
 
 ]

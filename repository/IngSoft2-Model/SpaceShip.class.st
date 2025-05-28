@@ -73,45 +73,23 @@ SpaceShip >> currentPosition [
 
 { #category : 'action' }
 SpaceShip >> goBack: amountToMoveBack onBoardOfSize: maximumSquares [
+
 	| aPositionToMove amountOfFuel |
 	amountOfFuel := amountToMoveBack.
 	aPositionToMove := self currentPosition - amountToMoveBack.
-	
+
 	aPositionToMove < 0 ifTrue: [
 		aPositionToMove := maximumSquares - aPositionToMove abs.
 		self adjustLapBy: -1 ].
 
 	self currentLap < 0 ifTrue: [
-		amountOfFuel := amountOfFuel + (self currentPosition - amountToMoveBack).
+		amountOfFuel := amountOfFuel
+		                + (self currentPosition - amountToMoveBack).
 		aPositionToMove := 0.
 		self adjustLapBy: 1 ].
 
 	self moveTo: aPositionToMove consuming: amountOfFuel.
-	self validateCurrentFule.
-	"self validateCurrentFule."
-
-	"| aPositionToMove amountOfFuel |
-	amountOfFuel := amountToMoveBack.
-	aPositionToMove := self currentPosition - amountToMoveBack.
-
-	self currentFule < amountToMoveBack
-		ifTrue: [
-			self moveTo: 0 consuming: self currentFule.
-			self losesRound ]
-		ifFalse: [
-			aPositionToMove < 0 ifTrue: [
-				aPositionToMove := maximumSquares - aPositionToMove abs.
-				self adjustLapBy: -1 ].
-
-			self currentLap < 0 ifTrue: [
-				amountOfFuel := amountOfFuel
-				                + (self currentPosition - amountToMoveBack).
-				aPositionToMove := 0.
-				self adjustLapBy: 1 ].
-
-			self moveTo: aPositionToMove consuming: amountOfFuel ].
-
-	self validateCurrentFule"
+	self validateCurrentFule
 ]
 
 { #category : 'accessing' }
@@ -204,6 +182,6 @@ SpaceShip >> validateCurrentFule [
 SpaceShip >> verifyCanPlayAgain [
 	numberOfLostTurns = 2 ifFalse: [ ^ self ].
 	numberOfLostTurns := 0.
-	"self rechargeFule."
+	
 
 ]

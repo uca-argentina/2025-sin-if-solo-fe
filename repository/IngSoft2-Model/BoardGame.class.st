@@ -12,7 +12,8 @@ Class {
 		'aCopyOfSpaceships',
 		'winnerSystem',
 		'maxNumberOfDiceFaces',
-		'specialTiles'
+		'specialTiles',
+		'sizeInParsec'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -47,8 +48,9 @@ BoardGame class >> withNumberOfSquares: aMaximumSquares withSizeInParsec:boardSi
 	self is:anExitOfTheWormHole smallerThan:aMaximumSquares.
 	^ self new
 		  initializationBoardGame: aMaximumSquares
+			withSizeInParsec:boardSizeInParsec
 		  withWormHoleFrom: anEntranceOfWormHole
-		  to: anExitOfTheWormHole
+		  to: anExitOfTheWormHole.
 		
 	
 
@@ -73,62 +75,73 @@ BoardGame class >> withNumberOfSquares: aMaximumSquares withWormHoleFrom: anEntr
 
 { #category : 'accessing' }
 BoardGame >> completedLapsBy: aSpaceShip [
- ^(aCopyOfSpaceships detect: [ :copyOfSpaceship | copyOfSpaceship isCopyOf: aSpaceShip ]) currentLap.
+
+	^ (aCopyOfSpaceships detect: [ :copyOfSpaceship |
+		   copyOfSpaceship isCopyOf: aSpaceShip ]) currentLap
 ]
 
 { #category : 'comparing' }
-BoardGame >> contains:aSpecialTiles [
-specialTiles :=aSpecialTiles.
+BoardGame >> contains: aSpecialTiles [
+
+	specialTiles := aSpecialTiles
 ]
 
 { #category : 'accessing' }
 BoardGame >> currentFuleOf: aPlayer [
-    ^ (aCopyOfSpaceships detect: [ :copyOfSpaceship | copyOfSpaceship isCopyOf: aPlayer ]) currentFule.
 
+	^ (aCopyOfSpaceships detect: [ :copyOfSpaceship |
+		   copyOfSpaceship isCopyOf: aPlayer ]) currentFule
 ]
 
 { #category : 'action' }
 BoardGame >> distanceFrom: origin to: destination [
-    ^ (((destination - origin)abs + maximumSquares) rem: maximumSquares).
+
+	^ (destination - origin) abs + maximumSquares rem: maximumSquares
 ]
 
 { #category : 'accessing' }
-BoardGame >> follows:aWinnerSystem [
+BoardGame >> follows: aWinnerSystem [
 
-winnerSystem:=aWinnerSystem .
-winnerSystem withPotentialWinner: aCopyOfSpaceships .
+	winnerSystem := aWinnerSystem.
+	winnerSystem withPotentialWinner: aCopyOfSpaceships
 ]
 
 { #category : 'accessing' }
 BoardGame >> has: players [
-aCopyOfSpaceships :=players .
 
-
-	
-	
+	aCopyOfSpaceships := players
 ]
 
 { #category : 'initialization' }
-BoardGame >> initializationBoardGame: aNumber withWormHoleFrom: aY to: aZ [
+BoardGame >> initializationBoardGame: aMaximumSquares withSizeInParsec: boardSizeInParsec withWormHoleFrom: anEntranceOfWormHole to: anExitOfTheWormHole [
 
-	maximumSquares := aNumber.
-	entranceOfWormHole := aY.
-	exitOfWormHole := aZ
+	maximumSquares := aMaximumSquares.
+	entranceOfWormHole := anEntranceOfWormHole.
+	exitOfWormHole := anExitOfTheWormHole.
+	sizeInParsec := boardSizeInParsec
 ]
 
 { #category : 'action' }
 BoardGame >> move: aSpaceShip with: dices [
 
-	| rolledNumber  |
-	winnerSystem thereIsAWinner ifTrue:  [ ^ self] .
+	| rolledNumber |
+	winnerSystem thereIsAWinner ifTrue: [ ^ self ].
 	rolledNumber := self rolledNumberSumOf: dices.
-	
-	(aSpaceShip canMoveWith: rolledNumber) ifFalse: [^[aSpaceShip losesRound. aSpaceShip losesRound. ]].
-	aSpaceShip moveWith:rolledNumber onBoardOfSize: maximumSquares.
-	
-	(self validateInSpecialTile: aSpaceShip) ifTrue:[(self specialTileAt: (aSpaceShip currentPosition )) applyConsequenceTo:aCopyOfSpaceships onBoardOfSize: maximumSquares].
 
-	self validateInWormHole: aSpaceShip.
+	(aSpaceShip canMoveWith: rolledNumber) ifFalse: [
+		^ [
+		  aSpaceShip losesRound.
+		  aSpaceShip losesRound ] ].
+
+	aSpaceShip moveWith: rolledNumber onBoardOfSize: maximumSquares.
+
+
+	(self validateInSpecialTile: aSpaceShip) ifTrue: [
+		(self specialTileAt: aSpaceShip currentPosition)
+			applyConsequenceTo: aCopyOfSpaceships
+			onBoardOfSize: self ].
+
+	self validateInWormHole: aSpaceShip
 ]
 
 { #category : 'accessing' }
@@ -139,28 +152,26 @@ BoardGame >> numberOfSquares [
 
 { #category : 'action' }
 BoardGame >> playOneRound [
-	
+
 	aCopyOfSpaceships do: [ :aSpaceShip |
 		aSpaceShip verifyCanPlayAgain.
 		aSpaceShip canPlay
 			ifTrue: [ self move: aSpaceShip with: dicesInGameBoard ]
-			ifFalse: [ self skipRoundAndRechargeFor: (aSpaceShip asOriginalSpaceShip )]. 
-			
-]
-		
-	
+			ifFalse: [
+			self skipRoundAndRechargeFor: aSpaceShip asOriginalSpaceShip ] ]
 ]
 
 { #category : 'accessing' }
 BoardGame >> positionOf: aPlayer [
-    ^ (aCopyOfSpaceships detect: [ :copyOfSpaceship | copyOfSpaceship isCopyOf: aPlayer ]) currentPosition.
 
+	^ (aCopyOfSpaceships detect: [ :copyOfSpaceship |
+		   copyOfSpaceship isCopyOf: aPlayer ]) currentPosition
 ]
 
 { #category : 'accessing' }
 BoardGame >> rolledNumberSumOf: dices [
 
- ^(dices collect: [ :dice | dice rolledNumber ]) sum
+	^ (dices collect: [ :dice | dice rolledNumber ]) sum
 ]
 
 { #category : 'action' }
@@ -170,21 +181,31 @@ BoardGame >> skipRoundAndRechargeFor: aSpaceShip [
 	spaceShipCopy := aCopyOfSpaceships detect: [ :copy |
 		                 copy isCopyOf: aSpaceShip ].
 	spaceShipCopy losesRound.
-	spaceShipCopy rechargeFule.
-	
+	spaceShipCopy rechargeFule
 ]
 
 { #category : 'accessing' }
 BoardGame >> specialTileAt: aPosition [
-    specialTiles ifNil: [ ^false ].
-    ^ specialTiles detect: [:tile | tile position = aPosition ] ifNone: [ false ].
+
+	specialTiles ifNil: [ ^ false ].
+	^ specialTiles
+		  detect: [ :tile | tile position = aPosition ]
+		  ifNone: [ false ]
+]
+
+{ #category : 'action' }
+BoardGame >> squaresInParsec: parsecsToMove [
+
+	^ (parsecsToMove * maximumSquares / sizeInParsec) floor
 ]
 
 { #category : 'validating' }
 BoardGame >> validateInSpecialTile: aSpaceShip [
-    specialTiles ifNil: [ ^false ].
 
-    ^ specialTiles anySatisfy: [:tile | tile position = aSpaceShip currentPosition ]
+	specialTiles ifNil: [ ^ false ].
+
+	^ specialTiles anySatisfy: [ :tile |
+		  tile position = aSpaceShip currentPosition ]
 ]
 
 { #category : 'validating' }
@@ -204,8 +225,9 @@ BoardGame >> validateInWormHole: aSpaceShip [
 ]
 
 { #category : 'accessing' }
-BoardGame >> withDices:dices [
+BoardGame >> withDices: dices [
 
-dicesInGameBoard:=dices.
-maxNumberOfDiceFaces := (dicesInGameBoard collect: [:dice | dice numberOfFaces]) max.
+	dicesInGameBoard := dices.
+	maxNumberOfDiceFaces := (dicesInGameBoard collect: [ :dice |
+		                         dice numberOfFaces ]) max
 ]
