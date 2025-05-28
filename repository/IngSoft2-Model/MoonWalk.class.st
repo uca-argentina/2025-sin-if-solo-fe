@@ -12,6 +12,11 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'initialization' }
+MoonWalk class >> in:aPosition moveBack:anAmount [
+^self new initializeMoonWalkIn: aPosition moveBack:anAmount.
+]
+
 { #category : 'action' }
 MoonWalk >> applyConsequenceTo: allSpaceShips onBoardOfSize: maximumSquares [
 
