@@ -96,7 +96,7 @@ TileTest >> test11WhenASpaceShipDoesntHaveEnoughFuelToMoveBackThenLosesTurnsAndG
 ]
 
 { #category : 'tests' }
-TileTest >> test12Banana [
+TileTest >> test12WhenPlayerFallsOnMoonWalkTileThenMovesBackAndConsumesFuel [
 
 
    | aGameSetUp aPlayer1 aPlayer2 aBoard |
@@ -135,40 +135,78 @@ TileTest >> test12Banana [
 ]
 
 { #category : 'tests' }
-TileTest >> test13ShipJumpsToValidParsec [
-	
-	|anEffect aSpaceShip aBoard validDestinations|
-	
-	aBoard := BoardGame new.
-	aBoard initializationBoardGame: 50 withWormHoleFrom: 30 to: 40.
-	
-	aSpaceShip := SpaceShip new.
-	aSpaceShip initializeSpaceShip: 13.
-	
-	anEffect := HyperJump new.
-	anEffect initializeWithBoardLength: aBoard numberOfSquares.
-	validDestinations := anEffect parsecDestinations.
-	
-	self assert: (validDestinations includes: aSpaceShip currentPosition).
-	
-	
+TileTest >> test13WhenASpaceSHipFallsInAMoonWalkButDosentHaveEnoughFulleToMoveBackThenMovesToInitialPositionInCurrentLap [
+
+	| aGameSetUp aPlayer1 aPlayer2 aBoard |
+	aGameSetUp := GameSetup new.
+
+	aGameSetUp withNumberOfPlayers: 2.
+
+
+	aGameSetUp withRiggedDiceConfigs: {
+			(aGameSetUp
+				 withRiggedDiceNumbers: { 5. 5. 8. 2. 5. 5. 5. 5 }
+				 andNumberOfFaces: 8).
+			(aGameSetUp
+				 withRiggedDiceNumbers: { 1. 1. 4. 1. 1. 1. 1. 1 }
+				 andNumberOfFaces: 4) }.
+
+	aGameSetUp withABoardNumberOfSquares: 5 andWithWormHoleFrom: 1 to: 1.
+	aGameSetUp withMaximumLapsToWin: 6.
+	aGameSetUp withSpecialTiles: { (MoonWalk in: 4 moveBack: 6) }.
+	aGameSetUp createGameInstance.
+
+	aPlayer1 := aGameSetUp spaceShips first.
+	aPlayer2 := aGameSetUp spaceShips second.
+	aBoard := aGameSetUp board.
+	aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer1) equals: 1.
+	self assert: (aBoard completedLapsBy: aPlayer1) equals: 1.
+	self assert: (aBoard currentFuleOf: aPlayer1) equals: 18.
+	self assert: (aBoard positionOf: aPlayer2) equals: 1.
+	self assert: (aBoard completedLapsBy: aPlayer2) equals: 1.
+	self assert: (aBoard currentFuleOf: aPlayer2) equals: 18.
+
+	aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer1) equals: 0.
+	self assert: (aBoard currentFuleOf: aPlayer1) equals: 0.
+	self assert: (aBoard completedLapsBy: aPlayer1) equals: 1.
+	self assert: (aBoard positionOf: aPlayer2) equals: 4.
+	self assert: (aBoard currentFuleOf: aPlayer2) equals: 15.
+	self assert: (aBoard completedLapsBy: aPlayer1) equals: 1.
+
+
 ]
 
 { #category : 'tests' }
-TileTest >> test13ValidateParseCalcAndDistribution [
+TileTest >> test14WhenSpaceShipFallsInHyperJumpThenItAdvancesTheAmountOfParsecs [
 
-	| aHyperJump aBoard |
+	| aGameSetUp aPlayer1  aBoard |
+	aGameSetUp := GameSetup new.
+
+	aGameSetUp withNumberOfPlayers: 2.
+	aGameSetUp withRiggedDiceConfigs: {
+			(aGameSetUp
+				 withRiggedDiceNumbers: { 2. 5. 8. 2. 5. 5. 5. 5 }
+				 andNumberOfFaces: 8).
+			(aGameSetUp
+				 withRiggedDiceNumbers: { 2. 1. 4. 1. 1. 1. 1. 1 }
+				 andNumberOfFaces: 4) }.
+
+	aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
+	aGameSetUp withBoardsLengthInParsec:100.
+	aGameSetUp withMaximumLapsToWin: 6.
+	aGameSetUp withSpecialTiles: { (HyperJump in: 4 parsecToMove: {8 .4 .2 .1}) }.
+	aGameSetUp createGameInstance.
+	aPlayer1 := aGameSetUp spaceShips first.
+	aBoard := aGameSetUp board.
+	aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer1) equals: 12.
+	self assert:(aBoard currentFuleOf:aPlayer1 )equals: 12.
 	
-	aHyperJump := HyperJump new.
-	aBoard := BoardGame new.
-	aBoard initializationBoardGame: 50 withWormHoleFrom: 20 to: 30.
 	
-	aHyperJump calculateParsecDistribution: (aBoard numberOfSquares).
-	
-	self assert: (aHyperJump parsecDestinations asArray = #(13 26 39 52)).
-	
-	
-	
+
+
 ]
 
 { #category : 'tests' }

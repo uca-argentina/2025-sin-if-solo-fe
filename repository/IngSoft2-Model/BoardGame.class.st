@@ -38,7 +38,7 @@ BoardGame class >> isANegativeNumber: aNumber [
 ]
 
 { #category : 'instance creation' }
-BoardGame class >> withNumberOfSquares: aMaximumSquares withWormHoleFrom: anEntranceOfWormHole to: anExitOfTheWormHole [
+BoardGame class >> withNumberOfSquares: aMaximumSquares withSizeInParsec:boardSizeInParsec withWormHoleFrom: anEntranceOfWormHole to: anExitOfTheWormHole [
 
 	self isANegativeNumber: aMaximumSquares.
 	self hasTheMinimumAmountOfSquares: aMaximumSquares.
@@ -49,6 +49,23 @@ BoardGame class >> withNumberOfSquares: aMaximumSquares withWormHoleFrom: anEntr
 		  initializationBoardGame: aMaximumSquares
 		  withWormHoleFrom: anEntranceOfWormHole
 		  to: anExitOfTheWormHole
+		
+	
+
+]
+
+{ #category : 'instance creation' }
+BoardGame class >> withNumberOfSquares: aMaximumSquares withWormHoleFrom: anEntranceOfWormHole to: anExitOfTheWormHole [
+
+	"self isANegativeNumber: aMaximumSquares.
+	self hasTheMinimumAmountOfSquares: aMaximumSquares.
+	self isANegativeNumber: anEntranceOfWormHole.
+	self isANegativeNumber: anExitOfTheWormHole.
+	self is:anExitOfTheWormHole smallerThan:aMaximumSquares.
+	^ self new
+		  initializationBoardGame: aMaximumSquares
+		  withWormHoleFrom: anEntranceOfWormHole
+		  to: anExitOfTheWormHole"
 		
 	
 

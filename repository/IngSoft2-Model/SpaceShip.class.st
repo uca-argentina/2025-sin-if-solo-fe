@@ -73,8 +73,24 @@ SpaceShip >> currentPosition [
 
 { #category : 'action' }
 SpaceShip >> goBack: amountToMoveBack onBoardOfSize: maximumSquares [
-
 	| aPositionToMove amountOfFuel |
+	amountOfFuel := amountToMoveBack.
+	aPositionToMove := self currentPosition - amountToMoveBack.
+	
+	aPositionToMove < 0 ifTrue: [
+		aPositionToMove := maximumSquares - aPositionToMove abs.
+		self adjustLapBy: -1 ].
+
+	self currentLap < 0 ifTrue: [
+		amountOfFuel := amountOfFuel + (self currentPosition - amountToMoveBack).
+		aPositionToMove := 0.
+		self adjustLapBy: 1 ].
+
+	self moveTo: aPositionToMove consuming: amountOfFuel.
+	self validateCurrentFule.
+	"self validateCurrentFule."
+
+	"| aPositionToMove amountOfFuel |
 	amountOfFuel := amountToMoveBack.
 	aPositionToMove := self currentPosition - amountToMoveBack.
 
@@ -95,7 +111,7 @@ SpaceShip >> goBack: amountToMoveBack onBoardOfSize: maximumSquares [
 
 			self moveTo: aPositionToMove consuming: amountOfFuel ].
 
-	self validateCurrentFule
+	self validateCurrentFule"
 ]
 
 { #category : 'accessing' }

@@ -5,35 +5,27 @@ Class {
 	#name : 'HyperJump',
 	#superclass : 'TileEffect',
 	#instVars : [
-		'parsecDestinations'
+		'parsecDestinations',
+		'tilePosition',
+		'parsecsToMove'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'instance creation' }
-HyperJump class >> forBoardWithLength: boardLength [
-	^ self new initializeWithBoardLength: boardLength.
-	
-]
-
-{ #category : 'instance creation' }
-HyperJump class >> initializeWithBoardLength: boardLength [
-	super initialize.
-	self calculateParsecDistribution: boardLength.
-	^ self.
+{ #category : 'initialization' }
+HyperJump class >> in: aPosition parsecToMove: someParsecsToMove [
+^self new initializeHyperJumpIn: aPosition parsecToMove: someParsecsToMove.
 ]
 
 { #category : 'action' }
-HyperJump >> applyConsequenceTo: aSpaceShip [
-]
+HyperJump >> applyConsequenceTo:allSpaceShips onBoardOfSize: maximumSquares [
 
-{ #category : 'abstract' }
-HyperJump >> applyTo: aSpaceShip on: aGameBoard [
-	| destination |
-	
-	destination := parsecDestinations at: 0.
-	aSpaceShip moveTo: destination.
+|  aSpaceShip aParsecToMove|
+aParsecToMove:= self getParsecToMove.
+
+aSpaceShip:= allSpaceShips detect:[:spaceShip | spaceShip currentPosition = tilePosition ].
+aSpaceShip moveTo:(aParsecToMove +aSpaceShip currentPosition )consuming: aParsecToMove.
 ]
 
 { #category : 'calculation' }
@@ -59,4 +51,9 @@ HyperJump >> initializeWithBoardLength: boardLength [
 { #category : 'accessing' }
 HyperJump >> parsecDestinations [
 	^ parsecDestinations 
+]
+
+{ #category : 'accessing' }
+HyperJump >> position [
+^tilePosition .
 ]

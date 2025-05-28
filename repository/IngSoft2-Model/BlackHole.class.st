@@ -17,43 +17,13 @@ BlackHole class >> in: aPosition [
 ]
 
 { #category : 'action' }
-BlackHole >> applyConsequenceTo:allSpaceShips [
-
-| aSpaceShip |
-aSpaceShip:= allSpaceShips detect:[:spaceShip | spaceShip currentPosition = tilePosition ].
-aSpaceShip moveTo: (aSpaceShip currentPosition - 4) consuming: 4.
-aSpaceShip validateCurrentFule.
-
-
-
-]
-
-{ #category : 'action' }
 BlackHole >> applyConsequenceTo: allSpaceShips onBoardOfSize: maximumSquares [
     
-| aSpaceShip aPositionToMove amountOfFuel |
+| aSpaceShip|
     
     aSpaceShip := allSpaceShips detect: [ :spaceShip | spaceShip currentPosition = tilePosition ].
-    aPositionToMove := aSpaceShip currentPosition - 4.
-    amountOfFuel := 4.
-
-    (aPositionToMove < 0) ifTrue: [
-        aPositionToMove := maximumSquares - (aPositionToMove abs).
-        aSpaceShip adjustLapBy: -1.].
-
-    (aSpaceShip currentLap < 0) ifTrue: [
-        amountOfFuel := amountOfFuel + (aSpaceShip currentPosition - 4).
-        aPositionToMove := 0.
-        aSpaceShip adjustLapBy: 1.].
-
-    aSpaceShip moveTo: aPositionToMove consuming: amountOfFuel.
-    aSpaceShip validateCurrentFule.
-
-]
-
-{ #category : 'abstract' }
-BlackHole >> applyTo: aSpaceShip on: aGameBoard [
-	^ 1.
+	aSpaceShip goBack: 4 onBoardOfSize: maximumSquares.
+  
 ]
 
 { #category : 'initialization' }

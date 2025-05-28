@@ -15,7 +15,8 @@ Class {
 		'winnerSystem',
 		'riggedDiceConfigs',
 		'maximumRolledNumber',
-		'specialTiles'
+		'specialTiles',
+		'boardSizeInParsec'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -29,10 +30,13 @@ GameSetup >> board [
 { #category : 'creation' }
 GameSetup >> createBoardInstanceWith: aDices andWith: aSpaceShips andWith: aWinnerSystem [
 	|aBoard aCopyOfSpaceships |
+	(boardSizeInParsec )ifNil:[boardSizeInParsec :=boardSize ].
 	aBoard := BoardGame
 		          withNumberOfSquares: boardSize
+					withSizeInParsec:boardSizeInParsec
 		          withWormHoleFrom: wormholeEntrance
 		          to: wormholeExit.
+		
 	aBoard withDices: aDices .
 	
 	aCopyOfSpaceships := OrderedCollection new.
@@ -72,8 +76,7 @@ maximumRolledNumber:=0.
 GameSetup >> createGameInstance [
 
 	| aDices aBoard aSpaceShips aWinnerSystem |
-	"aDices := RiggedDice withNumberOfFaces: numberOfFaces.
-	aDices setNumbersProvider: riggedNumbers."
+
 	aDices:= self createDiceInstance.
 
 	aSpaceShips := self createSpaceShipsInstance.

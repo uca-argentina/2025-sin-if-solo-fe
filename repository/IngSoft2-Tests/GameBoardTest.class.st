@@ -354,7 +354,7 @@ GameBoardTest >> test021WhenThereIsADrawForSecondPlaceThenTheSilverIsTheFirstPla
 GameBoardTest >> test0WhenTheBoardIsInitializeItHasACertainNumberOfSquaresAndAWormHole [
  
 | aBoard aWinnerSystem |
-	aBoard := BoardGame withNumberOfSquares: 64 withWormHoleFrom: 1 to: 2.
+	aBoard := BoardGame withNumberOfSquares: 64 withSizeInParsec:10 withWormHoleFrom: 1 to: 2.
 	aWinnerSystem := WinnerSystem withMaximunLaps: 1. 
 	aBoard follows: aWinnerSystem .
 	self assert: aBoard numberOfSquares equals: 64
@@ -365,7 +365,7 @@ GameBoardTest >> test1WhenTheGameBeginsTheBoardKnowsTheSpaceShipsInitialPosition
 
 	| aPlayer1 aBoard|
 	aPlayer1 := SpaceShip inInitialPosition: 0.
-	aBoard := BoardGame withNumberOfSquares: 60 withWormHoleFrom: 2 to: 5.
+	aBoard := BoardGame withNumberOfSquares: 60 withSizeInParsec:10 withWormHoleFrom: 2 to: 5.
 
 
 	self assert: aPlayer1 currentPosition equals: 0
@@ -379,8 +379,8 @@ GameBoardTest >> test2WhenADiceIsRolledThenTheSpaceShipsPositionInTheBoardChange
 	aGameSetUp withNumberOfPlayers: 1. 
 	
 	aGameSetUp withRiggedDiceConfigs: {
-        aGameSetUp withRiggedDiceNumbers:  {3. 3. 3. 4 } andNumberOfFaces: 6.}.
-	aGameSetUp withABoardNumberOfSquares: 64 andWithWormHoleFrom: 2 to: 5.
+        aGameSetUp withRiggedDiceNumbers:  {3. 1.} andNumberOfFaces: 6.}.
+	aGameSetUp withABoardNumberOfSquares: 64 andWithWormHoleFrom: 1 to: 1.
 	aGameSetUp withMaximumLapsToWin: 1.
 	aGameSetUp createGameInstance.
 
@@ -389,7 +389,16 @@ GameBoardTest >> test2WhenADiceIsRolledThenTheSpaceShipsPositionInTheBoardChange
 
 
 	aBoard playOneRound.
-	self assert: (aBoard positionOf: aPlayer1) equals: 3
+	self assert: (aBoard positionOf: aPlayer1) equals: 3.
+		aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer1) equals: 4.
+		aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer1) equals: 7.
+			aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer1) equals: 8.
+		aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer1) equals: 11.
+	
 ]
 
 { #category : 'tests' }

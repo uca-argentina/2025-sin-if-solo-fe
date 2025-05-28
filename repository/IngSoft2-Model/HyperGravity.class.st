@@ -19,26 +19,12 @@ HyperGravity class >> in: aPosition requiringMinimumRoll: aValue [
 ]
 
 { #category : 'action' }
-HyperGravity >> applyConsequenceTo:allSpaceShips [
-
-| aSpaceShip |
-aSpaceShip:= allSpaceShips detect:[:spaceShip | spaceShip currentPosition = tilePosition ].
-aSpaceShip preventMovingUntilRollsAtLeast: minimumRollValue.
-
-]
-
-{ #category : 'action' }
 HyperGravity >> applyConsequenceTo:allSpaceShips onBoardOfSize: maximumSquares [
 
 | aSpaceShip |
 aSpaceShip:= allSpaceShips detect:[:spaceShip | spaceShip currentPosition = tilePosition ].
 aSpaceShip preventMovingUntilRollsAtLeast: minimumRollValue.
 
-]
-
-{ #category : 'abstract' }
-HyperGravity >> applyTo: aSpaceShip on: aGameBoard [
-	^ 3.
 ]
 
 { #category : 'initialization' }
@@ -54,6 +40,7 @@ HyperGravity >> position [
 
 { #category : 'validating' }
 HyperGravity >> validateCreationIn: boardSize and: maximumRolledNumber [
+
 
 minimumRollValue > maximumRolledNumber ifTrue: [
    Error signal: 'The Requiring Minimum Roll Must Be Less Than Maximum Rolled Number'.
