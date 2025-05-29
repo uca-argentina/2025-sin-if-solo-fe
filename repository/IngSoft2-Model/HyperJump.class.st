@@ -60,11 +60,6 @@ parsecsToMove addAll:((someParsecsToMove)sort: [:aParsec :anotherParsec | aParse
 ]
 
 { #category : 'accessing' }
-HyperJump >> parsecDestinations [
-	^ parsecDestinations 
-]
-
-{ #category : 'accessing' }
 HyperJump >> position [
 ^tilePosition .
 ]

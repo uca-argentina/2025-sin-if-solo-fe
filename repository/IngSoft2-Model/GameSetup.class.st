@@ -220,14 +220,3 @@ specialTiles:=aSpecialTiles.
 
 
 ]
-
-{ #category : 'initialization' }
-GameSetup >> withSpecialTilesPosition: positions [
-
-tilesSetedPositions:= OrderedCollection new.
-tilesSetedPositions:= positions.
-
-
-
-
-]
