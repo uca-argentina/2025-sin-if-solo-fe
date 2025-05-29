@@ -58,7 +58,7 @@ DiceTest >> test4WhenARealDiceIsRolledThenTheRolledNumberIsAtRandom [
 { #category : 'tests' }
 DiceTest >> test5WhenARealDiceIsRolledWithNumberOfFacesThenTheRolledNumberIsAtRandomInARange [
    | aDice numberOfFaces |
-   numberOfFaces := 5.
+   numberOfFaces := 6.
    aDice := RealDice withNumberOfFaces: numberOfFaces.
    self assert:[ (1 to: numberOfFaces) includes: (aDice rolledNumber)].
 
