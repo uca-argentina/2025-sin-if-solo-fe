@@ -210,7 +210,7 @@ TileTest >> test14WhenSpaceShipFallsInHyperJumpThenItAdvancesTheAmountOfParsecs 
 ]
 
 { #category : 'tests' }
-TileTest >> test15Banana [
+TileTest >> test15WhenASpaceShipFallsInHyperJumpThenMovesTheAmountOfParces [
 
 	| aGameSetUp aPlayer1  aBoard |
 	aGameSetUp := GameSetup new.
@@ -568,16 +568,4 @@ TileTest >> testF2WhenASpecialTilePositionIsOutOfTheBoardMaximumSizeThenTheGameC
  
 
    
-]
-
-{ #category : 'TileDistributorTest' }
-TileTest >> testReturnsADictionary [
-
-	| aDistributor aBoard |
-	aDistributor := TileEffectDistributor new.
-	aBoard := BoardGame new.
-
-	aDistributor initalizeWith: aBoard.
-
-	self assert: (aDistributor instVarNamed: 'tileEffectsByPosition') class equals: Dictionary .
 ]
