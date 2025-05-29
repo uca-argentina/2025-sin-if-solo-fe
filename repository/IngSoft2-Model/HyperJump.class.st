@@ -59,11 +59,6 @@ parsecsToMove addAll:((someParsecsToMove)sort: [:aParsec :anotherParsec | aParse
 
 ]
 
-{ #category : 'testing' }
-HyperJump >> isHyperJump [
-^true.
-]
-
 { #category : 'accessing' }
 HyperJump >> parsecDestinations [
 	^ parsecDestinations 

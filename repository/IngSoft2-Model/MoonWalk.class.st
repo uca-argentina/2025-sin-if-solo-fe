@@ -35,12 +35,6 @@ amountToMoveBack:=anAmount.
 
 ]
 
-{ #category : 'testing' }
-MoonWalk >> isMoonWalk [
-^true.
-
-]
-
 { #category : 'accessing' }
 MoonWalk >> position [
 ^tilePosition .

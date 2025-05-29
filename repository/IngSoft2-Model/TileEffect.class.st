@@ -17,29 +17,8 @@ TileEffect >> applyConsequenceTo: allSpaceShips onBoardOfSize: aBoard [
 ]
 
 { #category : 'testing' }
-TileEffect >> isAtomicBomb [
-^ false.
-]
-
-{ #category : 'testing' }
-TileEffect >> isBlackHole [
-^false.
-]
-
-{ #category : 'testing' }
-TileEffect >> isHyperGravity [
-^false.
-]
-
-{ #category : 'testing' }
-TileEffect >> isHyperJump [
-
-^false.
-]
-
-{ #category : 'testing' }
-TileEffect >> isMoonWalk [
-^false.
+TileEffect >> isType: aTile [
+^self class = aTile
 ]
 
 { #category : 'accessing' }

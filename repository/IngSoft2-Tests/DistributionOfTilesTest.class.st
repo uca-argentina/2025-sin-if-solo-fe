@@ -32,7 +32,8 @@ DistributionOfTilesTest >> test1WhenABoardIsCreatedThen2PercentOfSquaresAreAtomi
     aWinnerSystem := aGameSetUp winnerSystem.
     aBoard playOneRound.
 	
-	self assert: (aBoard percentageOfAtomicBomb: 2 ).
+
+	self assert: (aBoard percentageOf: AtomicBomb)equals:2.
 	
 	
 
@@ -67,7 +68,8 @@ DistributionOfTilesTest >> test2WhenABoardIsCreatedThen8PercentOfSquaresAreHyper
     aWinnerSystem := aGameSetUp winnerSystem.
     aBoard playOneRound.
 	
-	self assert: (aBoard percentageOfHyperJump: 8).
+
+	self assert: (aBoard percentageOf: HyperJump )equals:8.
 	
 	
 
@@ -102,7 +104,8 @@ DistributionOfTilesTest >> test3WhenABoardIsCreatedThen10PercentOfSquaresAreMoon
     aWinnerSystem := aGameSetUp winnerSystem.
     aBoard playOneRound.
 	
-	self assert: (aBoard percentageOfMoonWalk: 10).
+
+	self assert: (aBoard percentageOf: MoonWalk )equals:10.
 	
 	
 
@@ -137,7 +140,8 @@ DistributionOfTilesTest >> test4WhenABoardIsCreatedThen20PercentOfSquaresAreHype
     aWinnerSystem := aGameSetUp winnerSystem.
     aBoard playOneRound.
 	
-	self assert: (aBoard percentageOfHyperGravity: 20).
+
+	self assert: (aBoard percentageOf: HyperGravity )equals:20.
 	
 	
 
@@ -172,7 +176,7 @@ DistributionOfTilesTest >> test5WhenABoardIsCreatedThen20PercentOfSquaresAreBlac
     aWinnerSystem := aGameSetUp winnerSystem.
     aBoard playOneRound.
 	
-	self assert: (aBoard percentageOfBlackHole: 20).
+	self assert: (aBoard percentageOf: BlackHole )equals:20.
 	
 	
 

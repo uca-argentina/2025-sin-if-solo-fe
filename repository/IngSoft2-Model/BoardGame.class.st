@@ -150,44 +150,11 @@ BoardGame >> numberOfSquares [
 	^ maximumSquares
 ]
 
-{ #category : 'validating' }
-BoardGame >> percentageOfAtomicBomb: aPercentage [
-| amountOfAtomicBomb |
-amountOfAtomicBomb:= (specialTiles select: [:specialTile | specialTile isAtomicBomb]) size.
-
-^amountOfAtomicBomb = ((aPercentage / 100) * maximumSquares )floor.
-]
-
-{ #category : 'validating' }
-BoardGame >> percentageOfBlackHole: aPercentage [
-| amountOfAtomicBomb |
-amountOfAtomicBomb:= (specialTiles select: [:specialTile | specialTile isBlackHole]) size.
-
-^amountOfAtomicBomb = ((aPercentage / 100) * maximumSquares )floor.
-]
-
-{ #category : 'validating' }
-BoardGame >> percentageOfHyperGravity: aPercentage [
-| amountOfAtomicBomb |
-amountOfAtomicBomb:= (specialTiles select: [:specialTile | specialTile isHyperGravity]) size.
-
-^amountOfAtomicBomb = ((aPercentage / 100) * maximumSquares )floor.
-]
-
-{ #category : 'validating' }
-BoardGame >> percentageOfHyperJump: aPercentage [
-| amountOfAtomicBomb |
-amountOfAtomicBomb:= (specialTiles select: [:specialTile | specialTile isHyperJump]) size.
-
-^amountOfAtomicBomb = ((aPercentage / 100) * maximumSquares )floor.
-]
-
-{ #category : 'validating' }
-BoardGame >> percentageOfMoonWalk: aPercentage [
-| amountOfAtomicBomb |
-amountOfAtomicBomb:= (specialTiles select: [:specialTile | specialTile isMoonWalk]) size.
-
-^amountOfAtomicBomb = ((aPercentage / 100) * maximumSquares )floor.
+{ #category : 'accessing' }
+BoardGame >> percentageOf: aTile [
+| count |
+    count := (specialTiles select: [:tile | tile isType: aTile]) size.
+    ^((count / maximumSquares) * 100) floor
 ]
 
 { #category : 'action' }
