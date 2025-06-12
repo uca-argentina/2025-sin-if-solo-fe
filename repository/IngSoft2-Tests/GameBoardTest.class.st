@@ -137,7 +137,7 @@ GameBoardTest >> test014WhenSpaceshipTriesToMoveOutsideBoardThenNothingChanges [
 { #category : 'tests' }
 GameBoardTest >> test015WhenTheSpaceShipGetsToTheMaximumOfSquaresThenSpaceShipGoesToInitialPosition [
 
-
+ 
 	|aGameSetUp aBoard aPlayer1  |
 
 	aGameSetUp:= GameSetup new.
