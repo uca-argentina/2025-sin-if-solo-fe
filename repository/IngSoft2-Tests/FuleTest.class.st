@@ -311,7 +311,7 @@ FuleTest >> test8WhenASpaceShipChoosesToSkipARoundThenDosentMoveAndRechargesTheF
 { #category : 'tests' }
 FuleTest >> test9WhenBothSpaceShipsSkipRoundThenTheyRechargeAllTheirFule [
 	| aGameSetUp aPlayer1 aBoard  aPlayer2|
-	aGameSetUp := GameSetup new.
+	aGameSetUp := GameSetup new. 
 
 	aGameSetUp withNumberOfPlayers: 2.
 	aGameSetUp withRiggedDiceConfigs: {
