@@ -28,18 +28,3 @@ BlackHole >> initializeBlackHoleIn: aPosition [
 
 tilePosition:=aPosition.
 ]
-
-{ #category : 'accessing' }
-BlackHole >> position [
-^tilePosition.
-]
-
-{ #category : 'validating' }
-BlackHole >> validateCreationIn: boardSize and: maximumRolledNumber [
-
-
-tilePosition > boardSize ifTrue: [
-   Error signal: 'Tile position is out of board bounds.'.
-].
-
-]

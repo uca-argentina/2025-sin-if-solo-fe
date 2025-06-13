@@ -58,17 +58,3 @@ parsecsToMove :=OrderedCollection new.
 parsecsToMove addAll:((someParsecsToMove)sort: [:aParsec :anotherParsec | aParsec> anotherParsec]).
 
 ]
-
-{ #category : 'accessing' }
-HyperJump >> position [
-^tilePosition .
-]
-
-{ #category : 'validating' }
-HyperJump >> validateCreationIn: boardSize and: maximumRolledNumber [
-
-tilePosition > boardSize ifTrue: [
-   Error signal: 'Tile position is out of board bounds.'.
-].
-
-]

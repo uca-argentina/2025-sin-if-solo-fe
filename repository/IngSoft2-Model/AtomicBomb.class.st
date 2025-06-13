@@ -27,18 +27,3 @@ AtomicBomb >> initializeAtomicBombIn: aPosition [
 
 tilePosition:= aPosition.
 ]
-
-{ #category : 'accessing' }
-AtomicBomb >> position [
-^tilePosition .
-]
-
-{ #category : 'validating' }
-AtomicBomb >> validateCreationIn: boardSize and: maximumRolledNumber [
-
-
-tilePosition > boardSize ifTrue: [
-   Error signal: 'Tile position is out of board bounds.'.
-].
-
-]

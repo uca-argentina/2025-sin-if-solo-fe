@@ -13,11 +13,10 @@ Class {
 		'board',
 		'spaceShips',
 		'winnerSystem',
-		'riggedDiceConfigs',
 		'maximumRolledNumber',
 		'boardSizeInParsec',
 		'specialTiles',
-		'tilesSetedPositions'
+		'dices'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -30,63 +29,52 @@ GameSetup >> board [
 
 { #category : 'creation' }
 GameSetup >> createBoardInstanceWith: aDices andWith: aSpaceShips andWith: aWinnerSystem [
-	|aBoard aCopyOfSpaceships |
-	(boardSizeInParsec )ifNil:[boardSizeInParsec :=boardSize ].
+
+	| aBoard aCopyOfSpaceships |
+	boardSizeInParsec ifNil: [ boardSizeInParsec := boardSize ].
 	aBoard := BoardGame
 		          withNumberOfSquares: boardSize
-					withSizeInParsec:boardSizeInParsec
+		          withSizeInParsec: boardSizeInParsec
 		          withWormHoleFrom: wormholeEntrance
 		          to: wormholeExit.
-		
+	specialTiles ifNil: [ specialTiles := OrderedCollection new ].
+
+	specialTiles add:( WormHole from:wormholeEntrance to:wormholeExit).
+	specialTiles add:( WormHole from:wormholeExit to:wormholeEntrance ).
+	
 	aBoard withDices: aDices .
-	
+
 	aCopyOfSpaceships := OrderedCollection new.
-	aCopyOfSpaceships addAll:  (aSpaceShips collect: [ :player |
-		              | copyOfSpaceships |
-		              copyOfSpaceships := player copy. 
-		              copyOfSpaceships originalSpaceShip: player.
-		              copyOfSpaceships ]).
-	
-	aBoard has: aCopyOfSpaceships .
+	aCopyOfSpaceships addAll: (aSpaceShips collect: [ :player |
+			 | copyOfSpaceships |
+			 copyOfSpaceships := player copy.
+			 copyOfSpaceships originalSpaceShip: player.
+			 copyOfSpaceships ]).
+
+	aBoard has: aCopyOfSpaceships.
 	aBoard follows: aWinnerSystem.
+	
+	self fillEmptyPositionsWithNoEffectTile.
 
-	aBoard contains:specialTiles .
-	^aBoard.
-]
-
-{ #category : 'creation' }
-GameSetup >> createDiceInstance [
-
-maximumRolledNumber:=0.
-
-    ^ riggedDiceConfigs collect: [:riggedDiceConfig |
-        | aRiggedNumbers aNumberOfFaces aDice |
-        aRiggedNumbers := riggedDiceConfig first.
-        aNumberOfFaces := riggedDiceConfig second.
-			 maximumRolledNumber := maximumRolledNumber +aNumberOfFaces .
-        aDice := RiggedDice withNumberOfFaces: aNumberOfFaces.
-        aDice setNumbersProvider: aRiggedNumbers.
- 			 aDice
-    ].
-
-
-
+	aBoard contains: specialTiles.
+	^ aBoard
 ]
 
 { #category : 'creation' }
 GameSetup >> createGameInstance [
 
-	| aDices aBoard aSpaceShips aWinnerSystem |
-
-	aDices:= self createDiceInstance.
-
+	| aBoard aSpaceShips aWinnerSystem |
 	aSpaceShips := self createSpaceShipsInstance.
 	aWinnerSystem := WinnerSystem withMaximunLaps: lapsToWin.
-	aBoard:= self createBoardInstanceWith: aDices andWith: aSpaceShips andWith: aWinnerSystem.
+
+	aBoard := self
+		          createBoardInstanceWith: dices
+		          andWith: aSpaceShips
+		          andWith: aWinnerSystem.
 	board := aBoard.
 	spaceShips := aSpaceShips.
 	winnerSystem := aWinnerSystem.
-	specialTiles ifNotNil: [ self validateSpecialTile. ].
+	self validateSpecialTileCreation
 ]
 
 { #category : 'creation' }
@@ -97,7 +85,7 @@ GameSetup >> createSpaceShipsInstance [
 	aSpaceShips := (1 to: numberOfPlayers) collectWithIndex: [ :i :index |
 		| spaceShip |
 		spaceShip := SpaceShip inInitialPosition: 0.
-		spaceShip initialFule: (maximumRolledNumber*2 ).
+		spaceShip initialFule: (maximumRolledNumber )*2.
 		spaceShip turnOrder: index.
 		spaceShip
 	].
@@ -107,13 +95,37 @@ GameSetup >> createSpaceShipsInstance [
 	^ aSpaceShips 
 ]
 
+{ #category : 'action' }
+GameSetup >> fillEmptyPositionsWithNoEffectTile [
+	| occupiedPositions |
+	
+	
+	occupiedPositions := specialTiles collect: [ :tile | tile position ] as: Set.
+	
+	0 to: boardSize  do: [ :pos |
+		(occupiedPositions includes: pos) ifFalse: [
+			specialTiles add: (NoEffect in: pos)
+		]
+	].
+
+]
+
+{ #category : 'accessing' }
+GameSetup >> maximumRollFromDices [
+	| total |
+	total := 0.
+	dices do: [:aDice | total := total + aDice numberOfFaces ].
+	
+	^ total
+]
+
 { #category : 'accessing' }
 GameSetup >> spaceShips [
 ^spaceShips
 ]
 
 { #category : 'validating' }
-GameSetup >> validateSpecialTile [
+GameSetup >> validateSpecialTileCreation [
 
 specialTiles do:[:specialTile|specialTile validateCreationIn: boardSize and: maximumRolledNumber].
 ]
@@ -187,6 +199,12 @@ GameSetup >> withBoardsLengthInParsec:aBoardSizeInParsec [
 boardSizeInParsec:=aBoardSizeInParsec.
 ]
 
+{ #category : 'accessing' }
+GameSetup >> withDices:someDices [
+dices:=someDices .
+maximumRolledNumber :=self maximumRollFromDices.
+]
+
 { #category : 'initialization' }
 GameSetup >> withMaximumLapsToWin: aLapsToWin [
   lapsToWin := aLapsToWin.
@@ -199,23 +217,12 @@ GameSetup >> withNumberOfPlayers: aNumber [
 
 ]
 
-{ #category : 'accessing' }
-GameSetup >> withRiggedDiceConfigs: diceConfigs [
-    riggedDiceConfigs := diceConfigs.
-  
-]
-
-{ #category : 'initialization' }
-GameSetup >> withRiggedDiceNumbers: aRiggedNumbers andNumberOfFaces: aNumberOfFaces [
-
-	^ { aRiggedNumbers . aNumberOfFaces }.
-	
-]
-
 { #category : 'initialization' }
 GameSetup >> withSpecialTiles:aSpecialTiles [
 
-specialTiles:=aSpecialTiles.
+specialTiles := aSpecialTiles asOrderedCollection.
+
+
 
 
 

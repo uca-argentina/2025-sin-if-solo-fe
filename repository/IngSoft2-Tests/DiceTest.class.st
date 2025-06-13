@@ -30,7 +30,7 @@ DiceTest >> test1WhenADiceItsReadyToBeUsedThenItCanBeRolled [
 
 	| aDice  |
 	aDice := RiggedDice withNumberOfFaces: 6.
-	aDice setNumbersProvider:{1. 2. 3. 4. 5. 6}. "Aca si son 6 lados deberian haber 6 numeros"
+	aDice setNumbersProvider:{1. 2. 3. 4. 5. 6}. 
 
 	self assert: aDice rolledNumber equals: 1
 ]

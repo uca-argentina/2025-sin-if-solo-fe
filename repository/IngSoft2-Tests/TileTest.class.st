@@ -19,13 +19,15 @@ TileTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessa
 { #category : 'tests' }
 TileTest >> test10WhenTheSpaceShipFallsInMoonWalkThenAllTheOtherSpaceShipsMoveBack [
 
-|aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem |
+|aGameSetUp  aDice aBoard aPlayer1 aPlayer2 aWinnerSystem |
 
 	aGameSetUp:= GameSetup new.
 	aGameSetUp withNumberOfPlayers:2 .
+	aDice := RiggedDice withNumberOfFaces: 8.
+    aDice setNumbersProvider:   {7. 5. 3. 4 }.
 	
-	aGameSetUp withRiggedDiceConfigs: {
-        aGameSetUp withRiggedDiceNumbers:  {7. 5. 3. 4 } andNumberOfFaces: 8.}.
+	aGameSetUp withDices: {
+        aDice}.
 	aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom:1 to: 2.
 	aGameSetUp withMaximumLapsToWin: 3. 
 	aGameSetUp withSpecialTiles: {MoonWalk in: 5 moveBack:2 }.
@@ -53,13 +55,20 @@ TileTest >> test10WhenTheSpaceShipFallsInMoonWalkThenAllTheOtherSpaceShipsMoveBa
 { #category : 'tests' }
 TileTest >> test11WhenASpaceShipDoesntHaveEnoughFuelToMoveBackThenLosesTurnsAndGoBackToInitialPosition [
 
-   | aGameSetUp aPlayer1 aPlayer2 aBoard |
+   | aGameSetUp  aDice aDice2 aPlayer1 aPlayer2 aBoard |
 	aGameSetUp:= GameSetup new.
 	
 	aGameSetUp withNumberOfPlayers:2.
-	aGameSetUp withRiggedDiceConfigs: {
-       aGameSetUp withRiggedDiceNumbers:  {8. 7. 1 . 1 . 8. 5. 1. 1 } andNumberOfFaces: 8.
-		aGameSetUp withRiggedDiceNumbers:  {2. 4. 1 . 2 . 3. 2. 1 . 1 } andNumberOfFaces: 4.}.
+	aDice := RiggedDice withNumberOfFaces: 8.
+    aDice setNumbersProvider:  {8. 7. 1 . 1 . 8. 5. 1. 1 }.
+	aDice2:=RiggedDice withNumberOfFaces: 4.
+    aDice2 setNumbersProvider:   {2. 4. 1 . 2 . 3. 2. 1 . 1 }.
+
+
+	aGameSetUp withDices: {
+        aDice.aDice2 }.
+	
+
 			
 	aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom:1 to: 1.
 	aGameSetUp withMaximumLapsToWin: 6.
@@ -99,13 +108,18 @@ TileTest >> test11WhenASpaceShipDoesntHaveEnoughFuelToMoveBackThenLosesTurnsAndG
 TileTest >> test12WhenPlayerFallsOnMoonWalkTileThenMovesBackAndConsumesFuel [
 
 
-   | aGameSetUp aPlayer1 aPlayer2 aBoard |
+   | aGameSetUp aDice aDice2 aPlayer1 aPlayer2 aBoard |
 	aGameSetUp:= GameSetup new.
 	
 	aGameSetUp withNumberOfPlayers:2.
-	aGameSetUp withRiggedDiceConfigs: {
-       aGameSetUp withRiggedDiceNumbers:  {1. 2. 1 . 1 . 8. 5. 1. 1 } andNumberOfFaces: 8.
-		aGameSetUp withRiggedDiceNumbers:  {1. 3. 1 . 2 . 3. 2. 1 . 1 } andNumberOfFaces: 4.}.
+		aDice := RiggedDice withNumberOfFaces: 8.
+    aDice setNumbersProvider:  {1. 2. 1 . 1 . 8. 5. 1. 1 }.
+	aDice2:=RiggedDice withNumberOfFaces: 4.
+    aDice2 setNumbersProvider:  {1. 3. 1 . 2 . 3. 2. 1 . 1  }.
+
+	
+	aGameSetUp withDices: {
+        aDice.aDice2 }.
 			
 	aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom:1 to: 1.
 	aGameSetUp withMaximumLapsToWin: 6.
@@ -137,19 +151,22 @@ TileTest >> test12WhenPlayerFallsOnMoonWalkTileThenMovesBackAndConsumesFuel [
 { #category : 'tests' }
 TileTest >> test13WhenASpaceSHipFallsInAMoonWalkButDosentHaveEnoughFulleToMoveBackThenMovesToInitialPositionInCurrentLap [
 
-	| aGameSetUp aPlayer1 aPlayer2 aBoard |
+	| aGameSetUp aDice aDice2 aPlayer1 aPlayer2 aBoard |
 	aGameSetUp := GameSetup new.
 
 	aGameSetUp withNumberOfPlayers: 2.
+aGameSetUp withNumberOfPlayers:2.
+		aDice := RiggedDice withNumberOfFaces: 8.
+    aDice setNumbersProvider:  { 5. 5. 8. 2. 5. 5. 5. 5 }.
+	aDice2:=RiggedDice withNumberOfFaces: 4.
+    aDice2 setNumbersProvider: { 1. 1. 4. 1. 1. 1. 1. 1 }.
+
+	
+	aGameSetUp withDices: {
+        aDice.aDice2 }.
 
 
-	aGameSetUp withRiggedDiceConfigs: {
-			(aGameSetUp
-				 withRiggedDiceNumbers: { 5. 5. 8. 2. 5. 5. 5. 5 }
-				 andNumberOfFaces: 8).
-			(aGameSetUp
-				 withRiggedDiceNumbers: { 1. 1. 4. 1. 1. 1. 1. 1 }
-				 andNumberOfFaces: 4) }.
+
 
 	aGameSetUp withABoardNumberOfSquares: 5 andWithWormHoleFrom: 1 to: 1.
 	aGameSetUp withMaximumLapsToWin: 6.
@@ -181,17 +198,21 @@ TileTest >> test13WhenASpaceSHipFallsInAMoonWalkButDosentHaveEnoughFulleToMoveBa
 { #category : 'tests' }
 TileTest >> test14WhenSpaceShipFallsInHyperJumpThenItAdvancesTheAmountOfParsecs [
 
-	| aGameSetUp aPlayer1  aBoard |
+	| aGameSetUp aPlayer1  aBoard aDice aDice2 |
 	aGameSetUp := GameSetup new.
 
 	aGameSetUp withNumberOfPlayers: 2.
-	aGameSetUp withRiggedDiceConfigs: {
-			(aGameSetUp
-				 withRiggedDiceNumbers: { 2. 5. 8. 2. 5. 5. 5. 5 }
-				 andNumberOfFaces: 8).
-			(aGameSetUp
-				 withRiggedDiceNumbers: { 2. 1. 4. 1. 1. 1. 1. 1 }
-				 andNumberOfFaces: 4) }.
+	
+		aDice := RiggedDice withNumberOfFaces: 8.
+    aDice setNumbersProvider:  { 2. 5. 8. 2. 5. 5. 5. 5 }.
+	aDice2:=RiggedDice withNumberOfFaces: 4.
+    aDice2 setNumbersProvider: { 2. 1. 4. 1. 1. 1. 1. 1 }.
+
+	
+	aGameSetUp withDices: {
+        aDice.aDice2 }.
+	
+	
 
 	aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
 	aGameSetUp withBoardsLengthInParsec:100.
@@ -212,17 +233,21 @@ TileTest >> test14WhenSpaceShipFallsInHyperJumpThenItAdvancesTheAmountOfParsecs 
 { #category : 'tests' }
 TileTest >> test15WhenASpaceShipFallsInHyperJumpThenMovesTheAmountOfParces [
 
-	| aGameSetUp aPlayer1  aBoard |
+	| aGameSetUp aPlayer1  aBoard aDice aDice2 |
 	aGameSetUp := GameSetup new.
 
 	aGameSetUp withNumberOfPlayers: 2.
-	aGameSetUp withRiggedDiceConfigs: {
-			(aGameSetUp
-				 withRiggedDiceNumbers: { 2. 5. 8. 2. 5. 5. 5. 5 }
-				 andNumberOfFaces: 8).
-			(aGameSetUp
-				 withRiggedDiceNumbers: { 2. 1. 4. 1. 1. 1. 1. 1 }
-				 andNumberOfFaces: 4) }.
+	
+		aDice := RiggedDice withNumberOfFaces: 8.
+    aDice setNumbersProvider: { 2. 5. 8. 2. 5. 5. 5. 5 }.
+	aDice2:=RiggedDice withNumberOfFaces: 4.
+    aDice2 setNumbersProvider: { 2. 1. 4. 1. 1. 1. 1. 1 }.
+
+	
+	aGameSetUp withDices: {
+        aDice.aDice2 }.
+	
+
 
 	aGameSetUp withABoardNumberOfSquares: 10 andWithWormHoleFrom: 1 to: 1.
 	aGameSetUp withBoardsLengthInParsec:20. "1 cuadrados son 2 parsec"
@@ -244,13 +269,17 @@ TileTest >> test15WhenASpaceShipFallsInHyperJumpThenMovesTheAmountOfParces [
 TileTest >> test1WhenMinimumRollIsntMetThenTheSpaceshipIsHeldByTheHyperGravity [
 
 
-    | aGameSetUp aBoard aPlayer1  aWinnerSystem |
+    | aGameSetUp aDice aBoard aPlayer1  aWinnerSystem |
     aGameSetUp := GameSetup new.
     aGameSetUp withNumberOfPlayers: 1.
-
-    aGameSetUp withRiggedDiceConfigs: {
-        aGameSetUp withRiggedDiceNumbers:  {2. 1. 5. 4 } andNumberOfFaces: 10.}.
-
+	aDice := RiggedDice withNumberOfFaces: 10.
+    aDice setNumbersProvider:  {2. 1. 5. 4 }.
+aGameSetUp withDices: {
+        aDice }.
+	
+   " aGameSetUp withDices: {aDice
+       "" aGameSetUp withRiggedDiceNumbers:  {2. 1. 5. 4 } andNumberOfFaces: 10.""}.
+"
     aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
 
     aGameSetUp withSpecialTiles: {HyperGravity in: 2 requiringMinimumRoll: 4}.
@@ -279,12 +308,16 @@ TileTest >> test1WhenMinimumRollIsntMetThenTheSpaceshipIsHeldByTheHyperGravity [
 TileTest >> test2WhenThereAreDifferentHyperGravityTilesThenEachHeldsTheSpaceShipAcordingToTheirIndependentCriteria [
 
 
-    | aGameSetUp aBoard aPlayer1  aWinnerSystem |
+    | aGameSetUp aDice aBoard aPlayer1  aWinnerSystem |
     aGameSetUp := GameSetup new.
     aGameSetUp withNumberOfPlayers: 1.
 
-    aGameSetUp withRiggedDiceConfigs: {
-        aGameSetUp withRiggedDiceNumbers:  {2. 1. 5. 4 . 9 } andNumberOfFaces: 10.}.
+aDice := RiggedDice withNumberOfFaces: 10.
+    aDice setNumbersProvider:    {2. 1. 5. 4 . 9 }.
+	
+	aGameSetUp withDices: {
+        aDice}.
+  
 
     aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
 
@@ -322,13 +355,17 @@ TileTest >> test2WhenThereAreDifferentHyperGravityTilesThenEachHeldsTheSpaceShip
 TileTest >> test4WhenAHyperGravityPositionIsOutOfTheBoardMaximumSizeThenTheGameCreationFails [
 
 
-    | aGameSetUp  |
+    | aGameSetUp  aDice |
     aGameSetUp := GameSetup new.
     aGameSetUp withNumberOfPlayers: 1.
 
-    aGameSetUp withRiggedDiceConfigs: {
-        aGameSetUp withRiggedDiceNumbers:  {2. 1. 5. 4 . 9 } andNumberOfFaces: 10.}.
 
+aDice := RiggedDice withNumberOfFaces: 10.
+    aDice setNumbersProvider:    {2. 1. 5. 4 . 9 }.
+	
+	aGameSetUp withDices: {
+        aDice}.
+  
     aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
 
     aGameSetUp withSpecialTiles:{(HyperGravity in: 101 requiringMinimumRoll: 9) .}.
@@ -348,12 +385,16 @@ TileTest >> test4WhenAHyperGravityPositionIsOutOfTheBoardMaximumSizeThenTheGameC
 TileTest >> test5WhenASpaceShipFallsToTheAtomicBombThenAllSpaceShipsMoveToTheStart [
 
 
-    | aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem |
+    | aGameSetUp aDice aBoard aPlayer1 aPlayer2 aWinnerSystem |
     aGameSetUp := GameSetup new.
     aGameSetUp withNumberOfPlayers: 2.
 
-    aGameSetUp withRiggedDiceConfigs: {
-        aGameSetUp withRiggedDiceNumbers:  {2. 4. 5. 9 } andNumberOfFaces: 10.}.
+aDice := RiggedDice withNumberOfFaces: 10.
+    aDice setNumbersProvider:     {2. 4. 5. 9 }.
+	
+	aGameSetUp withDices: {
+        aDice}.
+  
 
     aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
 
@@ -386,12 +427,15 @@ TileTest >> test5WhenASpaceShipFallsToTheAtomicBombThenAllSpaceShipsMoveToTheSta
 TileTest >> test6WhenASpaceShipFallsInToTheBlackHoleThenItMoves4StepsBack [
 
 
-    | aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem |
+    | aGameSetUp aDice aBoard aPlayer1 aPlayer2 aWinnerSystem |
     aGameSetUp := GameSetup new.
     aGameSetUp withNumberOfPlayers: 2.
+aDice := RiggedDice withNumberOfFaces: 10.
+    aDice setNumbersProvider:     {2. 4. 5. 9 }.
+	
+	aGameSetUp withDices: {
+        aDice}.
 
-    aGameSetUp withRiggedDiceConfigs: {
-        aGameSetUp withRiggedDiceNumbers:  {2. 4. 5. 9 } andNumberOfFaces: 10.}.
 
     aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
 
@@ -424,16 +468,23 @@ TileTest >> test6WhenASpaceShipFallsInToTheBlackHoleThenItMoves4StepsBack [
 TileTest >> test7WhenASpaceShipFallsInToTheBlackHoleAndDoesntHaveEnoughFuleToBackThenItLoses2Turns [
 
 
-   | aGameSetUp aPlayer1 aBoard |
+   | aGameSetUp aDice aDice2 aPlayer1 aBoard |
 
 	
 	aGameSetUp:= GameSetup new.
 	
 
 	aGameSetUp withNumberOfPlayers:1.
-	aGameSetUp withRiggedDiceConfigs: {
-        aGameSetUp withRiggedDiceNumbers:  {8. 7. 1 . 1 . 4} andNumberOfFaces: 8.
-			aGameSetUp withRiggedDiceNumbers:  {2. 4. 1 . 2 . 1} andNumberOfFaces: 4.}.
+	aDice := RiggedDice withNumberOfFaces: 8.
+    aDice setNumbersProvider: {8. 7. 1 . 1 . 4} .
+	aDice2:=RiggedDice withNumberOfFaces: 4.
+    aDice2 setNumbersProvider:  {2. 4. 1 . 2 . 1}.
+
+	
+	aGameSetUp withDices: {
+        aDice.aDice2 }.
+
+
 			
 	aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom:1 to: 1.
 	aGameSetUp withMaximumLapsToWin: 6.
@@ -461,13 +512,17 @@ TileTest >> test7WhenASpaceShipFallsInToTheBlackHoleAndDoesntHaveEnoughFuleToBac
 
 { #category : 'tests' }
 TileTest >> test8WhenSpaceshipFallsInBlackHoleOfLaterLapThenItGoesToPreviousLap [
-|aGameSetUp aBoard aPlayer1 aWinnerSystem |
+|aGameSetUp aDice aBoard aPlayer1 aWinnerSystem |
 
 	aGameSetUp:= GameSetup new.
 	aGameSetUp withNumberOfPlayers:1 .
+	aDice := RiggedDice withNumberOfFaces: 8.
+    aDice setNumbersProvider:     {5. 3. 3. 4 }.
 	
-	aGameSetUp withRiggedDiceConfigs: {
-        aGameSetUp withRiggedDiceNumbers:  {5. 3. 3. 4 } andNumberOfFaces: 8.}.
+	aGameSetUp withDices: {
+        aDice}.
+
+
 	aGameSetUp withABoardNumberOfSquares: 5 andWithWormHoleFrom:1 to: 1.
 	aGameSetUp withMaximumLapsToWin: 3. 
 	aGameSetUp withSpecialTiles: {BlackHole in: 3}.
@@ -492,13 +547,17 @@ TileTest >> test8WhenSpaceshipFallsInBlackHoleOfLaterLapThenItGoesToPreviousLap 
 
 { #category : 'tests' }
 TileTest >> test9WhenSpaceShipFallsInBlackHoleAtTheBeginingOfTheGameThenItGoesBackToInitialPosition [
-|aGameSetUp aBoard aPlayer1 aWinnerSystem |
+|aGameSetUp aDice aBoard aPlayer1 aWinnerSystem |
 
 	aGameSetUp:= GameSetup new.
 	aGameSetUp withNumberOfPlayers:1 .
+		aDice := RiggedDice withNumberOfFaces: 8.
+    aDice setNumbersProvider:     {3. 1. 3. 4 }.
 	
-	aGameSetUp withRiggedDiceConfigs: {
-        aGameSetUp withRiggedDiceNumbers:  {3. 1. 3. 4 } andNumberOfFaces: 8.}.
+	aGameSetUp withDices: {
+        aDice}.
+
+	
 	aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom:1 to: 1.
 	aGameSetUp withMaximumLapsToWin: 3. 
 	aGameSetUp withSpecialTiles: {BlackHole in: 3}.
@@ -522,12 +581,15 @@ TileTest >> test9WhenSpaceShipFallsInBlackHoleAtTheBeginingOfTheGameThenItGoesBa
 TileTest >> testF1WhenAHyperGravityHasAGreaterRequiringRollThanTheMaximumRolledNumberThenTheGameCreationFails [
 
 
-    | aGameSetUp  |
+    | aGameSetUp  aDice|
     aGameSetUp := GameSetup new.
     aGameSetUp withNumberOfPlayers: 1.
+	aDice := RiggedDice withNumberOfFaces: 10.
+    aDice setNumbersProvider:      {2. 1. 5. 4 . 9 } .
+	
+	aGameSetUp withDices: {
+        aDice}.
 
-    aGameSetUp withRiggedDiceConfigs: {
-        aGameSetUp withRiggedDiceNumbers:  {2. 1. 5. 4 . 9 } andNumberOfFaces: 10.}.
 
     aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
 
@@ -548,12 +610,15 @@ TileTest >> testF1WhenAHyperGravityHasAGreaterRequiringRollThanTheMaximumRolledN
 TileTest >> testF2WhenASpecialTilePositionIsOutOfTheBoardMaximumSizeThenTheGameCreationFails [
 
 
-    | aGameSetUp  |
+    | aGameSetUp aDice |
     aGameSetUp := GameSetup new.
     aGameSetUp withNumberOfPlayers: 1.
+aDice := RiggedDice withNumberOfFaces: 10.
+    aDice setNumbersProvider:      {2. 1. 5. 4 . 9 } .
+	
+	aGameSetUp withDices: {
+        aDice}.
 
-    aGameSetUp withRiggedDiceConfigs: {
-        aGameSetUp withRiggedDiceNumbers:  {2. 1. 5. 4 . 9 } andNumberOfFaces: 10.}.
 
     aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
 

@@ -34,17 +34,3 @@ tilePosition:=aPosition .
 amountToMoveBack:=anAmount.
 
 ]
-
-{ #category : 'accessing' }
-MoonWalk >> position [
-^tilePosition .
-]
-
-{ #category : 'validating' }
-MoonWalk >> validateCreationIn: boardSize and: maximumRolledNumber [
-
-tilePosition > boardSize ifTrue: [
-   Error signal: 'Tile position is out of board bounds.'.
-].
-
-]

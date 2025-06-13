@@ -32,21 +32,14 @@ tilePosition:=aPosition .
 minimumRollValue:=aValue .
 ]
 
-{ #category : 'accessing' }
-HyperGravity >> position [
-^tilePosition .
-]
-
 { #category : 'validating' }
 HyperGravity >> validateCreationIn: boardSize and: maximumRolledNumber [
 
+super validateCreationIn: boardSize and: maximumRolledNumber.
 
 minimumRollValue > maximumRolledNumber ifTrue: [
    Error signal: 'The Requiring Minimum Roll Must Be Less Than Maximum Rolled Number'.
 ].
 
-tilePosition > boardSize ifTrue: [
-   Error signal: 'Tile position is out of board bounds.'.
-].
 
 ]

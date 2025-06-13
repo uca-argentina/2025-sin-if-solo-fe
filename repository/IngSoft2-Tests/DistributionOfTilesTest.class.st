@@ -9,12 +9,15 @@ Class {
 DistributionOfTilesTest >> test1WhenABoardIsCreatedThen2PercentOfSquaresAreAtomicBomb [
 
 
-    | aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem |
+    | aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice |
     aGameSetUp := GameSetup new.
     aGameSetUp withNumberOfPlayers: 2.
-
-    aGameSetUp withRiggedDiceConfigs: {
-        aGameSetUp withRiggedDiceNumbers:  {5. 2. 5. 9 } andNumberOfFaces: 10.}.
+		aDice := RiggedDice withNumberOfFaces: 10.
+    aDice setNumbersProvider: {5. 2. 5. 9 }.
+	
+	aGameSetUp withDices: {
+        aDice}.
+  
 
     aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
 
@@ -46,12 +49,15 @@ DistributionOfTilesTest >> test1WhenABoardIsCreatedThen2PercentOfSquaresAreAtomi
 DistributionOfTilesTest >> test2WhenABoardIsCreatedThen8PercentOfSquaresAreHyperJump [
 
 
-    | aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem |
+    | aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice |
     aGameSetUp := GameSetup new.
     aGameSetUp withNumberOfPlayers: 2.
-
-    aGameSetUp withRiggedDiceConfigs: {
-        aGameSetUp withRiggedDiceNumbers:  {5. 2. 5. 9 } andNumberOfFaces: 10.}.
+	aDice := RiggedDice withNumberOfFaces: 10.
+    aDice setNumbersProvider: {5. 2. 5. 9 }.
+	
+	aGameSetUp withDices: {
+        aDice}.
+   
 
     aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
 
@@ -82,12 +88,15 @@ DistributionOfTilesTest >> test2WhenABoardIsCreatedThen8PercentOfSquaresAreHyper
 DistributionOfTilesTest >> test3WhenABoardIsCreatedThen10PercentOfSquaresAreMoonWalk [
 
 
-    | aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem |
+    | aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice |
     aGameSetUp := GameSetup new.
     aGameSetUp withNumberOfPlayers: 2.
 
-    aGameSetUp withRiggedDiceConfigs: {
-        aGameSetUp withRiggedDiceNumbers:  {5. 2. 5. 9 } andNumberOfFaces: 10.}.
+  aDice := RiggedDice withNumberOfFaces: 10.
+    aDice setNumbersProvider: {5. 2. 5. 9 }.
+	
+	aGameSetUp withDices: {
+        aDice}.
 
     aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
 
@@ -118,12 +127,14 @@ DistributionOfTilesTest >> test3WhenABoardIsCreatedThen10PercentOfSquaresAreMoon
 DistributionOfTilesTest >> test4WhenABoardIsCreatedThen20PercentOfSquaresAreHyperGravity [
 
 
-    | aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem |
+    | aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice |
     aGameSetUp := GameSetup new.
     aGameSetUp withNumberOfPlayers: 2.
-
-    aGameSetUp withRiggedDiceConfigs: {
-        aGameSetUp withRiggedDiceNumbers:  {5. 2. 5. 9 } andNumberOfFaces: 10.}.
+aDice := RiggedDice withNumberOfFaces: 10.
+    aDice setNumbersProvider: {5. 2. 5. 9 }.
+	
+	aGameSetUp withDices: {
+        aDice}.
 
     aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
 
@@ -154,12 +165,15 @@ DistributionOfTilesTest >> test4WhenABoardIsCreatedThen20PercentOfSquaresAreHype
 DistributionOfTilesTest >> test5WhenABoardIsCreatedThen20PercentOfSquaresAreBlackHole [
 
 
-    | aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem |
+    | aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice |
     aGameSetUp := GameSetup new.
     aGameSetUp withNumberOfPlayers: 2.
 
-    aGameSetUp withRiggedDiceConfigs: {
-        aGameSetUp withRiggedDiceNumbers:  {5. 2. 5. 9 } andNumberOfFaces: 10.}.
+aDice := RiggedDice withNumberOfFaces: 10.
+    aDice setNumbersProvider: {5. 2. 5. 9 }.
+	
+	aGameSetUp withDices: {
+        aDice}.
 
     aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
 

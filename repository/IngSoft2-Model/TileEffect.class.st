@@ -23,10 +23,12 @@ TileEffect >> isType: aTile [
 
 { #category : 'accessing' }
 TileEffect >> position [
-	^ self subclassResponsibility
+	^ tilePosition .
 ]
 
 { #category : 'validating' }
 TileEffect >> validateCreationIn: boardSize and: maximumRolledNumber [ 
-	^ self subclassResponsibility
+	 tilePosition > boardSize ifTrue: [
+   Error signal: 'Tile position is out of board bounds.'.
+].
 ]

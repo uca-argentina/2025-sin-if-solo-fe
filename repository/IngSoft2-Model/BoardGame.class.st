@@ -9,11 +9,10 @@ Class {
 		'entranceOfWormHole',
 		'exitOfWormHole',
 		'dicesInGameBoard',
-		'aCopyOfSpaceships',
 		'winnerSystem',
-		'maxNumberOfDiceFaces',
 		'specialTiles',
-		'sizeInParsec'
+		'sizeInParsec',
+		'spaceShips'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -59,7 +58,7 @@ BoardGame class >> withNumberOfSquares: aMaximumSquares withSizeInParsec:boardSi
 { #category : 'accessing' }
 BoardGame >> completedLapsBy: aSpaceShip [
 
-	^ (aCopyOfSpaceships detect: [ :copyOfSpaceship |
+	^ (spaceShips detect: [ :copyOfSpaceship |
 		   copyOfSpaceship isCopyOf: aSpaceShip ]) currentLap
 ]
 
@@ -72,7 +71,7 @@ BoardGame >> contains: aSpecialTiles [
 { #category : 'accessing' }
 BoardGame >> currentFuleOf: aPlayer [
 
-	^ (aCopyOfSpaceships detect: [ :copyOfSpaceship |
+	^ (spaceShips detect: [ :copyOfSpaceship |
 		   copyOfSpaceship isCopyOf: aPlayer ]) currentFule
 ]
 
@@ -86,13 +85,13 @@ BoardGame >> distanceFrom: origin to: destination [
 BoardGame >> follows: aWinnerSystem [
 
 	winnerSystem := aWinnerSystem.
-	winnerSystem withPotentialWinner: aCopyOfSpaceships
+	winnerSystem withPotentialWinner: spaceShips
 ]
 
 { #category : 'accessing' }
 BoardGame >> has: players [
 
-	aCopyOfSpaceships := players
+	spaceShips := players
 ]
 
 { #category : 'initialization' }
@@ -117,14 +116,9 @@ BoardGame >> move: aSpaceShip with: dices [
 		  aSpaceShip losesRound ] ].
 
 	aSpaceShip moveWith: rolledNumber onBoardOfSize: maximumSquares.
-
-
-	(self validateInSpecialTile: aSpaceShip) ifTrue: [
-		(self specialTileAt: aSpaceShip currentPosition)
-			applyConsequenceTo: aCopyOfSpaceships
-			onBoardOfSize: self ].
-
-	self validateInWormHole: aSpaceShip
+	(self specialTileAt: aSpaceShip currentPosition)
+		applyConsequenceTo: spaceShips
+		onBoardOfSize: self
 ]
 
 { #category : 'accessing' }
@@ -135,15 +129,16 @@ BoardGame >> numberOfSquares [
 
 { #category : 'accessing' }
 BoardGame >> percentageOf: aTile [
-| count |
-    count := (specialTiles select: [:tile | tile isType: aTile]) size.
-    ^((count / maximumSquares) * 100) floor
+
+	| count |
+	count := (specialTiles select: [ :tile | tile isType: aTile ]) size.
+	^ (count / maximumSquares * 100) floor
 ]
 
 { #category : 'action' }
 BoardGame >> playOneRound [
 
-	aCopyOfSpaceships do: [ :aSpaceShip |
+	spaceShips do: [ :aSpaceShip |
 		aSpaceShip verifyCanPlayAgain.
 		aSpaceShip canPlay
 			ifTrue: [ self move: aSpaceShip with: dicesInGameBoard ]
@@ -154,7 +149,7 @@ BoardGame >> playOneRound [
 { #category : 'accessing' }
 BoardGame >> positionOf: aPlayer [
 
-	^ (aCopyOfSpaceships detect: [ :copyOfSpaceship |
+	^ (spaceShips detect: [ :copyOfSpaceship |
 		   copyOfSpaceship isCopyOf: aPlayer ]) currentPosition
 ]
 
@@ -168,7 +163,7 @@ BoardGame >> rolledNumberSumOf: dices [
 BoardGame >> skipRoundAndRechargeFor: aSpaceShip [
 
 	| spaceShipCopy |
-	spaceShipCopy := aCopyOfSpaceships detect: [ :copy |
+	spaceShipCopy := spaceShips detect: [ :copy |
 		                 copy isCopyOf: aSpaceShip ].
 	spaceShipCopy losesRound.
 	spaceShipCopy rechargeFule
@@ -177,10 +172,7 @@ BoardGame >> skipRoundAndRechargeFor: aSpaceShip [
 { #category : 'accessing' }
 BoardGame >> specialTileAt: aPosition [
 
-	specialTiles ifNil: [ ^ false ].
-	^ specialTiles
-		  detect: [ :tile | tile position = aPosition ]
-		  ifNone: [ false ]
+	^ specialTiles detect: [ :tile | tile position = aPosition ]
 ]
 
 { #category : 'action' }
@@ -189,35 +181,9 @@ BoardGame >> squaresInParsec: parsecsToMove [
 	^ (parsecsToMove * maximumSquares / sizeInParsec) floor
 ]
 
-{ #category : 'validating' }
-BoardGame >> validateInSpecialTile: aSpaceShip [
-
-	specialTiles ifNil: [ ^ false ].
-
-	^ specialTiles anySatisfy: [ :tile |
-		  tile position = aSpaceShip currentPosition ]
-]
-
-{ #category : 'validating' }
-BoardGame >> validateInWormHole: aSpaceShip [
-
-	| originalPosition destination distance |
-	originalPosition := aSpaceShip currentPosition.
-	originalPosition = entranceOfWormHole ifTrue: [
-		destination := exitOfWormHole.
-		distance := self distanceFrom: originalPosition to: destination.
-		aSpaceShip moveTo: destination consuming: distance ].
-
-	originalPosition = exitOfWormHole ifFalse: [ ^ self ].
-	destination := entranceOfWormHole.
-	distance := self distanceFrom: originalPosition to: destination.
-	aSpaceShip moveTo: destination consuming: distance
-]
-
 { #category : 'accessing' }
 BoardGame >> withDices: dices [
 
 	dicesInGameBoard := dices.
-	maxNumberOfDiceFaces := (dicesInGameBoard collect: [ :dice |
-		                         dice numberOfFaces ]) max
+
 ]
