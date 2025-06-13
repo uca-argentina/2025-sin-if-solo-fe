@@ -20,12 +20,6 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'initialization' }
-SpaceShip class >> inInitialPosition: aPosition [
-
-	^ self new initializeSpaceShip: aPosition
-]
-
 { #category : 'action' }
 SpaceShip >> adjustLapBy: anAmount [
 laps:=laps+anAmount.
@@ -86,19 +80,18 @@ SpaceShip >> goBack: amountToMoveBack onBoardOfSize: maximumSquares [
 	self validateCurrentFule
 ]
 
-{ #category : 'accessing' }
-SpaceShip >> initialFule: ainitialFule [
-	currentFule := ainitialFule.
-	initialFule := ainitialFule.
-
-]
-
 { #category : 'initialization' }
-SpaceShip >> initializeSpaceShip: aPosition [
-	laps:=0.
-	currentPosition := aPosition.
-	numberOfLostTurns:=0.
-	minimumRollRequired := 0.
+SpaceShip >> initializeWithA: position andTurn: anOrderNumber startingWith: aFuel [
+
+    currentPosition := position.
+    numberOfOrderToPlay := anOrderNumber.
+    currentFule := aFuel.
+    initialFule := aFuel.
+    laps := 0.
+    numberOfLostTurns := 0.
+    minimumRollRequired := 0.
+
+
 ]
 
 { #category : 'testing' }
@@ -156,11 +149,6 @@ currentFule :=initialFule .
 { #category : 'accessing' }
 SpaceShip >> turnOrder [
 ^numberOfOrderToPlay
-]
-
-{ #category : 'assignments' }
-SpaceShip >> turnOrder: aNumberOfOrderToPlay [
-numberOfOrderToPlay:=aNumberOfOrderToPlay.
 ]
 
 { #category : 'validating' }

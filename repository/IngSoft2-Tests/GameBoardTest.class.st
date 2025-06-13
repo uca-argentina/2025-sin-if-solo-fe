@@ -366,8 +366,13 @@ GameBoardTest >> test0WhenTheBoardIsInitializeItHasACertainNumberOfSquaresAndAWo
 { #category : 'tests' }
 GameBoardTest >> test1WhenTheGameBeginsTheBoardKnowsTheSpaceShipsInitialPosition [
 
-	| aPlayer1 aBoard |
-	aPlayer1 := SpaceShip inInitialPosition: 0.
+	| aPlayer1 aBoard initialPosition fuel |
+	initialPosition := 0.
+	fuel := 100.
+	aPlayer1 := SpaceShip
+		            withA: initialPosition
+		            andTurn: 1
+		            startingWith: fuel.
 	aBoard := BoardGame
 		          withNumberOfSquares: 60
 		          withSizeInParsec: 10

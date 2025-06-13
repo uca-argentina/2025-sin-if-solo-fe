@@ -79,20 +79,13 @@ GameSetup >> createGameInstance [
 
 { #category : 'creation' }
 GameSetup >> createSpaceShipsInstance [
+    ^ (1 to: numberOfPlayers) collectWithIndex: [ :i :index |
+        SpaceShip 
+            withA: 0 
+            andTurn: index 
+            startingWith: (maximumRolledNumber * 2)
+    ].
 
-	| aSpaceShips  |
-	
-	aSpaceShips := (1 to: numberOfPlayers) collectWithIndex: [ :i :index |
-		| spaceShip |
-		spaceShip := SpaceShip inInitialPosition: 0.
-		spaceShip initialFule: (maximumRolledNumber )*2.
-		spaceShip turnOrder: index.
-		spaceShip
-	].
-	
-	
-	
-	^ aSpaceShips 
 ]
 
 { #category : 'action' }
