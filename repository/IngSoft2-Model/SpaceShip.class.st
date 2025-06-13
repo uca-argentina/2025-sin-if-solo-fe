@@ -147,6 +147,16 @@ SpaceShip >> preventMovingUntilRollsAtLeast: aNumber [
 ]
 
 { #category : 'action' }
+SpaceShip >> ranksHigherThan: oponentSpaceship [
+
+	^ self currentLap > oponentSpaceship currentLap or: [
+		  self currentLap = oponentSpaceship currentLap and: [
+			  self currentPosition > oponentSpaceship currentPosition or: [
+				  self currentPosition = oponentSpaceship currentPosition and: [
+					  self turnOrder < oponentSpaceship turnOrder ] ] ] ]
+]
+
+{ #category : 'action' }
 SpaceShip >> rechargeFule [
 currentFule :=initialFule .
 ]
