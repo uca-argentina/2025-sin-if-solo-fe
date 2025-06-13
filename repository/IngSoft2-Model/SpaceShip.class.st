@@ -20,6 +20,11 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'initialization' }
+SpaceShip class >> withA: position andTurn: anOrderNumber startingWith: aFuel [
+    ^ self new initializeWithA: position andTurn: anOrderNumber startingWith: aFuel
+]
+
 { #category : 'action' }
 SpaceShip >> adjustLapBy: anAmount [
 laps:=laps+anAmount.
