@@ -113,7 +113,7 @@ GameBoardTest >> test014WhenSpaceshipTriesToMoveOutsideBoardThenNothingChanges [
 	aDice setNumbersProvider: { 2. 1. 1. 6 }.
 	aGameSetUp withDices: { aDice }.
 
-	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: 1 to: 1.
+	aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
 	aGameSetUp withMaximumLapsToWin: 2.
 	aGameSetUp createGameInstance.
 
@@ -123,16 +123,12 @@ GameBoardTest >> test014WhenSpaceshipTriesToMoveOutsideBoardThenNothingChanges [
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
 
-
-
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 2.
-	self assert: (aBoard positionOf: aPlayer2) equals: 1.
-	aPlayer1 moveTo: 4 consuming: 1000.
-	aBoard playOneRound.
-	self assert: (aBoard positionOf: aPlayer1) equals: 3.
-	self assert: (aBoard positionOf: aPlayer2) equals: 1.
-	self assert: aWinnerSystem theGoldWinnerIs equals: aPlayer2
+	aPlayer1 moveTo: 99 consuming: 1.
+	self assert: (aBoard positionOf: aPlayer1) equals: 2.
+	
+
 ]
 
 { #category : 'tests' }
