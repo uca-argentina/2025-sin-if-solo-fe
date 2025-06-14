@@ -11,10 +11,9 @@ Class {
 		'originalSpaceShip',
 		'laps',
 		'numberOfOrderToPlay',
-		'currentFule',
 		'numberOfLostTurns',
-		'initialFule',
-		'minimumRollRequired'
+		'minimumRollRequired',
+		'fuelSistem'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -44,13 +43,13 @@ SpaceShip >> canMoveWith: rolledNumber [
 { #category : 'testing' }
 SpaceShip >> canPlay [
 
-    ^ currentFule > 0 and: [ numberOfLostTurns = 0 ]
+    ^ fuelSistem current > 0 and: [ numberOfLostTurns = 0 ]
 
 ]
 
 { #category : 'accessing' }
 SpaceShip >> currentFule [
-^currentFule 
+^fuelSistem current 
 ]
 
 { #category : 'accessing' }
@@ -82,7 +81,7 @@ SpaceShip >> goBack: amountToMoveBack onBoardOfSize: maximumSquares [
 		self adjustLapBy: 1 ].
 
 	self moveTo: aPositionToMove consuming: amountOfFuel.
-	self validateCurrentFule
+	fuelSistem validateCurrentFuleOf: self 
 ]
 
 { #category : 'initialization' }
@@ -90,8 +89,7 @@ SpaceShip >> initializeWithA: position andTurn: anOrderNumber startingWith: aFue
 
     currentPosition := position.
     numberOfOrderToPlay := anOrderNumber.
-    currentFule := aFuel.
-    initialFule := aFuel.
+    fuelSistem := aFuel.
     laps := 0.
     numberOfLostTurns := 0.
     minimumRollRequired := 0.
@@ -114,10 +112,13 @@ SpaceShip >> losesRound [
 { #category : 'action' }
 SpaceShip >> moveTo: newPosition consuming: aDistance [
 	
-	currentFule := currentFule - aDistance.
+	fuelSistem consume: aDistance.
+	
+	"currentFule := currentFule - aDistance."
 	currentPosition := newPosition.
 	
-	(currentFule <=0) ifTrue: [self losesRound].
+	fuelSistem hasFuel ifFalse: [self losesRound ] .
+	"(currentFule <=0) ifTrue: [self losesRound]."
 ]
 
 { #category : 'action' }
@@ -132,7 +133,7 @@ SpaceShip >> moveWith: rolledNumber onBoardOfSize: maximumSquares [
 	newPosition := (totalPosition - 1 rem: maximumSquares) + 1.
 	
 	self moveTo: newPosition consuming: rolledNumber.	
-	self validateCurrentFule.
+	fuelSistem validateCurrentFuleOf: self.
 ]
 
 { #category : 'accessing' }
@@ -157,22 +158,15 @@ SpaceShip >> ranksHigherThan: oponentSpaceship [
 ]
 
 { #category : 'action' }
-SpaceShip >> rechargeFule [
-currentFule :=initialFule .
+SpaceShip >> rechargeFule [ 
+
+fuelSistem recharge 
+"currentFule :=initialFule ."
 ]
 
 { #category : 'accessing' }
 SpaceShip >> turnOrder [
 ^numberOfOrderToPlay
-]
-
-{ #category : 'validating' }
-SpaceShip >> validateCurrentFule [
-
-(currentFule <= 0) ifFalse: [ ^ self ].
-    self moveTo: 0 consuming:0.
-    currentFule := 0.
-
 ]
 
 { #category : 'action' }

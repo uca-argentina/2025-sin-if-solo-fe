@@ -166,7 +166,8 @@ BoardGame >> skipRoundAndRechargeFor: aSpaceShip [
 	spaceShipCopy := spaceShips detect: [ :copy |
 		                 copy isCopyOf: aSpaceShip ].
 	spaceShipCopy losesRound.
-	spaceShipCopy rechargeFule
+	
+	spaceShipCopy  rechargeFule
 ]
 
 { #category : 'accessing' }

@@ -83,7 +83,8 @@ GameSetup >> createSpaceShipsInstance [
         SpaceShip 
             withA: 0 
             andTurn: index 
-            startingWith: (maximumRolledNumber * 2)
+				startingWith: (Fuel withAnAmount: (maximumRolledNumber *2))
+            "startingWith: (maximumRolledNumber * 2)"
     ].
 
 ]
