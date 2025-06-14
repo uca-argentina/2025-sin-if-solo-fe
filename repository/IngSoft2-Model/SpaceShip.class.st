@@ -10,10 +10,9 @@ Class {
 		'currentPosition',
 		'originalSpaceShip',
 		'laps',
-		'numberOfOrderToPlay',
-		'numberOfLostTurns',
 		'minimumRollRequired',
-		'fuelSistem'
+		'fuelSistem',
+		'turn'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -43,7 +42,7 @@ SpaceShip >> canMoveWith: rolledNumber [
 { #category : 'testing' }
 SpaceShip >> canPlay [
 
-    ^ fuelSistem current > 0 and: [ numberOfLostTurns = 0 ]
+    ^ fuelSistem current > 0 and: [ turn numberOfLostTurns = 0 ]
 
 ]
 
@@ -85,13 +84,12 @@ SpaceShip >> goBack: amountToMoveBack onBoardOfSize: maximumSquares [
 ]
 
 { #category : 'initialization' }
-SpaceShip >> initializeWithA: position andTurn: anOrderNumber startingWith: aFuel [
+SpaceShip >> initializeWithA: position andTurn: aTurn startingWith: aFuel [
 
     currentPosition := position.
-    numberOfOrderToPlay := anOrderNumber.
+    turn:= aTurn .
     fuelSistem := aFuel.
     laps := 0.
-    numberOfLostTurns := 0.
     minimumRollRequired := 0.
 
 
@@ -104,8 +102,8 @@ SpaceShip >> isCopyOf: aPlayer [
 
 { #category : 'action' }
 SpaceShip >> losesRound [
-	
-	numberOfLostTurns := numberOfLostTurns + 1.
+  turn roundLosed.
+
 
 ]
 
@@ -114,11 +112,10 @@ SpaceShip >> moveTo: newPosition consuming: aDistance [
 	
 	fuelSistem consume: aDistance.
 	
-	"currentFule := currentFule - aDistance."
 	currentPosition := newPosition.
 	
 	fuelSistem hasFuel ifFalse: [self losesRound ] .
-	"(currentFule <=0) ifTrue: [self losesRound]."
+
 ]
 
 { #category : 'action' }
@@ -154,25 +151,23 @@ SpaceShip >> ranksHigherThan: oponentSpaceship [
 		  self currentLap = oponentSpaceship currentLap and: [
 			  self currentPosition > oponentSpaceship currentPosition or: [
 				  self currentPosition = oponentSpaceship currentPosition and: [
-					  self turnOrder < oponentSpaceship turnOrder ] ] ] ]
+					  (self turnOrder) < oponentSpaceship turnOrder ] ] ] ]
 ]
 
 { #category : 'action' }
 SpaceShip >> rechargeFule [ 
 
 fuelSistem recharge 
-"currentFule :=initialFule ."
 ]
 
 { #category : 'accessing' }
 SpaceShip >> turnOrder [
-^numberOfOrderToPlay
+^ turn turnOrder 
 ]
 
 { #category : 'action' }
 SpaceShip >> verifyCanPlayAgain [
-	numberOfLostTurns = 2 ifFalse: [ ^ self ].
-	numberOfLostTurns := 0.
-	
+	turn lostTurnsVerifier.
+
 
 ]

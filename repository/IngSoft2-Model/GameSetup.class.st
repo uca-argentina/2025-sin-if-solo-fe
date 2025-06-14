@@ -82,9 +82,9 @@ GameSetup >> createSpaceShipsInstance [
     ^ (1 to: numberOfPlayers) collectWithIndex: [ :i :index |
         SpaceShip 
             withA: 0 
-            andTurn: index 
+            andTurn: (TurnAdministrator withAnIndex: index)
 				startingWith: (Fuel withAnAmount: (maximumRolledNumber *2))
-            "startingWith: (maximumRolledNumber * 2)"
+
     ].
 
 ]
