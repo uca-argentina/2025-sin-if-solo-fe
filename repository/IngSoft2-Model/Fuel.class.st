@@ -13,6 +13,18 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'class initialization' }
+Fuel class >> withAnAmount: aFuelAmount [
+
+^self new initializeWithAnAmount: aFuelAmount 
+]
+
+{ #category : 'action' }
+Fuel >> consume: aDistance [
+
+currentFuel := currentFuel -aDistance 
+]
+
 { #category : 'accessing' }
 Fuel >> current [
 ^currentFuel 
@@ -27,6 +39,11 @@ Fuel >> hasFuel [
 Fuel >> initializeWithAnAmount: aFuelAmount [ 
 currentFuel:=aFuelAmount .
 initialFuel:=aFuelAmount.
+]
+
+{ #category : 'action' }
+Fuel >> recharge [
+currentFuel := initialFuel .
 ]
 
 { #category : 'validating' }
