@@ -12,6 +12,12 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'class initialization' }
+TurnAdministrator class >> withAnIndex: index [
+
+^self new initializeWithAnIndex: index.
+]
+
 { #category : 'initialization' }
 TurnAdministrator >> initializeWithAnIndex: index [
 
@@ -19,10 +25,22 @@ numberOfOrderToPlay:= index.
 numberOfLostTurns:=0. 
 ]
 
+{ #category : 'action' }
+TurnAdministrator >> lostTurnsVerifier [
+	numberOfLostTurns = 2 ifFalse: [ ^ self ].
+	numberOfLostTurns := 0.
+]
+
 { #category : 'accessing' }
 TurnAdministrator >> numberOfLostTurns [ 
 
 ^numberOfLostTurns 
+]
+
+{ #category : 'action' }
+TurnAdministrator >> roundLosed [
+
+numberOfLostTurns := numberOfLostTurns + 1.
 ]
 
 { #category : 'accessing' }
