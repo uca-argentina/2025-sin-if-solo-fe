@@ -31,7 +31,7 @@ Fuel >> current [
 ]
 
 { #category : 'testing' }
-Fuel >> hasFuel [
+Fuel >> hasFuelToPlay [
 ^currentFuel >0 
 ]
 

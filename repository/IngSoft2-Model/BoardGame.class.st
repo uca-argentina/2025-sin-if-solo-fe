@@ -104,6 +104,21 @@ BoardGame >> initializationBoardGame: aMaximumSquares withSizeInParsec: boardSiz
 ]
 
 { #category : 'action' }
+BoardGame >> move: aSpaceShip forwardBy: rolledNumber [
+	| totalPosition lapsDone newPosition  |
+
+
+	totalPosition := aSpaceShip currentPosition + rolledNumber.
+	lapsDone := totalPosition quo: maximumSquares.
+	aSpaceShip actualLapsDone: lapsDone .
+	
+	newPosition := (totalPosition - 1 rem: maximumSquares) + 1.
+	
+	aSpaceShip moveTo: newPosition consuming: rolledNumber.	
+	aSpaceShip hasFule .
+]
+
+{ #category : 'action' }
 BoardGame >> move: aSpaceShip with: dices [
 
 	| rolledNumber |
@@ -115,7 +130,8 @@ BoardGame >> move: aSpaceShip with: dices [
 		  aSpaceShip losesRound.
 		  aSpaceShip losesRound ] ].
 
-	aSpaceShip moveWith: rolledNumber onBoardOfSize: maximumSquares.
+	self move: aSpaceShip forwardBy: rolledNumber.
+	
 	(self specialTileAt: aSpaceShip currentPosition)
 		applyConsequenceTo: spaceShips
 		onBoardOfSize: self

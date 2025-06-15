@@ -25,6 +25,11 @@ numberOfOrderToPlay:= index.
 numberOfLostTurns:=0. 
 ]
 
+{ #category : 'validating' }
+TurnAdministrator >> isAvailableToPlay [
+^numberOfLostTurns=0.
+]
+
 { #category : 'action' }
 TurnAdministrator >> lostTurnsVerifier [
 	numberOfLostTurns = 2 ifFalse: [ ^ self ].

@@ -24,6 +24,11 @@ SpaceShip class >> withA: position andTurn: anOrderNumber startingWith: aFuel [
 ]
 
 { #category : 'action' }
+SpaceShip >> actualLapsDone: lapsDone [ 
+laps:=lapsDone .
+]
+
+{ #category : 'action' }
 SpaceShip >> adjustLapBy: anAmount [
 laps:=laps+anAmount.
 ]
@@ -42,7 +47,7 @@ SpaceShip >> canMoveWith: rolledNumber [
 { #category : 'testing' }
 SpaceShip >> canPlay [
 
-    ^ fuelSistem current > 0 and: [ turn numberOfLostTurns = 0 ]
+    ^ fuelSistem hasFuelToPlay and: [ turn isAvailableToPlay]
 
 ]
 
@@ -83,6 +88,12 @@ SpaceShip >> goBack: amountToMoveBack onBoardOfSize: maximumSquares [
 	fuelSistem validateCurrentFuleOf: self 
 ]
 
+{ #category : 'testing' }
+SpaceShip >> hasFule [
+
+^fuelSistem validateCurrentFuleOf: self.
+]
+
 { #category : 'initialization' }
 SpaceShip >> initializeWithA: position andTurn: aTurn startingWith: aFuel [
 
@@ -114,23 +125,8 @@ SpaceShip >> moveTo: newPosition consuming: aDistance [
 	
 	currentPosition := newPosition.
 	
-	fuelSistem hasFuel ifFalse: [self losesRound ] .
+	fuelSistem hasFuelToPlay ifFalse: [self losesRound ] .
 
-]
-
-{ #category : 'action' }
-SpaceShip >> moveWith: rolledNumber onBoardOfSize: maximumSquares [
- | totalPosition lapsDone newPosition  |
-
-
-	totalPosition := currentPosition + rolledNumber.
-	lapsDone := totalPosition quo: maximumSquares.
-	laps := lapsDone.
-	
-	newPosition := (totalPosition - 1 rem: maximumSquares) + 1.
-	
-	self moveTo: newPosition consuming: rolledNumber.	
-	fuelSistem validateCurrentFuleOf: self.
 ]
 
 { #category : 'accessing' }
@@ -151,7 +147,8 @@ SpaceShip >> ranksHigherThan: oponentSpaceship [
 		  self currentLap = oponentSpaceship currentLap and: [
 			  self currentPosition > oponentSpaceship currentPosition or: [
 				  self currentPosition = oponentSpaceship currentPosition and: [
-					  (self turnOrder) < oponentSpaceship turnOrder ] ] ] ]
+					 turn comesFirstThanThe:oponentSpaceship .
+					  ] ] ] ]
 ]
 
 { #category : 'action' }
