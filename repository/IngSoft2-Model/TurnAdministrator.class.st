@@ -18,6 +18,11 @@ TurnAdministrator class >> withAnIndex: index [
 ^self new initializeWithAnIndex: index.
 ]
 
+{ #category : 'validating' }
+TurnAdministrator >> comesFirstThanThe:oponentSpaceship [
+^numberOfOrderToPlay < oponentSpaceship turnOrder.
+]
+
 { #category : 'initialization' }
 TurnAdministrator >> initializeWithAnIndex: index [
 
