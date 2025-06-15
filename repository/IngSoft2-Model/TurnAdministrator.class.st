@@ -41,12 +41,6 @@ TurnAdministrator >> lostTurnsVerifier [
 	numberOfLostTurns := 0.
 ]
 
-{ #category : 'accessing' }
-TurnAdministrator >> numberOfLostTurns [ 
-
-^numberOfLostTurns 
-]
-
 { #category : 'action' }
 TurnAdministrator >> roundLosed [
 
