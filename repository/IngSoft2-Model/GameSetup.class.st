@@ -108,12 +108,6 @@ GameSetup >> winnerSystem [
 ]
 
 { #category : 'initialization' }
-GameSetup >> withABoardNumberOfSquares: maximumSquares [ 
-	boardSize := maximumSquares.
-	
-]
-
-{ #category : 'initialization' }
 GameSetup >> withABoardNumberOfSquares: maximumSquares andTurnManager: aTurnManager [
 	boardSize := maximumSquares.
 	turnManager:=aTurnManager .

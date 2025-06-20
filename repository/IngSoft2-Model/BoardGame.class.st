@@ -134,7 +134,7 @@ BoardGame >> playOneRound [
 	spaceShip verifyCanPlayAgain.
 	spaceShip canPlay
 		ifTrue: [ self move: spaceShip with: dicesInGameBoard ]
-			"ifFalse: [ self skipRound ]"
+		
 		ifFalse: [ self skipRoundAndRechargeFor: spaceShip ]
 ]
 

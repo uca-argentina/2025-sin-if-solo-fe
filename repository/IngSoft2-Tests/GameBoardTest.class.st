@@ -87,7 +87,7 @@ aTurnManager := TurnManager withOrder: {
 { #category : 'tests' }
 GameBoardTest >> test012WhenABoardWithNumberOfSquaresIsNegativeThenCreationFails [
 
-	| aGameSetUp aDice aPlayer1 aPlayer2 |
+	| aGameSetUp aDice aPlayer1 aPlayer2 aTurnManager |
 	aGameSetUp := GameSetup new.
 	aDice := RiggedDice withNumberOfFaces: 8.
 	aDice setNumbersProvider: { 5. 3. 3. 7 }.
@@ -100,7 +100,11 @@ GameBoardTest >> test012WhenABoardWithNumberOfSquaresIsNegativeThenCreationFails
 			aPlayer1.
 			aPlayer2 }.
 
-	aGameSetUp withABoardNumberOfSquares: 8.
+aTurnManager := TurnManager withOrder: {
+			                aPlayer1.
+			                aPlayer2 }.
+
+	aGameSetUp withABoardNumberOfSquares: 6 andTurnManager: aTurnManager.
 	aGameSetUp withSpecialTiles: { (WormHole from: -1 to: -1) }.
 	aGameSetUp withMaximumLapsToWin: 2.
 
@@ -113,7 +117,7 @@ GameBoardTest >> test012WhenABoardWithNumberOfSquaresIsNegativeThenCreationFails
 { #category : 'tests' }
 GameBoardTest >> test013WhenABoardHasLessThanThreeSquaresThenCreationFails [
 
-	| aGameSetUp aDice aPlayer1 aPlayer2 |
+	| aGameSetUp aDice aPlayer1 aPlayer2 aTurnManager |
 	aGameSetUp := GameSetup new.
 
 	aDice := RiggedDice withNumberOfFaces: 8.
@@ -126,7 +130,11 @@ GameBoardTest >> test013WhenABoardHasLessThanThreeSquaresThenCreationFails [
 			aPlayer1.
 			aPlayer2 }.
 	aGameSetUp withDices: { aDice }.
-	aGameSetUp withABoardNumberOfSquares: 2 .
+	aTurnManager := TurnManager withOrder: {
+			                aPlayer1.
+			                aPlayer2 }.
+
+	aGameSetUp withABoardNumberOfSquares: 2 andTurnManager: aTurnManager.
 	aGameSetUp withSpecialTiles: {
 			(WormHole from: 3 to: 6).
 		 }.
@@ -204,7 +212,7 @@ aTurnManager := TurnManager withOrder: {
 { #category : 'tests' }
 GameBoardTest >> test016WhenTheExitOfTheWormHoleIsGreaterThanTheNumbersOfSqueareOfTheBoardThenBoardCreationFails [
 
-	| aGameSetUp aDice aPlayer1 aPlayer2 |
+	| aGameSetUp aDice aPlayer1 aPlayer2 aTurnManager |
 	aGameSetUp := GameSetup new.
 	aDice := RiggedDice withNumberOfFaces: 8.
 	aDice setNumbersProvider: { 5. 3. 3. 7 }.
@@ -217,9 +225,11 @@ GameBoardTest >> test016WhenTheExitOfTheWormHoleIsGreaterThanTheNumbersOfSqueare
 
 	aGameSetUp withDices: { aDice }.
 
-	aGameSetUp
-		withABoardNumberOfSquares: 10
-		.
+	aTurnManager := TurnManager withOrder: {
+			                aPlayer1.
+			                aPlayer2 }.
+
+	aGameSetUp withABoardNumberOfSquares: 10 andTurnManager: aTurnManager.
 		
 		aGameSetUp withSpecialTiles: { (WormHole from: 6 to: 12) }.
 	aGameSetUp withMaximumLapsToWin: 2.

@@ -39,12 +39,6 @@ SpaceShip >> adjustLapBy: anAmount [
 laps:=laps+anAmount.
 ]
 
-{ #category : 'action' }
-SpaceShip >> borrar: aturn [
-"
-turn:=aturn."
-]
-
 { #category : 'testing' }
 SpaceShip >> canMoveWith: rolledNumber [
 
