@@ -67,11 +67,7 @@ GameSetup >> createGameInstance [
 { #category : 'creation' }
 GameSetup >> createSpaceShipsInstance [
 
-spaceShips withIndexDo: [ :aSpaceship :index | 
-    aSpaceship borrar: (TurnAdministrator withAnIndex: index).
-    aSpaceship has: (Fuel withAnAmount: (maximumRolledNumber * 2)).
-].
-
+	spaceShips do: [ :spaceShip| spaceShip has: (Fuel withAnAmount: maximumRolledNumber * 2) ]
 ]
 
 { #category : 'action' }

@@ -21,49 +21,17 @@ Class {
 { #category : 'testing' }
 BoardGame class >> hasTheMinimumAmountOfSquares: aNumber [
 
-	aNumber < 3 ifTrue: [ Error signal: 'Should have at least 3 squares' ]
-]
-
-{ #category : 'testing' }
-BoardGame class >> is:anExitOfTheWormHole smallerThan:aMaximumSquares [
-(anExitOfTheWormHole >=aMaximumSquares )ifTrue: [ 
-	Error signal:'The worm hole exit must be smaller than the number of squares' ]
-]
-
-{ #category : 'testing' }
-BoardGame class >> isANegativeNumber: aNumber [
-
-	aNumber negative ifTrue: [
-		Error signal: 'Should be a positive number' ]
+    aNumber < 3 ifTrue: [ Error signal: 'Should have at least 3 squares' ]
 ]
 
 { #category : 'instance creation' }
 BoardGame class >> withNumberOfSquares: aMaximumSquares withSizeInParsec:boardSizeInParsec [
+self hasTheMinimumAmountOfSquares: aMaximumSquares .
 
-	self isANegativeNumber: aMaximumSquares.
-	self hasTheMinimumAmountOfSquares: aMaximumSquares.
 	
 	^ self new
 		  initializationBoardGame: aMaximumSquares
 			withSizeInParsec:boardSizeInParsec.
-	
-
-]
-
-{ #category : 'instance creation' }
-BoardGame class >> withNumberOfSquares: aMaximumSquares withSizeInParsec:boardSizeInParsec withWormHoleFrom: anEntranceOfWormHole to: anExitOfTheWormHole [
-
-	"self isANegativeNumber: aMaximumSquares.
-	self hasTheMinimumAmountOfSquares: aMaximumSquares.
-	self isANegativeNumber: anEntranceOfWormHole.
-	self isANegativeNumber: anExitOfTheWormHole.
-	self is:anExitOfTheWormHole smallerThan:aMaximumSquares.
-	^ self new
-		  initializationBoardGame: aMaximumSquares
-			withSizeInParsec:boardSizeInParsec
-		  withWormHoleFrom: anEntranceOfWormHole
-		  to: anExitOfTheWormHole.
-		"
 	
 
 ]
@@ -109,15 +77,6 @@ BoardGame >> has: players [
 BoardGame >> initializationBoardGame: aMaximumSquares withSizeInParsec: boardSizeInParsec [ 
 
 	maximumSquares := aMaximumSquares.
-	sizeInParsec := boardSizeInParsec
-]
-
-{ #category : 'initialization' }
-BoardGame >> initializationBoardGame: aMaximumSquares withSizeInParsec: boardSizeInParsec withWormHoleFrom: anEntranceOfWormHole to: anExitOfTheWormHole [
-
-	maximumSquares := aMaximumSquares.
-	entranceOfWormHole := anEntranceOfWormHole.
-	exitOfWormHole := anExitOfTheWormHole.
 	sizeInParsec := boardSizeInParsec
 ]
 

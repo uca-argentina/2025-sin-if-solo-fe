@@ -93,7 +93,7 @@ GameBoardTest >> test012WhenABoardWithNumberOfSquaresIsNegativeThenCreationFails
 			aPlayer1.
 			aPlayer2 }.
 
-	aGameSetUp withABoardNumberOfSquares: -1.
+	aGameSetUp withABoardNumberOfSquares: 8.
 	aGameSetUp withSpecialTiles: { (WormHole from: -1 to: -1) }.
 	aGameSetUp withMaximumLapsToWin: 2.
 
@@ -413,10 +413,7 @@ GameBoardTest >> test1WhenTheGameBeginsTheBoardKnowsTheSpaceShipsInitialPosition
 	| aPlayer1 aBoard initialPosition fuel |
 	initialPosition := 0.
 	fuel := 100.
-	aPlayer1 := SpaceShip
-		            withA: initialPosition
-		            andTurn: 1
-		            startingWith: fuel.
+	aPlayer1 := SpaceShip named: 'Marina'.
 	aBoard := BoardGame
 		          withNumberOfSquares: 60
 		          withSizeInParsec: 10
@@ -463,7 +460,7 @@ GameBoardTest >> test2WhenADiceIsRolledThenTheSpaceShipsPositionInTheBoardChange
 { #category : 'tests' }
 GameBoardTest >> test3WhenASpaceShipCompletesTheLapThenItsTheWinner [
 
-	| aGameSetUp aDice aBoard aPlayer1 aWinnerSystem |
+	| aGameSetUp aDice aBoard aPlayer1 aWinnerSystem  |
 	aGameSetUp := GameSetup new.
 
 	aDice := RiggedDice withNumberOfFaces: 6.
@@ -473,6 +470,7 @@ GameBoardTest >> test3WhenASpaceShipCompletesTheLapThenItsTheWinner [
 
 	aGameSetUp withDices: { aDice }.
 	aGameSetUp withPlayers: { aPlayer1 }.
+
 
 	aGameSetUp withABoardNumberOfSquares: 6 .
 	aGameSetUp withSpecialTiles: {

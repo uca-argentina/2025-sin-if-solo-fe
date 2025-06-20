@@ -11,8 +11,8 @@ Class {
 		'laps',
 		'minimumRollRequired',
 		'fuelSistem',
-		'turn',
-		'name'
+		'name',
+		'lostTurns'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -21,11 +21,6 @@ Class {
 { #category : 'initialization' }
 SpaceShip class >> named: aName [ 
     ^ self new initializeWtihAName:aName.
-]
-
-{ #category : 'initialization' }
-SpaceShip class >> withA: position andTurn: anOrderNumber startingWith: aFuel [
-    ^ self new initializeWithA: position andTurn: anOrderNumber startingWith: aFuel
 ]
 
 { #category : 'comparing' }
@@ -46,8 +41,8 @@ laps:=laps+anAmount.
 
 { #category : 'action' }
 SpaceShip >> borrar: aturn [
-
-turn:=aturn.
+"
+turn:=aturn."
 ]
 
 { #category : 'testing' }
@@ -59,7 +54,7 @@ SpaceShip >> canMoveWith: rolledNumber [
 { #category : 'testing' }
 SpaceShip >> canPlay [
 
-    ^ fuelSistem hasFuelToPlay and: [ turn isAvailableToPlay]
+    ^ fuelSistem hasFuelToPlay and: [ lostTurns =0].
 
 ]
 
@@ -113,30 +108,19 @@ SpaceShip >> hasFule [
 ]
 
 { #category : 'initialization' }
-SpaceShip >> initializeWithA: position andTurn: aTurn startingWith: aFuel [
-
-    currentPosition := position.
-    turn:= aTurn .
-    fuelSistem := aFuel.
-    laps := 0.
-    minimumRollRequired := 0.
-
-
-]
-
-{ #category : 'initialization' }
 SpaceShip >> initializeWtihAName:aName [
 
 name:= aName.
 currentPosition := 0.
 fuelSistem := 0.
+lostTurns:=0.
 laps := 0.
 minimumRollRequired := 0.
 ]
 
 { #category : 'action' }
 SpaceShip >> losesRound [
-  turn roundLosed.
+  lostTurns :=lostTurns +1.
 
 
 ]
@@ -148,7 +132,7 @@ SpaceShip >> moveTo: newPosition consuming: aDistance [
 	
 	currentPosition := newPosition.
 	
-	fuelSistem hasFuelToPlay ifFalse: [self losesRound ] .
+	fuelSistem hasFuelToPlay ifFalse: [self losesRound ].
 
 ]
 
@@ -169,9 +153,9 @@ SpaceShip >> ranksHigherThan: oponentSpaceship [
 	^ self currentLap > oponentSpaceship currentLap or: [
 		  self currentLap = oponentSpaceship currentLap and: [
 			  self currentPosition > oponentSpaceship currentPosition or: [
-				  self currentPosition = oponentSpaceship currentPosition and: [
+				  self currentPosition = oponentSpaceship currentPosition "and: [
 					 turn comesFirstThanThe:oponentSpaceship .
-					  ] ] ] ]
+					  ]" ] ] ]
 ]
 
 { #category : 'action' }
@@ -180,14 +164,10 @@ SpaceShip >> rechargeFule [
 fuelSistem recharge 
 ]
 
-{ #category : 'accessing' }
-SpaceShip >> turnOrder [
-^ turn turnOrder 
-]
-
 { #category : 'action' }
 SpaceShip >> verifyCanPlayAgain [
-	turn lostTurnsVerifier.
+	lostTurns = 2 ifFalse: [ ^ self ].
+	lostTurns := 0.
 
 
 ]
