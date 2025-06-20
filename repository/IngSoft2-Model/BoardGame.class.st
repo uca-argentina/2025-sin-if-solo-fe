@@ -180,6 +180,17 @@ BoardGame >> playOneRound [
 			self skipRoundAndRechargeFor: aSpaceShip ] ]
 ]
 
+{ #category : 'action' }
+BoardGame >> playRound [
+"|spaceShip|
+spaceShip=turnAdministrator spaceShipWhoseTurnItIs.
+spaceShip verifyCanPlayAgain.
+		spaceShip canPlay
+			ifTrue: [ self move: spaceShip with: dicesInGameBoard ]
+			ifFalse: [
+			self skipRoundAndRechargeFor: spaceShip ]"
+]
+
 { #category : 'accessing' }
 BoardGame >> positionOf: aSpaceShip [
 
