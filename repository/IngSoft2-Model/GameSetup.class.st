@@ -13,7 +13,8 @@ Class {
 		'maximumRolledNumber',
 		'boardSizeInParsec',
 		'specialTiles',
-		'dices'
+		'dices',
+		'turnManager'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -27,25 +28,25 @@ GameSetup >> board [
 { #category : 'creation' }
 GameSetup >> createBoardInstanceWith: aDices andWith: aSpaceShips andWith: aWinnerSystem [
 
-	| aBoard aCopyOfSpaceships |
-	boardSizeInParsec ifNil: [ boardSizeInParsec := boardSize ].
-	aBoard := BoardGame
-		          withNumberOfSquares: boardSize
-		          withSizeInParsec: boardSizeInParsec.
-		          
-	specialTiles ifNil: [ specialTiles := OrderedCollection new ].
-	
-	aBoard withDices: aDices .
-	
-	aCopyOfSpaceships := aSpaceShips collect: [ :each | each copy ].
+    | aBoard aCopyOfSpaceships |
+    boardSizeInParsec ifNil: [ boardSizeInParsec := boardSize ].
+    aBoard := BoardGame
+                  withNumberOfSquares: boardSize
+                  withSizeInParsec: boardSizeInParsec andTurnManager: turnManager .
 
-	aBoard has: aCopyOfSpaceships.
-	aBoard follows: aWinnerSystem.
-	
-	self fillEmptyPositionsWithNoEffectTile.
+    specialTiles ifNil: [ specialTiles := OrderedCollection new ].
 
-	aBoard contains: specialTiles.
-	^ aBoard
+    aBoard withDices: aDices .
+	aCopyOfSpaceships :=OrderedCollection new.
+    aCopyOfSpaceships := aSpaceShips collect: [ :each | each copy ].
+
+    aBoard has: aCopyOfSpaceships.
+    aBoard follows: aWinnerSystem.
+
+    self fillEmptyPositionsWithNoEffectTile.
+
+    aBoard contains: specialTiles.
+    ^ aBoard
 ]
 
 { #category : 'creation' }
@@ -67,7 +68,8 @@ GameSetup >> createGameInstance [
 { #category : 'creation' }
 GameSetup >> createSpaceShipsInstance [
 
-	spaceShips do: [ :spaceShip| spaceShip has: (Fuel withAnAmount: maximumRolledNumber * 2) ]
+	spaceShips do: [ :arg1 |
+		arg1 has: (Fuel withAnAmount: maximumRolledNumber * 2) ]
 ]
 
 { #category : 'action' }
@@ -108,6 +110,13 @@ GameSetup >> winnerSystem [
 { #category : 'initialization' }
 GameSetup >> withABoardNumberOfSquares: maximumSquares [ 
 	boardSize := maximumSquares.
+	
+]
+
+{ #category : 'initialization' }
+GameSetup >> withABoardNumberOfSquares: maximumSquares andTurnManager: aTurnManager [
+	boardSize := maximumSquares.
+	turnManager:=aTurnManager .
 	
 ]
 

@@ -8,7 +8,7 @@ Class {
 { #category : 'tests' }
 DistributionOfTilesTest >> test1WhenABoardIsCreatedThen2PercentOfSquaresAreAtomicBomb [
 
-	| aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice |
+	| aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice aTurnManager |
 	aGameSetUp := GameSetup new.
 	aDice := RiggedDice withNumberOfFaces: 10.
 	aDice setNumbersProvider: { 5. 2. 5. 9 }.
@@ -20,9 +20,8 @@ DistributionOfTilesTest >> test1WhenABoardIsCreatedThen2PercentOfSquaresAreAtomi
 	aGameSetUp withDices: { aDice }.
 
 
-	aGameSetUp
-		withABoardNumberOfSquares: 100
-		 .
+aTurnManager:=TurnManager withOrder:{aPlayer1 . aPlayer2}.
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager .
 	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 
 	aGameSetUp withAdistribution.
@@ -42,7 +41,7 @@ DistributionOfTilesTest >> test1WhenABoardIsCreatedThen2PercentOfSquaresAreAtomi
 { #category : 'tests' }
 DistributionOfTilesTest >> test2WhenABoardIsCreatedThen8PercentOfSquaresAreHyperJump [
 
-	| aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice |
+	| aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice aTurnManager |
 	aGameSetUp := GameSetup new.
 
 	aDice := RiggedDice withNumberOfFaces: 10.
@@ -57,7 +56,8 @@ DistributionOfTilesTest >> test2WhenABoardIsCreatedThen8PercentOfSquaresAreHyper
 	aGameSetUp withDices: { aDice }.
 
 
-	aGameSetUp withABoardNumberOfSquares: 100.
+aTurnManager:=TurnManager withOrder:{aPlayer1 . aPlayer2}.
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager .
 	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 
 	aGameSetUp withAdistribution.
@@ -77,7 +77,7 @@ DistributionOfTilesTest >> test2WhenABoardIsCreatedThen8PercentOfSquaresAreHyper
 { #category : 'tests' }
 DistributionOfTilesTest >> test3WhenABoardIsCreatedThen10PercentOfSquaresAreMoonWalk [
 
-	| aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice |
+	| aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice aTurnManager |
 	aGameSetUp := GameSetup new.
 
 	aDice := RiggedDice withNumberOfFaces: 10.
@@ -89,9 +89,8 @@ DistributionOfTilesTest >> test3WhenABoardIsCreatedThen10PercentOfSquaresAreMoon
 
 	aGameSetUp withDices: { aDice }.
 
-	aGameSetUp
-		withABoardNumberOfSquares: 100
-		 .
+	aTurnManager:=TurnManager withOrder:{aPlayer1 . aPlayer2}.
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager .
 	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 
 	aGameSetUp withAdistribution.
@@ -112,7 +111,7 @@ DistributionOfTilesTest >> test3WhenABoardIsCreatedThen10PercentOfSquaresAreMoon
 { #category : 'tests' }
 DistributionOfTilesTest >> test4WhenABoardIsCreatedThen20PercentOfSquaresAreHyperGravity [
 
-	| aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice |
+	| aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice aTurnManager |
 	aGameSetUp := GameSetup new.
 	aDice := RiggedDice withNumberOfFaces: 10.
 	aDice setNumbersProvider: { 5. 2. 5. 9 }.
@@ -124,9 +123,8 @@ DistributionOfTilesTest >> test4WhenABoardIsCreatedThen20PercentOfSquaresAreHype
 
 	aGameSetUp withDices: { aDice }.
 
-	aGameSetUp
-		withABoardNumberOfSquares: 100
-	 .
+	aTurnManager:=TurnManager withOrder:{aPlayer1 . aPlayer2}.
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager .
 	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 
 	aGameSetUp withAdistribution.
@@ -147,7 +145,7 @@ DistributionOfTilesTest >> test4WhenABoardIsCreatedThen20PercentOfSquaresAreHype
 { #category : 'tests' }
 DistributionOfTilesTest >> test5WhenABoardIsCreatedThen20PercentOfSquaresAreBlackHole [
 
-	| aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice |
+	| aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice aTurnManager |
 	aGameSetUp := GameSetup new.
 
 	aDice := RiggedDice withNumberOfFaces: 10.
@@ -159,9 +157,8 @@ DistributionOfTilesTest >> test5WhenABoardIsCreatedThen20PercentOfSquaresAreBlac
 
 	aGameSetUp withDices: { aDice }.
 
-	aGameSetUp
-		withABoardNumberOfSquares: 100
- .
+aTurnManager:=TurnManager withOrder:{aPlayer1 . aPlayer2}.
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager .
 	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 
 	aGameSetUp withAdistribution.

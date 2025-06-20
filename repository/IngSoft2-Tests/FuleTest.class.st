@@ -8,7 +8,7 @@ Class {
 { #category : 'tests' }
 FuleTest >> test010WhenASpaceShipSkipsATurnThenTheNextSpaceShipPlays [
 
-	| aGameSetUp aDice aDice2 aPlayer1 aBoard aPlayer2 |
+	| aGameSetUp aDice aDice2 aPlayer1 aBoard aPlayer2 aTurnManager |
 	aGameSetUp := GameSetup new.
 
 	aDice := RiggedDice withNumberOfFaces: 8.
@@ -25,9 +25,8 @@ FuleTest >> test010WhenASpaceShipSkipsATurnThenTheNextSpaceShipPlays [
 
 
 
-	aGameSetUp
-		withABoardNumberOfSquares: 100
-	 .
+	aTurnManager:=TurnManager withOrder:{aPlayer1 . aPlayer2}.
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager .
 	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 100.
 	aGameSetUp createGameInstance.
@@ -35,6 +34,7 @@ FuleTest >> test010WhenASpaceShipSkipsATurnThenTheNextSpaceShipPlays [
 	aBoard := aGameSetUp board.
 
 	aBoard playOneRound.
+		aBoard playOneRound.
 
 	self assert: (aBoard positionOf: aPlayer1) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 19.
@@ -42,6 +42,7 @@ FuleTest >> test010WhenASpaceShipSkipsATurnThenTheNextSpaceShipPlays [
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 14.
 
 	aBoard skipRoundAndRechargeFor: aPlayer1.
+	aBoard playOneRound.
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 24.
@@ -52,7 +53,7 @@ FuleTest >> test010WhenASpaceShipSkipsATurnThenTheNextSpaceShipPlays [
 { #category : 'tests' }
 FuleTest >> test0WhenASpaceShipDoesntMoveThenItHasInitialFuel [
 
-	| aGameSetUp aDice aPlayer1 |
+	| aGameSetUp aDice aPlayer1 aTurnManager |
 	aGameSetUp := GameSetup new.
 
 
@@ -64,7 +65,8 @@ FuleTest >> test0WhenASpaceShipDoesntMoveThenItHasInitialFuel [
 
 	aGameSetUp withDices: { aDice }.
 
-	aGameSetUp withABoardNumberOfSquares: 6  .
+		aTurnManager:=TurnManager withOrder:{aPlayer1 }.
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager .
 	aGameSetUp withSpecialTiles: { (WormHole from: 2 to: 5) }.
 	aGameSetUp withMaximumLapsToWin: 1.
 
@@ -77,7 +79,7 @@ FuleTest >> test0WhenASpaceShipDoesntMoveThenItHasInitialFuel [
 { #category : 'tests' }
 FuleTest >> test1WhenASpaceShipDoesntMoveThenItHasTheDoubleOfTheMaximumRolledNumberFuel [
 
-	| aGameSetUp aDice aDice2 aPlayer1 |
+	| aGameSetUp aDice aDice2 aPlayer1 aTurnManager |
 	aGameSetUp := GameSetup new.
 	aDice := RiggedDice withNumberOfFaces: 8.
 	aDice setNumbersProvider: { 7. 3. 3. 3 }.
@@ -92,7 +94,8 @@ FuleTest >> test1WhenASpaceShipDoesntMoveThenItHasTheDoubleOfTheMaximumRolledNum
 		aGameSetUp withPlayers: {aPlayer1 }.
 
 
-	aGameSetUp withABoardNumberOfSquares: 6 .
+	aTurnManager:=TurnManager withOrder:{aPlayer1 }.
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager .
 	aGameSetUp withSpecialTiles: { (WormHole from: 2 to: 5) }.
 	aGameSetUp withMaximumLapsToWin: 1.
 
@@ -104,7 +107,7 @@ FuleTest >> test1WhenASpaceShipDoesntMoveThenItHasTheDoubleOfTheMaximumRolledNum
 { #category : 'tests' }
 FuleTest >> test2WhenASpaceShipMovesThenFuelDecreasesByTheAmountMoved [
 
-	| aGameSetUp aPlayer1 aBoard aDice aDice2 |
+	| aGameSetUp aPlayer1 aBoard aDice aDice2 aTurnManager |
 	aGameSetUp := GameSetup new.
 
 
@@ -120,7 +123,9 @@ FuleTest >> test2WhenASpaceShipMovesThenFuelDecreasesByTheAmountMoved [
 		
 		aGameSetUp withPlayers: {aPlayer1 }.
 
-	aGameSetUp withABoardNumberOfSquares: 6  .
+	
+	aTurnManager:=TurnManager withOrder:{aPlayer1 }.
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager .
 	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 10.
 	aGameSetUp createGameInstance.
@@ -134,7 +139,7 @@ FuleTest >> test2WhenASpaceShipMovesThenFuelDecreasesByTheAmountMoved [
 { #category : 'tests' }
 FuleTest >> test3WhenASpaceShipDoesntHaveAnyFuleLeftThenItGoesBackToTheInitialPosition [
 
-	| aGameSetUp aPlayer1 aBoard aDice aDice2 |
+	| aGameSetUp aPlayer1 aBoard aDice aDice2 aTurnManager |
 	aGameSetUp := GameSetup new.
 
 	aDice := RiggedDice withNumberOfFaces: 8.
@@ -150,7 +155,9 @@ FuleTest >> test3WhenASpaceShipDoesntHaveAnyFuleLeftThenItGoesBackToTheInitialPo
 			aDice2 }.
 
 
-	aGameSetUp withABoardNumberOfSquares: 6 .
+	
+	aTurnManager:=TurnManager withOrder:{aPlayer1 }.
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager .
 	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 6.
 
@@ -168,7 +175,7 @@ FuleTest >> test3WhenASpaceShipDoesntHaveAnyFuleLeftThenItGoesBackToTheInitialPo
 { #category : 'tests' }
 FuleTest >> test4WhenSpaceShipDoesntHaveFuleThenLosesTwoTurnsAndThenItCanMoveAgainWithTheirMaximumFule [
 
-	| aGameSetUp aPlayer1 aBoard aDice aDice2 |
+	| aGameSetUp aPlayer1 aBoard aDice aDice2 aTurnManager |
 	aGameSetUp := GameSetup new.
 
 	aDice := RiggedDice withNumberOfFaces: 8.
@@ -183,9 +190,9 @@ FuleTest >> test4WhenSpaceShipDoesntHaveFuleThenLosesTwoTurnsAndThenItCanMoveAga
 			aDice2 }.
 
 
-	aGameSetUp
-		withABoardNumberOfSquares: 100
-	 .
+	
+	aTurnManager:=TurnManager withOrder:{aPlayer1 }.
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager .
 	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 6.
 
@@ -211,7 +218,7 @@ FuleTest >> test4WhenSpaceShipDoesntHaveFuleThenLosesTwoTurnsAndThenItCanMoveAga
 { #category : 'tests' }
 FuleTest >> test5WhenMoreThanOneSpaceShipDoesntHaveFuleThenBothCantMoveForTwoTurns [
 
-	| aGameSetUp aPlayer1 aPlayer2 aBoard aDice aDice2 |
+	| aGameSetUp aPlayer1 aPlayer2 aBoard aDice aDice2 aTurnManager |
 	aGameSetUp := GameSetup new.
 	aDice := RiggedDice withNumberOfFaces: 8.
 	aDice setNumbersProvider: { 8. 7. 2. 8. 7. 2. 8. 7. 2. 8. 7. 2 }.
@@ -229,15 +236,19 @@ FuleTest >> test5WhenMoreThanOneSpaceShipDoesntHaveFuleThenBothCantMoveForTwoTur
 	
 
 
-	aGameSetUp
-		withABoardNumberOfSquares: 100
-	 .
+	aTurnManager:=TurnManager withOrder:{aPlayer1 .aPlayer2 }.
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager .
 	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 16.
 
 	aGameSetUp createGameInstance.
 
 	aBoard := aGameSetUp board.
+	aBoard playOneRound.
+	
+	aBoard playOneRound.
+
+	aBoard playOneRound.
 	aBoard playOneRound.
 	aBoard playOneRound.
 	aBoard playOneRound.
@@ -246,15 +257,18 @@ FuleTest >> test5WhenMoreThanOneSpaceShipDoesntHaveFuleThenBothCantMoveForTwoTur
 	self assert: (aBoard positionOf: aPlayer2) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 0.
 	aBoard playOneRound.
-	self assert: (aBoard positionOf: aPlayer1) equals: 0.
-	self assert: (aBoard currentFuleOf: aPlayer1) equals: 24.
-	self assert: (aBoard positionOf: aPlayer2) equals: 0.
-	self assert: (aBoard currentFuleOf: aPlayer2) equals: 24.
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 24.
 	self assert: (aBoard positionOf: aPlayer2) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 24.
+	aBoard playOneRound.
+		aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer1) equals: 0.
+	self assert: (aBoard currentFuleOf: aPlayer1) equals: 24.
+	self assert: (aBoard positionOf: aPlayer2) equals: 0.
+	self assert: (aBoard currentFuleOf: aPlayer2) equals: 24.
+	aBoard playOneRound.
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 10.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 14.
@@ -265,7 +279,7 @@ FuleTest >> test5WhenMoreThanOneSpaceShipDoesntHaveFuleThenBothCantMoveForTwoTur
 { #category : 'tests' }
 FuleTest >> test6WhenASpaceShipFallsIntoAEntranceOfWormHoleThenTheFuleDecrecesTheAmountMoved [
 
-	| aGameSetUp aDice aPlayer1 aBoard aDice2 |
+	| aGameSetUp aDice aPlayer1 aBoard aDice2 aTurnManager |
 	aGameSetUp := GameSetup new.
 
 	aDice := RiggedDice withNumberOfFaces: 8.
@@ -281,7 +295,8 @@ FuleTest >> test6WhenASpaceShipFallsIntoAEntranceOfWormHoleThenTheFuleDecrecesTh
 			aDice2 }.
 
 
-	aGameSetUp withABoardNumberOfSquares: 80  .
+	aTurnManager:=TurnManager withOrder:{aPlayer1  }.
+	aGameSetUp withABoardNumberOfSquares: 80 andTurnManager: aTurnManager .
 	aGameSetUp withSpecialTiles: { (WormHole from: 3 to: 5) }.
 	aGameSetUp withMaximumLapsToWin: 100.
 
@@ -297,7 +312,7 @@ FuleTest >> test6WhenASpaceShipFallsIntoAEntranceOfWormHoleThenTheFuleDecrecesTh
 { #category : 'tests' }
 FuleTest >> test7WhenASpaceShipFallsIntoAExitOfWormHoleThenTheFuleDecrecesTheAmountMoved [
 
-	| aGameSetUp aPlayer1 aBoard aDice aDice2 |
+	| aGameSetUp aPlayer1 aBoard aDice aDice2 aTurnManager |
 	aGameSetUp := GameSetup new.
 
 	aDice := RiggedDice withNumberOfFaces: 8.
@@ -312,9 +327,8 @@ FuleTest >> test7WhenASpaceShipFallsIntoAExitOfWormHoleThenTheFuleDecrecesTheAmo
 			aDice2 }.
 
 
-	aGameSetUp
-		withABoardNumberOfSquares: 666
-	 .
+		aTurnManager:=TurnManager withOrder:{aPlayer1  }.
+	aGameSetUp withABoardNumberOfSquares: 666 andTurnManager: aTurnManager .
 	aGameSetUp withSpecialTiles: { (WormHole from: 3 to: 5) }.
 	aGameSetUp withMaximumLapsToWin: 100.
 
@@ -330,7 +344,7 @@ FuleTest >> test7WhenASpaceShipFallsIntoAExitOfWormHoleThenTheFuleDecrecesTheAmo
 { #category : 'tests' }
 FuleTest >> test8WhenASpaceShipChoosesToSkipARoundThenDosentMoveAndRechargesTheFule [
 
-	| aGameSetUp aPlayer1 aBoard aDice aDice2 |
+	| aGameSetUp aPlayer1 aBoard aDice aDice2 aTurnManager |
 	aGameSetUp := GameSetup new.
 
 	aDice := RiggedDice withNumberOfFaces: 8.
@@ -346,10 +360,8 @@ FuleTest >> test8WhenASpaceShipChoosesToSkipARoundThenDosentMoveAndRechargesTheF
 			aDice2 }.
 
 
-
-	aGameSetUp
-		withABoardNumberOfSquares: 100
- .
+	aTurnManager:=TurnManager withOrder:{aPlayer1  }.
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager .
 	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 100.
 	aGameSetUp createGameInstance.
@@ -371,17 +383,19 @@ FuleTest >> test8WhenASpaceShipChoosesToSkipARoundThenDosentMoveAndRechargesTheF
 { #category : 'tests' }
 FuleTest >> test9WhenBothSpaceShipsSkipRoundThenTheyRechargeAllTheirFule [
 
-	| aGameSetUp aPlayer1 aBoard aPlayer2 aDice aDice2 |
+	| aGameSetUp aPlayer1 aBoard aPlayer2 aDice aDice2 aTurnManager |
 	aGameSetUp := GameSetup new.
 
 	aDice := RiggedDice withNumberOfFaces: 8.
 	aDice setNumbersProvider: { 3. 7. 2. 5 }.
 	aDice2 := RiggedDice withNumberOfFaces: 4.
 	aDice2 setNumbersProvider: { 2. 3. 2. 5 }.
-		aPlayer1:= SpaceShip named: 'Fran'.
-	aPlayer2:= SpaceShip named: 'Agustin'.
-		
-		aGameSetUp withPlayers: {aPlayer1. aPlayer2 }.
+	aPlayer1 := SpaceShip named: 'Fran'.
+	aPlayer2 := SpaceShip named: 'Agustin'.
+
+	aGameSetUp withPlayers: {
+			aPlayer1.
+			aPlayer2 }.
 	aGameSetUp withDices: {
 			aDice.
 			aDice2 }.
@@ -390,15 +404,19 @@ FuleTest >> test9WhenBothSpaceShipsSkipRoundThenTheyRechargeAllTheirFule [
 
 
 
+	aTurnManager := TurnManager withOrder: {
+			                aPlayer1.
+			                aPlayer2 }.
 	aGameSetUp
 		withABoardNumberOfSquares: 100
- .
+		andTurnManager: aTurnManager.
 	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 100.
 	aGameSetUp createGameInstance.
 
 	aBoard := aGameSetUp board.
 
+	aBoard playOneRound.
 	aBoard playOneRound.
 
 	self assert: (aBoard positionOf: aPlayer1) equals: 5.
@@ -409,10 +427,12 @@ FuleTest >> test9WhenBothSpaceShipsSkipRoundThenTheyRechargeAllTheirFule [
 	aBoard skipRoundAndRechargeFor: aPlayer1.
 	aBoard skipRoundAndRechargeFor: aPlayer2.
 	aBoard playOneRound.
+	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 24.
 	self assert: (aBoard positionOf: aPlayer2) equals: 10.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 24.
+	aBoard playOneRound.
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 9.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 20.

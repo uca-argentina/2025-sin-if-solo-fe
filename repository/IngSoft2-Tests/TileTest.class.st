@@ -19,7 +19,7 @@ TileTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessa
 { #category : 'tests' }
 TileTest >> test10WhenTheSpaceShipFallsInMoonWalkThenAllTheOtherSpaceShipsMoveBack [
 
-	| aGameSetUp aDice aBoard aPlayer1 aPlayer2 aWinnerSystem |
+	| aGameSetUp aDice aBoard aPlayer1 aPlayer2 aWinnerSystem aTurnManager |
 	aGameSetUp := GameSetup new.
 	aDice := RiggedDice withNumberOfFaces: 8.
 	aDice setNumbersProvider: { 7. 5. 3. 4 }.
@@ -29,8 +29,11 @@ TileTest >> test10WhenTheSpaceShipFallsInMoonWalkThenAllTheOtherSpaceShipsMoveBa
 		aGameSetUp withPlayers: {aPlayer1. aPlayer2 }.
 
 	aGameSetUp withDices: { aDice }.
-	aGameSetUp
-		withABoardNumberOfSquares: 100.
+aTurnManager := TurnManager withOrder: {
+			                aPlayer1.
+			                aPlayer2 }.
+
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 	aGameSetUp withMaximumLapsToWin: 3.
 	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 2).(MoonWalk in: 5 moveBack: 2) }.
 	aGameSetUp createGameInstance.
@@ -40,11 +43,13 @@ TileTest >> test10WhenTheSpaceShipFallsInMoonWalkThenAllTheOtherSpaceShipsMoveBa
 	aWinnerSystem := aGameSetUp winnerSystem.
 
 	aBoard playOneRound.
+	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 7.
 	self assert: (aBoard positionOf: aPlayer2) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 11.
 
+	aBoard playOneRound.
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 8.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 4.
@@ -55,7 +60,7 @@ TileTest >> test10WhenTheSpaceShipFallsInMoonWalkThenAllTheOtherSpaceShipsMoveBa
 { #category : 'tests' }
 TileTest >> test11WhenASpaceShipDoesntHaveEnoughFuelToMoveBackThenLosesTurnsAndGoBackToInitialPosition [
 
-	| aGameSetUp aDice aDice2 aPlayer1 aPlayer2 aBoard |
+	| aGameSetUp aDice aDice2 aPlayer1 aPlayer2 aBoard aTurnManager |
 	aGameSetUp := GameSetup new.
 
 	aDice := RiggedDice withNumberOfFaces: 8.
@@ -74,9 +79,11 @@ TileTest >> test11WhenASpaceShipDoesntHaveEnoughFuelToMoveBackThenLosesTurnsAndG
 
 
 
-	aGameSetUp
-		withABoardNumberOfSquares: 100
-	 .
+aTurnManager := TurnManager withOrder: {
+			                aPlayer1.
+			                aPlayer2 }.
+
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 
 	aGameSetUp withMaximumLapsToWin: 6.
 	aGameSetUp withSpecialTiles: {(WormHole from: 1 to: 1). (MoonWalk in: 23 moveBack: 4) }.
@@ -85,21 +92,27 @@ TileTest >> test11WhenASpaceShipDoesntHaveEnoughFuelToMoveBackThenLosesTurnsAndG
 	aBoard := aGameSetUp board.
 	aBoard playOneRound.
 	aBoard playOneRound.
+	aBoard playOneRound.
+	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 12.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 12.
 	self assert: (aBoard positionOf: aPlayer2) equals: 14.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 10.
+	aBoard playOneRound.
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 23.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 1.
 	self assert: (aBoard positionOf: aPlayer2) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 0.
 	aBoard playOneRound.
-	self assert: (aBoard positionOf: aPlayer2) equals: 0.
-	self assert: (aBoard currentFuleOf: aPlayer2) equals: 24.
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer2) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 24.
+	aBoard playOneRound.
+	aBoard playOneRound.
+	self assert: (aBoard positionOf: aPlayer2) equals: 0.
+	self assert: (aBoard currentFuleOf: aPlayer2) equals: 24.
+	aBoard playOneRound.
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer2) equals: 2.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 22
@@ -108,7 +121,7 @@ TileTest >> test11WhenASpaceShipDoesntHaveEnoughFuelToMoveBackThenLosesTurnsAndG
 { #category : 'tests' }
 TileTest >> test12WhenPlayerFallsOnMoonWalkTileThenMovesBackAndConsumesFuel [
 
-	| aGameSetUp aDice aDice2 aPlayer1 aPlayer2 aBoard |
+	| aGameSetUp aDice aDice2 aPlayer1 aPlayer2 aBoard aTurnManager |
 	aGameSetUp := GameSetup new.
 
 	aDice := RiggedDice withNumberOfFaces: 8.
@@ -125,15 +138,18 @@ TileTest >> test12WhenPlayerFallsOnMoonWalkTileThenMovesBackAndConsumesFuel [
 			aDice.
 			aDice2 }.
 
-	aGameSetUp
-		withABoardNumberOfSquares: 100
-	 .
+aTurnManager := TurnManager withOrder: {
+			                aPlayer1.
+			                aPlayer2 }.
+
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 
 	aGameSetUp withMaximumLapsToWin: 6.
 	aGameSetUp withSpecialTiles: {(WormHole from: 1 to: 1). (MoonWalk in: 5 moveBack: 4) }.
 	aGameSetUp createGameInstance.
 
 	aBoard := aGameSetUp board.
+	aBoard playOneRound.
 	aBoard playOneRound.
 
 	self assert: (aBoard positionOf: aPlayer1) equals: 0.
@@ -143,6 +159,7 @@ TileTest >> test12WhenPlayerFallsOnMoonWalkTileThenMovesBackAndConsumesFuel [
 	self assert: (aBoard positionOf: aPlayer2) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 19.
 	self assert: (aBoard completedLapsBy: aPlayer2) equals: 0.
+	aBoard playOneRound.
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 2.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 18.
@@ -155,18 +172,20 @@ TileTest >> test12WhenPlayerFallsOnMoonWalkTileThenMovesBackAndConsumesFuel [
 { #category : 'tests' }
 TileTest >> test13WhenASpaceSHipFallsInAMoonWalkButDosentHaveEnoughFulleToMoveBackThenMovesToInitialPositionInCurrentLap [
 
-	| aGameSetUp aDice aDice2 aPlayer1 aPlayer2 aBoard |
+	| aGameSetUp aDice aDice2 aPlayer1 aPlayer2 aBoard aTurnManager |
 	aGameSetUp := GameSetup new.
 
-	
+
 	aDice := RiggedDice withNumberOfFaces: 8.
 	aDice setNumbersProvider: { 5. 5. 8. 2. 5. 5. 5. 5 }.
 	aDice2 := RiggedDice withNumberOfFaces: 4.
 	aDice2 setNumbersProvider: { 1. 1. 4. 1. 1. 1. 1. 1 }.
-		aPlayer1:= SpaceShip named: 'Fran'.
-	aPlayer2:= SpaceShip named: 'Agustin'.
-		
-		aGameSetUp withPlayers: {aPlayer1. aPlayer2 }.
+	aPlayer1 := SpaceShip named: 'Fran'.
+	aPlayer2 := SpaceShip named: 'Agustin'.
+
+	aGameSetUp withPlayers: {
+			aPlayer1.
+			aPlayer2 }.
 
 
 	aGameSetUp withDices: {
@@ -176,14 +195,22 @@ TileTest >> test13WhenASpaceSHipFallsInAMoonWalkButDosentHaveEnoughFulleToMoveBa
 
 
 
-	aGameSetUp withABoardNumberOfSquares: 5 .
+
+	aTurnManager := TurnManager withOrder: {
+			                aPlayer1.
+			                aPlayer2 }.
+
+	aGameSetUp withABoardNumberOfSquares: 5 andTurnManager: aTurnManager.
 
 	aGameSetUp withMaximumLapsToWin: 6.
-	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1).(MoonWalk in: 4 moveBack: 6) }.
+	aGameSetUp withSpecialTiles: {
+			(WormHole from: 1 to: 1).
+			(MoonWalk in: 4 moveBack: 6) }.
 	aGameSetUp createGameInstance.
 
 
 	aBoard := aGameSetUp board.
+	aBoard playOneRound.
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 1.
 	self assert: (aBoard completedLapsBy: aPlayer1) equals: 1.
@@ -192,6 +219,7 @@ TileTest >> test13WhenASpaceSHipFallsInAMoonWalkButDosentHaveEnoughFulleToMoveBa
 	self assert: (aBoard completedLapsBy: aPlayer2) equals: 1.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 18.
 
+	aBoard playOneRound.
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 0.
@@ -204,7 +232,7 @@ TileTest >> test13WhenASpaceSHipFallsInAMoonWalkButDosentHaveEnoughFulleToMoveBa
 { #category : 'tests' }
 TileTest >> test14WhenSpaceShipFallsInHyperJumpThenItAdvancesTheAmountOfParsecs [
 
-	| aGameSetUp aPlayer1 aBoard aDice aDice2 |
+	| aGameSetUp aPlayer1 aBoard aDice aDice2 aTurnManager |
 	aGameSetUp := GameSetup new.
 
 
@@ -223,10 +251,11 @@ TileTest >> test14WhenSpaceShipFallsInHyperJumpThenItAdvancesTheAmountOfParsecs 
 			aDice2 }.
 
 
+	aTurnManager := TurnManager withOrder: {
+			                aPlayer1.
+			                 }.
 
-	aGameSetUp
-		withABoardNumberOfSquares: 100
-	 .
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 	aGameSetUp withBoardsLengthInParsec: 100.
 	aGameSetUp withMaximumLapsToWin: 6.
 	aGameSetUp withSpecialTiles:
@@ -235,13 +264,14 @@ TileTest >> test14WhenSpaceShipFallsInHyperJumpThenItAdvancesTheAmountOfParsecs 
 
 	aBoard := aGameSetUp board.
 	aBoard playOneRound.
+
 	self assert: (aBoard positionOf: aPlayer1) equals: 12.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 12
 ]
 
 { #category : 'tests' }
 TileTest >> test15WhenManySpaceShipsFallInHyperJumpThenTheyAllAdvanceTheAmountOfParsecs [
-	| aGameSetUp aPlayer1 aPlayer2 aPlayer3 aBoard aDice aDice2 |
+	| aGameSetUp aPlayer1 aPlayer2 aPlayer3 aBoard aDice aDice2 aTurnManager |
 
 	aGameSetUp := GameSetup new.
 
@@ -257,7 +287,11 @@ TileTest >> test15WhenManySpaceShipsFallInHyperJumpThenTheyAllAdvanceTheAmountOf
 		aGameSetUp withPlayers: {aPlayer1. aPlayer2 . aPlayer3 }.
 
 	aGameSetUp withDices: { aDice. aDice2 }.
-	aGameSetUp withABoardNumberOfSquares: 100  .
+	aTurnManager := TurnManager withOrder: {
+			               aPlayer1. aPlayer2 . aPlayer3
+			                 }.
+
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 
 	aGameSetUp withBoardsLengthInParsec: 100.
 	aGameSetUp withMaximumLapsToWin: 6.
@@ -267,6 +301,8 @@ TileTest >> test15WhenManySpaceShipsFallInHyperJumpThenTheyAllAdvanceTheAmountOf
 
 	aBoard := aGameSetUp board.
 
+	aBoard playOneRound.
+	aBoard playOneRound.
 	aBoard playOneRound.
 
 	self assert: (aBoard positionOf: aPlayer1) equals: 12.  
@@ -283,7 +319,7 @@ TileTest >> test15WhenManySpaceShipsFallInHyperJumpThenTheyAllAdvanceTheAmountOf
 { #category : 'tests' }
 TileTest >> test1WhenMinimumRollIsntMetThenTheSpaceshipIsHeldByTheHyperGravity [
 
-	| aGameSetUp aDice aBoard aPlayer1 aWinnerSystem |
+	| aGameSetUp aDice aBoard aPlayer1 aWinnerSystem aTurnManager |
 	aGameSetUp := GameSetup new.
 	aDice := RiggedDice withNumberOfFaces: 10.
 	aDice setNumbersProvider: { 2. 1. 5. 4 }.
@@ -293,9 +329,11 @@ TileTest >> test1WhenMinimumRollIsntMetThenTheSpaceshipIsHeldByTheHyperGravity [
 		aGameSetUp withPlayers: {aPlayer1 }.
 	aGameSetUp withDices: { aDice }.
 
-	aGameSetUp
-		withABoardNumberOfSquares: 100
-		 .
+		aTurnManager := TurnManager withOrder: {
+			                aPlayer1.
+			                 }.
+
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 	
 
 	aGameSetUp withSpecialTiles:
@@ -321,7 +359,7 @@ TileTest >> test1WhenMinimumRollIsntMetThenTheSpaceshipIsHeldByTheHyperGravity [
 { #category : 'tests' }
 TileTest >> test2WhenThereAreDifferentHyperGravityTilesThenEachHeldsTheSpaceShipAcordingToTheirIndependentCriteria [
 
-	| aGameSetUp aDice aBoard aPlayer1 aWinnerSystem |
+	| aGameSetUp aDice aBoard aPlayer1 aWinnerSystem aTurnManager |
 	aGameSetUp := GameSetup new.
 
 	aDice := RiggedDice withNumberOfFaces: 10.
@@ -333,9 +371,11 @@ TileTest >> test2WhenThereAreDifferentHyperGravityTilesThenEachHeldsTheSpaceShip
 	aGameSetUp withDices: { aDice }.
 
 
-	aGameSetUp
-		withABoardNumberOfSquares: 100
-	 .
+		aTurnManager := TurnManager withOrder: {
+			                aPlayer1.
+			                 }.
+
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 
 	aGameSetUp withSpecialTiles: {
 	(WormHole from: 1 to: 1).
@@ -368,7 +408,7 @@ TileTest >> test2WhenThereAreDifferentHyperGravityTilesThenEachHeldsTheSpaceShip
 { #category : 'tests' }
 TileTest >> test4WhenAHyperGravityPositionIsOutOfTheBoardMaximumSizeThenTheGameCreationFails [
 
-	| aGameSetUp aDice aPlayer1|
+	| aGameSetUp aDice aPlayer1 aTurnManager |
 	aGameSetUp := GameSetup new.
 
 
@@ -380,9 +420,11 @@ TileTest >> test4WhenAHyperGravityPositionIsOutOfTheBoardMaximumSizeThenTheGameC
 
 	aGameSetUp withDices: { aDice }.
 
-	aGameSetUp
-		withABoardNumberOfSquares: 100
-	 .
+		aTurnManager := TurnManager withOrder: {
+			                aPlayer1.
+			                 }.
+
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 	
 
 	aGameSetUp withSpecialTiles:
@@ -400,7 +442,7 @@ TileTest >> test4WhenAHyperGravityPositionIsOutOfTheBoardMaximumSizeThenTheGameC
 { #category : 'tests' }
 TileTest >> test5WhenASpaceShipFallsToTheAtomicBombThenAllSpaceShipsMoveToTheStart [
 
-	| aGameSetUp aDice aBoard aPlayer1 aPlayer2 aWinnerSystem |
+	| aGameSetUp aDice aBoard aPlayer1 aPlayer2 aWinnerSystem aTurnManager |
 	aGameSetUp := GameSetup new.
 
 	aDice := RiggedDice withNumberOfFaces: 10.
@@ -412,10 +454,11 @@ TileTest >> test5WhenASpaceShipFallsToTheAtomicBombThenAllSpaceShipsMoveToTheSta
 
 	aGameSetUp withDices: { aDice }.
 
+	aTurnManager := TurnManager withOrder: {
+			                aPlayer1.aPlayer2
+			                 }.
 
-	aGameSetUp
-		withABoardNumberOfSquares: 100
-	 .
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 
 	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1).(AtomicBomb in: 7) }.
 
@@ -426,10 +469,12 @@ TileTest >> test5WhenASpaceShipFallsToTheAtomicBombThenAllSpaceShipsMoveToTheSta
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
 	aBoard playOneRound.
+	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 2.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 18.
 	self assert: (aBoard positionOf: aPlayer2) equals: 4.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 16.
+	aBoard playOneRound.
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 13.
@@ -440,7 +485,7 @@ TileTest >> test5WhenASpaceShipFallsToTheAtomicBombThenAllSpaceShipsMoveToTheSta
 { #category : 'tests' }
 TileTest >> test6WhenASpaceShipFallsInToTheBlackHoleThenItMoves4StepsBack [
 
-	| aGameSetUp aDice aBoard aPlayer1 aPlayer2 aWinnerSystem |
+	| aGameSetUp aDice aBoard aPlayer1 aPlayer2 aWinnerSystem aTurnManager |
 	aGameSetUp := GameSetup new.
 	aDice := RiggedDice withNumberOfFaces: 10.
 	aDice setNumbersProvider: { 2. 4. 5. 9 }.
@@ -452,10 +497,11 @@ TileTest >> test6WhenASpaceShipFallsInToTheBlackHoleThenItMoves4StepsBack [
 
 	aGameSetUp withDices: { aDice }.
 
+aTurnManager := TurnManager withOrder: {
+			                aPlayer1.aPlayer2
+			                 }.
 
-	aGameSetUp
-		withABoardNumberOfSquares: 100
-.
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 
 	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1).(BlackHole in: 7) }.
 
@@ -466,10 +512,12 @@ TileTest >> test6WhenASpaceShipFallsInToTheBlackHoleThenItMoves4StepsBack [
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
 	aBoard playOneRound.
+	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 2.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 18.
 	self assert: (aBoard positionOf: aPlayer2) equals: 4.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 16.
+	aBoard playOneRound.
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 3.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 9.
@@ -480,7 +528,7 @@ TileTest >> test6WhenASpaceShipFallsInToTheBlackHoleThenItMoves4StepsBack [
 { #category : 'tests' }
 TileTest >> test7WhenASpaceShipFallsInToTheBlackHoleAndDoesntHaveEnoughFuleToBackThenItLoses2Turns [
 
-	| aGameSetUp aDice aDice2 aPlayer1 aBoard |
+	| aGameSetUp aDice aDice2 aPlayer1 aBoard aTurnManager |
 	aGameSetUp := GameSetup new.
 	
 	aPlayer1:= SpaceShip named: 'Fran'.
@@ -500,8 +548,11 @@ aGameSetUp withPlayers: {aPlayer1 }.
 
 
 
-	aGameSetUp
-		withABoardNumberOfSquares: 100.
+aTurnManager := TurnManager withOrder: {
+			                aPlayer1
+			                 }.
+
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 	aGameSetUp withMaximumLapsToWin: 6.
 	aGameSetUp withSpecialTiles: {(WormHole from: 1 to: 1). (BlackHole in: 23) }.
 
@@ -527,7 +578,7 @@ aGameSetUp withPlayers: {aPlayer1 }.
 { #category : 'tests' }
 TileTest >> test8WhenSpaceshipFallsInBlackHoleOfLaterLapThenItGoesToPreviousLap [
 
-	| aGameSetUp aDice aBoard aPlayer1 aWinnerSystem |
+	| aGameSetUp aDice aBoard aPlayer1 aWinnerSystem aTurnManager |
 	aGameSetUp := GameSetup new.
 	aDice := RiggedDice withNumberOfFaces: 8.
 	aDice setNumbersProvider: { 5. 3. 3. 4 }.
@@ -539,7 +590,11 @@ TileTest >> test8WhenSpaceshipFallsInBlackHoleOfLaterLapThenItGoesToPreviousLap 
 	aGameSetUp withDices: { aDice }.
 
 
-	aGameSetUp withABoardNumberOfSquares: 5 .
+aTurnManager := TurnManager withOrder: {
+			                aPlayer1
+			                 }.
+
+	aGameSetUp withABoardNumberOfSquares: 5 andTurnManager: aTurnManager.
 	aGameSetUp withMaximumLapsToWin: 3.
 	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1).(BlackHole in: 3) }.
 	aGameSetUp createGameInstance.
@@ -561,7 +616,7 @@ TileTest >> test8WhenSpaceshipFallsInBlackHoleOfLaterLapThenItGoesToPreviousLap 
 { #category : 'tests' }
 TileTest >> test9WhenSpaceShipFallsInBlackHoleAtTheBeginingOfTheGameThenItGoesBackToInitialPosition [
 
-	| aGameSetUp aDice aBoard aPlayer1 aWinnerSystem |
+	| aGameSetUp aDice aBoard aPlayer1 aWinnerSystem aTurnManager |
 	aGameSetUp := GameSetup new.
 	aDice := RiggedDice withNumberOfFaces: 8.
 	aDice setNumbersProvider: { 3. 1. 3. 4 }.
@@ -573,8 +628,11 @@ TileTest >> test9WhenSpaceShipFallsInBlackHoleAtTheBeginingOfTheGameThenItGoesBa
 	aGameSetUp withDices: { aDice }.
 
 
-	aGameSetUp
-		withABoardNumberOfSquares: 100.
+aTurnManager := TurnManager withOrder: {
+			                aPlayer1
+			                 }.
+
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 	aGameSetUp withMaximumLapsToWin: 3.
 	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1).(BlackHole in: 3) }.
 	aGameSetUp createGameInstance.
@@ -592,7 +650,7 @@ TileTest >> test9WhenSpaceShipFallsInBlackHoleAtTheBeginingOfTheGameThenItGoesBa
 { #category : 'tests' }
 TileTest >> testF1WhenAHyperGravityHasAGreaterRequiringRollThanTheMaximumRolledNumberThenTheGameCreationFails [
 
-	| aGameSetUp aDice  aPlayer1|
+	| aGameSetUp aDice  aPlayer1 aTurnManager |
 	aGameSetUp := GameSetup new.
 	aDice := RiggedDice withNumberOfFaces: 10.
 	aDice setNumbersProvider: { 2. 1. 5. 4. 9 }.
@@ -603,9 +661,11 @@ TileTest >> testF1WhenAHyperGravityHasAGreaterRequiringRollThanTheMaximumRolledN
 
 	aGameSetUp withDices: { aDice }.
 
+aTurnManager := TurnManager withOrder: {
+			                aPlayer1
+			                 }.
 
-	aGameSetUp
-		withABoardNumberOfSquares: 100.
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 
 	aGameSetUp withSpecialTiles:
 		{(WormHole from: 1 to: 1). (HyperGravity in: 2 requiringMinimumRoll: 11) }.
@@ -623,7 +683,7 @@ TileTest >> testF1WhenAHyperGravityHasAGreaterRequiringRollThanTheMaximumRolledN
 { #category : 'tests' }
 TileTest >> testF2WhenASpecialTilePositionIsOutOfTheBoardMaximumSizeThenTheGameCreationFails [
 
-	| aGameSetUp aDice aPlayer1|
+	| aGameSetUp aDice aPlayer1 aTurnManager |
 	aGameSetUp := GameSetup new.
 	aDice := RiggedDice withNumberOfFaces: 10.
 	aDice setNumbersProvider: { 2. 1. 5. 4. 9 }.
@@ -633,10 +693,11 @@ TileTest >> testF2WhenASpecialTilePositionIsOutOfTheBoardMaximumSizeThenTheGameC
 		aGameSetUp withPlayers: {aPlayer1 }.
 
 	aGameSetUp withDices: { aDice }.
+aTurnManager := TurnManager withOrder: {
+			                aPlayer1
+			                 }.
 
-
-	aGameSetUp
-		withABoardNumberOfSquares: 100.
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 
 	aGameSetUp withSpecialTiles: {(WormHole from: 1 to: 1). (AtomicBomb in: 101) }.
 
