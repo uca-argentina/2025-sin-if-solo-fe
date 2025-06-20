@@ -8,15 +8,20 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'currentPosition',
-		'originalSpaceShip',
 		'laps',
 		'minimumRollRequired',
 		'fuelSistem',
-		'turn'
+		'turn',
+		'name'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
+
+{ #category : 'initialization' }
+SpaceShip class >> named: aName [ 
+    ^ self new initializeWtihAName:aName.
+]
 
 { #category : 'initialization' }
 SpaceShip class >> withA: position andTurn: anOrderNumber startingWith: aFuel [
@@ -26,7 +31,7 @@ SpaceShip class >> withA: position andTurn: anOrderNumber startingWith: aFuel [
 { #category : 'comparing' }
 SpaceShip >> = anotherSpaceShip [
 
-^ (self turnOrder = anotherSpaceShip turnOrder).
+^ (name = anotherSpaceShip name).
 
 ]
 
@@ -38,6 +43,12 @@ laps:=lapsDone .
 { #category : 'action' }
 SpaceShip >> adjustLapBy: anAmount [
 laps:=laps+anAmount.
+]
+
+{ #category : 'action' }
+SpaceShip >> borrar: aturn [
+
+turn:=aturn.
 ]
 
 { #category : 'testing' }
@@ -91,6 +102,12 @@ SpaceShip >> goBack: amountToMoveBack onBoardOfSize: maximumSquares [
 ]
 
 { #category : 'testing' }
+SpaceShip >> has: fuel [
+
+	fuelSistem := fuel.
+]
+
+{ #category : 'testing' }
 SpaceShip >> hasFule [
 
 ^fuelSistem validateCurrentFuleOf: self.
@@ -106,6 +123,16 @@ SpaceShip >> initializeWithA: position andTurn: aTurn startingWith: aFuel [
     minimumRollRequired := 0.
 
 
+]
+
+{ #category : 'initialization' }
+SpaceShip >> initializeWtihAName:aName [
+
+name:= aName.
+currentPosition := 0.
+fuelSistem := 0.
+laps := 0.
+minimumRollRequired := 0.
 ]
 
 { #category : 'action' }
@@ -124,6 +151,11 @@ SpaceShip >> moveTo: newPosition consuming: aDistance [
 	
 	fuelSistem hasFuelToPlay ifFalse: [self losesRound ] .
 
+]
+
+{ #category : 'accessing' }
+SpaceShip >> name [
+^name.
 ]
 
 { #category : 'action' }

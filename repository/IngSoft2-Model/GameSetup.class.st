@@ -58,29 +58,26 @@ GameSetup >> createBoardInstanceWith: aDices andWith: aSpaceShips andWith: aWinn
 { #category : 'creation' }
 GameSetup >> createGameInstance [
 
-	| aBoard aSpaceShips aWinnerSystem |
-	aSpaceShips := self createSpaceShipsInstance.
+	| aBoard aWinnerSystem |
+	self createSpaceShipsInstance.
 	aWinnerSystem := WinnerSystem withMaximunLaps: lapsToWin.
 
 	aBoard := self
 		          createBoardInstanceWith: dices
-		          andWith: aSpaceShips
+		          andWith: spaceShips 
 		          andWith: aWinnerSystem.
 	board := aBoard.
-	spaceShips := aSpaceShips.
 	winnerSystem := aWinnerSystem.
 	self validateSpecialTileCreation
 ]
 
 { #category : 'creation' }
 GameSetup >> createSpaceShipsInstance [
-    ^ (1 to: numberOfPlayers) collectWithIndex: [ :i :index |
-        SpaceShip 
-            withA: 0 
-            andTurn: (TurnAdministrator withAnIndex: index)
-				startingWith: (Fuel withAnAmount: (maximumRolledNumber *2))
 
-    ].
+spaceShips withIndexDo: [ :aSpaceship :index | 
+    aSpaceship borrar: (TurnAdministrator withAnIndex: index).
+    aSpaceship has: (Fuel withAnAmount: (maximumRolledNumber * 2)).
+].
 
 ]
 
@@ -106,11 +103,6 @@ GameSetup >> maximumRollFromDices [
 	dices do: [:aDice | total := total + aDice numberOfFaces ].
 	
 	^ total
-]
-
-{ #category : 'accessing' }
-GameSetup >> spaceShips [
-^spaceShips
 ]
 
 { #category : 'validating' }
@@ -201,9 +193,20 @@ GameSetup >> withMaximumLapsToWin: aLapsToWin [
 
 { #category : 'initialization' }
 GameSetup >> withNumberOfPlayers: aNumber [
-	 numberOfPlayers := aNumber.
+	" numberOfPlayers := aNumber."
  
 
+]
+
+{ #category : 'creation' }
+GameSetup >> withPlayers: someSpaceShips [ 
+
+spaceShips:= someSpaceShips.
+
+
+
+"andTurn:=  "
+"startingWith: (Fuel withAnAmount: (maximumRolledNumber *2)"
 ]
 
 { #category : 'initialization' }

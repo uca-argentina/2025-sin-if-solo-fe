@@ -21,9 +21,12 @@ TileTest >> test10WhenTheSpaceShipFallsInMoonWalkThenAllTheOtherSpaceShipsMoveBa
 
 	| aGameSetUp aDice aBoard aPlayer1 aPlayer2 aWinnerSystem |
 	aGameSetUp := GameSetup new.
-	aGameSetUp withNumberOfPlayers: 2.
 	aDice := RiggedDice withNumberOfFaces: 8.
 	aDice setNumbersProvider: { 7. 5. 3. 4 }.
+		aPlayer1:= SpaceShip named: 'Fran'.
+	aPlayer2:= SpaceShip named: 'Agustin'.
+		
+		aGameSetUp withPlayers: {aPlayer1. aPlayer2 }.
 
 	aGameSetUp withDices: { aDice }.
 	aGameSetUp
@@ -33,8 +36,7 @@ TileTest >> test10WhenTheSpaceShipFallsInMoonWalkThenAllTheOtherSpaceShipsMoveBa
 	aGameSetUp withMaximumLapsToWin: 3.
 	aGameSetUp withSpecialTiles: { (MoonWalk in: 5 moveBack: 2) }.
 	aGameSetUp createGameInstance.
-	aPlayer1 := aGameSetUp spaceShips first.
-	aPlayer2 := aGameSetUp spaceShips second.
+
 
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
@@ -58,11 +60,14 @@ TileTest >> test11WhenASpaceShipDoesntHaveEnoughFuelToMoveBackThenLosesTurnsAndG
 	| aGameSetUp aDice aDice2 aPlayer1 aPlayer2 aBoard |
 	aGameSetUp := GameSetup new.
 
-	aGameSetUp withNumberOfPlayers: 2.
 	aDice := RiggedDice withNumberOfFaces: 8.
 	aDice setNumbersProvider: { 8. 7. 1. 1. 8. 5. 1. 1 }.
 	aDice2 := RiggedDice withNumberOfFaces: 4.
 	aDice2 setNumbersProvider: { 2. 4. 1. 2. 3. 2. 1. 1 }.
+		aPlayer1:= SpaceShip named: 'Fran'.
+	aPlayer2:= SpaceShip named: 'Agustin'.
+		
+		aGameSetUp withPlayers: {aPlayer1. aPlayer2 }.
 
 
 	aGameSetUp withDices: {
@@ -78,8 +83,6 @@ TileTest >> test11WhenASpaceShipDoesntHaveEnoughFuelToMoveBackThenLosesTurnsAndG
 	aGameSetUp withMaximumLapsToWin: 6.
 	aGameSetUp withSpecialTiles: { (MoonWalk in: 23 moveBack: 4) }.
 	aGameSetUp createGameInstance.
-	aPlayer1 := aGameSetUp spaceShips first.
-	aPlayer2 := aGameSetUp spaceShips second.
 
 	aBoard := aGameSetUp board.
 	aBoard playOneRound.
@@ -110,11 +113,14 @@ TileTest >> test12WhenPlayerFallsOnMoonWalkTileThenMovesBackAndConsumesFuel [
 	| aGameSetUp aDice aDice2 aPlayer1 aPlayer2 aBoard |
 	aGameSetUp := GameSetup new.
 
-	aGameSetUp withNumberOfPlayers: 2.
 	aDice := RiggedDice withNumberOfFaces: 8.
 	aDice setNumbersProvider: { 1. 2. 1. 1. 8. 5. 1. 1 }.
 	aDice2 := RiggedDice withNumberOfFaces: 4.
 	aDice2 setNumbersProvider: { 1. 3. 1. 2. 3. 2. 1. 1 }.
+		aPlayer1:= SpaceShip named: 'Fran'.
+	aPlayer2:= SpaceShip named: 'Agustin'.
+		
+		aGameSetUp withPlayers: {aPlayer1. aPlayer2 }.
 
 
 	aGameSetUp withDices: {
@@ -128,8 +134,6 @@ TileTest >> test12WhenPlayerFallsOnMoonWalkTileThenMovesBackAndConsumesFuel [
 	aGameSetUp withMaximumLapsToWin: 6.
 	aGameSetUp withSpecialTiles: { (MoonWalk in: 5 moveBack: 4) }.
 	aGameSetUp createGameInstance.
-	aPlayer1 := aGameSetUp spaceShips first.
-	aPlayer2 := aGameSetUp spaceShips second.
 
 	aBoard := aGameSetUp board.
 	aBoard playOneRound.
@@ -162,6 +166,10 @@ TileTest >> test13WhenASpaceSHipFallsInAMoonWalkButDosentHaveEnoughFulleToMoveBa
 	aDice setNumbersProvider: { 5. 5. 8. 2. 5. 5. 5. 5 }.
 	aDice2 := RiggedDice withNumberOfFaces: 4.
 	aDice2 setNumbersProvider: { 1. 1. 4. 1. 1. 1. 1. 1 }.
+		aPlayer1:= SpaceShip named: 'Fran'.
+	aPlayer2:= SpaceShip named: 'Agustin'.
+		
+		aGameSetUp withPlayers: {aPlayer1. aPlayer2 }.
 
 
 	aGameSetUp withDices: {
@@ -176,8 +184,7 @@ TileTest >> test13WhenASpaceSHipFallsInAMoonWalkButDosentHaveEnoughFulleToMoveBa
 	aGameSetUp withSpecialTiles: { (MoonWalk in: 4 moveBack: 6) }.
 	aGameSetUp createGameInstance.
 
-	aPlayer1 := aGameSetUp spaceShips first.
-	aPlayer2 := aGameSetUp spaceShips second.
+
 	aBoard := aGameSetUp board.
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 1.
@@ -202,12 +209,15 @@ TileTest >> test14WhenSpaceShipFallsInHyperJumpThenItAdvancesTheAmountOfParsecs 
 	| aGameSetUp aPlayer1 aBoard aDice aDice2 |
 	aGameSetUp := GameSetup new.
 
-	aGameSetUp withNumberOfPlayers: 2.
 
 	aDice := RiggedDice withNumberOfFaces: 8.
 	aDice setNumbersProvider: { 2. 5. 8. 2. 5. 5. 5. 5 }.
 	aDice2 := RiggedDice withNumberOfFaces: 4.
 	aDice2 setNumbersProvider: { 2. 1. 4. 1. 1. 1. 1. 1 }.
+	
+	aPlayer1:= SpaceShip named: 'Fran'.
+		
+		aGameSetUp withPlayers: {aPlayer1 }.
 
 
 	aGameSetUp withDices: {
@@ -225,7 +235,7 @@ TileTest >> test14WhenSpaceShipFallsInHyperJumpThenItAdvancesTheAmountOfParsecs 
 	aGameSetUp withSpecialTiles:
 		{ (HyperJump in: 4 parsecToMove: { 8. 4. 2. 1 }) }.
 	aGameSetUp createGameInstance.
-	aPlayer1 := aGameSetUp spaceShips first.
+
 	aBoard := aGameSetUp board.
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 12.
@@ -237,12 +247,17 @@ TileTest >> test15WhenManySpaceShipsFallInHyperJumpThenTheyAllAdvanceTheAmountOf
 	| aGameSetUp aPlayer1 aPlayer2 aPlayer3 aBoard aDice aDice2 |
 
 	aGameSetUp := GameSetup new.
-	aGameSetUp withNumberOfPlayers: 3.
 
 	aDice := RiggedDice withNumberOfFaces: 8.
 	aDice setNumbersProvider: { 2. 2. 2. }.
 	aDice2 := RiggedDice withNumberOfFaces: 4.
 	aDice2 setNumbersProvider: { 2. 2. 2. }.
+	
+		aPlayer1:= SpaceShip named: 'Fran'.
+	aPlayer2:= SpaceShip named: 'Agustin'.
+	aPlayer3 := SpaceShip named: 'Jorge'.
+		
+		aGameSetUp withPlayers: {aPlayer1. aPlayer2 . aPlayer3 }.
 
 	aGameSetUp withDices: { aDice. aDice2 }.
 	aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
@@ -252,9 +267,6 @@ TileTest >> test15WhenManySpaceShipsFallInHyperJumpThenTheyAllAdvanceTheAmountOf
 
 	aGameSetUp createGameInstance.
 
-	aPlayer1 := aGameSetUp spaceShips first.
-	aPlayer2 := aGameSetUp spaceShips second.
-	aPlayer3 := aGameSetUp spaceShips third.
 	aBoard := aGameSetUp board.
 
 	aBoard playOneRound.
@@ -275,9 +287,12 @@ TileTest >> test1WhenMinimumRollIsntMetThenTheSpaceshipIsHeldByTheHyperGravity [
 
 	| aGameSetUp aDice aBoard aPlayer1 aWinnerSystem |
 	aGameSetUp := GameSetup new.
-	aGameSetUp withNumberOfPlayers: 1.
 	aDice := RiggedDice withNumberOfFaces: 10.
 	aDice setNumbersProvider: { 2. 1. 5. 4 }.
+	
+		aPlayer1:= SpaceShip named: 'Fran'.
+		
+		aGameSetUp withPlayers: {aPlayer1 }.
 	aGameSetUp withDices: { aDice }.
 
 	aGameSetUp
@@ -291,7 +306,6 @@ TileTest >> test1WhenMinimumRollIsntMetThenTheSpaceshipIsHeldByTheHyperGravity [
 	aGameSetUp withMaximumLapsToWin: 100.
 	aGameSetUp createGameInstance.
 
-	aPlayer1 := aGameSetUp spaceShips first.
 
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
@@ -311,10 +325,12 @@ TileTest >> test2WhenThereAreDifferentHyperGravityTilesThenEachHeldsTheSpaceShip
 
 	| aGameSetUp aDice aBoard aPlayer1 aWinnerSystem |
 	aGameSetUp := GameSetup new.
-	aGameSetUp withNumberOfPlayers: 1.
 
 	aDice := RiggedDice withNumberOfFaces: 10.
 	aDice setNumbersProvider: { 2. 1. 5. 4. 9 }.
+		aPlayer1:= SpaceShip named: 'Fran'.
+		
+		aGameSetUp withPlayers: {aPlayer1 }.
 
 	aGameSetUp withDices: { aDice }.
 
@@ -331,8 +347,6 @@ TileTest >> test2WhenThereAreDifferentHyperGravityTilesThenEachHeldsTheSpaceShip
 
 	aGameSetUp withMaximumLapsToWin: 100.
 	aGameSetUp createGameInstance.
-
-	aPlayer1 := aGameSetUp spaceShips first.
 
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
@@ -356,13 +370,15 @@ TileTest >> test2WhenThereAreDifferentHyperGravityTilesThenEachHeldsTheSpaceShip
 { #category : 'tests' }
 TileTest >> test4WhenAHyperGravityPositionIsOutOfTheBoardMaximumSizeThenTheGameCreationFails [
 
-	| aGameSetUp aDice |
+	| aGameSetUp aDice aPlayer1|
 	aGameSetUp := GameSetup new.
-	aGameSetUp withNumberOfPlayers: 1.
 
 
 	aDice := RiggedDice withNumberOfFaces: 10.
 	aDice setNumbersProvider: { 2. 1. 5. 4. 9 }.
+		aPlayer1:= SpaceShip named: 'Fran'.
+		
+		aGameSetUp withPlayers: {aPlayer1 }.
 
 	aGameSetUp withDices: { aDice }.
 
@@ -388,10 +404,13 @@ TileTest >> test5WhenASpaceShipFallsToTheAtomicBombThenAllSpaceShipsMoveToTheSta
 
 	| aGameSetUp aDice aBoard aPlayer1 aPlayer2 aWinnerSystem |
 	aGameSetUp := GameSetup new.
-	aGameSetUp withNumberOfPlayers: 2.
 
 	aDice := RiggedDice withNumberOfFaces: 10.
 	aDice setNumbersProvider: { 2. 4. 5. 9 }.
+	aPlayer1:= SpaceShip named: 'Fran'.
+	aPlayer2:= SpaceShip named: 'Agustin'.
+		
+		aGameSetUp withPlayers: {aPlayer1. aPlayer2 }.
 
 	aGameSetUp withDices: { aDice }.
 
@@ -406,8 +425,6 @@ TileTest >> test5WhenASpaceShipFallsToTheAtomicBombThenAllSpaceShipsMoveToTheSta
 	aGameSetUp withMaximumLapsToWin: 100.
 	aGameSetUp createGameInstance.
 
-	aPlayer1 := aGameSetUp spaceShips first.
-	aPlayer2 := aGameSetUp spaceShips second.
 
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
@@ -428,9 +445,13 @@ TileTest >> test6WhenASpaceShipFallsInToTheBlackHoleThenItMoves4StepsBack [
 
 	| aGameSetUp aDice aBoard aPlayer1 aPlayer2 aWinnerSystem |
 	aGameSetUp := GameSetup new.
-	aGameSetUp withNumberOfPlayers: 2.
 	aDice := RiggedDice withNumberOfFaces: 10.
 	aDice setNumbersProvider: { 2. 4. 5. 9 }.
+	
+		aPlayer1:= SpaceShip named: 'Fran'.
+	aPlayer2:= SpaceShip named: 'Agustin'.
+		
+		aGameSetUp withPlayers: {aPlayer1. aPlayer2 }.
 
 	aGameSetUp withDices: { aDice }.
 
@@ -445,8 +466,6 @@ TileTest >> test6WhenASpaceShipFallsInToTheBlackHoleThenItMoves4StepsBack [
 	aGameSetUp withMaximumLapsToWin: 100.
 	aGameSetUp createGameInstance.
 
-	aPlayer1 := aGameSetUp spaceShips first.
-	aPlayer2 := aGameSetUp spaceShips second.
 
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
@@ -467,9 +486,12 @@ TileTest >> test7WhenASpaceShipFallsInToTheBlackHoleAndDoesntHaveEnoughFuleToBac
 
 	| aGameSetUp aDice aDice2 aPlayer1 aBoard |
 	aGameSetUp := GameSetup new.
+	
+	aPlayer1:= SpaceShip named: 'Fran'.
+		
+aGameSetUp withPlayers: {aPlayer1 }.
 
 
-	aGameSetUp withNumberOfPlayers: 1.
 	aDice := RiggedDice withNumberOfFaces: 8.
 	aDice setNumbersProvider: { 8. 7. 1. 1. 4 }.
 	aDice2 := RiggedDice withNumberOfFaces: 4.
@@ -491,7 +513,6 @@ TileTest >> test7WhenASpaceShipFallsInToTheBlackHoleAndDoesntHaveEnoughFuleToBac
 
 	aGameSetUp createGameInstance.
 
-	aPlayer1 := aGameSetUp spaceShips first.
 	aBoard := aGameSetUp board.
 	aBoard playOneRound.
 	aBoard playOneRound.
@@ -514,9 +535,12 @@ TileTest >> test8WhenSpaceshipFallsInBlackHoleOfLaterLapThenItGoesToPreviousLap 
 
 	| aGameSetUp aDice aBoard aPlayer1 aWinnerSystem |
 	aGameSetUp := GameSetup new.
-	aGameSetUp withNumberOfPlayers: 1.
 	aDice := RiggedDice withNumberOfFaces: 8.
 	aDice setNumbersProvider: { 5. 3. 3. 4 }.
+	
+		aPlayer1:= SpaceShip named: 'Fran'.
+		
+		aGameSetUp withPlayers: {aPlayer1 }.
 
 	aGameSetUp withDices: { aDice }.
 
@@ -525,9 +549,6 @@ TileTest >> test8WhenSpaceshipFallsInBlackHoleOfLaterLapThenItGoesToPreviousLap 
 	aGameSetUp withMaximumLapsToWin: 3.
 	aGameSetUp withSpecialTiles: { (BlackHole in: 3) }.
 	aGameSetUp createGameInstance.
-
-
-	aPlayer1 := aGameSetUp spaceShips first.
 
 
 	aBoard := aGameSetUp board.
@@ -548,9 +569,12 @@ TileTest >> test9WhenSpaceShipFallsInBlackHoleAtTheBeginingOfTheGameThenItGoesBa
 
 	| aGameSetUp aDice aBoard aPlayer1 aWinnerSystem |
 	aGameSetUp := GameSetup new.
-	aGameSetUp withNumberOfPlayers: 1.
 	aDice := RiggedDice withNumberOfFaces: 8.
 	aDice setNumbersProvider: { 3. 1. 3. 4 }.
+	
+	aPlayer1:= SpaceShip named: 'Fran'.
+		
+		aGameSetUp withPlayers: {aPlayer1 }.
 
 	aGameSetUp withDices: { aDice }.
 
@@ -562,9 +586,6 @@ TileTest >> test9WhenSpaceShipFallsInBlackHoleAtTheBeginingOfTheGameThenItGoesBa
 	aGameSetUp withMaximumLapsToWin: 3.
 	aGameSetUp withSpecialTiles: { (BlackHole in: 3) }.
 	aGameSetUp createGameInstance.
-
-
-	aPlayer1 := aGameSetUp spaceShips first.
 
 
 	aBoard := aGameSetUp board.
@@ -579,11 +600,14 @@ TileTest >> test9WhenSpaceShipFallsInBlackHoleAtTheBeginingOfTheGameThenItGoesBa
 { #category : 'tests' }
 TileTest >> testF1WhenAHyperGravityHasAGreaterRequiringRollThanTheMaximumRolledNumberThenTheGameCreationFails [
 
-	| aGameSetUp aDice |
+	| aGameSetUp aDice  aPlayer1|
 	aGameSetUp := GameSetup new.
-	aGameSetUp withNumberOfPlayers: 1.
 	aDice := RiggedDice withNumberOfFaces: 10.
 	aDice setNumbersProvider: { 2. 1. 5. 4. 9 }.
+	
+		aPlayer1:= SpaceShip named: 'Fran'.
+		
+		aGameSetUp withPlayers: {aPlayer1 }.
 
 	aGameSetUp withDices: { aDice }.
 
@@ -609,11 +633,14 @@ TileTest >> testF1WhenAHyperGravityHasAGreaterRequiringRollThanTheMaximumRolledN
 { #category : 'tests' }
 TileTest >> testF2WhenASpecialTilePositionIsOutOfTheBoardMaximumSizeThenTheGameCreationFails [
 
-	| aGameSetUp aDice |
+	| aGameSetUp aDice aPlayer1|
 	aGameSetUp := GameSetup new.
-	aGameSetUp withNumberOfPlayers: 1.
 	aDice := RiggedDice withNumberOfFaces: 10.
 	aDice setNumbersProvider: { 2. 1. 5. 4. 9 }.
+	
+		aPlayer1:= SpaceShip named: 'Fran'.
+		
+		aGameSetUp withPlayers: {aPlayer1 }.
 
 	aGameSetUp withDices: { aDice }.
 

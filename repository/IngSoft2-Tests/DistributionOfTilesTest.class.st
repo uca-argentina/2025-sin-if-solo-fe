@@ -10,9 +10,12 @@ DistributionOfTilesTest >> test1WhenABoardIsCreatedThen2PercentOfSquaresAreAtomi
 
 	| aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice |
 	aGameSetUp := GameSetup new.
-	aGameSetUp withNumberOfPlayers: 2.
 	aDice := RiggedDice withNumberOfFaces: 10.
 	aDice setNumbersProvider: { 5. 2. 5. 9 }.
+	aPlayer1:= SpaceShip named: 'Fran'.
+	aPlayer2:= SpaceShip named: 'Agustin'.
+		
+		aGameSetUp withPlayers: {aPlayer1. aPlayer2 }.
 
 	aGameSetUp withDices: { aDice }.
 
@@ -28,9 +31,6 @@ DistributionOfTilesTest >> test1WhenABoardIsCreatedThen2PercentOfSquaresAreAtomi
 
 	aGameSetUp withMaximumLapsToWin: 100.
 	aGameSetUp createGameInstance.
-
-	aPlayer1 := aGameSetUp spaceShips first.
-	aPlayer2 := aGameSetUp spaceShips second.
 
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
@@ -48,6 +48,10 @@ DistributionOfTilesTest >> test2WhenABoardIsCreatedThen8PercentOfSquaresAreHyper
 	aGameSetUp withNumberOfPlayers: 2.
 	aDice := RiggedDice withNumberOfFaces: 10.
 	aDice setNumbersProvider: { 5. 2. 5. 9 }.
+		aPlayer1:= SpaceShip named: 'Fran'.
+	aPlayer2:= SpaceShip named: 'Agustin'.
+		
+		aGameSetUp withPlayers: {aPlayer1. aPlayer2 }.
 
 	aGameSetUp withDices: { aDice }.
 
@@ -62,9 +66,6 @@ DistributionOfTilesTest >> test2WhenABoardIsCreatedThen8PercentOfSquaresAreHyper
 
 	aGameSetUp withMaximumLapsToWin: 100.
 	aGameSetUp createGameInstance.
-
-	aPlayer1 := aGameSetUp spaceShips first.
-	aPlayer2 := aGameSetUp spaceShips second.
 
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
@@ -79,10 +80,13 @@ DistributionOfTilesTest >> test3WhenABoardIsCreatedThen10PercentOfSquaresAreMoon
 
 	| aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice |
 	aGameSetUp := GameSetup new.
-	aGameSetUp withNumberOfPlayers: 2.
 
 	aDice := RiggedDice withNumberOfFaces: 10.
 	aDice setNumbersProvider: { 5. 2. 5. 9 }.
+		aPlayer1:= SpaceShip named: 'Fran'.
+	aPlayer2:= SpaceShip named: 'Agustin'.
+		
+		aGameSetUp withPlayers: {aPlayer1. aPlayer2 }.
 
 	aGameSetUp withDices: { aDice }.
 
@@ -97,8 +101,6 @@ DistributionOfTilesTest >> test3WhenABoardIsCreatedThen10PercentOfSquaresAreMoon
 	aGameSetUp withMaximumLapsToWin: 100.
 	aGameSetUp createGameInstance.
 
-	aPlayer1 := aGameSetUp spaceShips first.
-	aPlayer2 := aGameSetUp spaceShips second.
 
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
@@ -113,9 +115,13 @@ DistributionOfTilesTest >> test4WhenABoardIsCreatedThen20PercentOfSquaresAreHype
 
 	| aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice |
 	aGameSetUp := GameSetup new.
-	aGameSetUp withNumberOfPlayers: 2.
 	aDice := RiggedDice withNumberOfFaces: 10.
 	aDice setNumbersProvider: { 5. 2. 5. 9 }.
+	
+	aPlayer1:= SpaceShip named: 'Fran'.
+	aPlayer2:= SpaceShip named: 'Agustin'.
+		
+		aGameSetUp withPlayers: {aPlayer1. aPlayer2 }.
 
 	aGameSetUp withDices: { aDice }.
 
@@ -130,8 +136,6 @@ DistributionOfTilesTest >> test4WhenABoardIsCreatedThen20PercentOfSquaresAreHype
 	aGameSetUp withMaximumLapsToWin: 100.
 	aGameSetUp createGameInstance.
 
-	aPlayer1 := aGameSetUp spaceShips first.
-	aPlayer2 := aGameSetUp spaceShips second.
 
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
@@ -146,10 +150,13 @@ DistributionOfTilesTest >> test5WhenABoardIsCreatedThen20PercentOfSquaresAreBlac
 
 	| aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice |
 	aGameSetUp := GameSetup new.
-	aGameSetUp withNumberOfPlayers: 2.
 
 	aDice := RiggedDice withNumberOfFaces: 10.
 	aDice setNumbersProvider: { 5. 2. 5. 9 }.
+		aPlayer1:= SpaceShip named: 'Fran'.
+	aPlayer2:= SpaceShip named: 'Agustin'.
+		
+		aGameSetUp withPlayers: {aPlayer1. aPlayer2 }.
 
 	aGameSetUp withDices: { aDice }.
 
@@ -164,8 +171,6 @@ DistributionOfTilesTest >> test5WhenABoardIsCreatedThen20PercentOfSquaresAreBlac
 	aGameSetUp withMaximumLapsToWin: 100.
 	aGameSetUp createGameInstance.
 
-	aPlayer1 := aGameSetUp spaceShips first.
-	aPlayer2 := aGameSetUp spaceShips second.
 
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
