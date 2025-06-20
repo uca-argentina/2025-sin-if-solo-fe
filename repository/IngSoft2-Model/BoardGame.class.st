@@ -24,19 +24,13 @@ BoardGame class >> hasTheMinimumAmountOfSquares: aNumber [
 ]
 
 { #category : 'instance creation' }
-BoardGame class >> withNumberOfSquares: arg1 withSizeInParsec: arg2 [
+BoardGame class >> withNumberOfSquares: aNumberOfSquares withSizeInParsec: aSizeInParsec andTurnManager: aTurnManager [
 
-	self hasTheMinimumAmountOfSquares: arg1
-]
-
-{ #category : 'instance creation' }
-BoardGame class >> withNumberOfSquares: arg1 withSizeInParsec: arg2 andTurnManager: arg3 [
-
-	self hasTheMinimumAmountOfSquares: arg1.
+	self hasTheMinimumAmountOfSquares: aNumberOfSquares.
 	^ self new
-		  initializationBoardGame: arg1
-		  withSizeInParsec: arg2
-		  andTurnManager: arg3
+		  initializationBoardGame: aNumberOfSquares
+		  withSizeInParsec: aSizeInParsec
+		  andTurnManager: aTurnManager.
 ]
 
 { #category : 'accessing' }
@@ -77,17 +71,11 @@ BoardGame >> has: players [
 ]
 
 { #category : 'initialization' }
-BoardGame >> initializationBoardGame: arg1 withSizeInParsec: arg2 [
+BoardGame >> initializationBoardGame: aMaxiumSquares withSizeInParsec: aSizeInParsec andTurnManager: aTurnManager [
 
-	
-]
-
-{ #category : 'initialization' }
-BoardGame >> initializationBoardGame: arg1 withSizeInParsec: arg2 andTurnManager: arg3 [
-
-	maximumSquares := arg1.
-	sizeInParsec := arg2.
-	turnManager := arg3
+	maximumSquares := aMaxiumSquares.
+	sizeInParsec := aSizeInParsec.
+	turnManager := aTurnManager.
 ]
 
 { #category : 'action' }
