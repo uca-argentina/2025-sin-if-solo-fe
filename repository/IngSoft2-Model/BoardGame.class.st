@@ -163,6 +163,17 @@ BoardGame >> rolledNumberSumOf: dices [
 ]
 
 { #category : 'action' }
+BoardGame >> skipRound [
+| spaceShip |
+	spaceShip := turnManager spaceShipWhoseTurnItIsFrom: spaceShips.
+	spaceShip losesRound.
+	spaceShip losesRound.
+
+	spaceShip  rechargeFule.
+	
+]
+
+{ #category : 'action' }
 BoardGame >> skipRoundAndRechargeFor: aSpaceShip [
 
 	| spaceShipCopy |	
