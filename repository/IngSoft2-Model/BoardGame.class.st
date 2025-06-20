@@ -146,6 +146,7 @@ BoardGame >> playOneRound [
 	spaceShip verifyCanPlayAgain.
 	spaceShip canPlay
 		ifTrue: [ self move: spaceShip with: dicesInGameBoard ]
+			"ifFalse: [ self skipRound ]"
 		ifFalse: [ self skipRoundAndRechargeFor: spaceShip ]
 ]
 
@@ -164,8 +165,7 @@ BoardGame >> rolledNumberSumOf: dices [
 { #category : 'action' }
 BoardGame >> skipRoundAndRechargeFor: aSpaceShip [
 
-	| spaceShipCopy |
-	
+	| spaceShipCopy |	
 	spaceShipCopy := (spaceShips detect: [ :each | each = aSpaceShip ]).
 	spaceShipCopy losesRound.
 	
@@ -175,7 +175,6 @@ BoardGame >> skipRoundAndRechargeFor: aSpaceShip [
 { #category : 'accessing' }
 BoardGame >> specialTileAt: position [
 
-	"^ specialTiles detect: [ :tile | tile position = aPosition ]"
 	^ specialTiles detect: [ :tile | tile includesA: position ].
 ]
 

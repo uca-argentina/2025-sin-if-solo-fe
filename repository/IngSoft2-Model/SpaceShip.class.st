@@ -153,9 +153,7 @@ SpaceShip >> ranksHigherThan: oponentSpaceship [
 	^ self currentLap > oponentSpaceship currentLap or: [
 		  self currentLap = oponentSpaceship currentLap and: [
 			  self currentPosition > oponentSpaceship currentPosition or: [
-				  self currentPosition = oponentSpaceship currentPosition "and: [
-					 turn comesFirstThanThe:oponentSpaceship .
-					  ]" ] ] ]
+				  self currentPosition = oponentSpaceship currentPosition  ] ] ]
 ]
 
 { #category : 'action' }

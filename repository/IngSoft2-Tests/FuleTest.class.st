@@ -41,8 +41,8 @@ FuleTest >> test010WhenASpaceShipSkipsATurnThenTheNextSpaceShipPlays [
 	self assert: (aBoard positionOf: aPlayer2) equals: 10.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 14.
 
-	aBoard skipRoundAndRechargeFor: aPlayer1.
-	aBoard playOneRound.
+	aBoard skipRound .
+	
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 24.
@@ -371,8 +371,9 @@ FuleTest >> test8WhenASpaceShipChoosesToSkipARoundThenDosentMoveAndRechargesTheF
 	aBoard playOneRound.
 	self assert: (aBoard positionOf: aPlayer1) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 19.
-	aBoard skipRoundAndRechargeFor: aPlayer1.
-	aBoard playOneRound.
+
+	aBoard skipRound.
+
 	self assert: (aBoard positionOf: aPlayer1) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 24.
 	aBoard playOneRound.
@@ -400,10 +401,6 @@ FuleTest >> test9WhenBothSpaceShipsSkipRoundThenTheyRechargeAllTheirFule [
 			aDice.
 			aDice2 }.
 
-
-
-
-
 	aTurnManager := TurnManager withOrder: {
 			                aPlayer1.
 			                aPlayer2 }.
@@ -424,10 +421,9 @@ FuleTest >> test9WhenBothSpaceShipsSkipRoundThenTheyRechargeAllTheirFule [
 	self assert: (aBoard positionOf: aPlayer2) equals: 10.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 14.
 
-	aBoard skipRoundAndRechargeFor: aPlayer1.
-	aBoard skipRoundAndRechargeFor: aPlayer2.
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard skipRound.
+	aBoard skipRound.
+
 	self assert: (aBoard positionOf: aPlayer1) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 24.
 	self assert: (aBoard positionOf: aPlayer2) equals: 10.
