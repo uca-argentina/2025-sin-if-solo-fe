@@ -141,23 +141,12 @@ BoardGame >> percentageOf: aTile [
 { #category : 'action' }
 BoardGame >> playOneRound [
 
-	spaceShips do: [ :aSpaceShip |
-		aSpaceShip verifyCanPlayAgain.
-		aSpaceShip canPlay
-			ifTrue: [ self move: aSpaceShip with: dicesInGameBoard ]
-			ifFalse: [
-			self skipRoundAndRechargeFor: aSpaceShip ] ]
-]
-
-{ #category : 'action' }
-BoardGame >> playRound [
-"|spaceShip|
-spaceShip=turnAdministrator spaceShipWhoseTurnItIs.
-spaceShip verifyCanPlayAgain.
-		spaceShip canPlay
-			ifTrue: [ self move: spaceShip with: dicesInGameBoard ]
-			ifFalse: [
-			self skipRoundAndRechargeFor: spaceShip ]"
+	| spaceShip |
+	spaceShip := turnManager spaceShipWhoseTurnItIsFrom: spaceShips.
+	spaceShip verifyCanPlayAgain.
+	spaceShip canPlay
+		ifTrue: [ self move: spaceShip with: dicesInGameBoard ]
+		ifFalse: [ self skipRoundAndRechargeFor: spaceShip ]
 ]
 
 { #category : 'accessing' }

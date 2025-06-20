@@ -523,7 +523,7 @@ GameBoardTest >> test2WhenADiceIsRolledThenTheSpaceShipsPositionInTheBoardChange
 { #category : 'tests' }
 GameBoardTest >> test3WhenASpaceShipCompletesTheLapThenItsTheWinner [
 
-	| aGameSetUp aDice aBoard aPlayer1 aWinnerSystem  |
+	| aGameSetUp aDice aBoard aPlayer1 aWinnerSystem  aTurnManager |
 	aGameSetUp := GameSetup new.
 
 	aDice := RiggedDice withNumberOfFaces: 6.
@@ -534,8 +534,8 @@ GameBoardTest >> test3WhenASpaceShipCompletesTheLapThenItsTheWinner [
 	aGameSetUp withDices: { aDice }.
 	aGameSetUp withPlayers: { aPlayer1 }.
 
-
-	aGameSetUp withABoardNumberOfSquares: 6 .
+	aTurnManager:=TurnManager withOrder:{aPlayer1}.
+	aGameSetUp withABoardNumberOfSquares: 6 andTurnManager: aTurnManager.
 	aGameSetUp withSpecialTiles: {
 			(WormHole from: 2 to: 5).
 		 }.
