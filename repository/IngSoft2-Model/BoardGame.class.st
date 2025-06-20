@@ -58,8 +58,7 @@ BoardGame class >> withNumberOfSquares: aMaximumSquares withSizeInParsec:boardSi
 { #category : 'accessing' }
 BoardGame >> completedLapsBy: aSpaceShip [
 
-	^ (spaceShips detect: [ :copyOfSpaceship |
-		   copyOfSpaceship isCopyOf: aSpaceShip ]) currentLap
+^ (spaceShips detect: [ :each | each = aSpaceShip ]) currentLap
 ]
 
 { #category : 'comparing' }
@@ -69,10 +68,9 @@ BoardGame >> contains: aSpecialTiles [
 ]
 
 { #category : 'accessing' }
-BoardGame >> currentFuleOf: aPlayer [
+BoardGame >> currentFuleOf: aSpaceShip [
 
-	^ (spaceShips detect: [ :copyOfSpaceship |
-		   copyOfSpaceship isCopyOf: aPlayer ]) currentFule
+^ (spaceShips detect: [ :each | each = aSpaceShip ])currentFule.
 ]
 
 { #category : 'action' }
@@ -159,14 +157,13 @@ BoardGame >> playOneRound [
 		aSpaceShip canPlay
 			ifTrue: [ self move: aSpaceShip with: dicesInGameBoard ]
 			ifFalse: [
-			self skipRoundAndRechargeFor: aSpaceShip asOriginalSpaceShip ] ]
+			self skipRoundAndRechargeFor: aSpaceShip ] ]
 ]
 
 { #category : 'accessing' }
-BoardGame >> positionOf: aPlayer [
+BoardGame >> positionOf: aSpaceShip [
 
-	^ (spaceShips detect: [ :copyOfSpaceship |
-		   copyOfSpaceship isCopyOf: aPlayer ]) currentPosition
+^ (spaceShips detect: [ :each | each = aSpaceShip ]) currentPosition.
 ]
 
 { #category : 'accessing' }
@@ -179,8 +176,8 @@ BoardGame >> rolledNumberSumOf: dices [
 BoardGame >> skipRoundAndRechargeFor: aSpaceShip [
 
 	| spaceShipCopy |
-	spaceShipCopy := spaceShips detect: [ :copy |
-		                 copy isCopyOf: aSpaceShip ].
+	
+	spaceShipCopy := (spaceShips detect: [ :each | each = aSpaceShip ]).
 	spaceShipCopy losesRound.
 	
 	spaceShipCopy  rechargeFule

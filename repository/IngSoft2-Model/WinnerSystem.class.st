@@ -41,17 +41,17 @@ WinnerSystem >> ranking [
 
 { #category : 'accessing' }
 WinnerSystem >> theBronzeWinnerIs [
-^( self ranking third)asOriginalSpaceShip.
+^( self ranking third).
 ]
 
 { #category : 'accessing' }
 WinnerSystem >> theGoldWinnerIs [
-    ^ ( self ranking first) asOriginalSpaceShip.
+    ^ ( self ranking first).
 ]
 
 { #category : 'accessing' }
 WinnerSystem >> theSilverWinnerIs [
-^(self ranking second) asOriginalSpaceShip.
+^(self ranking second).
 ]
 
 { #category : 'validating' }

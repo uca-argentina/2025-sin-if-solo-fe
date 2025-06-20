@@ -23,6 +23,13 @@ SpaceShip class >> withA: position andTurn: anOrderNumber startingWith: aFuel [
     ^ self new initializeWithA: position andTurn: anOrderNumber startingWith: aFuel
 ]
 
+{ #category : 'comparing' }
+SpaceShip >> = anotherSpaceShip [
+
+^ (self turnOrder = anotherSpaceShip turnOrder).
+
+]
+
 { #category : 'action' }
 SpaceShip >> actualLapsDone: lapsDone [ 
 laps:=lapsDone .
@@ -31,11 +38,6 @@ laps:=lapsDone .
 { #category : 'action' }
 SpaceShip >> adjustLapBy: anAmount [
 laps:=laps+anAmount.
-]
-
-{ #category : 'accessing' }
-SpaceShip >> asOriginalSpaceShip [
-^originalSpaceShip.
 ]
 
 { #category : 'testing' }
@@ -106,11 +108,6 @@ SpaceShip >> initializeWithA: position andTurn: aTurn startingWith: aFuel [
 
 ]
 
-{ #category : 'testing' }
-SpaceShip >> isCopyOf: aPlayer [
-    ^ originalSpaceShip == aPlayer.
-]
-
 { #category : 'action' }
 SpaceShip >> losesRound [
   turn roundLosed.
@@ -127,11 +124,6 @@ SpaceShip >> moveTo: newPosition consuming: aDistance [
 	
 	fuelSistem hasFuelToPlay ifFalse: [self losesRound ] .
 
-]
-
-{ #category : 'accessing' }
-SpaceShip >> originalSpaceShip: aPlayer [
-    originalSpaceShip := aPlayer.
 ]
 
 { #category : 'action' }

@@ -43,13 +43,8 @@ GameSetup >> createBoardInstanceWith: aDices andWith: aSpaceShips andWith: aWinn
 	specialTiles add:( WormHole from:wormholeExit to:wormholeEntrance ).
 	
 	aBoard withDices: aDices .
-
-	aCopyOfSpaceships := OrderedCollection new.
-	aCopyOfSpaceships addAll: (aSpaceShips collect: [ :player |
-			 | copyOfSpaceships |
-			 copyOfSpaceships := player copy.
-			 copyOfSpaceships originalSpaceShip: player.
-			 copyOfSpaceships ]).
+	
+	aCopyOfSpaceships := aSpaceShips collect: [ :each | each copy ].
 
 	aBoard has: aCopyOfSpaceships.
 	aBoard follows: aWinnerSystem.
