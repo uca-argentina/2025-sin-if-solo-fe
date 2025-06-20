@@ -31,7 +31,11 @@ GameBoardTest >> test010WhenAWormHoleWhichExitIsTheFinishLineThenCreationFails [
 			aPlayer2 }.
 
 	aGameSetUp withDices: { aDice }.
-	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: 2 to: 6.
+	aGameSetUp withABoardNumberOfSquares: 6 .
+		aGameSetUp withSpecialTiles: {
+			(WormHole from: 6 to: 2).
+		 }.
+	
 	aGameSetUp withMaximumLapsToWin: 1.
 
 
@@ -59,10 +63,12 @@ GameBoardTest >> test011WhenABoardWithAWormHoleInANegativePositionThenCreationFa
 			aPlayer2 }.
 
 
-	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: -1 to: 1.
+	aGameSetUp withABoardNumberOfSquares: 6 .
+	aGameSetUp withSpecialTiles: {
+			(WormHole from: -1 to: 1).
+		 }.
+	
 	aGameSetUp withMaximumLapsToWin: 2.
-
-
 
 
 	self
@@ -87,10 +93,8 @@ GameBoardTest >> test012WhenABoardWithNumberOfSquaresIsNegativeThenCreationFails
 			aPlayer1.
 			aPlayer2 }.
 
-	aGameSetUp
-		withABoardNumberOfSquares: -1
-		andWithWormHoleFrom: -1
-		to: 1.
+	aGameSetUp withABoardNumberOfSquares: -1.
+	aGameSetUp withSpecialTiles: { (WormHole from: -1 to: -1) }.
 	aGameSetUp withMaximumLapsToWin: 2.
 
 	self
@@ -115,7 +119,10 @@ GameBoardTest >> test013WhenABoardHasLessThanThreeSquaresThenCreationFails [
 			aPlayer1.
 			aPlayer2 }.
 	aGameSetUp withDices: { aDice }.
-	aGameSetUp withABoardNumberOfSquares: 2 andWithWormHoleFrom: 3 to: 6.
+	aGameSetUp withABoardNumberOfSquares: 2 .
+	aGameSetUp withSpecialTiles: {
+			(WormHole from: 3 to: 6).
+		 }.
 	aGameSetUp withMaximumLapsToWin: 2.
 
 	self
@@ -140,10 +147,8 @@ GameBoardTest >> test014WhenSpaceshipTriesToMoveOutsideBoardThenNothingChanges [
 			aPlayer2 }.
 	aGameSetUp withDices: { aDice }.
 
-	aGameSetUp
-		withABoardNumberOfSquares: 100
-		andWithWormHoleFrom: 1
-		to: 1.
+	aGameSetUp withABoardNumberOfSquares: 100.
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 2.
 	aGameSetUp createGameInstance.
 
@@ -170,7 +175,8 @@ GameBoardTest >> test015WhenTheSpaceShipGetsToTheMaximumOfSquaresThenSpaceShipGo
 
 
 	aGameSetUp withDices: { aDice }.
-	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: 1 to: 1.
+	aGameSetUp withABoardNumberOfSquares: 6 .
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 2.
 	aGameSetUp createGameInstance.
 
@@ -199,15 +205,16 @@ GameBoardTest >> test016WhenTheExitOfTheWormHoleIsGreaterThanTheNumbersOfSqueare
 
 	aGameSetUp
 		withABoardNumberOfSquares: 10
-		andWithWormHoleFrom: 6
-		to: 12.
+		.
+		
+		aGameSetUp withSpecialTiles: { (WormHole from: 6 to: 12) }.
 	aGameSetUp withMaximumLapsToWin: 2.
 
 	self
 		should: [ aGameSetUp createGameInstance ]
 		raise: Error
 		withMessageText:
-		'The worm hole exit must be smaller than the number of squares'
+		'Tile position is out of board bounds.'
 ]
 
 { #category : 'tests' }
@@ -222,7 +229,8 @@ GameBoardTest >> test017WhenSpaceShipDoesMultipleLapsInOneRollThenWins [
 	aGameSetUp withPlayers: { aPlayer1 }.
 
 	aGameSetUp withDices: { aDice }.
-	aGameSetUp withABoardNumberOfSquares: 5 andWithWormHoleFrom: 1 to: 1.
+	aGameSetUp withABoardNumberOfSquares: 5  .
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 2.
 	aGameSetUp createGameInstance.
 
@@ -253,7 +261,8 @@ GameBoardTest >> test018WhenASpaceShipWinsTheGameThenTheBoardKnowsTheLapsComplet
 
 	aGameSetUp withDices: { aDice }.
 
-	aGameSetUp withABoardNumberOfSquares: 5 andWithWormHoleFrom: 1 to: 1.
+	aGameSetUp withABoardNumberOfSquares: 5  .
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 2.
 	aGameSetUp createGameInstance.
 
@@ -287,7 +296,8 @@ GameBoardTest >> test019WhenTheGameEndsThenThereIsARanking [
 		aGameSetUp withPlayers: {aPlayer1. aPlayer2 .aPlayer3 .aPlayer4 }.
 	
 	aGameSetUp withDices: { aDice }.
-	aGameSetUp withABoardNumberOfSquares: 5 andWithWormHoleFrom: 1 to: 1.
+	aGameSetUp withABoardNumberOfSquares: 5  .
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 2.
 	aGameSetUp createGameInstance.
 
@@ -324,7 +334,8 @@ GameBoardTest >> test020WhenASpaceShipFinallyPositionIsLessThanOtherSpaceShipBut
 
 	aGameSetUp withDices: { aDice }.
 
-	aGameSetUp withABoardNumberOfSquares: 5 andWithWormHoleFrom: 1 to: 1.
+	aGameSetUp withABoardNumberOfSquares: 5 .
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 1.
 	aGameSetUp createGameInstance.
 	aBoard := aGameSetUp board.
@@ -358,7 +369,8 @@ GameBoardTest >> test021WhenThereIsADrawForSecondPlaceThenTheSilverIsTheFirstPla
 
 	aGameSetUp withDices: { aDice }.
 
-	aGameSetUp withABoardNumberOfSquares: 5 andWithWormHoleFrom: 1 to: 1.
+	aGameSetUp withABoardNumberOfSquares: 5  .
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 1.
 	aGameSetUp createGameInstance.
 	
@@ -389,8 +401,7 @@ GameBoardTest >> test0WhenTheBoardIsInitializeItHasACertainNumberOfSquaresAndAWo
 	aBoard := BoardGame
 		          withNumberOfSquares: 64
 		          withSizeInParsec: 10
-		          withWormHoleFrom: 1
-		          to: 2.
+		          .
 	aWinnerSystem := WinnerSystem withMaximunLaps: 1.
 	aBoard follows: aWinnerSystem.
 	self assert: aBoard numberOfSquares equals: 64
@@ -409,8 +420,7 @@ GameBoardTest >> test1WhenTheGameBeginsTheBoardKnowsTheSpaceShipsInitialPosition
 	aBoard := BoardGame
 		          withNumberOfSquares: 60
 		          withSizeInParsec: 10
-		          withWormHoleFrom: 2
-		          to: 5.
+		        .
 
 
 	self assert: aPlayer1 currentPosition equals: 0
@@ -429,7 +439,8 @@ GameBoardTest >> test2WhenADiceIsRolledThenTheSpaceShipsPositionInTheBoardChange
 	aGameSetUp withDices: { aDice }.
 	aGameSetUp withPlayers: {aPlayer1}.
 		
-	aGameSetUp withABoardNumberOfSquares: 64 andWithWormHoleFrom: 1 to: 1.
+	aGameSetUp withABoardNumberOfSquares: 64  .
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 1.
 	aGameSetUp createGameInstance.
 
@@ -454,20 +465,23 @@ GameBoardTest >> test3WhenASpaceShipCompletesTheLapThenItsTheWinner [
 
 	| aGameSetUp aDice aBoard aPlayer1 aWinnerSystem |
 	aGameSetUp := GameSetup new.
-	"aGameSetUp withNumberOfPlayers: 1."
+
 	aDice := RiggedDice withNumberOfFaces: 6.
 	aDice setNumbersProvider: { 6. 3. 3. 4 }.
-	
-	aPlayer1:= SpaceShip named: 'Juan'.
+
+	aPlayer1 := SpaceShip named: 'Juan'.
 
 	aGameSetUp withDices: { aDice }.
-	aGameSetUp withPlayers: {aPlayer1}.
+	aGameSetUp withPlayers: { aPlayer1 }.
+
+	aGameSetUp withABoardNumberOfSquares: 6 .
+	aGameSetUp withSpecialTiles: {
+			(WormHole from: 2 to: 5).
+		 }.
 	
-	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: 2 to: 5.
+			
 	aGameSetUp withMaximumLapsToWin: 1.
 	aGameSetUp createGameInstance.
-	
-	"aPlayer1 := aGameSetUp spaceShips first."
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
 
@@ -499,7 +513,11 @@ GameBoardTest >> test4WhenTheFirstSpaceShipCompletesTheLapThenItsTheWinner [
 
 
 
-	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: 2 to: 5.
+	aGameSetUp withABoardNumberOfSquares: 6.
+		aGameSetUp withSpecialTiles: {
+			(WormHole from: 2 to: 5).
+		 }.
+	
 	aGameSetUp withMaximumLapsToWin: 1.
 	aGameSetUp createGameInstance.
 
@@ -531,7 +549,11 @@ GameBoardTest >> test5WhenSpaceshipRolledNumberExceedsRemainingDistanceToFinishL
 	aGameSetUp withDices: { aDice }.
 	
 
-	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: 3 to: 5.
+	aGameSetUp withABoardNumberOfSquares: 6.
+		aGameSetUp withSpecialTiles: {
+			(WormHole from: 3 to: 5).
+		 }.
+	
 	aGameSetUp withMaximumLapsToWin: 1.
 	aGameSetUp createGameInstance.
 
@@ -558,7 +580,11 @@ GameBoardTest >> test6WhenThereIsAWinnerThenNoMoreRoundsArePlayed [
 
 	aGameSetUp withDices: { aDice }.
 
-	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: 3 to: 5.
+	aGameSetUp withABoardNumberOfSquares: 6.
+		aGameSetUp withSpecialTiles: {
+			(WormHole from: 3 to: 5).
+		 }.
+	
 	aGameSetUp withMaximumLapsToWin: 1.
 	aGameSetUp createGameInstance.
 
@@ -587,7 +613,11 @@ GameBoardTest >> test8WhenTheSpaceShipFallsIntoTheWormHoleEntranceThenItMovesToT
 
 	aGameSetUp withDices: { aDice }.
 
-	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: 2 to: 5.
+	aGameSetUp withABoardNumberOfSquares: 6 .
+		aGameSetUp withSpecialTiles: {
+			(WormHole from: 2 to: 5).
+		 }.
+	
 	aGameSetUp withMaximumLapsToWin: 1.
 	aGameSetUp createGameInstance.
 
@@ -611,7 +641,11 @@ GameBoardTest >> test9WhenTheSpaceShipFallsIntoWormHoleExitThenItMovesToTheWormH
 		aGameSetUp withPlayers: {aPlayer1 }.
 
 	aGameSetUp withDices: { aDice }.
-	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: 2 to: 5.
+	aGameSetUp withABoardNumberOfSquares: 6 .
+		aGameSetUp withSpecialTiles: {
+			(WormHole from: 2 to: 5).
+		 }.
+	
 	aGameSetUp withMaximumLapsToWin: 1.
 	aGameSetUp createGameInstance.
 

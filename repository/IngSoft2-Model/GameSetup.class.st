@@ -5,10 +5,7 @@ Class {
 	#name : 'GameSetup',
 	#superclass : 'Object',
 	#instVars : [
-		'numberOfPlayers',
 		'boardSize',
-		'wormholeEntrance',
-		'wormholeExit',
 		'lapsToWin',
 		'board',
 		'spaceShips',
@@ -34,13 +31,9 @@ GameSetup >> createBoardInstanceWith: aDices andWith: aSpaceShips andWith: aWinn
 	boardSizeInParsec ifNil: [ boardSizeInParsec := boardSize ].
 	aBoard := BoardGame
 		          withNumberOfSquares: boardSize
-		          withSizeInParsec: boardSizeInParsec
-		          withWormHoleFrom: wormholeEntrance
-		          to: wormholeExit.
+		          withSizeInParsec: boardSizeInParsec.
+		          
 	specialTiles ifNil: [ specialTiles := OrderedCollection new ].
-
-	specialTiles add:( WormHole from:wormholeEntrance to:wormholeExit).
-	specialTiles add:( WormHole from:wormholeExit to:wormholeEntrance ).
 	
 	aBoard withDices: aDices .
 	
@@ -117,11 +110,9 @@ GameSetup >> winnerSystem [
 ]
 
 { #category : 'initialization' }
-GameSetup >> withABoardNumberOfSquares: maximumSquares andWithWormHoleFrom: entry to: exit [
-
+GameSetup >> withABoardNumberOfSquares: maximumSquares [ 
 	boardSize := maximumSquares.
-	wormholeEntrance := entry.
-	wormholeExit := exit.
+	
 ]
 
 { #category : 'initialization' }
@@ -191,13 +182,6 @@ GameSetup >> withMaximumLapsToWin: aLapsToWin [
   lapsToWin := aLapsToWin.
 ]
 
-{ #category : 'initialization' }
-GameSetup >> withNumberOfPlayers: aNumber [
-	" numberOfPlayers := aNumber."
- 
-
-]
-
 { #category : 'creation' }
 GameSetup >> withPlayers: someSpaceShips [ 
 
@@ -205,8 +189,6 @@ spaceShips:= someSpaceShips.
 
 
 
-"andTurn:=  "
-"startingWith: (Fuel withAnAmount: (maximumRolledNumber *2)"
 ]
 
 { #category : 'initialization' }

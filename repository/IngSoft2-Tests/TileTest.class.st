@@ -30,11 +30,9 @@ TileTest >> test10WhenTheSpaceShipFallsInMoonWalkThenAllTheOtherSpaceShipsMoveBa
 
 	aGameSetUp withDices: { aDice }.
 	aGameSetUp
-		withABoardNumberOfSquares: 100
-		andWithWormHoleFrom: 1
-		to: 2.
+		withABoardNumberOfSquares: 100.
 	aGameSetUp withMaximumLapsToWin: 3.
-	aGameSetUp withSpecialTiles: { (MoonWalk in: 5 moveBack: 2) }.
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 2).(MoonWalk in: 5 moveBack: 2) }.
 	aGameSetUp createGameInstance.
 
 
@@ -78,10 +76,10 @@ TileTest >> test11WhenASpaceShipDoesntHaveEnoughFuelToMoveBackThenLosesTurnsAndG
 
 	aGameSetUp
 		withABoardNumberOfSquares: 100
-		andWithWormHoleFrom: 1
-		to: 1.
+	 .
+
 	aGameSetUp withMaximumLapsToWin: 6.
-	aGameSetUp withSpecialTiles: { (MoonWalk in: 23 moveBack: 4) }.
+	aGameSetUp withSpecialTiles: {(WormHole from: 1 to: 1). (MoonWalk in: 23 moveBack: 4) }.
 	aGameSetUp createGameInstance.
 
 	aBoard := aGameSetUp board.
@@ -129,10 +127,10 @@ TileTest >> test12WhenPlayerFallsOnMoonWalkTileThenMovesBackAndConsumesFuel [
 
 	aGameSetUp
 		withABoardNumberOfSquares: 100
-		andWithWormHoleFrom: 1
-		to: 1.
+	 .
+
 	aGameSetUp withMaximumLapsToWin: 6.
-	aGameSetUp withSpecialTiles: { (MoonWalk in: 5 moveBack: 4) }.
+	aGameSetUp withSpecialTiles: {(WormHole from: 1 to: 1). (MoonWalk in: 5 moveBack: 4) }.
 	aGameSetUp createGameInstance.
 
 	aBoard := aGameSetUp board.
@@ -160,8 +158,7 @@ TileTest >> test13WhenASpaceSHipFallsInAMoonWalkButDosentHaveEnoughFulleToMoveBa
 	| aGameSetUp aDice aDice2 aPlayer1 aPlayer2 aBoard |
 	aGameSetUp := GameSetup new.
 
-	aGameSetUp withNumberOfPlayers: 2.
-	aGameSetUp withNumberOfPlayers: 2.
+	
 	aDice := RiggedDice withNumberOfFaces: 8.
 	aDice setNumbersProvider: { 5. 5. 8. 2. 5. 5. 5. 5 }.
 	aDice2 := RiggedDice withNumberOfFaces: 4.
@@ -179,9 +176,10 @@ TileTest >> test13WhenASpaceSHipFallsInAMoonWalkButDosentHaveEnoughFulleToMoveBa
 
 
 
-	aGameSetUp withABoardNumberOfSquares: 5 andWithWormHoleFrom: 1 to: 1.
+	aGameSetUp withABoardNumberOfSquares: 5 .
+
 	aGameSetUp withMaximumLapsToWin: 6.
-	aGameSetUp withSpecialTiles: { (MoonWalk in: 4 moveBack: 6) }.
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1).(MoonWalk in: 4 moveBack: 6) }.
 	aGameSetUp createGameInstance.
 
 
@@ -228,12 +226,11 @@ TileTest >> test14WhenSpaceShipFallsInHyperJumpThenItAdvancesTheAmountOfParsecs 
 
 	aGameSetUp
 		withABoardNumberOfSquares: 100
-		andWithWormHoleFrom: 1
-		to: 1.
+	 .
 	aGameSetUp withBoardsLengthInParsec: 100.
 	aGameSetUp withMaximumLapsToWin: 6.
 	aGameSetUp withSpecialTiles:
-		{ (HyperJump in: 4 parsecToMove: { 8. 4. 2. 1 }) }.
+		{ (WormHole from: 1 to: 1).(HyperJump in: 4 parsecToMove: { 8. 4. 2. 1 }) }.
 	aGameSetUp createGameInstance.
 
 	aBoard := aGameSetUp board.
@@ -260,10 +257,11 @@ TileTest >> test15WhenManySpaceShipsFallInHyperJumpThenTheyAllAdvanceTheAmountOf
 		aGameSetUp withPlayers: {aPlayer1. aPlayer2 . aPlayer3 }.
 
 	aGameSetUp withDices: { aDice. aDice2 }.
-	aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
+	aGameSetUp withABoardNumberOfSquares: 100  .
+
 	aGameSetUp withBoardsLengthInParsec: 100.
 	aGameSetUp withMaximumLapsToWin: 6.
-	aGameSetUp withSpecialTiles: { HyperJump in: 4 parsecToMove: { 8. 4. 2. 1 } }.
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1).HyperJump in: 4 parsecToMove: { 8. 4. 2. 1 } }.
 
 	aGameSetUp createGameInstance.
 
@@ -297,11 +295,11 @@ TileTest >> test1WhenMinimumRollIsntMetThenTheSpaceshipIsHeldByTheHyperGravity [
 
 	aGameSetUp
 		withABoardNumberOfSquares: 100
-		andWithWormHoleFrom: 1
-		to: 1.
+		 .
+	
 
 	aGameSetUp withSpecialTiles:
-		{ (HyperGravity in: 2 requiringMinimumRoll: 4) }.
+		{(WormHole from: 1 to: 1). (HyperGravity in: 2 requiringMinimumRoll: 4) }.
 
 	aGameSetUp withMaximumLapsToWin: 100.
 	aGameSetUp createGameInstance.
@@ -337,10 +335,10 @@ TileTest >> test2WhenThereAreDifferentHyperGravityTilesThenEachHeldsTheSpaceShip
 
 	aGameSetUp
 		withABoardNumberOfSquares: 100
-		andWithWormHoleFrom: 1
-		to: 1.
+	 .
 
 	aGameSetUp withSpecialTiles: {
+	(WormHole from: 1 to: 1).
 			(HyperGravity in: 2 requiringMinimumRoll: 4).
 			(HyperGravity in: 7 requiringMinimumRoll: 8) }.
 
@@ -384,11 +382,11 @@ TileTest >> test4WhenAHyperGravityPositionIsOutOfTheBoardMaximumSizeThenTheGameC
 
 	aGameSetUp
 		withABoardNumberOfSquares: 100
-		andWithWormHoleFrom: 1
-		to: 1.
+	 .
+	
 
 	aGameSetUp withSpecialTiles:
-		{ (HyperGravity in: 101 requiringMinimumRoll: 9) }.
+		{(WormHole from: 1 to: 1). (HyperGravity in: 101 requiringMinimumRoll: 9) }.
 
 
 	aGameSetUp withMaximumLapsToWin: 100.
@@ -417,10 +415,9 @@ TileTest >> test5WhenASpaceShipFallsToTheAtomicBombThenAllSpaceShipsMoveToTheSta
 
 	aGameSetUp
 		withABoardNumberOfSquares: 100
-		andWithWormHoleFrom: 1
-		to: 1.
+	 .
 
-	aGameSetUp withSpecialTiles: { (AtomicBomb in: 7) }.
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1).(AtomicBomb in: 7) }.
 
 	aGameSetUp withMaximumLapsToWin: 100.
 	aGameSetUp createGameInstance.
@@ -458,10 +455,9 @@ TileTest >> test6WhenASpaceShipFallsInToTheBlackHoleThenItMoves4StepsBack [
 
 	aGameSetUp
 		withABoardNumberOfSquares: 100
-		andWithWormHoleFrom: 1
-		to: 1.
+.
 
-	aGameSetUp withSpecialTiles: { (BlackHole in: 7) }.
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1).(BlackHole in: 7) }.
 
 	aGameSetUp withMaximumLapsToWin: 100.
 	aGameSetUp createGameInstance.
@@ -505,11 +501,9 @@ aGameSetUp withPlayers: {aPlayer1 }.
 
 
 	aGameSetUp
-		withABoardNumberOfSquares: 100
-		andWithWormHoleFrom: 1
-		to: 1.
+		withABoardNumberOfSquares: 100.
 	aGameSetUp withMaximumLapsToWin: 6.
-	aGameSetUp withSpecialTiles: { (BlackHole in: 23) }.
+	aGameSetUp withSpecialTiles: {(WormHole from: 1 to: 1). (BlackHole in: 23) }.
 
 	aGameSetUp createGameInstance.
 
@@ -545,9 +539,9 @@ TileTest >> test8WhenSpaceshipFallsInBlackHoleOfLaterLapThenItGoesToPreviousLap 
 	aGameSetUp withDices: { aDice }.
 
 
-	aGameSetUp withABoardNumberOfSquares: 5 andWithWormHoleFrom: 1 to: 1.
+	aGameSetUp withABoardNumberOfSquares: 5 .
 	aGameSetUp withMaximumLapsToWin: 3.
-	aGameSetUp withSpecialTiles: { (BlackHole in: 3) }.
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1).(BlackHole in: 3) }.
 	aGameSetUp createGameInstance.
 
 
@@ -580,11 +574,9 @@ TileTest >> test9WhenSpaceShipFallsInBlackHoleAtTheBeginingOfTheGameThenItGoesBa
 
 
 	aGameSetUp
-		withABoardNumberOfSquares: 100
-		andWithWormHoleFrom: 1
-		to: 1.
+		withABoardNumberOfSquares: 100.
 	aGameSetUp withMaximumLapsToWin: 3.
-	aGameSetUp withSpecialTiles: { (BlackHole in: 3) }.
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1).(BlackHole in: 3) }.
 	aGameSetUp createGameInstance.
 
 
@@ -613,12 +605,10 @@ TileTest >> testF1WhenAHyperGravityHasAGreaterRequiringRollThanTheMaximumRolledN
 
 
 	aGameSetUp
-		withABoardNumberOfSquares: 100
-		andWithWormHoleFrom: 1
-		to: 1.
+		withABoardNumberOfSquares: 100.
 
 	aGameSetUp withSpecialTiles:
-		{ (HyperGravity in: 2 requiringMinimumRoll: 11) }.
+		{(WormHole from: 1 to: 1). (HyperGravity in: 2 requiringMinimumRoll: 11) }.
 
 
 	aGameSetUp withMaximumLapsToWin: 100.
@@ -646,11 +636,9 @@ TileTest >> testF2WhenASpecialTilePositionIsOutOfTheBoardMaximumSizeThenTheGameC
 
 
 	aGameSetUp
-		withABoardNumberOfSquares: 100
-		andWithWormHoleFrom: 1
-		to: 1.
+		withABoardNumberOfSquares: 100.
 
-	aGameSetUp withSpecialTiles: { (AtomicBomb in: 101) }.
+	aGameSetUp withSpecialTiles: {(WormHole from: 1 to: 1). (AtomicBomb in: 101) }.
 
 
 	aGameSetUp withMaximumLapsToWin: 100.

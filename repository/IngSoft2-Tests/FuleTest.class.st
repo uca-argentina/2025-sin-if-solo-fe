@@ -23,12 +23,12 @@ FuleTest >> test010WhenASpaceShipSkipsATurnThenTheNextSpaceShipPlays [
 			aDice.
 			aDice2 }.
 
-	aGameSetUp withNumberOfPlayers: 2.
+
 
 	aGameSetUp
 		withABoardNumberOfSquares: 100
-		andWithWormHoleFrom: 1
-		to: 1.
+	 .
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 100.
 	aGameSetUp createGameInstance.
 
@@ -64,7 +64,8 @@ FuleTest >> test0WhenASpaceShipDoesntMoveThenItHasInitialFuel [
 
 	aGameSetUp withDices: { aDice }.
 
-	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: 2 to: 5.
+	aGameSetUp withABoardNumberOfSquares: 6  .
+	aGameSetUp withSpecialTiles: { (WormHole from: 2 to: 5) }.
 	aGameSetUp withMaximumLapsToWin: 1.
 
 	aGameSetUp createGameInstance.
@@ -91,7 +92,8 @@ FuleTest >> test1WhenASpaceShipDoesntMoveThenItHasTheDoubleOfTheMaximumRolledNum
 		aGameSetUp withPlayers: {aPlayer1 }.
 
 
-	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: 2 to: 5.
+	aGameSetUp withABoardNumberOfSquares: 6 .
+	aGameSetUp withSpecialTiles: { (WormHole from: 2 to: 5) }.
 	aGameSetUp withMaximumLapsToWin: 1.
 
 	aGameSetUp createGameInstance.
@@ -118,7 +120,8 @@ FuleTest >> test2WhenASpaceShipMovesThenFuelDecreasesByTheAmountMoved [
 		
 		aGameSetUp withPlayers: {aPlayer1 }.
 
-	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: 1 to: 1.
+	aGameSetUp withABoardNumberOfSquares: 6  .
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 10.
 	aGameSetUp createGameInstance.
 
@@ -147,7 +150,8 @@ FuleTest >> test3WhenASpaceShipDoesntHaveAnyFuleLeftThenItGoesBackToTheInitialPo
 			aDice2 }.
 
 
-	aGameSetUp withABoardNumberOfSquares: 6 andWithWormHoleFrom: 1 to: 1.
+	aGameSetUp withABoardNumberOfSquares: 6 .
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 6.
 
 	aGameSetUp createGameInstance.
@@ -181,8 +185,8 @@ FuleTest >> test4WhenSpaceShipDoesntHaveFuleThenLosesTwoTurnsAndThenItCanMoveAga
 
 	aGameSetUp
 		withABoardNumberOfSquares: 100
-		andWithWormHoleFrom: 1
-		to: 1.
+	 .
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 6.
 
 	aGameSetUp createGameInstance.
@@ -222,13 +226,13 @@ FuleTest >> test5WhenMoreThanOneSpaceShipDoesntHaveFuleThenBothCantMoveForTwoTur
 			aDice.
 			aDice2 }.
 
-	aGameSetUp withNumberOfPlayers: 2.
+	
 
 
 	aGameSetUp
 		withABoardNumberOfSquares: 100
-		andWithWormHoleFrom: 1
-		to: 1.
+	 .
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 16.
 
 	aGameSetUp createGameInstance.
@@ -277,7 +281,8 @@ FuleTest >> test6WhenASpaceShipFallsIntoAEntranceOfWormHoleThenTheFuleDecrecesTh
 			aDice2 }.
 
 
-	aGameSetUp withABoardNumberOfSquares: 80 andWithWormHoleFrom: 3 to: 5.
+	aGameSetUp withABoardNumberOfSquares: 80  .
+	aGameSetUp withSpecialTiles: { (WormHole from: 3 to: 5) }.
 	aGameSetUp withMaximumLapsToWin: 100.
 
 	aGameSetUp createGameInstance.
@@ -309,8 +314,8 @@ FuleTest >> test7WhenASpaceShipFallsIntoAExitOfWormHoleThenTheFuleDecrecesTheAmo
 
 	aGameSetUp
 		withABoardNumberOfSquares: 666
-		andWithWormHoleFrom: 3
-		to: 5.
+	 .
+	aGameSetUp withSpecialTiles: { (WormHole from: 3 to: 5) }.
 	aGameSetUp withMaximumLapsToWin: 100.
 
 	aGameSetUp createGameInstance.
@@ -344,8 +349,8 @@ FuleTest >> test8WhenASpaceShipChoosesToSkipARoundThenDosentMoveAndRechargesTheF
 
 	aGameSetUp
 		withABoardNumberOfSquares: 100
-		andWithWormHoleFrom: 1
-		to: 1.
+ .
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 100.
 	aGameSetUp createGameInstance.
 
@@ -383,12 +388,12 @@ FuleTest >> test9WhenBothSpaceShipsSkipRoundThenTheyRechargeAllTheirFule [
 
 
 
-	aGameSetUp withNumberOfPlayers: 2.
+
 
 	aGameSetUp
 		withABoardNumberOfSquares: 100
-		andWithWormHoleFrom: 1
-		to: 1.
+ .
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 100.
 	aGameSetUp createGameInstance.
 

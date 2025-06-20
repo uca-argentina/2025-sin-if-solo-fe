@@ -38,9 +38,22 @@ BoardGame class >> isANegativeNumber: aNumber [
 ]
 
 { #category : 'instance creation' }
-BoardGame class >> withNumberOfSquares: aMaximumSquares withSizeInParsec:boardSizeInParsec withWormHoleFrom: anEntranceOfWormHole to: anExitOfTheWormHole [
+BoardGame class >> withNumberOfSquares: aMaximumSquares withSizeInParsec:boardSizeInParsec [
 
 	self isANegativeNumber: aMaximumSquares.
+	self hasTheMinimumAmountOfSquares: aMaximumSquares.
+	
+	^ self new
+		  initializationBoardGame: aMaximumSquares
+			withSizeInParsec:boardSizeInParsec.
+	
+
+]
+
+{ #category : 'instance creation' }
+BoardGame class >> withNumberOfSquares: aMaximumSquares withSizeInParsec:boardSizeInParsec withWormHoleFrom: anEntranceOfWormHole to: anExitOfTheWormHole [
+
+	"self isANegativeNumber: aMaximumSquares.
 	self hasTheMinimumAmountOfSquares: aMaximumSquares.
 	self isANegativeNumber: anEntranceOfWormHole.
 	self isANegativeNumber: anExitOfTheWormHole.
@@ -50,7 +63,7 @@ BoardGame class >> withNumberOfSquares: aMaximumSquares withSizeInParsec:boardSi
 			withSizeInParsec:boardSizeInParsec
 		  withWormHoleFrom: anEntranceOfWormHole
 		  to: anExitOfTheWormHole.
-		
+		"
 	
 
 ]
@@ -90,6 +103,13 @@ BoardGame >> follows: aWinnerSystem [
 BoardGame >> has: players [
 
 	spaceShips := players
+]
+
+{ #category : 'initialization' }
+BoardGame >> initializationBoardGame: aMaximumSquares withSizeInParsec: boardSizeInParsec [ 
+
+	maximumSquares := aMaximumSquares.
+	sizeInParsec := boardSizeInParsec
 ]
 
 { #category : 'initialization' }
@@ -184,9 +204,10 @@ BoardGame >> skipRoundAndRechargeFor: aSpaceShip [
 ]
 
 { #category : 'accessing' }
-BoardGame >> specialTileAt: aPosition [
+BoardGame >> specialTileAt: position [
 
-	^ specialTiles detect: [ :tile | tile position = aPosition ]
+	"^ specialTiles detect: [ :tile | tile position = aPosition ]"
+	^ specialTiles detect: [ :tile | tile includesA: position ].
 ]
 
 { #category : 'action' }

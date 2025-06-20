@@ -22,9 +22,8 @@ DistributionOfTilesTest >> test1WhenABoardIsCreatedThen2PercentOfSquaresAreAtomi
 
 	aGameSetUp
 		withABoardNumberOfSquares: 100
-		andWithWormHoleFrom: 1
-		to: 1.
-
+		 .
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 
 	aGameSetUp withAdistribution.
 
@@ -45,21 +44,21 @@ DistributionOfTilesTest >> test2WhenABoardIsCreatedThen8PercentOfSquaresAreHyper
 
 	| aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice |
 	aGameSetUp := GameSetup new.
-	aGameSetUp withNumberOfPlayers: 2.
+
 	aDice := RiggedDice withNumberOfFaces: 10.
 	aDice setNumbersProvider: { 5. 2. 5. 9 }.
-		aPlayer1:= SpaceShip named: 'Fran'.
-	aPlayer2:= SpaceShip named: 'Agustin'.
-		
-		aGameSetUp withPlayers: {aPlayer1. aPlayer2 }.
+	aPlayer1 := SpaceShip named: 'Fran'.
+	aPlayer2 := SpaceShip named: 'Agustin'.
+
+	aGameSetUp withPlayers: {
+			aPlayer1.
+			aPlayer2 }.
 
 	aGameSetUp withDices: { aDice }.
 
 
-	aGameSetUp
-		withABoardNumberOfSquares: 100
-		andWithWormHoleFrom: 1
-		to: 1.
+	aGameSetUp withABoardNumberOfSquares: 100.
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 
 	aGameSetUp withAdistribution.
 
@@ -92,8 +91,8 @@ DistributionOfTilesTest >> test3WhenABoardIsCreatedThen10PercentOfSquaresAreMoon
 
 	aGameSetUp
 		withABoardNumberOfSquares: 100
-		andWithWormHoleFrom: 1
-		to: 1.
+		 .
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 
 	aGameSetUp withAdistribution.
 
@@ -127,8 +126,8 @@ DistributionOfTilesTest >> test4WhenABoardIsCreatedThen20PercentOfSquaresAreHype
 
 	aGameSetUp
 		withABoardNumberOfSquares: 100
-		andWithWormHoleFrom: 1
-		to: 1.
+	 .
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 
 	aGameSetUp withAdistribution.
 
@@ -162,8 +161,8 @@ DistributionOfTilesTest >> test5WhenABoardIsCreatedThen20PercentOfSquaresAreBlac
 
 	aGameSetUp
 		withABoardNumberOfSquares: 100
-		andWithWormHoleFrom: 1
-		to: 1.
+ .
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
 
 	aGameSetUp withAdistribution.
 
