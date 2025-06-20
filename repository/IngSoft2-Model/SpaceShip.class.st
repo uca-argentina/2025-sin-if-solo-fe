@@ -31,8 +31,7 @@ SpaceShip class >> withA: position andTurn: anOrderNumber startingWith: aFuel [
 { #category : 'comparing' }
 SpaceShip >> = anotherSpaceShip [
 
-^ (name = anotherSpaceShip name).
-
+	^ name = anotherSpaceShip name
 ]
 
 { #category : 'action' }
