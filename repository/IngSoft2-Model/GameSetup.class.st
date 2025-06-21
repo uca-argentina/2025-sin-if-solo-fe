@@ -12,41 +12,62 @@ Class {
 		'winnerSystem',
 		'maximumRolledNumber',
 		'boardSizeInParsec',
-		'specialTiles',
 		'dices',
-		'turnManager'
+		'turnManager',
+		'deckOfCards',
+		'tiles'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'testing' }
+GameSetup >> assigns: aDeckOfCards [
+
+| cardOne cardTwo |
+cardOne:= aDeckOfCards atRandom.
+aDeckOfCards remove: cardOne.
+cardTwo:= aDeckOfCards atRandom.
+aDeckOfCards remove: cardTwo.
+
+deckOfCards := OrderedCollection with: cardOne with: cardTwo.
+
+
+]
+
 { #category : 'accessing' }
 GameSetup >> board [
-    ^ board
+
+	^ board
 ]
 
 { #category : 'creation' }
 GameSetup >> createBoardInstanceWith: aDices andWith: aSpaceShips andWith: aWinnerSystem [
 
-    | aBoard aCopyOfSpaceships |
-    boardSizeInParsec ifNil: [ boardSizeInParsec := boardSize ].
-    aBoard := BoardGame
-                  withNumberOfSquares: boardSize
-                  withSizeInParsec: boardSizeInParsec andTurnManager: turnManager .
+	| aBoard aCopyOfSpaceships |
+	boardSizeInParsec ifNil: [ boardSizeInParsec := boardSize ].
+	aBoard := BoardGame
+		          withNumberOfSquares: boardSize
+		          withSizeInParsec: boardSizeInParsec
+		          andTurnManager: turnManager
+		          andADeckOfCards: deckOfCards.
 
-    specialTiles ifNil: [ specialTiles := OrderedCollection new ].
+	tiles ifNil: [ tiles := OrderedCollection new ].
 
-    aBoard withDices: aDices .
-	aCopyOfSpaceships :=OrderedCollection new.
-    aCopyOfSpaceships := aSpaceShips collect: [ :each | each copy ].
+	deckOfCards ifNil: [ deckOfCards := OrderedCollection new ].
 
-    aBoard has: aCopyOfSpaceships.
-    aBoard follows: aWinnerSystem.
+	aBoard withDices: aDices.
+	aCopyOfSpaceships := OrderedCollection new.
+	aCopyOfSpaceships := aSpaceShips collect: [ :each | each copy ].
 
-    self fillEmptyPositionsWithNoEffectTile.
 
-    aBoard contains: specialTiles.
-    ^ aBoard
+	aBoard has: aCopyOfSpaceships.
+	aBoard follows: aWinnerSystem.
+
+	self fillEmptyPositionsWithNoEffectTile.
+
+	aBoard contains: tiles.
+	^ aBoard
 ]
 
 { #category : 'creation' }
@@ -68,8 +89,16 @@ GameSetup >> createGameInstance [
 { #category : 'creation' }
 GameSetup >> createSpaceShipsInstance [
 
-	spaceShips do: [ :arg1 |
-		arg1 has: (Fuel withAnAmount: maximumRolledNumber * 2) ]
+	| cardOne cardTwo |
+	deckOfCards ifNotNil: [
+		cardOne := deckOfCards at: 1.
+		cardTwo := deckOfCards at: 2.
+		spaceShips do: [ :spaceShip |
+			spaceShip equipWith: cardOne.
+			spaceShip equipWith: cardTwo ] ].
+
+	spaceShips do: [ :spaceShip |
+		spaceShip has: (Fuel withAnAmount: maximumRolledNumber * 2) ]
 ]
 
 { #category : 'action' }
@@ -77,11 +106,11 @@ GameSetup >> fillEmptyPositionsWithNoEffectTile [
 	| occupiedPositions |
 	
 	
-	occupiedPositions := specialTiles collect: [ :tile | tile position ] as: Set.
+	occupiedPositions := tiles collect: [ :tile | tile position ] as: Set.
 	
 	0 to: boardSize  do: [ :pos |
 		(occupiedPositions includes: pos) ifFalse: [
-			specialTiles add: (NoEffect in: pos)
+			tiles add: (NoEffect in: pos)
 		]
 	].
 
@@ -99,7 +128,7 @@ GameSetup >> maximumRollFromDices [
 { #category : 'validating' }
 GameSetup >> validateSpecialTileCreation [
 
-specialTiles do:[:specialTile|specialTile validateCreationIn: boardSize and: maximumRolledNumber].
+tiles do:[:specialTile|specialTile validateCreationIn: boardSize and: maximumRolledNumber].
 ]
 
 { #category : 'accessing' }
@@ -141,12 +170,7 @@ spaceShips:= someSpaceShips.
 ]
 
 { #category : 'initialization' }
-GameSetup >> withSpecialTiles:aSpecialTiles [
+GameSetup >> withTiles: someTiles [
 
-specialTiles := aSpecialTiles asOrderedCollection.
-
-
-
-
-
+	tiles := someTiles asOrderedCollection
 ]

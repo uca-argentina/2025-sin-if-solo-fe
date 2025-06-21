@@ -36,7 +36,7 @@ GameBoardTest >> test010WhenAWormHoleWhichExitIsTheFinishLineThenCreationFails [
 			                aPlayer2 }.
 
 	aGameSetUp withABoardNumberOfSquares: 6 andTurnManager: aTurnManager.
-		aGameSetUp withSpecialTiles: {
+		aGameSetUp withTiles: {
 			(WormHole from: 6 to: 2).
 		 }.
 	
@@ -71,7 +71,7 @@ aTurnManager := TurnManager withOrder: {
 			                aPlayer2 }.
 
 	aGameSetUp withABoardNumberOfSquares: 6 andTurnManager: aTurnManager.
-	aGameSetUp withSpecialTiles: {
+	aGameSetUp withTiles: {
 			(WormHole from: -1 to: 1).
 		 }.
 	
@@ -105,7 +105,7 @@ aTurnManager := TurnManager withOrder: {
 			                aPlayer2 }.
 
 	aGameSetUp withABoardNumberOfSquares: 6 andTurnManager: aTurnManager.
-	aGameSetUp withSpecialTiles: { (WormHole from: -1 to: -1) }.
+	aGameSetUp withTiles: { (WormHole from: -1 to: -1) }.
 	aGameSetUp withMaximumLapsToWin: 2.
 
 	self
@@ -135,7 +135,7 @@ GameBoardTest >> test013WhenABoardHasLessThanThreeSquaresThenCreationFails [
 			                aPlayer2 }.
 
 	aGameSetUp withABoardNumberOfSquares: 2 andTurnManager: aTurnManager.
-	aGameSetUp withSpecialTiles: {
+	aGameSetUp withTiles: {
 			(WormHole from: 3 to: 6).
 		 }.
 	aGameSetUp withMaximumLapsToWin: 2.
@@ -166,7 +166,7 @@ aTurnManager := TurnManager withOrder: {
 			                aPlayer2 }.
 
 	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
-	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
+	aGameSetUp withTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 2.
 	aGameSetUp createGameInstance.
 
@@ -198,7 +198,7 @@ aTurnManager := TurnManager withOrder: {
 			                 }.
 
 	aGameSetUp withABoardNumberOfSquares: 6 andTurnManager: aTurnManager.
-	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
+	aGameSetUp withTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 2.
 	aGameSetUp createGameInstance.
 
@@ -231,7 +231,7 @@ GameBoardTest >> test016WhenTheExitOfTheWormHoleIsGreaterThanTheNumbersOfSqueare
 
 	aGameSetUp withABoardNumberOfSquares: 10 andTurnManager: aTurnManager.
 		
-		aGameSetUp withSpecialTiles: { (WormHole from: 6 to: 12) }.
+		aGameSetUp withTiles: { (WormHole from: 6 to: 12) }.
 	aGameSetUp withMaximumLapsToWin: 2.
 
 	self
@@ -258,7 +258,7 @@ aTurnManager := TurnManager withOrder: {
 			                 }.
 
 	aGameSetUp withABoardNumberOfSquares: 5 andTurnManager: aTurnManager.
-	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
+	aGameSetUp withTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 2.
 	aGameSetUp createGameInstance.
 
@@ -294,7 +294,7 @@ GameBoardTest >> test018WhenASpaceShipWinsTheGameThenTheBoardKnowsTheLapsComplet
 			                aPlayer2 .aPlayer3}.
 
 	aGameSetUp withABoardNumberOfSquares: 5 andTurnManager: aTurnManager.
-	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
+	aGameSetUp withTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 2.
 	aGameSetUp createGameInstance.
 
@@ -342,7 +342,7 @@ GameBoardTest >> test019WhenTheGameEndsThenThereIsARanking [
 			                aPlayer4 }.
 
 	aGameSetUp withABoardNumberOfSquares: 5 andTurnManager: aTurnManager.
-	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
+	aGameSetUp withTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 2.
 	aGameSetUp createGameInstance.
 
@@ -392,7 +392,7 @@ aTurnManager := TurnManager withOrder: {
 			                aPlayer4 }.
 
 	aGameSetUp withABoardNumberOfSquares: 5 andTurnManager: aTurnManager.
-	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
+	aGameSetUp withTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 1.
 	aGameSetUp createGameInstance.
 	aBoard := aGameSetUp board.
@@ -434,7 +434,7 @@ aTurnManager := TurnManager withOrder: {
 			                aPlayer2 .aPlayer3}.
 
 	aGameSetUp withABoardNumberOfSquares: 5 andTurnManager: aTurnManager.
-	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
+	aGameSetUp withTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 1.
 	aGameSetUp createGameInstance.
 	
@@ -468,7 +468,7 @@ GameBoardTest >> test0WhenTheBoardIsInitializeItHasACertainNumberOfSquaresAndAWo
 			                }.
 	aBoard := BoardGame
 		          withNumberOfSquares: 64
-		          withSizeInParsec: 10 andTurnManager: aTurnManager .
+		          withSizeInParsec: 10 andTurnManager: aTurnManager andADeckOfCards: nil .
 	aWinnerSystem := WinnerSystem withMaximunLaps: 1.
 	aBoard follows: aWinnerSystem.
 	self assert: aBoard numberOfSquares equals: 64
@@ -510,7 +510,7 @@ GameBoardTest >> test2WhenADiceIsRolledThenTheSpaceShipsPositionInTheBoardChange
 			               }.
 
 	aGameSetUp withABoardNumberOfSquares: 64 andTurnManager: aTurnManager.
-	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
+	aGameSetUp withTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 1.
 	aGameSetUp createGameInstance.
 
@@ -546,7 +546,7 @@ GameBoardTest >> test3WhenASpaceShipCompletesTheLapThenItsTheWinner [
 
 	aTurnManager:=TurnManager withOrder:{aPlayer1}.
 	aGameSetUp withABoardNumberOfSquares: 6 andTurnManager: aTurnManager.
-	aGameSetUp withSpecialTiles: {
+	aGameSetUp withTiles: {
 			(WormHole from: 2 to: 5).
 		 }.
 	
@@ -589,7 +589,7 @@ GameBoardTest >> test4WhenTheFirstSpaceShipCompletesTheLapThenItsTheWinner [
 			                aPlayer1.
 			                aPlayer2 }.
 	aGameSetUp withABoardNumberOfSquares: 6 andTurnManager: aTurnManager.
-	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
+	aGameSetUp withTiles: { (WormHole from: 1 to: 1) }.
 
 	aGameSetUp withMaximumLapsToWin: 1.
 	aGameSetUp createGameInstance.
@@ -627,7 +627,7 @@ aTurnManager := TurnManager withOrder: {
 			                aPlayer2 }.
 
 	aGameSetUp withABoardNumberOfSquares: 6 andTurnManager: aTurnManager.
-	aGameSetUp withSpecialTiles: { (WormHole from: 3 to: 5) }.
+	aGameSetUp withTiles: { (WormHole from: 3 to: 5) }.
 
 	aGameSetUp withMaximumLapsToWin: 1.
 	aGameSetUp createGameInstance.
@@ -657,7 +657,7 @@ GameBoardTest >> test6WhenThereIsAWinnerThenNoMoreRoundsArePlayed [
 
 	aTurnManager:=TurnManager withOrder:{aPlayer1 . aPlayer2}.
 	aGameSetUp withABoardNumberOfSquares: 6 andTurnManager: aTurnManager .
-		aGameSetUp withSpecialTiles: {
+		aGameSetUp withTiles: {
 			(WormHole from: 3 to: 5).
 		 }.
 	
@@ -698,7 +698,7 @@ GameBoardTest >> test8WhenTheSpaceShipFallsIntoTheWormHoleEntranceThenItMovesToT
 			                aPlayer2 }.
 
 	aGameSetUp withABoardNumberOfSquares: 6 andTurnManager: aTurnManager.
-		aGameSetUp withSpecialTiles: {
+		aGameSetUp withTiles: {
 			(WormHole from: 2 to: 5).
 		 }.
 	
@@ -731,7 +731,7 @@ GameBoardTest >> test9WhenTheSpaceShipFallsIntoWormHoleExitThenItMovesToTheWormH
 			                 }.
 
 	aGameSetUp withABoardNumberOfSquares: 6 andTurnManager: aTurnManager.
-		aGameSetUp withSpecialTiles: {
+		aGameSetUp withTiles: {
 			(WormHole from: 2 to: 5).
 		 }.
 	

@@ -12,7 +12,8 @@ Class {
 		'minimumRollRequired',
 		'fuelSistem',
 		'name',
-		'lostTurns'
+		'lostTurns',
+		'cardsInHand'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -50,6 +51,11 @@ SpaceShip >> canPlay [
 
     ^ fuelSistem hasFuelToPlay and: [ lostTurns =0].
 
+]
+
+{ #category : 'accessing' }
+SpaceShip >> cardsInHand [
+^cardsInHand.
 ]
 
 { #category : 'accessing' }
@@ -105,6 +111,7 @@ SpaceShip >> hasFule [
 SpaceShip >> initializeWtihAName:aName [
 
 name:= aName.
+cardsInHand:= OrderedCollection new.
 currentPosition := 0.
 fuelSistem := 0.
 lostTurns:=0.

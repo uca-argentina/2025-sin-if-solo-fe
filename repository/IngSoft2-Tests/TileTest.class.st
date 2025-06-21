@@ -35,7 +35,7 @@ aTurnManager := TurnManager withOrder: {
 
 	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 	aGameSetUp withMaximumLapsToWin: 3.
-	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 2).(MoonWalk in: 5 moveBack: 2) }.
+	aGameSetUp withTiles: { (WormHole from: 1 to: 2).(MoonWalk in: 5 moveBack: 2) }.
 	aGameSetUp createGameInstance.
 
 
@@ -86,7 +86,7 @@ aTurnManager := TurnManager withOrder: {
 	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 
 	aGameSetUp withMaximumLapsToWin: 6.
-	aGameSetUp withSpecialTiles: {(WormHole from: 1 to: 1). (MoonWalk in: 23 moveBack: 4) }.
+	aGameSetUp withTiles: {(WormHole from: 1 to: 1). (MoonWalk in: 23 moveBack: 4) }.
 	aGameSetUp createGameInstance.
 
 	aBoard := aGameSetUp board.
@@ -145,7 +145,7 @@ aTurnManager := TurnManager withOrder: {
 	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 
 	aGameSetUp withMaximumLapsToWin: 6.
-	aGameSetUp withSpecialTiles: {(WormHole from: 1 to: 1). (MoonWalk in: 5 moveBack: 4) }.
+	aGameSetUp withTiles: {(WormHole from: 1 to: 1). (MoonWalk in: 5 moveBack: 4) }.
 	aGameSetUp createGameInstance.
 
 	aBoard := aGameSetUp board.
@@ -203,7 +203,7 @@ TileTest >> test13WhenASpaceSHipFallsInAMoonWalkButDosentHaveEnoughFulleToMoveBa
 	aGameSetUp withABoardNumberOfSquares: 5 andTurnManager: aTurnManager.
 
 	aGameSetUp withMaximumLapsToWin: 6.
-	aGameSetUp withSpecialTiles: {
+	aGameSetUp withTiles: {
 			(WormHole from: 1 to: 1).
 			(MoonWalk in: 4 moveBack: 6) }.
 	aGameSetUp createGameInstance.
@@ -258,7 +258,7 @@ TileTest >> test14WhenSpaceShipFallsInHyperJumpThenItAdvancesTheAmountOfParsecs 
 	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 	aGameSetUp withBoardsLengthInParsec: 100.
 	aGameSetUp withMaximumLapsToWin: 6.
-	aGameSetUp withSpecialTiles:
+	aGameSetUp withTiles:
 		{ (WormHole from: 1 to: 1).(HyperJump in: 4 parsecToMove: { 8. 4. 2. 1 }) }.
 	aGameSetUp createGameInstance.
 
@@ -295,7 +295,7 @@ TileTest >> test15WhenManySpaceShipsFallInHyperJumpThenTheyAllAdvanceTheAmountOf
 
 	aGameSetUp withBoardsLengthInParsec: 100.
 	aGameSetUp withMaximumLapsToWin: 6.
-	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1).HyperJump in: 4 parsecToMove: { 8. 4. 2. 1 } }.
+	aGameSetUp withTiles: { (WormHole from: 1 to: 1).HyperJump in: 4 parsecToMove: { 8. 4. 2. 1 } }.
 
 	aGameSetUp createGameInstance.
 
@@ -336,7 +336,7 @@ TileTest >> test1WhenMinimumRollIsntMetThenTheSpaceshipIsHeldByTheHyperGravity [
 	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 	
 
-	aGameSetUp withSpecialTiles:
+	aGameSetUp withTiles:
 		{(WormHole from: 1 to: 1). (HyperGravity in: 2 requiringMinimumRoll: 4) }.
 
 	aGameSetUp withMaximumLapsToWin: 100.
@@ -377,7 +377,7 @@ TileTest >> test2WhenThereAreDifferentHyperGravityTilesThenEachHeldsTheSpaceShip
 
 	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 
-	aGameSetUp withSpecialTiles: {
+	aGameSetUp withTiles: {
 	(WormHole from: 1 to: 1).
 			(HyperGravity in: 2 requiringMinimumRoll: 4).
 			(HyperGravity in: 7 requiringMinimumRoll: 8) }.
@@ -427,7 +427,7 @@ TileTest >> test4WhenAHyperGravityPositionIsOutOfTheBoardMaximumSizeThenTheGameC
 	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 	
 
-	aGameSetUp withSpecialTiles:
+	aGameSetUp withTiles:
 		{(WormHole from: 1 to: 1). (HyperGravity in: 101 requiringMinimumRoll: 9) }.
 
 
@@ -460,7 +460,7 @@ TileTest >> test5WhenASpaceShipFallsToTheAtomicBombThenAllSpaceShipsMoveToTheSta
 
 	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 
-	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1).(AtomicBomb in: 7) }.
+	aGameSetUp withTiles: { (WormHole from: 1 to: 1).(AtomicBomb in: 7) }.
 
 	aGameSetUp withMaximumLapsToWin: 100.
 	aGameSetUp createGameInstance.
@@ -503,7 +503,7 @@ aTurnManager := TurnManager withOrder: {
 
 	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 
-	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1).(BlackHole in: 7) }.
+	aGameSetUp withTiles: { (WormHole from: 1 to: 1).(BlackHole in: 7) }.
 
 	aGameSetUp withMaximumLapsToWin: 100.
 	aGameSetUp createGameInstance.
@@ -554,7 +554,7 @@ aTurnManager := TurnManager withOrder: {
 
 	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 	aGameSetUp withMaximumLapsToWin: 6.
-	aGameSetUp withSpecialTiles: {(WormHole from: 1 to: 1). (BlackHole in: 23) }.
+	aGameSetUp withTiles: {(WormHole from: 1 to: 1). (BlackHole in: 23) }.
 
 	aGameSetUp createGameInstance.
 
@@ -596,7 +596,7 @@ aTurnManager := TurnManager withOrder: {
 
 	aGameSetUp withABoardNumberOfSquares: 5 andTurnManager: aTurnManager.
 	aGameSetUp withMaximumLapsToWin: 3.
-	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1).(BlackHole in: 3) }.
+	aGameSetUp withTiles: { (WormHole from: 1 to: 1).(BlackHole in: 3) }.
 	aGameSetUp createGameInstance.
 
 
@@ -634,7 +634,7 @@ aTurnManager := TurnManager withOrder: {
 
 	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 	aGameSetUp withMaximumLapsToWin: 3.
-	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1).(BlackHole in: 3) }.
+	aGameSetUp withTiles: { (WormHole from: 1 to: 1).(BlackHole in: 3) }.
 	aGameSetUp createGameInstance.
 
 
@@ -667,7 +667,7 @@ aTurnManager := TurnManager withOrder: {
 
 	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 
-	aGameSetUp withSpecialTiles:
+	aGameSetUp withTiles:
 		{(WormHole from: 1 to: 1). (HyperGravity in: 2 requiringMinimumRoll: 11) }.
 
 
@@ -699,7 +699,7 @@ aTurnManager := TurnManager withOrder: {
 
 	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 
-	aGameSetUp withSpecialTiles: {(WormHole from: 1 to: 1). (AtomicBomb in: 101) }.
+	aGameSetUp withTiles: {(WormHole from: 1 to: 1). (AtomicBomb in: 101) }.
 
 
 	aGameSetUp withMaximumLapsToWin: 100.

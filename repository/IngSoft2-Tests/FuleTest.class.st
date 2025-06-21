@@ -27,7 +27,7 @@ FuleTest >> test010WhenASpaceShipSkipsATurnThenTheNextSpaceShipPlays [
 
 	aTurnManager:=TurnManager withOrder:{aPlayer1 . aPlayer2}.
 	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager .
-	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
+	aGameSetUp withTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 100.
 	aGameSetUp createGameInstance.
 
@@ -67,7 +67,7 @@ FuleTest >> test0WhenASpaceShipDoesntMoveThenItHasInitialFuel [
 
 		aTurnManager:=TurnManager withOrder:{aPlayer1 }.
 	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager .
-	aGameSetUp withSpecialTiles: { (WormHole from: 2 to: 5) }.
+	aGameSetUp withTiles: { (WormHole from: 2 to: 5) }.
 	aGameSetUp withMaximumLapsToWin: 1.
 
 	aGameSetUp createGameInstance.
@@ -96,7 +96,7 @@ FuleTest >> test1WhenASpaceShipDoesntMoveThenItHasTheDoubleOfTheMaximumRolledNum
 
 	aTurnManager:=TurnManager withOrder:{aPlayer1 }.
 	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager .
-	aGameSetUp withSpecialTiles: { (WormHole from: 2 to: 5) }.
+	aGameSetUp withTiles: { (WormHole from: 2 to: 5) }.
 	aGameSetUp withMaximumLapsToWin: 1.
 
 	aGameSetUp createGameInstance.
@@ -126,7 +126,7 @@ FuleTest >> test2WhenASpaceShipMovesThenFuelDecreasesByTheAmountMoved [
 	
 	aTurnManager:=TurnManager withOrder:{aPlayer1 }.
 	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager .
-	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
+	aGameSetUp withTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 10.
 	aGameSetUp createGameInstance.
 
@@ -158,7 +158,7 @@ FuleTest >> test3WhenASpaceShipDoesntHaveAnyFuleLeftThenItGoesBackToTheInitialPo
 	
 	aTurnManager:=TurnManager withOrder:{aPlayer1 }.
 	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager .
-	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
+	aGameSetUp withTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 6.
 
 	aGameSetUp createGameInstance.
@@ -193,7 +193,7 @@ FuleTest >> test4WhenSpaceShipDoesntHaveFuleThenLosesTwoTurnsAndThenItCanMoveAga
 	
 	aTurnManager:=TurnManager withOrder:{aPlayer1 }.
 	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager .
-	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
+	aGameSetUp withTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 6.
 
 	aGameSetUp createGameInstance.
@@ -238,7 +238,7 @@ FuleTest >> test5WhenMoreThanOneSpaceShipDoesntHaveFuleThenBothCantMoveForTwoTur
 
 	aTurnManager:=TurnManager withOrder:{aPlayer1 .aPlayer2 }.
 	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager .
-	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
+	aGameSetUp withTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 16.
 
 	aGameSetUp createGameInstance.
@@ -297,7 +297,7 @@ FuleTest >> test6WhenASpaceShipFallsIntoAEntranceOfWormHoleThenTheFuleDecrecesTh
 
 	aTurnManager:=TurnManager withOrder:{aPlayer1  }.
 	aGameSetUp withABoardNumberOfSquares: 80 andTurnManager: aTurnManager .
-	aGameSetUp withSpecialTiles: { (WormHole from: 3 to: 5) }.
+	aGameSetUp withTiles: { (WormHole from: 3 to: 5) }.
 	aGameSetUp withMaximumLapsToWin: 100.
 
 	aGameSetUp createGameInstance.
@@ -329,7 +329,7 @@ FuleTest >> test7WhenASpaceShipFallsIntoAExitOfWormHoleThenTheFuleDecrecesTheAmo
 
 		aTurnManager:=TurnManager withOrder:{aPlayer1  }.
 	aGameSetUp withABoardNumberOfSquares: 666 andTurnManager: aTurnManager .
-	aGameSetUp withSpecialTiles: { (WormHole from: 3 to: 5) }.
+	aGameSetUp withTiles: { (WormHole from: 3 to: 5) }.
 	aGameSetUp withMaximumLapsToWin: 100.
 
 	aGameSetUp createGameInstance.
@@ -362,7 +362,7 @@ FuleTest >> test8WhenASpaceShipChoosesToSkipARoundThenDosentMoveAndRechargesTheF
 
 	aTurnManager:=TurnManager withOrder:{aPlayer1  }.
 	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager .
-	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
+	aGameSetUp withTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 100.
 	aGameSetUp createGameInstance.
 
@@ -407,7 +407,7 @@ FuleTest >> test9WhenBothSpaceShipsSkipRoundThenTheyRechargeAllTheirFule [
 	aGameSetUp
 		withABoardNumberOfSquares: 100
 		andTurnManager: aTurnManager.
-	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
+	aGameSetUp withTiles: { (WormHole from: 1 to: 1) }.
 	aGameSetUp withMaximumLapsToWin: 100.
 	aGameSetUp createGameInstance.
 

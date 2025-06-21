@@ -11,7 +11,8 @@ Class {
 		'specialTiles',
 		'sizeInParsec',
 		'spaceShips',
-		'turnManager'
+		'turnManager',
+		'deckOfCards'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -26,11 +27,23 @@ BoardGame class >> hasTheMinimumAmountOfSquares: aNumber [
 { #category : 'instance creation' }
 BoardGame class >> withNumberOfSquares: aNumberOfSquares withSizeInParsec: aSizeInParsec andTurnManager: aTurnManager [
 
+	"self hasTheMinimumAmountOfSquares: aNumberOfSquares.
+	^ self new
+		  initializationBoardGame: aNumberOfSquares
+		  withSizeInParsec: aSizeInParsec
+		  andTurnManager: aTurnManager."
+]
+
+{ #category : 'instance creation' }
+BoardGame class >> withNumberOfSquares: aNumberOfSquares withSizeInParsec: aSizeInParsec andTurnManager: aTurnManager andADeckOfCards: deckOfCards [
+
 	self hasTheMinimumAmountOfSquares: aNumberOfSquares.
 	^ self new
 		  initializationBoardGame: aNumberOfSquares
 		  withSizeInParsec: aSizeInParsec
-		  andTurnManager: aTurnManager.
+		  andTurnManager: aTurnManager
+		andADeckOfCards: deckOfCards.
+		
 ]
 
 { #category : 'accessing' }
@@ -73,9 +86,18 @@ BoardGame >> has: players [
 { #category : 'initialization' }
 BoardGame >> initializationBoardGame: aMaxiumSquares withSizeInParsec: aSizeInParsec andTurnManager: aTurnManager [
 
+"	maximumSquares := aMaxiumSquares.
+	sizeInParsec := aSizeInParsec.
+	turnManager := aTurnManager."
+]
+
+{ #category : 'initialization' }
+BoardGame >> initializationBoardGame: aMaxiumSquares withSizeInParsec: aSizeInParsec andTurnManager: aTurnManager andADeckOfCards: adeckOfCards [
+
 	maximumSquares := aMaxiumSquares.
 	sizeInParsec := aSizeInParsec.
 	turnManager := aTurnManager.
+	deckOfCards:= adeckOfCards.
 ]
 
 { #category : 'action' }
