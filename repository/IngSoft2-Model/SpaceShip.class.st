@@ -125,6 +125,12 @@ laps := 0.
 minimumRollRequired := 0.
 ]
 
+{ #category : 'testing' }
+SpaceShip >> isEquipedWith: aCard [
+
+^cardsInHand includes: aCard.
+]
+
 { #category : 'action' }
 SpaceShip >> losesOneRound [
   lostTurns :=2.

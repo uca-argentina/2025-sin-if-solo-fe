@@ -463,9 +463,11 @@ aTurnManager := TurnManager withOrder: {
 { #category : 'tests' }
 GameBoardTest >> test0WhenTheBoardIsInitializeItHasACertainNumberOfSquaresAndAWormHole [
 
-	| aBoard aWinnerSystem aTurnManager|
-	aTurnManager := TurnManager withOrder: {
-			                }.
+	| aBoard aWinnerSystem aTurnManager aPlayer1|
+	
+	aPlayer1 := SpaceShip named: 'Juan'.
+
+	aTurnManager:=TurnManager withOrder:{aPlayer1}.
 	aBoard := BoardGame
 		          withNumberOfSquares: 64
 		          withSizeInParsec: 10 andTurnManager: aTurnManager andADeckOfCards: nil .
@@ -477,12 +479,14 @@ GameBoardTest >> test0WhenTheBoardIsInitializeItHasACertainNumberOfSquaresAndAWo
 { #category : 'tests' }
 GameBoardTest >> test1WhenTheGameBeginsTheBoardKnowsTheSpaceShipsInitialPosition [
 
-	| aPlayer1 aBoard initialPosition fuel aTurnManager |
+	| aBoard initialPosition fuel aTurnManager aPlayer1|
+	
+	aPlayer1 := SpaceShip named: 'Juan'.
+
+	aTurnManager:=TurnManager withOrder:{aPlayer1}.
+	
 	initialPosition := 0.
 	fuel := 100.
-	aTurnManager := TurnManager withOrder: {
-			                }.
-	aPlayer1 := SpaceShip named: 'Marina'.
 	aBoard := BoardGame
 		          withNumberOfSquares: 60
 		          withSizeInParsec: 10 andTurnManager: aTurnManager andADeckOfCards: nil.

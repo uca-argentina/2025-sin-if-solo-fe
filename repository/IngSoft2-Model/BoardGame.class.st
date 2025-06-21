@@ -12,7 +12,8 @@ Class {
 		'sizeInParsec',
 		'spaceShips',
 		'turnManager',
-		'deckOfCards'
+		'deckOfCards',
+		'cardsInGame'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -34,6 +35,13 @@ BoardGame class >> withNumberOfSquares: aNumberOfSquares withSizeInParsec: aSize
 		  andTurnManager: aTurnManager
 		andADeckOfCards: deckOfCards.
 		
+]
+
+{ #category : 'action' }
+BoardGame >> cardEffectIsPlayed [
+
+	cardsInGame do: [ :card |
+		card applyEffectTo: spaceShips with: dicesInGameBoard ]
 ]
 
 { #category : 'accessing' }
@@ -95,6 +103,7 @@ BoardGame >> initializationBoardGame: aMaxiumSquares withSizeInParsec: aSizeInPa
 	sizeInParsec := aSizeInParsec.
 	turnManager := aTurnManager.
 	deckOfCards:= adeckOfCards.
+	cardsInGame:= OrderedCollection new.
 ]
 
 { #category : 'action' }
@@ -123,7 +132,8 @@ BoardGame >> move: aSpaceShip with: dices [
 	
 	(self specialTileAt: aSpaceShip currentPosition)
 		applyConsequenceTo: spaceShips
-		onBoardOfSize: self
+		onBoardOfSize: self.
+		
 ]
 
 { #category : 'accessing' }

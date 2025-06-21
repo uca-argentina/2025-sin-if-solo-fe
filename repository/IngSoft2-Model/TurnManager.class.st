@@ -5,7 +5,8 @@ Class {
 	#name : 'TurnManager',
 	#superclass : 'Object',
 	#instVars : [
-		'spaceShipsInOrder'
+		'spaceShipsInOrder',
+		'nextSpaceShip'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -20,7 +21,8 @@ spaceShips := OrderedCollection withAll: spaceShipsInOrderToPlay.
 
 { #category : 'initialization' }
 TurnManager >> initializeTurnManager: aOrderOfSpaceShips [
-spaceShipsInOrder:=aOrderOfSpaceShips .
+spaceShipsInOrder:=aOrderOfSpaceShips. 
+nextSpaceShip := spaceShipsInOrder at:1.
 ]
 
 { #category : 'action' }
