@@ -58,7 +58,7 @@ BoardGame >> distanceFrom: origin to: destination [
 ]
 
 { #category : 'accessing' }
-BoardGame >> follows: aWinnerSystem [
+BoardGame >> follows: aWinnerSystem [ 
 
 	winnerSystem := aWinnerSystem.
 	winnerSystem withPotentialWinner: spaceShips
@@ -100,10 +100,7 @@ BoardGame >> move: aSpaceShip with: dices [
 	winnerSystem thereIsAWinner ifTrue: [ ^ self ].
 	rolledNumber := self rolledNumberSumOf: dices.
 
-	(aSpaceShip canMoveWith: rolledNumber) ifFalse: [
-		^ [
-		  aSpaceShip losesRound.
-		  aSpaceShip losesRound ] ].
+	(aSpaceShip canMoveWith: rolledNumber)ifFalse: [ ^self ].
 
 	self move: aSpaceShip forwardBy: rolledNumber.
 	
@@ -135,7 +132,8 @@ BoardGame >> playOneRound [
 	spaceShip canPlay
 		ifTrue: [ self move: spaceShip with: dicesInGameBoard ]
 		
-		ifFalse: [ self skipRoundAndRechargeFor: spaceShip ]
+		ifFalse: [ spaceShip losesTwoRounds . spaceShip  rechargeFule].
+		
 ]
 
 { #category : 'accessing' }
@@ -154,21 +152,9 @@ BoardGame >> rolledNumberSumOf: dices [
 BoardGame >> skipRound [
 | spaceShip |
 	spaceShip := turnManager spaceShipWhoseTurnItIsFrom: spaceShips.
-	spaceShip losesRound.
-	spaceShip losesRound.
-
+	spaceShip losesOneRound.
 	spaceShip  rechargeFule.
 	
-]
-
-{ #category : 'action' }
-BoardGame >> skipRoundAndRechargeFor: aSpaceShip [
-
-	| spaceShipCopy |	
-	spaceShipCopy := (spaceShips detect: [ :each | each = aSpaceShip ]).
-	spaceShipCopy losesRound.
-	
-	spaceShipCopy  rechargeFule
 ]
 
 { #category : 'accessing' }

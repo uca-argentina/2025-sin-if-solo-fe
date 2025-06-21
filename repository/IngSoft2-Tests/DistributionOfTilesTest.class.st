@@ -174,3 +174,42 @@ aTurnManager:=TurnManager withOrder:{aPlayer1 . aPlayer2}.
 
 	self assert: (aBoard percentageOf: BlackHole) equals: 20
 ]
+
+{ #category : 'tests' }
+DistributionOfTilesTest >> testBanana [
+
+	| aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice aTurnManager aTileDistribution  |
+	aGameSetUp := GameSetup new.
+	aDice := RiggedDice withNumberOfFaces: 10.
+	aDice setNumbersProvider: { 5. 2. 5. 9 }.
+	aPlayer1:= SpaceShip named: 'Fran'.
+	aPlayer2:= SpaceShip named: 'Agustin'.
+		
+		aGameSetUp withPlayers: {aPlayer1. aPlayer2 }.
+
+	aGameSetUp withDices: { aDice }.
+	
+	aTurnManager:=TurnManager withOrder:{aPlayer1 . aPlayer2}.
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager .
+	aGameSetUp withSpecialTiles: { (WormHole from: 1 to: 1) }.
+
+	
+	aTileDistribution:= TileDistribution withABoardNumberOfSquares: 100.
+	aTileDistribution forNoEffect:0.40.
+	aTileDistribution forBlackHole: 0.20.
+	aTileDistribution forHyperGravity: 0.2. 
+	aTileDistribution forMoonWalk: 0.10.
+	aTileDistribution forHyperJump:0.08.
+	aTileDistribution forAtomicBomb: 0.02.
+	
+	aGameSetUp withSpecialTiles: (aTileDistribution build).
+	
+	aGameSetUp withMaximumLapsToWin: 100.
+	aGameSetUp createGameInstance.
+
+	aBoard := aGameSetUp board.
+	aWinnerSystem := aGameSetUp winnerSystem.
+	aBoard playOneRound.
+
+	self assert: (aBoard percentageOf: AtomicBomb) equals: 2
+]

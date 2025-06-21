@@ -113,7 +113,21 @@ minimumRollRequired := 0.
 ]
 
 { #category : 'action' }
+SpaceShip >> losesOneRound [
+  lostTurns :=2.
+
+
+]
+
+{ #category : 'action' }
 SpaceShip >> losesRound [
+  lostTurns :=lostTurns +1.
+
+
+]
+
+{ #category : 'action' }
+SpaceShip >> losesTwoRounds [ 
   lostTurns :=lostTurns +1.
 
 
@@ -126,7 +140,7 @@ SpaceShip >> moveTo: newPosition consuming: aDistance [
 	
 	currentPosition := newPosition.
 	
-	fuelSistem hasFuelToPlay ifFalse: [self losesRound ].
+	fuelSistem hasFuelToPlay ifFalse: [self losesTwoRounds ].
 
 ]
 
