@@ -13,7 +13,8 @@ Class {
 		'fuelSistem',
 		'name',
 		'lostTurns',
-		'cardsInHand'
+		'cardsInHand',
+		'aPositionToMove'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -49,8 +50,7 @@ SpaceShip >> canMoveWith: rolledNumber [
 { #category : 'testing' }
 SpaceShip >> canPlay [
 
-    ^ fuelSistem hasFuelToPlay and: [ lostTurns =0].
-
+	^ fuelSistem hasFuelToPlay and: [ lostTurns = 0 ]
 ]
 
 { #category : 'accessing' }
@@ -83,7 +83,7 @@ cardsInHand add: aCard.
 { #category : 'action' }
 SpaceShip >> goBack: amountToMoveBack onBoardOfSize: maximumSquares [
 
-	| aPositionToMove amountOfFuel |
+	 |amountOfFuel |
 	amountOfFuel := amountToMoveBack.
 	aPositionToMove := self currentPosition - amountToMoveBack.
 
@@ -119,6 +119,7 @@ SpaceShip >> initializeWtihAName:aName [
 name:= aName.
 cardsInHand:= OrderedCollection new.
 currentPosition := 0.
+aPositionToMove:=0.
 fuelSistem := 0.
 lostTurns:=0.
 laps := 0.
@@ -184,8 +185,7 @@ fuelSistem recharge
 
 { #category : 'action' }
 SpaceShip >> verifyCanPlayAgain [
+
 	lostTurns = 2 ifFalse: [ ^ self ].
-	lostTurns := 0.
-
-
+	lostTurns := 0
 ]

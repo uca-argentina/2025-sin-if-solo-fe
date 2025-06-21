@@ -31,6 +31,11 @@ RealDice >> initializeNumberOfFaces: aNumber [
 ]
 
 { #category : 'accessing' }
+RealDice >> numberOfFaces [
+^numberOfFaces .
+]
+
+{ #category : 'accessing' }
 RealDice >> rolledNumber [
 
 	rolledNumber := (1 to: numberOfFaces) atRandom.

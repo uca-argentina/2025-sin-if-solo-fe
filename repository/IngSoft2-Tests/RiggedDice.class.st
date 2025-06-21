@@ -24,12 +24,6 @@ self hasAtLeastOneFace:aNumber.
 ^self new initializeNumberOfFaces: aNumber .
 ]
 
-{ #category : 'action' }
-RiggedDice >> adjustRolledNumberBy: accelerationIncrement [
-    numbersToBeRolles at: 1 put: (numbersToBeRolles at: 1) + accelerationIncrement.
-
-]
-
 { #category : 'initialization' }
 RiggedDice >> initializeNumberOfFaces: aNumber [
 

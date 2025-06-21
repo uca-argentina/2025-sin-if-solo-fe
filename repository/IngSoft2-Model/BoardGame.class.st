@@ -39,9 +39,10 @@ BoardGame class >> withNumberOfSquares: aNumberOfSquares withSizeInParsec: aSize
 
 { #category : 'action' }
 BoardGame >> cardEffectIsPlayed [
-
+	|spaceShip|
+	spaceShip:= turnManager spaceShipWhoseTurnItIsFrom:spaceShips.
 	cardsInGame do: [ :card |
-		card applyEffectTo: spaceShips with: dicesInGameBoard ]
+		card applyEffectTo: spaceShip  with: dicesInGameBoard in:self ].
 ]
 
 { #category : 'accessing' }
@@ -116,6 +117,7 @@ BoardGame >> move: aSpaceShip forwardBy: rolledNumber [
 		               for: aSpaceShip.
 
 	aSpaceShip moveTo: newPosition consuming: rolledNumber.
+
 	aSpaceShip hasFule
 ]
 
@@ -129,6 +131,7 @@ BoardGame >> move: aSpaceShip with: dices [
 	(aSpaceShip canMoveWith: rolledNumber)ifFalse: [ ^self ].
 
 	self move: aSpaceShip forwardBy: rolledNumber.
+		self cardEffectIsPlayed.
 	
 	(self specialTileAt: aSpaceShip currentPosition)
 		applyConsequenceTo: spaceShips
@@ -153,7 +156,7 @@ BoardGame >> playNextTurn [
 
 	spaceShip canPlay
 		ifTrue: [
-			self cardEffectIsPlayed.
+			"self cardEffectIsPlayed."
 			self move: spaceShip with: dicesInGameBoard ]
 		ifFalse: [
 			spaceShip losesTwoRounds.
@@ -166,7 +169,7 @@ BoardGame >> playerThrows: aCard [
 	| spaceShip |
 	spaceShip := turnManager spaceShipWhoseTurnItIsFrom: spaceShips.
 	(spaceShip isEquipedWith: aCard) ifTrue: [cardsInGame add: aCard].
-	self playNextTurn.
+	
 		
 ]
 

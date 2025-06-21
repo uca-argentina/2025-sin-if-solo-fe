@@ -13,10 +13,11 @@ Class {
 }
 
 { #category : 'initialization' }
-TurnManager class >> withOrder: spaceShipsInOrderToPlay [
-|spaceShips|
-spaceShips := OrderedCollection withAll: spaceShipsInOrderToPlay.
-	^ self new initializeTurnManager: spaceShips
+TurnManager class >> withOrder: arg1 [
+
+	| tmp1 |
+	tmp1 := OrderedCollection withAll: arg1.
+	^ self new initializeTurnManager: tmp1
 ]
 
 { #category : 'initialization' }
