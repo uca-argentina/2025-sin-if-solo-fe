@@ -26,7 +26,7 @@ self hasAtLeastOneFace:aNumber.
 
 { #category : 'initialization' }
 RealDice >> initializeNumberOfFaces: aNumber [
-
+	
 	numberOfFaces := aNumber
 ]
 
