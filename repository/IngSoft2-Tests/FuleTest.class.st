@@ -33,17 +33,17 @@ FuleTest >> test010WhenASpaceShipSkipsATurnThenTheNextSpaceShipPlays [
 
 	aBoard := aGameSetUp board.
 
-	aBoard playOneRound.
-		aBoard playOneRound.
+	aBoard playNextTurn.
+		aBoard playNextTurn.
 
 	self assert: (aBoard positionOf: aPlayer1) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 19.
 	self assert: (aBoard positionOf: aPlayer2) equals: 10.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 14.
 
-	aBoard skipRound .
+	aBoard skipNextTurn .
 	
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 24.
 	self assert: (aBoard positionOf: aPlayer2) equals: 14.
@@ -132,7 +132,7 @@ FuleTest >> test2WhenASpaceShipMovesThenFuelDecreasesByTheAmountMoved [
 
 
 	aBoard := aGameSetUp board.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 16
 ]
 
@@ -165,9 +165,9 @@ FuleTest >> test3WhenASpaceShipDoesntHaveAnyFuleLeftThenItGoesBackToTheInitialPo
 
 
 	aBoard := aGameSetUp board.
-	aBoard playOneRound.
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 0
 ]
@@ -199,18 +199,18 @@ FuleTest >> test4WhenSpaceShipDoesntHaveFuleThenLosesTwoTurnsAndThenItCanMoveAga
 	aGameSetUp createGameInstance.
 
 	aBoard := aGameSetUp board.
-	aBoard playOneRound.
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 0.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 24.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 24.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 10.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 14
 ]
@@ -244,32 +244,32 @@ FuleTest >> test5WhenMoreThanOneSpaceShipDoesntHaveFuleThenBothCantMoveForTwoTur
 	aGameSetUp createGameInstance.
 
 	aBoard := aGameSetUp board.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	
-	aBoard playOneRound.
+	aBoard playNextTurn.
 
-	aBoard playOneRound.
-	aBoard playOneRound.
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 0.
 	self assert: (aBoard positionOf: aPlayer2) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 0.
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 24.
 	self assert: (aBoard positionOf: aPlayer2) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 24.
-	aBoard playOneRound.
-		aBoard playOneRound.
+	aBoard playNextTurn.
+		aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 24.
 	self assert: (aBoard positionOf: aPlayer2) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 24.
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 10.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 14.
 	self assert: (aBoard positionOf: aPlayer2) equals: 10.
@@ -303,7 +303,7 @@ FuleTest >> test6WhenASpaceShipFallsIntoAEntranceOfWormHoleThenTheFuleDecrecesTh
 	aGameSetUp createGameInstance.
 
 	aBoard := aGameSetUp board.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 
 	self assert: (aBoard positionOf: aPlayer1) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 19
@@ -335,7 +335,7 @@ FuleTest >> test7WhenASpaceShipFallsIntoAExitOfWormHoleThenTheFuleDecrecesTheAmo
 	aGameSetUp createGameInstance.
 
 	aBoard := aGameSetUp board.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 
 	self assert: (aBoard positionOf: aPlayer1) equals: 3.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 17
@@ -368,15 +368,15 @@ FuleTest >> test8WhenASpaceShipChoosesToSkipARoundThenDosentMoveAndRechargesTheF
 
 	aBoard := aGameSetUp board.
 
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 19.
 
-	aBoard skipRound.
+	aBoard skipNextTurn.
 
 	self assert: (aBoard positionOf: aPlayer1) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 24.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 15.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 14
 ]
@@ -413,23 +413,23 @@ FuleTest >> test9WhenBothSpaceShipsSkipRoundThenTheyRechargeAllTheirFule [
 
 	aBoard := aGameSetUp board.
 
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 
 	self assert: (aBoard positionOf: aPlayer1) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 19.
 	self assert: (aBoard positionOf: aPlayer2) equals: 10.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 14.
 
-	aBoard skipRound.
-	aBoard skipRound.
+	aBoard skipNextTurn.
+	aBoard skipNextTurn.
 
 	self assert: (aBoard positionOf: aPlayer1) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 24.
 	self assert: (aBoard positionOf: aPlayer2) equals: 10.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 24.
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 9.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 20.
 	self assert: (aBoard positionOf: aPlayer2) equals: 20.

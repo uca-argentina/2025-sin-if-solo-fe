@@ -25,13 +25,19 @@ spaceShipsInOrder:=aOrderOfSpaceShips.
 nextSpaceShip := spaceShipsInOrder at:1.
 ]
 
+{ #category : 'accessing' }
+TurnManager >> spaceShipWhoseTurnItIsFrom: spaceShips [
+
+^ spaceShips detect: [ :spaceShip | spaceShip name= nextSpaceShip name].
+
+]
+
 { #category : 'action' }
-TurnManager >> spaceShipWhoseTurnItIsFrom:spaceShips [
- | nextSpaceShip |
+TurnManager >> updateTurn:someSpaceShips [
 
     nextSpaceShip := spaceShipsInOrder first.
     spaceShipsInOrder add: nextSpaceShip.
     spaceShipsInOrder removeFirst.
 
-    ^ spaceShips detect: [ :spaceShip | spaceShip name= nextSpaceShip name].
+  
 ]

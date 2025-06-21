@@ -42,15 +42,15 @@ aTurnManager := TurnManager withOrder: {
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
 
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 7.
 	self assert: (aBoard positionOf: aPlayer2) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 11.
 
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 8.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 4.
 	self assert: (aBoard positionOf: aPlayer2) equals: 9.
@@ -90,30 +90,30 @@ aTurnManager := TurnManager withOrder: {
 	aGameSetUp createGameInstance.
 
 	aBoard := aGameSetUp board.
-	aBoard playOneRound.
-	aBoard playOneRound.
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 12.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 12.
 	self assert: (aBoard positionOf: aPlayer2) equals: 14.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 10.
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 23.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 1.
 	self assert: (aBoard positionOf: aPlayer2) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 0.
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer2) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 24.
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer2) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 24.
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer2) equals: 2.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 22
 ]
@@ -149,8 +149,8 @@ aTurnManager := TurnManager withOrder: {
 	aGameSetUp createGameInstance.
 
 	aBoard := aGameSetUp board.
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 
 	self assert: (aBoard positionOf: aPlayer1) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 20.
@@ -159,8 +159,8 @@ aTurnManager := TurnManager withOrder: {
 	self assert: (aBoard positionOf: aPlayer2) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 19.
 	self assert: (aBoard completedLapsBy: aPlayer2) equals: 0.
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 2.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 18.
 	self assert: (aBoard completedLapsBy: aPlayer1) equals: 0.
@@ -210,8 +210,8 @@ TileTest >> test13WhenASpaceSHipFallsInAMoonWalkButDosentHaveEnoughFulleToMoveBa
 
 
 	aBoard := aGameSetUp board.
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 1.
 	self assert: (aBoard completedLapsBy: aPlayer1) equals: 1.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 18.
@@ -219,8 +219,8 @@ TileTest >> test13WhenASpaceSHipFallsInAMoonWalkButDosentHaveEnoughFulleToMoveBa
 	self assert: (aBoard completedLapsBy: aPlayer2) equals: 1.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 18.
 
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 0.
 	self assert: (aBoard completedLapsBy: aPlayer1) equals: 1.
@@ -263,7 +263,7 @@ TileTest >> test14WhenSpaceShipFallsInHyperJumpThenItAdvancesTheAmountOfParsecs 
 	aGameSetUp createGameInstance.
 
 	aBoard := aGameSetUp board.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 
 	self assert: (aBoard positionOf: aPlayer1) equals: 12.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 12
@@ -301,9 +301,9 @@ TileTest >> test15WhenManySpaceShipsFallInHyperJumpThenTheyAllAdvanceTheAmountOf
 
 	aBoard := aGameSetUp board.
 
-	aBoard playOneRound.
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 
 	self assert: (aBoard positionOf: aPlayer1) equals: 12.  
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 12.
@@ -345,13 +345,13 @@ TileTest >> test1WhenMinimumRollIsntMetThenTheSpaceshipIsHeldByTheHyperGravity [
 
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 2.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 18.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 2.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 18.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 7.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 13
 ]
@@ -388,19 +388,19 @@ TileTest >> test2WhenThereAreDifferentHyperGravityTilesThenEachHeldsTheSpaceShip
 
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 2.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 18.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 2.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 18.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 7.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 13.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 7.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 13.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 16.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 4
 ]
@@ -468,14 +468,14 @@ TileTest >> test5WhenASpaceShipFallsToTheAtomicBombThenAllSpaceShipsMoveToTheSta
 
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 2.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 18.
 	self assert: (aBoard positionOf: aPlayer2) equals: 4.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 16.
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 13.
 	self assert: (aBoard positionOf: aPlayer2) equals: 9.
@@ -511,14 +511,14 @@ aTurnManager := TurnManager withOrder: {
 
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 2.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 18.
 	self assert: (aBoard positionOf: aPlayer2) equals: 4.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 16.
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 3.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 9.
 	self assert: (aBoard positionOf: aPlayer2) equals: 13.
@@ -559,18 +559,18 @@ aTurnManager := TurnManager withOrder: {
 	aGameSetUp createGameInstance.
 
 	aBoard := aGameSetUp board.
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 21.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 3.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 0.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 0.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 0.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 3.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 21
 ]
@@ -603,11 +603,11 @@ aTurnManager := TurnManager withOrder: {
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
 
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 11.
 	self assert: (aBoard completedLapsBy: aPlayer1) equals: 1.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 4.
 	self assert: (aBoard completedLapsBy: aPlayer1) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 4
@@ -641,7 +641,7 @@ aTurnManager := TurnManager withOrder: {
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
 
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 0.
 	self assert: (aBoard completedLapsBy: aPlayer1) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 10

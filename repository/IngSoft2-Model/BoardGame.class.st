@@ -143,15 +143,30 @@ BoardGame >> numberOfSquares [
 ]
 
 { #category : 'action' }
-BoardGame >> playOneRound [
+BoardGame >> playNextTurn [
+
+	| spaceShip |
+	turnManager updateTurn: spaceShips.
+	spaceShip := turnManager spaceShipWhoseTurnItIsFrom: spaceShips.
+
+	spaceShip verifyCanPlayAgain.
+
+	spaceShip canPlay
+		ifTrue: [
+			self cardEffectIsPlayed.
+			self move: spaceShip with: dicesInGameBoard ]
+		ifFalse: [
+			spaceShip losesTwoRounds.
+			spaceShip rechargeFule ]
+]
+
+{ #category : 'action' }
+BoardGame >> playerThrows: aCard [
 
 	| spaceShip |
 	spaceShip := turnManager spaceShipWhoseTurnItIsFrom: spaceShips.
-	spaceShip verifyCanPlayAgain.
-	spaceShip canPlay
-		ifTrue: [ self move: spaceShip with: dicesInGameBoard ]
-		
-		ifFalse: [ spaceShip losesTwoRounds . spaceShip  rechargeFule].
+	(spaceShip isEquipedWith: aCard) ifTrue: [cardsInGame add: aCard].
+	self playNextTurn.
 		
 ]
 
@@ -179,9 +194,10 @@ lapsDone := totalPosition quo: maximumSquares.
 ]
 
 { #category : 'action' }
-BoardGame >> skipRound [
+BoardGame >> skipNextTurn [
 | spaceShip |
-	spaceShip := turnManager spaceShipWhoseTurnItIsFrom: spaceShips.
+	turnManager updateTurn:spaceShips. 
+	spaceShip := turnManager spaceShipWhoseTurnItIsFrom: spaceShips .
 	spaceShip losesOneRound.
 	spaceShip  rechargeFule.
 	

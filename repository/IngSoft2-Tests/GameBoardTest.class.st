@@ -174,7 +174,7 @@ aTurnManager := TurnManager withOrder: {
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
 
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 2.
 	aPlayer1 moveTo: 99 consuming: 1.
 	self assert: (aBoard positionOf: aPlayer1) equals: 2
@@ -205,7 +205,7 @@ aTurnManager := TurnManager withOrder: {
 	aBoard := aGameSetUp board.
 
 
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 1
 ]
 
@@ -269,7 +269,7 @@ aTurnManager := TurnManager withOrder: {
 
 
 
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 2.
 	self assert: aWinnerSystem theGoldWinnerIs equals: aPlayer1
 ]
@@ -301,11 +301,11 @@ GameBoardTest >> test018WhenASpaceShipWinsTheGameThenTheBoardKnowsTheLapsComplet
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
 
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 	
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 
 
 	self assert: (aBoard positionOf: aPlayer1) equals: 2.
@@ -352,14 +352,14 @@ GameBoardTest >> test019WhenTheGameEndsThenThereIsARanking [
 
 
 
-	aBoard playOneRound.
-	aBoard playOneRound.
-	aBoard playOneRound.
-	aBoard playOneRound.
-	aBoard playOneRound.
-	aBoard playOneRound.
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 
 	self assert: (aBoard positionOf: aPlayer1) equals: 2.
 
@@ -399,10 +399,10 @@ aTurnManager := TurnManager withOrder: {
 	aWinnerSystem := aGameSetUp winnerSystem.
 
 
-	aBoard playOneRound.
-aBoard playOneRound.
-aBoard playOneRound.
-aBoard playOneRound.
+	aBoard playNextTurn.
+aBoard playNextTurn.
+aBoard playNextTurn.
+aBoard playNextTurn.
 
 
 
@@ -443,9 +443,9 @@ aTurnManager := TurnManager withOrder: {
 
 
 
-	aBoard playOneRound.
-		aBoard playOneRound.
-			aBoard playOneRound.
+	aBoard playNextTurn.
+		aBoard playNextTurn.
+			aBoard playNextTurn.
 
 	self assert: (aBoard positionOf: aPlayer3) equals: 1.
 	self assert: (aBoard positionOf: aPlayer2) equals: 3.
@@ -521,15 +521,15 @@ GameBoardTest >> test2WhenADiceIsRolledThenTheSpaceShipsPositionInTheBoardChange
 	aBoard := aGameSetUp board.
 
 
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 3.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 4.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 7.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 8.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 11
 ]
 
@@ -559,7 +559,7 @@ GameBoardTest >> test3WhenASpaceShipCompletesTheLapThenItsTheWinner [
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
 
-	aBoard playOneRound.
+	aBoard playNextTurn.
 
 
 	self assert: aWinnerSystem theGoldWinnerIs equals: aPlayer1.
@@ -600,9 +600,9 @@ GameBoardTest >> test4WhenTheFirstSpaceShipCompletesTheLapThenItsTheWinner [
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
 
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 4.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer2) equals: 6.
 	self assert: aWinnerSystem theGoldWinnerIs equals: aPlayer2
 ]
@@ -637,9 +637,9 @@ aTurnManager := TurnManager withOrder: {
 
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
-	aBoard playOneRound.
+	aBoard playNextTurn.
 
-	aBoard playOneRound.
+	aBoard playNextTurn.
 	self assert: aWinnerSystem theGoldWinnerIs equals: aPlayer2.
 	self assert: (aBoard positionOf: aPlayer2) equals: 2
 ]
@@ -670,13 +670,13 @@ GameBoardTest >> test6WhenThereIsAWinnerThenNoMoreRoundsArePlayed [
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
 
-	aBoard playOneRound.
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 	
-	aBoard playOneRound.
-	aBoard playOneRound.
-	aBoard playOneRound.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 4.
 	self assert: (aBoard positionOf: aPlayer2) equals: 2.
 	self assert: aWinnerSystem theGoldWinnerIs equals: aPlayer2
@@ -711,8 +711,8 @@ GameBoardTest >> test8WhenTheSpaceShipFallsIntoTheWormHoleEntranceThenItMovesToT
 	aBoard := aGameSetUp board.
 	aWinnerSystem := aGameSetUp winnerSystem.
 
-	aBoard playOneRound.
-	aBoard  playOneRound .
+	aBoard playNextTurn.
+	aBoard  playNextTurn .
 
 	self assert: (aBoard positionOf: aPlayer1) equals: 5
 ]
@@ -746,7 +746,7 @@ GameBoardTest >> test9WhenTheSpaceShipFallsIntoWormHoleExitThenItMovesToTheWormH
 	aWinnerSystem := aGameSetUp winnerSystem.
 
 
-	aBoard playOneRound.
+	aBoard playNextTurn.
 
 	self assert: (aBoard positionOf: aPlayer1) equals: 2
 ]

@@ -12,6 +12,18 @@ Class {
 }
 
 { #category : 'initialization' }
+AccelerationCard class >> withIncrement: aNumber [
+
+^self new initializeAccelerationCard: aNumber.
+]
+
+{ #category : 'action' }
+AccelerationCard >> applyEffectTo:spaceShips with: dices [
+
+dices do:[:dice|dice adjustRolledNumberBy: accelerationIncrement]. 
+]
+
+{ #category : 'initialization' }
 AccelerationCard >> initializeAccelerationCard: aNumber [
 
 accelerationIncrement:= aNumber.
