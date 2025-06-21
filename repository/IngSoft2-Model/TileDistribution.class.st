@@ -26,52 +26,38 @@ TileDistribution class >> withABoardNumberOfSquares: aNumberOfTiles [
 
 { #category : 'building' }
 TileDistribution >> build [
+    | availablePositions effectsPool totalAssigned remaining |
+    availablePositions := (1 to: numberOfTiles) asOrderedCollection shuffle.
+    tiles := OrderedCollection new.
+    effectsPool := OrderedCollection new.
 
-| avaliblePosition atomicCount hyperJumpCount moonWalkCount hyperGravityCount blackHoleCount noEffectCount |
+    (numberOfTiles * atomicBombProability) floor timesRepeat: [
+        effectsPool add: AtomicBomb new ].
+    (numberOfTiles * hyperJumpProbability) floor timesRepeat: [
+        effectsPool add: HyperJump new ].
+    (numberOfTiles * moonWalkProbabilty) floor timesRepeat: [
+        effectsPool add: MoonWalk new].
+    (numberOfTiles * hyperGravityProbability) floor timesRepeat: [
+        effectsPool add: HyperGravity new].
+    (numberOfTiles * blackHoleProbability) floor timesRepeat: [
+        effectsPool add: BlackHole new ].
+    (numberOfTiles * noEffectProbability) floor timesRepeat: [
+        effectsPool add: NoEffect new].
+    
 
-avaliblePosition := OrderedCollection new.
-1 to: numberOfTiles do: [:aNumber | avaliblePosition add: aNumber ].
-
-avaliblePosition := avaliblePosition shuffle .
-atomicCount := (numberOfTiles * atomicBombProability ) floor.
-hyperJumpCount := (numberOfTiles * hyperJumpProbability ) floor.
-moonWalkCount := (numberOfTiles * moonWalkProbabilty ) floor.
-hyperGravityCount := (numberOfTiles * hyperGravityProbability ) floor.
-blackHoleCount := (numberOfTiles * blackHoleProbability ) floor.
-noEffectCount:=(numberOfTiles * noEffectProbability ) floor.
-
-tiles := OrderedCollection new.
-
-1 to: atomicCount do: [:aCount |
-    | pos |
-    pos := avaliblePosition removeFirst.
-    tiles add: (AtomicBomb in: pos).
-].
-
-1 to: hyperJumpCount do: [:aCount |
-    | pos |
-    pos := avaliblePosition removeFirst.
-    tiles add: (HyperJump in: pos parsecToMove: {1. 9 .7}).
-].
-
-1 to: moonWalkCount do: [:aCount |
-    | pos |
-    pos := avaliblePosition removeFirst.
-    tiles add: (MoonWalk in: pos moveBack:aCount).
-].
-
-1 to: hyperGravityCount do: [:aCount |
-    | pos |
-    pos := avaliblePosition removeFirst.
-    tiles add: (HyperGravity in: pos requiringMinimumRoll:1 ).
-].
-1 to: blackHoleCount do: [:aCount |
-    | pos |
-    pos := avaliblePosition removeFirst.
-    tiles add: (BlackHole in: pos).
-].
-
-^tiles
+    totalAssigned := effectsPool size.
+    remaining := numberOfTiles - totalAssigned.
+    remaining timesRepeat: [
+        effectsPool add: NoEffect new].
+    
+    effectsPool := effectsPool shuffle.
+    availablePositions do: [ :pos |
+        | effect |
+        effect := effectsPool removeFirst.
+        tiles add: effect.
+    ].
+    
+    ^tiles
 ]
 
 { #category : 'initialization' }
@@ -114,4 +100,10 @@ noEffectProbability:= aProbability.
 TileDistribution >> initializeWithABoardSize: aNumberOfTiles [
 
 numberOfTiles:= aNumberOfTiles.
+]
+
+{ #category : 'accessing' }
+TileDistribution >> percentageOf: tile [
+    ^(tiles count: [ :atile | atile isType: tile ])/tiles size asFloat.
+
 ]
