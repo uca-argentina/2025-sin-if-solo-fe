@@ -21,11 +21,6 @@ TileEffect >> includesA:position [
 ^tilePosition =position.
 ]
 
-{ #category : 'testing' }
-TileEffect >> isType: aTile [
-^self class = aTile
-]
-
 { #category : 'accessing' }
 TileEffect >> position [
 ^tilePosition .

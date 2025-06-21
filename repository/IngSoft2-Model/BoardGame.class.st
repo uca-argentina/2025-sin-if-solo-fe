@@ -80,17 +80,15 @@ BoardGame >> initializationBoardGame: aMaxiumSquares withSizeInParsec: aSizeInPa
 
 { #category : 'action' }
 BoardGame >> move: aSpaceShip forwardBy: rolledNumber [
-	| totalPosition lapsDone newPosition  |
 
-
+	| totalPosition newPosition |
 	totalPosition := aSpaceShip currentPosition + rolledNumber.
-	lapsDone := totalPosition quo: maximumSquares.
-	aSpaceShip actualLapsDone: lapsDone .
-	
-	newPosition := (totalPosition - 1 rem: maximumSquares) + 1.
-	
-	aSpaceShip moveTo: newPosition consuming: rolledNumber.	
-	aSpaceShip hasFule .
+	newPosition := self
+		               setLapsAndGetNewPositionFrom: totalPosition
+		               for: aSpaceShip.
+
+	aSpaceShip moveTo: newPosition consuming: rolledNumber.
+	aSpaceShip hasFule
 ]
 
 { #category : 'action' }
@@ -113,14 +111,6 @@ BoardGame >> move: aSpaceShip with: dices [
 BoardGame >> numberOfSquares [
 
 	^ maximumSquares
-]
-
-{ #category : 'accessing' }
-BoardGame >> percentageOf: aTile [
-
-	| count |
-	count := (specialTiles select: [ :tile | tile isType: aTile ]) size.
-	^ (count / maximumSquares * 100) floor
 ]
 
 { #category : 'action' }
@@ -146,6 +136,17 @@ BoardGame >> positionOf: aSpaceShip [
 BoardGame >> rolledNumberSumOf: dices [
 
 	^ (dices collect: [ :dice | dice rolledNumber ]) sum
+]
+
+{ #category : 'action' }
+BoardGame >> setLapsAndGetNewPositionFrom:totalPosition for:aSpaceShip [
+|lapsDone newPosition|
+lapsDone := totalPosition quo: maximumSquares.
+	
+	aSpaceShip actualLapsDone: lapsDone .
+	newPosition := (totalPosition - 1 rem: maximumSquares) + 1.
+	^newPosition .
+	
 ]
 
 { #category : 'action' }

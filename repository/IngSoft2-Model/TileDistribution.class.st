@@ -26,38 +26,11 @@ TileDistribution class >> withABoardNumberOfSquares: aNumberOfTiles [
 
 { #category : 'building' }
 TileDistribution >> build [
-    | availablePositions effectsPool totalAssigned remaining |
-    availablePositions := (1 to: numberOfTiles) asOrderedCollection shuffle.
-    tiles := OrderedCollection new.
-    effectsPool := OrderedCollection new.
-
-    (numberOfTiles * atomicBombProability) floor timesRepeat: [
-        effectsPool add: AtomicBomb new ].
-    (numberOfTiles * hyperJumpProbability) floor timesRepeat: [
-        effectsPool add: HyperJump new ].
-    (numberOfTiles * moonWalkProbabilty) floor timesRepeat: [
-        effectsPool add: MoonWalk new].
-    (numberOfTiles * hyperGravityProbability) floor timesRepeat: [
-        effectsPool add: HyperGravity new].
-    (numberOfTiles * blackHoleProbability) floor timesRepeat: [
-        effectsPool add: BlackHole new ].
-    (numberOfTiles * noEffectProbability) floor timesRepeat: [
-        effectsPool add: NoEffect new].
-    
-
-    totalAssigned := effectsPool size.
-    remaining := numberOfTiles - totalAssigned.
-    remaining timesRepeat: [
-        effectsPool add: NoEffect new].
-    
-    effectsPool := effectsPool shuffle.
-    availablePositions do: [ :pos |
-        | effect |
-        effect := effectsPool removeFirst.
-        tiles add: effect.
-    ].
-    
+	self theSumIsOne.
+ tiles := (1 to: numberOfTiles) collect: [ :i |
+        self tileFor: Random new next ].
     ^tiles
+
 ]
 
 { #category : 'initialization' }
@@ -104,6 +77,32 @@ numberOfTiles:= aNumberOfTiles.
 
 { #category : 'accessing' }
 TileDistribution >> percentageOf: tile [
-    ^(tiles count: [ :atile | atile isType: tile ])/tiles size asFloat.
+    ^(tiles count: [ :atile | atile class = tile  ])/tiles size asFloat.
 
+]
+
+{ #category : 'verification' }
+TileDistribution >> theSumIsOne [
+
+	noEffectProbability + blackHoleProbability + hyperGravityProbability
+	+ moonWalkProbabilty + hyperJumpProbability + atomicBombProability
+	= 1 ifFalse: [
+		Error signal: 'The Sum Of All Probabilities should be 1' ]
+]
+
+{ #category : 'creation' }
+TileDistribution >> tileFor: randomProvavility [
+
+	|  accumulated |
+	 accumulated := atomicBombProability.
+	randomProvavility <  accumulated ifTrue: [ ^ AtomicBomb new ].
+	 accumulated :=  accumulated + hyperJumpProbability.
+	randomProvavility <  accumulated ifTrue: [ ^ HyperJump new ].
+	 accumulated :=  accumulated + moonWalkProbabilty.
+	randomProvavility <  accumulated ifTrue: [ ^ MoonWalk new ].
+	 accumulated :=  accumulated + hyperGravityProbability.
+	randomProvavility <  accumulated ifTrue: [ ^ HyperGravity new ].
+	 accumulated :=  accumulated + blackHoleProbability.
+	randomProvavility <  accumulated ifTrue: [ ^ BlackHole new ].
+	^ NoEffect new
 ]
