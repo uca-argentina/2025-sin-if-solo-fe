@@ -47,6 +47,12 @@ BoardGame class >> withNumberOfSquares: aNumberOfSquares withSizeInParsec: aSize
 ]
 
 { #category : 'accessing' }
+BoardGame >> cardsOf:  aSpaceShip [
+
+^ (spaceShips detect: [ :each | each = aSpaceShip ]) cardsInHand.
+]
+
+{ #category : 'accessing' }
 BoardGame >> completedLapsBy: aSpaceShip [
 
 ^ (spaceShips detect: [ :each | each = aSpaceShip ]) currentLap
@@ -75,6 +81,15 @@ BoardGame >> follows: aWinnerSystem [
 
 	winnerSystem := aWinnerSystem.
 	winnerSystem withPotentialWinner: spaceShips
+]
+
+{ #category : 'action' }
+BoardGame >> givesACardTo: aSpaceShip [
+
+| assignedCard |
+assignedCard:= deckOfCards atRandom.
+deckOfCards remove: assignedCard.
+aSpaceShip equipWith: assignedCard.
 ]
 
 { #category : 'accessing' }

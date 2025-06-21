@@ -74,6 +74,12 @@ SpaceShip >> currentPosition [
 	^ currentPosition
 ]
 
+{ #category : 'initialization' }
+SpaceShip >> equipWith: aCard [
+
+cardsInHand add: aCard.
+]
+
 { #category : 'action' }
 SpaceShip >> goBack: amountToMoveBack onBoardOfSize: maximumSquares [
 
