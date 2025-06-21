@@ -485,8 +485,7 @@ GameBoardTest >> test1WhenTheGameBeginsTheBoardKnowsTheSpaceShipsInitialPosition
 	aPlayer1 := SpaceShip named: 'Marina'.
 	aBoard := BoardGame
 		          withNumberOfSquares: 60
-		          withSizeInParsec: 10 andTurnManager: aTurnManager
-		        .
+		          withSizeInParsec: 10 andTurnManager: aTurnManager andADeckOfCards: nil.
 
 
 	self assert: aPlayer1 currentPosition equals: 0

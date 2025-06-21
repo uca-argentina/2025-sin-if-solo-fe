@@ -25,16 +25,6 @@ BoardGame class >> hasTheMinimumAmountOfSquares: aNumber [
 ]
 
 { #category : 'instance creation' }
-BoardGame class >> withNumberOfSquares: aNumberOfSquares withSizeInParsec: aSizeInParsec andTurnManager: aTurnManager [
-
-	"self hasTheMinimumAmountOfSquares: aNumberOfSquares.
-	^ self new
-		  initializationBoardGame: aNumberOfSquares
-		  withSizeInParsec: aSizeInParsec
-		  andTurnManager: aTurnManager."
-]
-
-{ #category : 'instance creation' }
 BoardGame class >> withNumberOfSquares: aNumberOfSquares withSizeInParsec: aSizeInParsec andTurnManager: aTurnManager andADeckOfCards: deckOfCards [
 
 	self hasTheMinimumAmountOfSquares: aNumberOfSquares.
@@ -96,14 +86,6 @@ aSpaceShip equipWith: assignedCard.
 BoardGame >> has: players [
 
 	spaceShips := players
-]
-
-{ #category : 'initialization' }
-BoardGame >> initializationBoardGame: aMaxiumSquares withSizeInParsec: aSizeInParsec andTurnManager: aTurnManager [
-
-"	maximumSquares := aMaxiumSquares.
-	sizeInParsec := aSizeInParsec.
-	turnManager := aTurnManager."
 ]
 
 { #category : 'initialization' }
