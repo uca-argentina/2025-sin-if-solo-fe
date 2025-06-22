@@ -191,6 +191,11 @@ SpaceShip >> rechargeFule [
 fuelSistem recharge 
 ]
 
+{ #category : 'removing' }
+SpaceShip >> removeCard:aCard [
+cardsInHand remove:aCard.
+]
+
 { #category : 'action' }
 SpaceShip >> sharesFuleWith:anotherSpaceShip [
 

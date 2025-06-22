@@ -147,7 +147,7 @@ BoardGame >> move: aSpaceShip with: dices [
 	rolledNumber := self rolledNumberSumOf: dices.
 
 	(aSpaceShip canMoveWith: rolledNumber)ifFalse: [ ^self ].
-
+	"self cardEffectIsPlayed."
 	self move: aSpaceShip forwardBy: rolledNumber.
 	self cardEffectIsPlayed.
 	
@@ -174,7 +174,7 @@ BoardGame >> playNextTurn [
 
 	spaceShip canPlay
 		ifTrue: [
-			"self cardEffectIsPlayed."
+			
 			self move: spaceShip with: dicesInGameBoard ]
 		ifFalse: [
 			spaceShip losesTwoRounds.
@@ -186,8 +186,10 @@ BoardGame >> playerThrows: aCard [
 
 	| spaceShip |
 	spaceShip := turnManager spaceShipWhoseTurnItIsFrom: spaceShips.
-	(spaceShip isEquipedWith: aCard) ifTrue: [cardsInGame add: aCard].
-	
+	(spaceShip isEquipedWith: aCard) ifTrue: [cardsInGame add: aCard.  spaceShip removeCard: aCard.].
+	(aCard isInstantaneous)
+			ifTrue: [ aCard applyEffectTo: spaceShip with: dicesInGameBoard in: self.  ].
+	self playNextTurn .
 		
 ]
 

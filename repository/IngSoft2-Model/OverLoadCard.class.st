@@ -35,3 +35,8 @@ rolledNumberAdjust :=0.
 OverLoadCard >> initializeOverLoadFor:aSpaceShip [
 spaceShipToOverLoad:=aSpaceShip .
 ]
+
+{ #category : 'testing' }
+OverLoadCard >> isInstantaneous [
+^false.
+]

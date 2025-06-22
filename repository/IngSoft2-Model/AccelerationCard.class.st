@@ -30,3 +30,8 @@ AccelerationCard >> initializeAccelerationCard: aNumber [
 
 accelerationIncrement:= aNumber.
 ]
+
+{ #category : 'testing' }
+AccelerationCard >> isInstantaneous [
+^false.
+]

@@ -29,3 +29,8 @@ aBoard hasAnAlianceFrom:spaceShip and:spaceShipToTeamUp.
 AllyCard >> initializeAllyCardTeamsUpWith:aSpaceShip [
 spaceShipToTeamUp:=aSpaceShip .
 ]
+
+{ #category : 'testing' }
+AllyCard >> isInstantaneous [
+^false.
+]

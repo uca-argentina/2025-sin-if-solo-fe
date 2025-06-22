@@ -29,3 +29,8 @@ CancellationCard >> initializationFor:aCard [
 
 cardToCancel:=aCard.
 ]
+
+{ #category : 'testing' }
+CancellationCard >> isInstantaneous [
+^true.
+]

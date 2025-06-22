@@ -24,14 +24,8 @@ Class {
 { #category : 'testing' }
 GameSetup >> assigns: aDeckOfCards [
 
-| cardOne cardTwo |
-cardOne:= aDeckOfCards atRandom.
-aDeckOfCards remove: cardOne.
-cardTwo:= aDeckOfCards atRandom.
-aDeckOfCards remove: cardTwo.
 
-deckOfCards := OrderedCollection with: cardOne with: cardTwo.
-
+	deckOfCards := aDeckOfCards copy. 
 
 ]
 
@@ -89,16 +83,23 @@ GameSetup >> createGameInstance [
 { #category : 'creation' }
 GameSetup >> createSpaceShipsInstance [
 
-	| cardOne cardTwo |
 	deckOfCards ifNotNil: [
-		cardOne := deckOfCards at: 1.
-		cardTwo := deckOfCards at: 2.
 		spaceShips do: [ :spaceShip |
-			spaceShip equipWith: cardOne.
-			spaceShip equipWith: cardTwo ] ].
+			| card1 card2 |
+			card1 := deckOfCards atRandom.
+			deckOfCards remove: card1.
+			
+			card2 := deckOfCards atRandom.
+			deckOfCards remove: card2.
+
+			spaceShip equipWith: card1.
+			spaceShip equipWith: card2.
+		]
+	].
 
 	spaceShips do: [ :spaceShip |
-		spaceShip has: (Fuel withAnAmount: maximumRolledNumber * 2) ]
+		spaceShip has: (Fuel withAnAmount: maximumRolledNumber * 2) ].
+
 ]
 
 { #category : 'action' }
