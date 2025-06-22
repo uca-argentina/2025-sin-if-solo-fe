@@ -25,6 +25,12 @@ aBoard upDateLastCardPlayed:self.
 
 ]
 
+{ #category : 'accessing' }
+CancellationCard >> choosenCard [
+
+^cardToCancel.
+]
+
 { #category : 'verification' }
 CancellationCard >> chosenOnIsIn:cardsInGame [
 ^cardsInGame includes: cardToCancel.
