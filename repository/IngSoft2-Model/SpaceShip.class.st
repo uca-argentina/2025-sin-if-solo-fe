@@ -186,6 +186,12 @@ SpaceShip >> rechargeFule [
 fuelSistem recharge 
 ]
 
+{ #category : 'action' }
+SpaceShip >> sharesFuleWith:anotherSpaceShip [
+
+fuelSistem sharesFuleWith:anotherSpaceShip .
+]
+
 { #category : 'testing' }
 SpaceShip >> validateFuleToMove [
 

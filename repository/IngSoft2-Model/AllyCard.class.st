@@ -12,6 +12,11 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'initialization' }
+AllyCard class >> teamsUpWith: aSpaceShip [
+^self new initializeAllyCardTeamsUpWith:aSpaceShip.
+]
+
 { #category : 'action' }
 AllyCard >> applyEffectTo: spaceShip  with: dicesInGameBoard in:aBoard [
 spaceShip sharesFuleWith:spaceShipToTeamUp .

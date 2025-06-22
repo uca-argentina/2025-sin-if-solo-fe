@@ -50,6 +50,11 @@ Fuel >> recharge [
 currentFuel := initialFuel .
 ]
 
+{ #category : 'action' }
+Fuel >> sharesFuleWith:anotherSpaceShip [ 
+fuelPartner:=anotherSpaceShip .
+]
+
 { #category : 'validating' }
 Fuel >> validateCurrentFuleOf: aSpaceShip [
 
