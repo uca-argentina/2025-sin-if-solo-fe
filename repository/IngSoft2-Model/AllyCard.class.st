@@ -22,6 +22,7 @@ AllyCard >> applyEffectTo: spaceShip  with: dicesInGameBoard in:aBoard [
 "spaceShip sharesFuleWith:spaceShipToTeamUp .
 spaceShipToTeamUp sharesFuleWith:spaceShip ."
 aBoard hasAnAlianceFrom:spaceShip and:spaceShipToTeamUp.
+aBoard upDateLastCardPlayed:self.
 
 ]
 

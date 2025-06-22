@@ -26,7 +26,7 @@ rolledNumberAdjust :=0.
 
 (spaceShip  = spaceShipToOverLoad )ifTrue:[spaceShip goBack: 2 onBoardOfSize: (aBoard numberOfSquares ).].
 
-
+aBoard upDateLastCardPlayed:self.
 
 
 ]

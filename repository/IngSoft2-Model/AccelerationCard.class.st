@@ -21,7 +21,7 @@ AccelerationCard class >> withIncrement: aNumber [
 AccelerationCard >> applyEffectTo: spaceShip  with: dices in:aBoard [
 
 aBoard move: spaceShip forwardBy: accelerationIncrement.
-
+aBoard upDateLastCardPlayed:self.
 
 ]
 

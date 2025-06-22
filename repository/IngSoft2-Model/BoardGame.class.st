@@ -13,7 +13,8 @@ Class {
 		'spaceShips',
 		'turnManager',
 		'deckOfCards',
-		'cardsInGame'
+		'cardsInGame',
+		'lastCardPlayed'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -179,13 +180,31 @@ BoardGame >> playNextTurn [
 { #category : 'action' }
 BoardGame >> playerThrows: aCard [
 
-	| spaceShip |
+    | spaceShip |
+    spaceShip := turnManager spaceShipWhoseTurnItIsFrom: spaceShips.
+
+    (spaceShip isEquipedWith: aCard) ifTrue: [
+        cardsInGame add: aCard.
+        spaceShip removeCard: aCard
+    ].
+
+"cardsInGame includes: aCard choosenCard"
+
+    ((aCard isInstantaneous) and: [aCard chosenOnIsIn:cardsInGame.]) 
+    ifTrue: [
+        aCard applyEffectTo: spaceShip with: dicesInGameBoard in: self
+    ].
+
+    self playNextTurn.
+
+"	| spaceShip |
+	
 	spaceShip := turnManager spaceShipWhoseTurnItIsFrom: spaceShips.
 	(spaceShip isEquipedWith: aCard) ifTrue: [cardsInGame add: aCard.  spaceShip removeCard: aCard.].
 	(aCard isInstantaneous)
 			ifTrue: [ aCard applyEffectTo: spaceShip with: dicesInGameBoard in: self.  ].
-	self playNextTurn .
-		
+	self playNextTurn ."
+		 
 ]
 
 { #category : 'accessing' }

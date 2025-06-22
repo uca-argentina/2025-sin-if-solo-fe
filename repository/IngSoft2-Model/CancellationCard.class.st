@@ -21,6 +21,7 @@ CancellationCard class >> for: aCard [
 CancellationCard >> applyEffectTo: spaceShip  with: dices in:aBoard [
 
 aBoard remove: cardToCancel.
+aBoard upDateLastCardPlayed:self.
 
 ]
 
