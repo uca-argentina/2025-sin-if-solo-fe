@@ -21,26 +21,21 @@ Fuel class >> withAnAmount: aFuelAmount [
 ]
 
 { #category : 'action' }
-Fuel >> consume: aDistance [
+Fuel >> consume: aDistance [ 
+    | fuelNeeded |
+
+    (currentFuel >= aDistance)
+        ifTrue: [
+            currentFuel := currentFuel-aDistance.
+        ]
+        ifFalse: [
+            fuelNeeded := aDistance-currentFuel.
+            currentFuel := 0.
+            fuelPartner giveFuel: fuelNeeded.
+        ].
 
 
-		"	currentFuel >= aDistance
-				ifTrue: [ currentFuel := currentFuel - aDistance ] 
-				ifFalse: [
-					((currentFuel + (fuelPartner current)) >= aDistance )ifTrue:[
-					| fuelNeeded |
-					fuelNeeded := aDistance - currentFuel.
-					currentFuel := 0.
-					fuelPartner giveFuel: fuelNeeded ]]"
-		
-
-	(currentFuel > aDistance )
-		ifTrue: [ currentFuel := currentFuel - aDistance ]
-		ifFalse: [
-		
-			currentFuel :=0.
-
-			fuelPartner giveFuel: aDistance ]
+	
 ]
 
 { #category : 'accessing' }
@@ -51,7 +46,7 @@ Fuel >> current [
 { #category : 'action' }
 Fuel >> giveFuel: anAmount [
 
-	 currentFuel := currentFuel - anAmount.
+	currentFuel := currentFuel-anAmount
 ]
 
 { #category : 'testing' }

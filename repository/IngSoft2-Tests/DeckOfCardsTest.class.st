@@ -13,7 +13,7 @@ DeckOfCardsTest >> test10WhenASecondSpaceShipUsesAnAllyCardThenItApplysTheirConc
 	aPlayer1 := SpaceShip named: 'Juan'.
 	aPlayer2 := SpaceShip named: 'Pedro'.
 	aDice := RiggedDice withNumberOfFaces: 2.
-		aDice setNumbersProvider: { 1. 0. 1. 0 }.
+		aDice setNumbersProvider: { 2. 0. 1. 0 }.
 	aGameSetUp withDices: {
 			aDice.
 			}.
@@ -36,77 +36,30 @@ DeckOfCardsTest >> test10WhenASecondSpaceShipUsesAnAllyCardThenItApplysTheirConc
 	aGameSetUp assigns: aDeckOfCards.
 
 	aGameSetUp createGameInstance.
-	aBoard := aGameSetUp board.
-	aBoard playNextTurn.aBoard playerThrows: anAllyCard. aBoard playNextTurn.
+	aBoard := aGameSetUp board.  
+	aBoard playNextTurn.aBoard playerThrows: anAllyCard. aBoard playNextTurn.  
 	aBoard playNextTurn.aBoard playNextTurn.
-	aBoard playNextTurn.aBoard playNextTurn.
-	" { 1. 0. 1. 0 }"
+	aBoard playNextTurn.aBoard playNextTurn. 
 	
-	self assert: (aBoard positionOf: aPlayer1) equals: 3.
+	
+	self assert: (aBoard positionOf: aPlayer1) equals: 5.
 	self assert: (aBoard positionOf: aPlayer2) equals: 0.
-	self assert: (aBoard currentFuleOf: aPlayer1) equals: 1.
+	self assert: (aBoard currentFuleOf: aPlayer1) equals: 0.
+	self assert: (aBoard currentFuleOf: aPlayer2) equals: 3.
 	
-	aBoard playNextTurn.aBoard playNextTurn.
+	aBoard playNextTurn.aBoard playNextTurn. 
 
 	
-	self assert: (aBoard positionOf: aPlayer1) equals: 4.
+	self assert: (aBoard positionOf: aPlayer1) equals: 6.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 0.
 	
 	self assert: (aBoard positionOf: aPlayer2) equals: 0.
-	self assert: (aBoard currentFuleOf: aPlayer2) equals: 3.
-	
-	
-	
-	
-	
-	
-
-
-
-]
-
-{ #category : 'tests' }
-DeckOfCardsTest >> test11Banana [
-
-
-	| aGameSetUp aDice  aBoard aPlayer1 aPlayer2 aTurnManager aDeckOfCards  anAllyCard |
-	aGameSetUp := GameSetup new.
-	aPlayer1 := SpaceShip named: 'Juan'.
-	aPlayer2 := SpaceShip named: 'Pedro'.
-	aDice := RiggedDice withNumberOfFaces: 2.
-		aDice setNumbersProvider: { 6. 0. 1. 0 }.
-	aGameSetUp withDices: {
-			aDice.
-			}.
-	aGameSetUp withPlayers: {
-			aPlayer1.
-			aPlayer2 }.
-
-	aTurnManager := TurnManager withOrder: {
-			                aPlayer1.
-			                aPlayer2 }.
-	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
-	
-	anAllyCard := AllyCard teamsUpWith: aPlayer2.
-
-	aDeckOfCards := {
-		                anAllyCard.
-		                anAllyCard .anAllyCard.
-		                anAllyCard } asOrderedCollection.
-	
-	aGameSetUp assigns: aDeckOfCards.
-
-	aGameSetUp createGameInstance.
-	aBoard := aGameSetUp board.
-	aBoard playerThrows: anAllyCard.
-	aBoard playNextTurn .
-	"aDice setNumbersProvider: { 5. 0. 1. 0 }."
-	"
-	self assert: (aBoard positionOf: aPlayer1) equals: 6.
-	self assert: (aBoard currentFuleOf: aPlayer1) equals: 4.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 2.
-	"
-
+	
+	
+	
+	
+	
 	
 
 
@@ -436,8 +389,9 @@ DeckOfCardsTest >> test8WhenAnAllyCardIsUsedThenTheSpaceShipsCanShareTheirFule [
 	
 	self assert: (aBoard positionOf: aPlayer1) equals: 0.
 	
+	aBoard playNextTurn. aBoard playNextTurn.
 	aBoard playNextTurn.
-	self assert: (aBoard positionOf: aPlayer2) equals: 4.
+	self assert: (aBoard positionOf: aPlayer2) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 0.
 	self assert: (aBoard positionOf: aPlayer1) equals: 0.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 3.
