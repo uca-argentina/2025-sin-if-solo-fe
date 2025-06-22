@@ -24,6 +24,11 @@ aBoard applyRepeatEffectTo:spaceShipToApplyEffect.
 
 ]
 
+{ #category : 'verification' }
+RedoCard >> chosenOnIsIn:cardsInGame [
+^true.
+]
+
 { #category : 'initialization' }
 RedoCard >> initializationFor:aSpaceShip [
 
