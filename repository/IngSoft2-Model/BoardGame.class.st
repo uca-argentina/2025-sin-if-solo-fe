@@ -131,7 +131,7 @@ BoardGame >> move: aSpaceShip with: dices [
 	(aSpaceShip canMoveWith: rolledNumber)ifFalse: [ ^self ].
 
 	self move: aSpaceShip forwardBy: rolledNumber.
-		self cardEffectIsPlayed.
+	self cardEffectIsPlayed.
 	
 	(self specialTileAt: aSpaceShip currentPosition)
 		applyConsequenceTo: spaceShips

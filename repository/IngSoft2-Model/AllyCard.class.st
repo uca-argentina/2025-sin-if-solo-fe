@@ -1,0 +1,25 @@
+"
+AllyCard
+
+"
+Class {
+	#name : 'AllyCard',
+	#superclass : 'Object',
+	#instVars : [
+		'spaceShipToTeamUp'
+	],
+	#category : 'IngSoft2-Model',
+	#package : 'IngSoft2-Model'
+}
+
+{ #category : 'action' }
+AllyCard >> applyEffectTo: spaceShip  with: dicesInGameBoard in:aBoard [
+spaceShip sharesFuleWith:spaceShipToTeamUp .
+spaceShipToTeamUp sharesFuleWith:spaceShip .
+
+]
+
+{ #category : 'initialization' }
+AllyCard >> initializeAllyCardTeamsUpWith:aSpaceShip [
+spaceShipToTeamUp:=aSpaceShip .
+]

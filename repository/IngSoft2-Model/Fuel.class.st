@@ -7,7 +7,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'currentFuel',
-		'initialFuel'
+		'initialFuel',
+		'fuelPartner'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -32,13 +33,16 @@ Fuel >> current [
 
 { #category : 'testing' }
 Fuel >> hasFuelToPlay [
-^currentFuel >0 
+
+   ^ (currentFuel > 0) or: [ fuelPartner notNil and: [ fuelPartner hasFule ] ].
+
 ]
 
 { #category : 'initialization' }
 Fuel >> initializeWithAnAmount: aFuelAmount [ 
 currentFuel:=aFuelAmount .
 initialFuel:=aFuelAmount.
+
 ]
 
 { #category : 'action' }

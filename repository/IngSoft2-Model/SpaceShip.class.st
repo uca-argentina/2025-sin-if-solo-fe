@@ -50,7 +50,7 @@ SpaceShip >> canMoveWith: rolledNumber [
 { #category : 'testing' }
 SpaceShip >> canPlay [
 
-	^ fuelSistem hasFuelToPlay and: [ lostTurns = 0 ]
+	^ self validateFuleToMove and: [ lostTurns = 0 ]
 ]
 
 { #category : 'accessing' }
@@ -110,7 +110,12 @@ SpaceShip >> has: fuel [
 { #category : 'testing' }
 SpaceShip >> hasFule [
 
-^fuelSistem validateCurrentFuleOf: self.
+^(fuelSistem validateCurrentFuleOf: self ).
+]
+
+{ #category : 'testing' }
+SpaceShip >> hasFuleToPlay [
+fuelSistem hasFuleToPlay .
 ]
 
 { #category : 'initialization' }
@@ -148,13 +153,11 @@ SpaceShip >> losesTwoRounds [
 
 { #category : 'action' }
 SpaceShip >> moveTo: newPosition consuming: aDistance [
-	
-	fuelSistem consume: aDistance.
-	
-	currentPosition := newPosition.
-	
-	fuelSistem hasFuelToPlay ifFalse: [self losesTwoRounds ].
 
+	fuelSistem consume: aDistance.
+
+	currentPosition := newPosition.
+	self validateFuleToMove ifFalse: [ self losesTwoRounds ]
 ]
 
 { #category : 'accessing' }
@@ -181,6 +184,12 @@ SpaceShip >> ranksHigherThan: oponentSpaceship [
 SpaceShip >> rechargeFule [ 
 
 fuelSistem recharge 
+]
+
+{ #category : 'testing' }
+SpaceShip >> validateFuleToMove [
+
+	^ fuelSistem hasFuelToPlay
 ]
 
 { #category : 'action' }

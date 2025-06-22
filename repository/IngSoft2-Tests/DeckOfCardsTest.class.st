@@ -285,12 +285,74 @@ DeckOfCardsTest >> test7WhenAOverLoadCardIsUsedThenTheSpaceShipCouldGoBackALap [
 ]
 
 { #category : 'tests' }
+DeckOfCardsTest >> test8BANANA [
+	| aGameSetUp aDice  aBoard aPlayer1 aPlayer2 aTurnManager aDeckOfCards  anAllyCard |
+	aGameSetUp := GameSetup new.
+
+	aDice := RiggedDice withNumberOfFaces: 2.
+		aDice setNumbersProvider: { 0. 1. 0. 1 }.
+
+
+	aPlayer1 := SpaceShip named: 'Juan'.
+	aPlayer2 := SpaceShip named: 'Pedro'.
+
+	aGameSetUp withDices: {
+			aDice.
+			}.
+	aGameSetUp withPlayers: {
+			aPlayer1.
+			aPlayer2 }.
+
+	aTurnManager := TurnManager withOrder: {
+			                aPlayer1.
+			                aPlayer2 }.
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
+	
+	anAllyCard := AllyCard teamsUpWith: aPlayer1.
+
+	aDeckOfCards := {
+		                anAllyCard.
+		                anAllyCard } asOrderedCollection.
+	
+	aGameSetUp assigns: aDeckOfCards.
+
+	aGameSetUp createGameInstance.
+	aBoard := aGameSetUp board.
+	aBoard playNextTurn.aBoard playNextTurn.
+	aBoard playNextTurn.aBoard playNextTurn.
+	aBoard playNextTurn.aBoard playNextTurn.
+	
+	"
+	self assert: (aBoard positionOf: aPlayer1) equals: 0.
+	self assert: (aBoard positionOf: aPlayer2) equals: 3.
+	aBoard playNextTurn.
+	
+	self assert: (aBoard positionOf: aPlayer1) equals: 0.
+	self assert: (aBoard currentFuleOf: aPlayer1) equals: 4.
+	
+	aBoard playerThrows: anAllyCard. aBoard playNextTurn.
+	
+	self assert: (aBoard positionOf: aPlayer1) equals: 4.
+	self assert: (aBoard currentFuleOf: aPlayer1) equals: 0."
+	
+	
+	
+	
+	
+	
+
+
+
+]
+
+{ #category : 'tests' }
 DeckOfCardsTest >> testWhenBanana [
 
 	| aGameSetUp aDice aDice2 aBoard aPlayer1 aTurnManager  aDeckOfCards |
 	aGameSetUp := GameSetup new.
 
 	aDice := RiggedDice withNumberOfFaces: 1.
+	
 	aDice2 := RiggedDice withNumberOfFaces: 1.
 
 	aPlayer1 := SpaceShip named: 'Juan'.
