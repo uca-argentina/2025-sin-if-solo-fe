@@ -8,21 +8,10 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
-{ #category : 'accessing' }
-EmptyFule >> current [
-^0.
-]
-
 { #category : 'action' }
-EmptyFule >> giveFuel: remainingDistance [
+EmptyFule >> giveFuel: anAmount [
 
-]
-
-{ #category : 'testing' }
-EmptyFule >> hasFuelToPlay [
-
-   ^ false.
-
+^false.
 ]
 
 { #category : 'testing' }

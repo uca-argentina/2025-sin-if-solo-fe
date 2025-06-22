@@ -30,8 +30,7 @@ DeckOfCardsTest >> test10WhenASecondSpaceShipUsesAnAllyCardThenItApplysTheirConc
 
 	aDeckOfCards := {
 		                anAllyCard.
-		                anAllyCard .anAllyCard.
-		                anAllyCard } asOrderedCollection.
+		                anAllyCard . } asOrderedCollection.
 	
 	aGameSetUp assigns: aDeckOfCards.
 
@@ -62,6 +61,99 @@ DeckOfCardsTest >> test10WhenASecondSpaceShipUsesAnAllyCardThenItApplysTheirConc
 	
 	
 
+
+
+]
+
+{ #category : 'tests' }
+DeckOfCardsTest >> test11WhenTestingADeterministicMethodForCardsIsUsed [
+
+	| aGameSetUp aDice aBoard aPlayer1 aPlayer2 aTurnManager aDeckOfCards anAccelerationCard |
+	aGameSetUp := GameSetup new.
+
+	aDice := RiggedDice withNumberOfFaces: 6.
+	aDice setNumbersProvider: { 6. 3. 3. 4 }.
+
+	aPlayer1 := SpaceShip named: 'Juan'.
+	aPlayer2 := SpaceShip named: 'Martin'.
+
+	anAccelerationCard := AccelerationCard withIncrement: 1.
+
+	aDeckOfCards := {
+		                anAccelerationCard.
+		                anAccelerationCard } asOrderedCollection.
+	aGameSetUp assigns: aDeckOfCards.
+
+	aGameSetUp withDices: { aDice }.
+	aGameSetUp withPlayers: {
+			aPlayer1.
+			aPlayer2 }.
+
+	aTurnManager := TurnManager withOrder: {
+			                aPlayer1.
+				                aPlayer2 }.
+	aGameSetUp withABoardNumberOfSquares: 10 andTurnManager: aTurnManager.
+	aGameSetUp withTiles: { (BonusCard in: 6) }.
+	aGameSetUp  equip: aPlayer1 with: anAccelerationCard. "Esto es para hacerlo determinisco"
+
+	aGameSetUp createGameInstance.
+	aBoard := aGameSetUp board.
+
+	self assert: (aBoard cardsOf: aPlayer1)size equals: 3.
+
+
+
+]
+
+{ #category : 'tests' }
+DeckOfCardsTest >> test12WhenBANANNANA [
+
+	| aGameSetUp aDice aBoard aPlayer1 aPlayer2 aTurnManager aDeckOfCards anAccelerationCard aCancellationCard |
+	aGameSetUp := GameSetup new.
+
+	aDice := RiggedDice withNumberOfFaces: 6.
+	aDice setNumbersProvider: { 1. 1. 1. 1 }.
+
+	aPlayer1 := SpaceShip named: 'Juan'.
+	aPlayer2 := SpaceShip named: 'Martin'.
+
+	anAccelerationCard := AccelerationCard withIncrement: 1.
+	aCancellationCard:=CancellationCard for: anAccelerationCard.
+
+	aDeckOfCards := {
+		                anAccelerationCard.
+		                anAccelerationCard.
+									anAccelerationCard.
+		                anAccelerationCard  } asOrderedCollection.
+	aGameSetUp assigns: aDeckOfCards.
+	aGameSetUp  equip: aPlayer2 with: aCancellationCard.
+
+	aGameSetUp withDices: { aDice }.
+	aGameSetUp withPlayers: {
+			aPlayer1.
+			aPlayer2 }.
+
+	aTurnManager := TurnManager withOrder: {
+			                aPlayer1.
+				                aPlayer2 }.
+				
+				
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
+
+	aGameSetUp createGameInstance.
+	aBoard := aGameSetUp board.
+	aBoard playerThrows: anAccelerationCard. aBoard playNextTurn.
+
+	self assert: (aBoard positionOf: aPlayer1) equals: 2.
+	aBoard playerThrows: aCancellationCard .	aBoard playNextTurn.
+"	
+	self assert: (aBoard cardsInGame includes: anAccelerationCard) equals: false.
+
+	self assert: (aBoard positionOf: aPlayer2) equals: 2.
+	aBoard playNextTurn.
+
+	self assert: (aBoard positionOf: aPlayer1) equals: 3.
+"
 
 
 ]

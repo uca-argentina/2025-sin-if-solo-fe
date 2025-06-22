@@ -102,6 +102,14 @@ GameSetup >> createSpaceShipsInstance [
 ]
 
 { #category : 'action' }
+GameSetup >> equip: aSpaceShip with: aCard [
+
+aSpaceShip equipWith: aCard.
+ 
+
+]
+
+{ #category : 'action' }
 GameSetup >> fillEmptyPositionsWithNoEffectTile [
 	| occupiedPositions |
 	

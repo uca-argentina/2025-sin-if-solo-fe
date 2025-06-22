@@ -46,6 +46,11 @@ BoardGame >> cardEffectIsPlayed [
 ]
 
 { #category : 'accessing' }
+BoardGame >> cardsInGame [
+^cardsInGame.
+]
+
+{ #category : 'accessing' }
 BoardGame >> cardsOf:  aSpaceShip [
 
 ^ (spaceShips detect: [ :each | each = aSpaceShip ]) cardsInHand.
@@ -190,6 +195,12 @@ BoardGame >> playerThrows: aCard [
 BoardGame >> positionOf: aSpaceShip [
 
 ^ (spaceShips detect: [ :each | each = aSpaceShip ]) currentPosition.
+]
+
+{ #category : 'removing' }
+BoardGame >> remove: cardToCancel [
+
+cardsInGame remove: cardToCancel.
 ]
 
 { #category : 'accessing' }
