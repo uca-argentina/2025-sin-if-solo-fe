@@ -48,6 +48,12 @@ Fuel >> current [
 ^currentFuel 
 ]
 
+{ #category : 'action' }
+Fuel >> giveFuel: anAmount [
+
+	 currentFuel := currentFuel - anAmount.
+]
+
 { #category : 'testing' }
 Fuel >> hasFuelToPlay [
 

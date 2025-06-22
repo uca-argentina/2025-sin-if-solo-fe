@@ -80,6 +80,11 @@ SpaceShip >> equipWith: aCard [
 cardsInHand add: aCard.
 ]
 
+{ #category : 'accessing' }
+SpaceShip >> fuelSystem [
+^fuelSistem.
+]
+
 { #category : 'action' }
 SpaceShip >> goBack: amountToMoveBack onBoardOfSize: maximumSquares [
 

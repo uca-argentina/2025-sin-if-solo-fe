@@ -13,6 +13,11 @@ EmptyFule >> current [
 ^0.
 ]
 
+{ #category : 'action' }
+EmptyFule >> giveFuel: remainingDistance [
+
+]
+
 { #category : 'testing' }
 EmptyFule >> hasFuelToPlay [
 
