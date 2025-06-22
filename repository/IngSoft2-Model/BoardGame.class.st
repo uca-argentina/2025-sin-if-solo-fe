@@ -40,10 +40,13 @@ BoardGame class >> withNumberOfSquares: aNumberOfSquares withSizeInParsec: aSize
 
 { #category : 'action' }
 BoardGame >> applyRepeatEffectTo:spaceShipToApplyEffect [
-|spaceShip|  
+
+
+self playerThrows: lastCardPlayed.
+"|spaceShip|  
 spaceShip:=(spaceShips detect: [ :each | each = spaceShipToApplyEffect ]).
 
-lastCardPlayed applyEffectTo:spaceShip  with: dicesInGameBoard in: self.
+lastCardPlayed applyEffectTo:spaceShip  with: dicesInGameBoard in: self."
 ]
 
 { #category : 'action' }
@@ -203,7 +206,7 @@ BoardGame >> playerThrows: aCard [
         aCard applyEffectTo: spaceShip with: dicesInGameBoard in: self
     ].
 
-    self playNextTurn.
+   " self playNextTurn."
 
 "	| spaceShip |
 	

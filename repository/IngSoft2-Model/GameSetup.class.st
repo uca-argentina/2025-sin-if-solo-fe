@@ -22,9 +22,16 @@ Class {
 }
 
 { #category : 'testing' }
-GameSetup >> assigns: aDeckOfCards [
+GameSetup >> assignsInOrder: aDeckOfCards [
 
+	deckOfCards := aDeckOfCards copy. 
 
+]
+
+{ #category : 'testing' }
+GameSetup >> assignsRandomly: aDeckOfCards [
+
+	aDeckOfCards shuffle.
 	deckOfCards := aDeckOfCards copy. 
 
 ]
@@ -52,6 +59,7 @@ GameSetup >> createBoardInstanceWith: aDices andWith: aSpaceShips andWith: aWinn
 
 	aBoard withDices: aDices.
 	aCopyOfSpaceships := OrderedCollection new.
+	
 	aCopyOfSpaceships := aSpaceShips collect: [ :each | each copy ].
 
 
@@ -86,10 +94,10 @@ GameSetup >> createSpaceShipsInstance [
 	deckOfCards ifNotNil: [
 		spaceShips do: [ :spaceShip |
 			| card1 card2 |
-			card1 := deckOfCards atRandom.
+			card1 := deckOfCards first.
 			deckOfCards remove: card1.
 			
-			card2 := deckOfCards atRandom.
+			card2 := deckOfCards first.
 			deckOfCards remove: card2.
 
 			spaceShip equipWith: card1.
