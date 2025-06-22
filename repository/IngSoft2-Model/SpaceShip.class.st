@@ -118,11 +118,6 @@ SpaceShip >> hasFule [
 ^(fuelSistem validateCurrentFuleOf: self ).
 ]
 
-{ #category : 'testing' }
-SpaceShip >> hasFuleToPlay [
-fuelSistem hasFuleToPlay .
-]
-
 { #category : 'initialization' }
 SpaceShip >> initializeWtihAName:aName [
 
