@@ -97,6 +97,19 @@ BoardGame >> has: players [
 	spaceShips := players
 ]
 
+{ #category : 'testing' }
+BoardGame >> hasAnAlianceFrom:spaceShip and:anotherSpaceShip [
+
+|spaceShipToTeamUp|
+spaceShipToTeamUp := spaceShips detect: [ :each | each = anotherSpaceShip ].
+spaceShip sharesFuleWith:spaceShipToTeamUp .
+spaceShipToTeamUp sharesFuleWith:spaceShip .
+
+
+
+
+]
+
 { #category : 'initialization' }
 BoardGame >> initializationBoardGame: aMaxiumSquares withSizeInParsec: aSizeInParsec andTurnManager: aTurnManager andADeckOfCards: adeckOfCards [
 

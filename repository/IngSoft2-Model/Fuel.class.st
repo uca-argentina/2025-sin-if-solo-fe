@@ -23,7 +23,24 @@ Fuel class >> withAnAmount: aFuelAmount [
 { #category : 'action' }
 Fuel >> consume: aDistance [
 
-currentFuel := currentFuel -aDistance 
+
+		"	currentFuel >= aDistance
+				ifTrue: [ currentFuel := currentFuel - aDistance ] 
+				ifFalse: [
+					((currentFuel + (fuelPartner current)) >= aDistance )ifTrue:[
+					| fuelNeeded |
+					fuelNeeded := aDistance - currentFuel.
+					currentFuel := 0.
+					fuelPartner giveFuel: fuelNeeded ]]"
+		
+
+	(currentFuel > aDistance )
+		ifTrue: [ currentFuel := currentFuel - aDistance ]
+		ifFalse: [
+		
+			currentFuel :=0.
+
+			fuelPartner giveFuel: aDistance ]
 ]
 
 { #category : 'accessing' }
@@ -34,7 +51,9 @@ Fuel >> current [
 { #category : 'testing' }
 Fuel >> hasFuelToPlay [
 
-   ^ (currentFuel > 0) or: [ fuelPartner notNil and: [ fuelPartner hasFule ] ].
+
+
+  ^ (self isBiggerThanCero or: fuelPartner isBiggerThanCero ).
 
 ]
 
@@ -42,7 +61,13 @@ Fuel >> hasFuelToPlay [
 Fuel >> initializeWithAnAmount: aFuelAmount [ 
 currentFuel:=aFuelAmount .
 initialFuel:=aFuelAmount.
+fuelPartner:=EmptyFule new.
 
+]
+
+{ #category : 'testing' }
+Fuel >> isBiggerThanCero [
+^currentFuel >0.
 ]
 
 { #category : 'action' }
@@ -51,14 +76,16 @@ currentFuel := initialFuel .
 ]
 
 { #category : 'action' }
-Fuel >> sharesFuleWith:anotherSpaceShip [ 
-fuelPartner:=anotherSpaceShip .
+Fuel >> sharesFuleWith:anotherSystem [ 
+fuelPartner:=anotherSystem .
+
+
 ]
 
 { #category : 'validating' }
 Fuel >> validateCurrentFuleOf: aSpaceShip [
 
-( currentFuel <= 0) ifFalse: [ ^ self ].
+( self hasFuelToPlay) ifTrue: [ ^ self ].
     aSpaceShip moveTo: 0 consuming:0.
     currentFuel := 0.
 ]

@@ -19,8 +19,9 @@ AllyCard class >> teamsUpWith: aSpaceShip [
 
 { #category : 'action' }
 AllyCard >> applyEffectTo: spaceShip  with: dicesInGameBoard in:aBoard [
-spaceShip sharesFuleWith:spaceShipToTeamUp .
-spaceShipToTeamUp sharesFuleWith:spaceShip .
+"spaceShip sharesFuleWith:spaceShipToTeamUp .
+spaceShipToTeamUp sharesFuleWith:spaceShip ."
+aBoard hasAnAlianceFrom:spaceShip and:spaceShipToTeamUp.
 
 ]
 

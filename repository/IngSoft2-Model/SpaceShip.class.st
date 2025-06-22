@@ -50,7 +50,7 @@ SpaceShip >> canMoveWith: rolledNumber [
 { #category : 'testing' }
 SpaceShip >> canPlay [
 
-	^ self validateFuleToMove and: [ lostTurns = 0 ]
+	^ fuelSistem hasFuelToPlay and: [ lostTurns = 0 ]
 ]
 
 { #category : 'accessing' }
@@ -157,7 +157,7 @@ SpaceShip >> moveTo: newPosition consuming: aDistance [
 	fuelSistem consume: aDistance.
 
 	currentPosition := newPosition.
-	self validateFuleToMove ifFalse: [ self losesTwoRounds ]
+	(fuelSistem hasFuelToPlay ) ifFalse: [ self losesTwoRounds ]
 ]
 
 { #category : 'accessing' }
@@ -189,13 +189,7 @@ fuelSistem recharge
 { #category : 'action' }
 SpaceShip >> sharesFuleWith:anotherSpaceShip [
 
-fuelSistem sharesFuleWith:anotherSpaceShip .
-]
-
-{ #category : 'testing' }
-SpaceShip >> validateFuleToMove [
-
-	^ fuelSistem hasFuelToPlay
+fuelSistem sharesFuleWith: (anotherSpaceShip fuelSystem) .
 ]
 
 { #category : 'action' }
