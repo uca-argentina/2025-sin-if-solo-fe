@@ -18,6 +18,10 @@ NoEffect >> applyConsequenceTo: allSpaceShips onBoardOfSize: aBoard [
  
 ]
 
+{ #category : 'action' }
+NoEffect >> applyEffectToSpecific: spaceship on: board [
+]
+
 { #category : 'initialization' }
 NoEffect >> initializeNoEffectTileIn:aPosition [ 
 tilePosition:=aPosition .

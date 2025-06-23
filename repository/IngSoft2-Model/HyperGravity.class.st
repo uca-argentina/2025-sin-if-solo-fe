@@ -26,6 +26,12 @@ aSpaceShip preventMovingUntilRollsAtLeast: minimumRollValue.
 
 ]
 
+{ #category : 'action' }
+HyperGravity >> applyEffectToSpecific: spaceship on: board [
+
+spaceship preventMovingUntilRollsAtLeast: minimumRollValue.
+]
+
 { #category : 'initialization' }
 HyperGravity >> initializeHyperGravityWith:aPosition requiringMinimumRoll: aValue [
 tilePosition:=aPosition .

@@ -28,6 +28,13 @@ MoonWalk >> applyConsequenceTo: allSpaceShips onBoardOfSize: aBoard [
 
 ]
 
+{ #category : 'action' }
+MoonWalk >> applyEffectToSpecific: spaceship on: board [
+	
+	spaceship goBack: amountToMoveBack onBoardOfSize: (board numberOfSquares)
+
+]
+
 { #category : 'initialization' }
 MoonWalk >> initializeMoonWalkIn: aPosition moveBack:anAmount [
 tilePosition:=aPosition .

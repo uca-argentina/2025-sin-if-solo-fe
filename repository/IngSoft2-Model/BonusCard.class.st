@@ -23,6 +23,12 @@ BonusCard >> applyConsequenceTo: allSpaceShips onBoardOfSize: aBoard [
   
 ]
 
+{ #category : 'action' }
+BonusCard >> applyEffectToSpecific: spaceship on: board [
+
+board givesACardTo: spaceship.
+]
+
 { #category : 'initialization' }
 BonusCard >> initializeBonusCard: aPosition [
 

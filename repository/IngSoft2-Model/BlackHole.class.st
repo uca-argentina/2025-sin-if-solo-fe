@@ -23,6 +23,12 @@ BlackHole >> applyConsequenceTo: allSpaceShips onBoardOfSize: aBoard [
   
 ]
 
+{ #category : 'action' }
+BlackHole >> applyEffectToSpecific: spaceship on: board [
+
+spaceship goBack: 4 onBoardOfSize: (board numberOfSquares )
+]
+
 { #category : 'initialization' }
 BlackHole >> initializeBlackHoleIn: aPosition [
 

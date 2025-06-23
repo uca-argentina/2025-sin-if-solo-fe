@@ -41,15 +41,17 @@ BoardGame class >> withNumberOfSquares: aNumberOfSquares withSizeInParsec: aSize
 ]
 
 { #category : 'action' }
-BoardGame >> applyRepeatEffectWith: anImplementation [
+BoardGame >> applyRedoEffectWith: anImplementation [
    | aCard |
    aCard := lastCardPlayed changeTo: anImplementation.
 	cardsInGame add: aCard.
    aCard applyEffectTo: spaceShipMoving with:dicesInGameBoard  in: self.
-	
-  
-  
+]
 
+{ #category : 'action' }
+BoardGame >> applyRepeatEffectWith: spaceship [
+
+ lastSpecialTileEffect applyEffectToSpecific: spaceship on: self.
 ]
 
 { #category : 'action' }

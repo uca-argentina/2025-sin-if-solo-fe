@@ -32,6 +32,19 @@ squaresToMove:=aSpaceShip currentPosition + (self calculateParsecDistribution: a
 aSpaceShip moveTo:(squaresToMove)consuming: (self calculateParsecDistribution: aBoard).
 ]
 
+{ #category : 'action' }
+HyperJump >> applyEffectToSpecific: spaceship on: board [
+
+| squaresToMove|
+
+aParsecToMove:= self getParsecToMove.
+
+squaresToMove:=spaceship currentPosition + (self calculateParsecDistribution: board).
+
+
+spaceship moveTo:(squaresToMove)consuming: (self calculateParsecDistribution: board).
+]
+
 { #category : 'calculation' }
 HyperJump >> calculateParsecDistribution: aBoard [
 	
