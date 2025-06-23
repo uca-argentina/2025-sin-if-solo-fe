@@ -35,3 +35,8 @@ accelerationIncrement:= aNumber.
 AccelerationCard >> isInstantaneous [
 ^false.
 ]
+
+{ #category : 'testing' }
+AccelerationCard >> isPermanent [
+^true.
+]

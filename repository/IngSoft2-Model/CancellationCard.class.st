@@ -46,3 +46,8 @@ cardToCancel:=aCard.
 CancellationCard >> isInstantaneous [
 ^true.
 ]
+
+{ #category : 'testing' }
+CancellationCard >> isPermanent [
+^false.
+]

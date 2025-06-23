@@ -40,3 +40,8 @@ spaceShipToOverLoad:=aSpaceShip .
 OverLoadCard >> isInstantaneous [
 ^false.
 ]
+
+{ #category : 'testing' }
+OverLoadCard >> isPermanent [
+^true.
+]

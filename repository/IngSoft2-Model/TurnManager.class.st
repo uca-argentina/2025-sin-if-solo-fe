@@ -29,6 +29,9 @@ nextSpaceShip := spaceShipsInOrder at:1.
 { #category : 'accessing' }
 TurnManager >> spaceShipWhoseTurnItIsFrom: spaceShips [
 
+"| spaceShipToPlay |
+spaceShipToPlay := spaceShips first."
+
 ^ spaceShips detect: [ :spaceShip | spaceShip name= nextSpaceShip name].
 
 ]

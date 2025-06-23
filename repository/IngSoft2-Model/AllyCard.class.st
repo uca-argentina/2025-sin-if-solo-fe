@@ -35,3 +35,8 @@ spaceShipToTeamUp:=aSpaceShip .
 AllyCard >> isInstantaneous [
 ^false.
 ]
+
+{ #category : 'testing' }
+AllyCard >> isPermanent [
+^true.
+]

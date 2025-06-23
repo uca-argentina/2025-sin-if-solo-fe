@@ -19,9 +19,7 @@ RedoCard class >> for: aSpaceShip [
 
 { #category : 'action' }
 RedoCard >> applyEffectTo: spaceShip with: dices in: aBoard [
-
-aBoard applyRepeatEffectTo:spaceShipToApplyEffect.
-
+   aBoard applyRepeatEffectWith: spaceShipToApplyEffect.
 ]
 
 { #category : 'verification' }
@@ -38,5 +36,10 @@ spaceShipToApplyEffect:=aSpaceShip.
 { #category : 'testing' }
 RedoCard >> isInstantaneous [
 
+^false.
+]
+
+{ #category : 'testing' }
+RedoCard >> isPermanent [
 ^false.
 ]
