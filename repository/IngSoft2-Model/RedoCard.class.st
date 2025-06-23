@@ -22,6 +22,12 @@ RedoCard >> applyEffectTo: spaceShip with: dices in: aBoard [
    aBoard applyRepeatEffectWith: spaceShipToApplyEffect.
 ]
 
+{ #category : 'action' }
+RedoCard >> changeTo: anImplementation [
+   spaceShipToApplyEffect := anImplementation.
+   ^self
+]
+
 { #category : 'verification' }
 RedoCard >> chosenOnIsIn:cardsInGame [
 ^true.

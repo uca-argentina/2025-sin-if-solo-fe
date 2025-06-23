@@ -25,6 +25,12 @@ aBoard upDateLastCardPlayed:self.
 
 ]
 
+{ #category : 'action' }
+CancellationCard >> changeTo: anImplementation [
+
+cardToCancel := anImplementation .
+]
+
 { #category : 'accessing' }
 CancellationCard >> choosenCard [
 

@@ -25,6 +25,11 @@ aBoard upDateLastCardPlayed:self.
 
 ]
 
+{ #category : 'action' }
+AccelerationCard >> changeTo: anImplementation [
+   ^ (self class) withIncrement: anImplementation.
+]
+
 { #category : 'initialization' }
 AccelerationCard >> initializeAccelerationCard: aNumber [
 

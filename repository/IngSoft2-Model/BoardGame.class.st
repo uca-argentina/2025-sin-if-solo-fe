@@ -284,6 +284,42 @@ BoardGame >> upDateLastCardPlayed:aCard [
 lastCardPlayed :=aCard.
 ]
 
+{ #category : 'action' }
+BoardGame >> with: aSpaceship throws: aCard [ 
+
+
+   | spaceShip |
+    spaceShip := turnManager spaceShipWhoseTurnItIsFrom: spaceShips.
+
+    (spaceShip isEquipedWith: aCard) ifTrue: [
+        cardsInGame add: aCard.
+        spaceShip removeCard: aCard
+    ].
+
+    ((aCard isInstantaneous) and: [aCard chosenOnIsIn:cardsInGame.]) 
+    ifTrue: [
+        aCard applyEffectTo: spaceShip with: dicesInGameBoard in: self
+    ].
+
+ " (aCard isPermanent )
+        ""and: [(aSpaceship) = (turnManager spaceShipWhoseTurnItIsFrom: spaceShips)]) ""
+(aSpaceship isEquipedWith: aCard) ifTrue: [         
+            cardsInGame add: aCard.
+            aSpaceship removeCard: aCard].
+   ifTrue: [
+        (aSpaceship isEquipedWith: aCard) ifTrue: [         
+            cardsInGame add: aCard.
+            aSpaceship removeCard: aCard
+        ].
+    ].""
+
+    ((aCard isInstantaneous) and: [aCard chosenOnIsIn: cardsInGame]) 
+    ifTrue: [
+        aCard applyEffectTo: aSpaceship with: dicesInGameBoard in: self
+    ].
+"
+]
+
 { #category : 'accessing' }
 BoardGame >> withDices: dices [
 

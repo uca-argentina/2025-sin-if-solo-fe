@@ -26,6 +26,12 @@ aBoard upDateLastCardPlayed:self.
 
 ]
 
+{ #category : 'action' }
+AllyCard >> changeTo: anImplementation [
+
+spaceShipToTeamUp:= anImplementation .
+]
+
 { #category : 'initialization' }
 AllyCard >> initializeAllyCardTeamsUpWith:aSpaceShip [
 spaceShipToTeamUp:=aSpaceShip .

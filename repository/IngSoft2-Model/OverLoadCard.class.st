@@ -31,6 +31,14 @@ aBoard upDateLastCardPlayed:self.
 
 ]
 
+{ #category : 'action' }
+OverLoadCard >> changeTo: anImplementation [
+
+spaceShipToOverLoad := anImplementation
+
+
+]
+
 { #category : 'initialization' }
 OverLoadCard >> initializeOverLoadFor:aSpaceShip [
 spaceShipToOverLoad:=aSpaceShip .
