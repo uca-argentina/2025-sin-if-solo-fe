@@ -6,7 +6,9 @@ Class {
 	#superclass : 'TileEffect',
 	#instVars : [
 		'wormHoleEntrance',
-		'wormHoleExit'
+		'wormHoleExit',
+		'distance',
+		'destination'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -20,7 +22,7 @@ WormHole class >> from:wormholeEntrance to:wormholeExit [
 { #category : 'action' }
 WormHole >> applyConsequenceTo: allSpaceShips onBoardOfSize: aBoard [
 
-	|aSpaceShip originalPosition destination distance |
+	|aSpaceShip originalPosition |
 	aSpaceShip:= allSpaceShips detect:[:spaceShip | spaceShip currentPosition = wormHoleEntrance or: spaceShip currentPosition = wormHoleExit].
 	originalPosition := aSpaceShip currentPosition.
 	originalPosition = wormHoleEntrance ifTrue: [

@@ -432,7 +432,7 @@ DeckOfCardsTest >> test16WhenItsNotTheSpaceShipTurnAnywayItCanThrowAInatantaniou
 ]
 
 { #category : 'tests' }
-DeckOfCardsTest >> test17BANANA [
+DeckOfCardsTest >> test17ARedoCardIsUsedAfterFallinginABonusTileThenTheAssignedSpaceshipGetsAnotherCard [
 	| aGameSetUp aDice aBoard aPlayer1 aPlayer2 aTurnManager aDeckOfCards anAccelerationCard aCancellationCard aRepeat |
 	aGameSetUp := GameSetup new.
 
@@ -452,7 +452,7 @@ DeckOfCardsTest >> test17BANANA [
 		                aRepeat.
 		                anAccelerationCard.
 		                anAccelerationCard.
-		                anAccelerationCard .anAccelerationCard} asOrderedCollection.
+		                anAccelerationCard .anAccelerationCard. anAccelerationCard.} asOrderedCollection.
 	aGameSetUp assignsInOrder: aDeckOfCards.
 	
 	aGameSetUp withTiles: { (BonusCard in: 1) }.
@@ -482,9 +482,9 @@ DeckOfCardsTest >> test17BANANA [
 	aBoard with: aPlayer1 throws: aRepeat .
 	
 	aBoard playNextTurn.
-"	self assert: (aBoard positionOf: aPlayer2) equals: 2.
+	self assert: (aBoard positionOf: aPlayer2) equals: 2.
 	self assert: (aPlayer2 cardsInHand ) equals: (OrderedCollection with:anAccelerationCard with:anAccelerationCard with:anAccelerationCard) .
-	"
+	
 	
 
 	

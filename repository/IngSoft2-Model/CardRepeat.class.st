@@ -6,7 +6,7 @@ Class {
 	#name : 'CardRepeat',
 	#superclass : 'Object',
 	#instVars : [
-		'spaceShipToAffect'
+		'spaceship'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -14,13 +14,21 @@ Class {
 
 { #category : 'instance creation' }
 CardRepeat class >> for: aSpaceShip [
-^self new initializeReleatFor:aSpaceShip.
+^self new initializationFor:aSpaceShip.
 ]
 
-{ #category : 'adding' }
-CardRepeat >> applyEffectTo: spaceShip with: dices in: aBoard [
-"
-aBoard applyLastEffectMadeTo:spaceShipToAffect."
+{ #category : 'action' }
+CardRepeat >> applyEffectTo: aSpaceShip with: dicesInGameBoard in: aBoard [
+
+aBoard applyRepeatEffectWith: spaceship.
+
+
+"(board lastSpecialTileEffect) applyTo: spaceship on: aBoard."
+]
+
+{ #category : 'action' }
+CardRepeat >> changeTo: aSpaceShip [
+^ (self class) for:aSpaceShip.
 ]
 
 { #category : 'verification' }
@@ -29,9 +37,9 @@ CardRepeat >> chosenOnIsIn: cardsInGame [
 ]
 
 { #category : 'initialization' }
-CardRepeat >> initializeReleatFor:aSpaceShip [
+CardRepeat >> initializationFor:aSpaceship [
+spaceship:=aSpaceship .
 
-spaceShipToAffect:=aSpaceShip .
 ]
 
 { #category : 'testing' }

@@ -41,12 +41,6 @@ BoardGame class >> withNumberOfSquares: aNumberOfSquares withSizeInParsec: aSize
 ]
 
 { #category : 'action' }
-BoardGame >> applyLastEffectMadeTo:spaceShipToAffect [
-
-lastSpecialTileEffect applyConsequenceTo: spaceShipToAffect onBoardOfSize: self.
-]
-
-{ #category : 'action' }
 BoardGame >> applyRepeatEffectWith: anImplementation [
    | aCard |
    aCard := lastCardPlayed changeTo: anImplementation.
@@ -174,7 +168,6 @@ BoardGame >> move: aSpaceShip with: dices [
 	
 	self move: aSpaceShip forwardBy: rolledNumber.
 	
-	"self cardEffectIsPlayed."
 	lastSpecialTileEffect:=(self specialTileAt: aSpaceShip currentPosition).
 	(lastSpecialTileEffect)
 		applyConsequenceTo: spaceShips
