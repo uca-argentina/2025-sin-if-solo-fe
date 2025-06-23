@@ -256,10 +256,10 @@ TileTest >> test14WhenSpaceShipFallsInHyperJumpThenItAdvancesTheAmountOfParsecs 
 			                 }.
 
 	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
-	aGameSetUp withBoardsLengthInParsec: 100.
+	aGameSetUp withBoardsLengthInMetric: (Parsec distance: 100).
 	aGameSetUp withMaximumLapsToWin: 6.
 	aGameSetUp withTiles:
-		{ (WormHole from: 1 to: 1).(HyperJump in: 4 parsecToMove: { 8. 4. 2. 1 }) }.
+		{ (WormHole from: 1 to: 1).(HyperJump in: 4 toMove: { Parsec distance:8. Parsec distance:4. Parsec distance:2. Parsec distance:1 }) }.
 	aGameSetUp createGameInstance.
 
 	aBoard := aGameSetUp board.
@@ -293,9 +293,9 @@ TileTest >> test15WhenManySpaceShipsFallInHyperJumpThenTheyAllAdvanceTheAmountOf
 
 	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
 
-	aGameSetUp withBoardsLengthInParsec: 100.
+	aGameSetUp withBoardsLengthInMetric: (Parsec distance: 100).
 	aGameSetUp withMaximumLapsToWin: 6.
-	aGameSetUp withTiles: { (WormHole from: 1 to: 1).HyperJump in: 4 parsecToMove: { 8. 4. 2. 1 } }.
+	aGameSetUp withTiles: { (WormHole from: 1 to: 1).HyperJump in: 4 toMove: { Parsec distance:8. Parsec distance:4.Parsec distance: 2. Parsec distance:1 } }.
 
 	aGameSetUp createGameInstance.
 

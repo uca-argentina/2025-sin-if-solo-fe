@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : 'initialization' }
-HyperJump class >> in: aPosition parsecToMove: someParsecsToMove [
+HyperJump class >> in: aPosition toMove: someParsecsToMove [
 ^self new initializeHyperJumpIn: aPosition parsecToMove: someParsecsToMove.
 ]
 
@@ -48,13 +48,13 @@ HyperJump >> getParsecToMove [
     nextParsec := parsecsToMove first.
     parsecsToMove removeFirst.
     parsecsToMove add: nextParsec.
-    ^ nextParsec
+    ^ (nextParsec distance)
 ]
 
 { #category : 'initialization' }
 HyperJump >> initializeHyperJumpIn: aPosition parsecToMove: someParsecsToMove [
 tilePosition:=aPosition .
 parsecsToMove :=OrderedCollection new.
-parsecsToMove addAll:((someParsecsToMove)sort: [:aParsec :anotherParsec | aParsec> anotherParsec]).
+parsecsToMove addAll:((someParsecsToMove)sort: [:aParsec :anotherParsec | (aParsec distance)> (anotherParsec distance)]).
 
 ]

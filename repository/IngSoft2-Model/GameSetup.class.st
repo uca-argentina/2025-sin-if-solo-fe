@@ -161,9 +161,9 @@ GameSetup >> withABoardNumberOfSquares: numberOfSqueares andTurnManager: aTurnMa
 ]
 
 { #category : 'initialization' }
-GameSetup >> withBoardsLengthInParsec:aBoardSizeInParsec [
+GameSetup >> withBoardsLengthInMetric:aBoardSizeInParsec [
 
-boardSizeInParsec:=aBoardSizeInParsec.
+boardSizeInParsec:=aBoardSizeInParsec asParsecs .
 ]
 
 { #category : 'accessing' }

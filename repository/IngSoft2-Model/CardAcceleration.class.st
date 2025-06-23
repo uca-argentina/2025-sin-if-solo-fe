@@ -2,7 +2,7 @@
 A
 "
 Class {
-	#name : 'AccelerationCard',
+	#name : 'CardAcceleration',
 	#superclass : 'Object',
 	#instVars : [
 		'accelerationIncrement'
@@ -12,13 +12,13 @@ Class {
 }
 
 { #category : 'initialization' }
-AccelerationCard class >> withIncrement: aNumber [
+CardAcceleration class >> withIncrement: aNumber [
 
 ^self new initializeAccelerationCard: aNumber.
 ]
 
 { #category : 'action' }
-AccelerationCard >> applyEffectTo: spaceShip  with: dices in:aBoard [
+CardAcceleration >> applyEffectTo: spaceShip  with: dices in:aBoard [
 
 aBoard move: spaceShip forwardBy: accelerationIncrement.
 
@@ -26,29 +26,29 @@ aBoard move: spaceShip forwardBy: accelerationIncrement.
 ]
 
 { #category : 'action' }
-AccelerationCard >> changeTo: anImplementation [
+CardAcceleration >> changeTo: anImplementation [
    ^ (self class) withIncrement: anImplementation.
 ]
 
 { #category : 'initialization' }
-AccelerationCard >> initializeAccelerationCard: aNumber [
+CardAcceleration >> initializeAccelerationCard: aNumber [
 
 accelerationIncrement:= aNumber.
 
 ]
 
 { #category : 'testing' }
-AccelerationCard >> isInstantaneous [
+CardAcceleration >> isInstantaneous [
 ^false.
 ]
 
 { #category : 'testing' }
-AccelerationCard >> isLastBeingPlayedIn:aBoard [
+CardAcceleration >> isLastBeingPlayedIn:aBoard [
 
 aBoard upDateLastCardPlayed: self.
 ]
 
 { #category : 'testing' }
-AccelerationCard >> isPermanent [
+CardAcceleration >> isPermanent [
 ^true.
 ]

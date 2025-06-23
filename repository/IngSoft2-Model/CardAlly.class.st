@@ -3,7 +3,7 @@ AllyCard
 
 "
 Class {
-	#name : 'AllyCard',
+	#name : 'CardAlly',
 	#superclass : 'Object',
 	#instVars : [
 		'spaceShipToTeamUp'
@@ -13,12 +13,12 @@ Class {
 }
 
 { #category : 'initialization' }
-AllyCard class >> teamsUpWith: aSpaceShip [
+CardAlly class >> teamsUpWith: aSpaceShip [
 ^self new initializeAllyCardTeamsUpWith:aSpaceShip.
 ]
 
 { #category : 'action' }
-AllyCard >> applyEffectTo: spaceShip  with: dicesInGameBoard in:aBoard [
+CardAlly >> applyEffectTo: spaceShip  with: dicesInGameBoard in:aBoard [
 
 aBoard hasAnAlianceFrom:spaceShip and:spaceShipToTeamUp.
 
@@ -26,29 +26,29 @@ aBoard hasAnAlianceFrom:spaceShip and:spaceShipToTeamUp.
 ]
 
 { #category : 'action' }
-AllyCard >> changeTo: anImplementation [
+CardAlly >> changeTo: anImplementation [
 
-spaceShipToTeamUp:= anImplementation .
+^ (self class) teamsUpWith:anImplementation.
 ]
 
 { #category : 'initialization' }
-AllyCard >> initializeAllyCardTeamsUpWith:aSpaceShip [
+CardAlly >> initializeAllyCardTeamsUpWith:aSpaceShip [
 spaceShipToTeamUp:=aSpaceShip .
 
 ]
 
 { #category : 'testing' }
-AllyCard >> isInstantaneous [
+CardAlly >> isInstantaneous [
 ^false.
 ]
 
 { #category : 'testing' }
-AllyCard >> isLastBeingPlayedIn:aBoard [
+CardAlly >> isLastBeingPlayedIn:aBoard [
 
 aBoard upDateLastCardPlayed: self.
 ]
 
 { #category : 'testing' }
-AllyCard >> isPermanent [
+CardAlly >> isPermanent [
 ^true.
 ]

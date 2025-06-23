@@ -3,7 +3,7 @@ OverLoad Card
 
 "
 Class {
-	#name : 'OverLoadCard',
+	#name : 'CardOverLoad',
 	#superclass : 'Object',
 	#instVars : [
 		'spaceShipToOverLoad'
@@ -13,12 +13,12 @@ Class {
 }
 
 { #category : 'instance creation' }
-OverLoadCard class >> for: aSpaceShip [
+CardOverLoad class >> for: aSpaceShip [
 ^self new initializeOverLoadFor:aSpaceShip.
 ]
 
 { #category : 'action' }
-OverLoadCard >> applyEffectTo: spaceShip with: dices in: aBoard [
+CardOverLoad >> applyEffectTo: spaceShip with: dices in: aBoard [
 
 |rolledNumberAdjust |
 rolledNumberAdjust :=0.
@@ -32,31 +32,31 @@ aBoard upDateLastCardPlayed:self.
 ]
 
 { #category : 'action' }
-OverLoadCard >> changeTo: anImplementation [
+CardOverLoad >> changeTo: anImplementation [
 
-spaceShipToOverLoad := anImplementation
+ ^ (self class) for: anImplementation.
 
 
 ]
 
 { #category : 'initialization' }
-OverLoadCard >> initializeOverLoadFor:aSpaceShip [
+CardOverLoad >> initializeOverLoadFor:aSpaceShip [
 spaceShipToOverLoad:=aSpaceShip .
 
 ]
 
 { #category : 'testing' }
-OverLoadCard >> isInstantaneous [
+CardOverLoad >> isInstantaneous [
 ^false.
 ]
 
 { #category : 'testing' }
-OverLoadCard >> isLastBeingPlayedIn:aBoard [
+CardOverLoad >> isLastBeingPlayedIn:aBoard [
 
 aBoard upDateLastCardPlayed: self.
 ]
 
 { #category : 'testing' }
-OverLoadCard >> isPermanent [
+CardOverLoad >> isPermanent [
 ^true.
 ]

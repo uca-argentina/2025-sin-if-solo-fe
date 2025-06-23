@@ -2,7 +2,7 @@
 RedoCard
 "
 Class {
-	#name : 'RedoCard',
+	#name : 'CardRedo',
 	#superclass : 'Object',
 	#instVars : [
 		'anInicialization'
@@ -12,13 +12,13 @@ Class {
 }
 
 { #category : 'instance creation' }
-RedoCard class >> for: aSpaceShip [
+CardRedo class >> for: aSpaceShip [
 
 ^self new initializationFor:aSpaceShip.
 ]
 
 { #category : 'adding' }
-RedoCard >> addEffectRepetedTo:aBoard by:spaceShip the:lastCardPlay [
+CardRedo >> addEffectRepetedTo:aBoard by:spaceShip the:lastCardPlay [
 
 |aCard|
  aCard := lastCardPlay changeTo: anInicialization .
@@ -28,37 +28,37 @@ aBoard with: spaceShip throws: aCard .
 ]
 
 { #category : 'action' }
-RedoCard >> changeTo: anImplementation [
+CardRedo >> changeTo: anImplementation [
    anInicialization := anImplementation.
    ^self
 ]
 
 { #category : 'verification' }
-RedoCard >> chosenOnIsIn:cardsInGame [
+CardRedo >> chosenOnIsIn:cardsInGame [
 ^true.
 ]
 
 { #category : 'initialization' }
-RedoCard >> initializationFor:aSpaceShip [
+CardRedo >> initializationFor:aSpaceShip [
 
 anInicialization:=aSpaceShip.
 
 ]
 
 { #category : 'testing' }
-RedoCard >> isInstantaneous [
+CardRedo >> isInstantaneous [
 
 ^false.
 ]
 
 { #category : 'testing' }
-RedoCard >> isLastBeingPlayedIn:aBoard [
+CardRedo >> isLastBeingPlayedIn:aBoard [
 
 aBoard upDateLastCardPlayed: self.
 ]
 
 { #category : 'testing' }
-RedoCard >> isPermanent [
+CardRedo >> isPermanent [
 ^false.
 
 ]

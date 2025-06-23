@@ -19,7 +19,7 @@ BonusCard >> applyConsequenceTo: allSpaceShips onBoardOfSize: aBoard [
     | aSpaceShip |
 		aSpaceShip := allSpaceShips detect: [ :spaceShip | spaceShip currentPosition = tilePosition ].
 		aBoard givesACardTo: aSpaceShip.
-
+	
   
 ]
 

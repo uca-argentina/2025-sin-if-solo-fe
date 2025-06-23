@@ -15,7 +15,8 @@ Class {
 		'deckOfCards',
 		'cardsInGame',
 		'lastCardPlayed',
-		'spaceShipMoving'
+		'spaceShipMoving',
+		'lastSpecialTileEffect'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -37,6 +38,12 @@ BoardGame class >> withNumberOfSquares: aNumberOfSquares withSizeInParsec: aSize
 		  andTurnManager: aTurnManager
 		andADeckOfCards: deckOfCards.
 		
+]
+
+{ #category : 'action' }
+BoardGame >> applyLastEffectMadeTo:spaceShipToAffect [
+
+lastSpecialTileEffect applyConsequenceTo: spaceShipToAffect onBoardOfSize: self.
 ]
 
 { #category : 'action' }
@@ -138,6 +145,7 @@ BoardGame >> initializationBoardGame: aMaxiumSquares withSizeInParsec: aSizeInPa
 	deckOfCards:= adeckOfCards.
 	
 	cardsInGame:= OrderedCollection new.
+	
 ]
 
 { #category : 'action' }
@@ -163,15 +171,15 @@ BoardGame >> move: aSpaceShip with: dices [
 	spaceShipMoving :=aSpaceShip .
 
 	(aSpaceShip canMoveWith: rolledNumber)ifFalse: [ ^self ].
-	"self cardEffectIsPlayed."
+	
 	self move: aSpaceShip forwardBy: rolledNumber.
 	
-	self cardEffectIsPlayed.
-	
-	(self specialTileAt: aSpaceShip currentPosition)
+	"self cardEffectIsPlayed."
+	lastSpecialTileEffect:=(self specialTileAt: aSpaceShip currentPosition).
+	(lastSpecialTileEffect)
 		applyConsequenceTo: spaceShips
 		onBoardOfSize: self.
-		
+	self cardEffectIsPlayed.
 ]
 
 { #category : 'accessing' }
@@ -212,6 +220,7 @@ BoardGame >> remove: cardToCancel [
  
 
 cardsInGame remove: cardToCancel.
+
 ]
 
 { #category : 'accessing' }
@@ -263,29 +272,26 @@ lastCardPlayed :=aCard.
 { #category : 'action' }
 BoardGame >> with: aSpaceship throws: aCard [
 
-	| spaceShip aSpaceshipToThrowCard|
-	aSpaceshipToThrowCard:= (spaceShips detect: [ :each | each = aSpaceship ]).
+	| spaceShip aSpaceshipToThrowCard |
+	aSpaceshipToThrowCard := spaceShips detect: [ :each |
+		                         each = aSpaceship ].
 	spaceShip := turnManager spaceShipWhoseTurnItIsFrom: spaceShips.
-	spaceShipMoving:=spaceShip.
-	
-	(spaceShip isEquipedWith: aCard   )ifTrue: [
-		(aCard isPermanent and:( turnManager isAboutToPlay:aSpaceshipToThrowCard)) ifTrue: [
+	spaceShipMoving := spaceShip.
+	(spaceShip isEquipedWith: aCard) ifTrue: [
+		(aCard isPermanent and:
+			 (turnManager isAboutToPlay: aSpaceshipToThrowCard)) ifTrue: [
 			cardsInGame add: aCard.
 			spaceShip removeCard: aCard.
-			aCard isLastBeingPlayedIn:self.
-			
-			 ].
-		 ].
-
+			aCard isLastBeingPlayedIn: self ] ].
 	(aCard isInstantaneous and: [ aCard chosenOnIsIn: cardsInGame ])
 		ifTrue: [
-			aCard isLastBeingPlayedIn:self.
-		aCard applyEffectTo: spaceShip with: dicesInGameBoard in: self ].
-	
-	((aCard isInstantaneous not) and: (aCard isPermanent not))
-    ifTrue: [  aCard addEffectRepetedTo: self by: spaceShip the: lastCardPlayed. ].
+			aCard isLastBeingPlayedIn: self.
+			aCard applyEffectTo: spaceShip with: dicesInGameBoard in: self ].
 
-
+	(aCard isInstantaneous not and: aCard isPermanent not) ifFalse: [
+		^ self ].
+	aCard addEffectRepetedTo: self by: spaceShip the: lastCardPlayed.
+	spaceShip removeCard: aCard
 ]
 
 { #category : 'accessing' }

@@ -20,6 +20,7 @@ AtomicBomb >> applyConsequenceTo:allSpaceShips onBoardOfSize: aBoard [
 allSpaceShips do:[:spaceShip|spaceShip moveTo: 0 consuming: 0].
 
 
+
 ]
 
 { #category : 'initialization' }
