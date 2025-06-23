@@ -49,9 +49,12 @@ BoardGame >> applyRedoEffectWith: anImplementation [
 ]
 
 { #category : 'action' }
-BoardGame >> applyRepeatEffectWith: spaceship [
+BoardGame >> applyRepeatEffectWith: aSpaceship [
 
- lastSpecialTileEffect applyEffectToSpecific: spaceship on: self.
+|spaceShip|
+spaceShip:=(spaceShips detect: [ :each | each = aSpaceship ]).
+
+ lastSpecialTileEffect applyEffectToSpecific: spaceShip on: self.
 ]
 
 { #category : 'action' }
