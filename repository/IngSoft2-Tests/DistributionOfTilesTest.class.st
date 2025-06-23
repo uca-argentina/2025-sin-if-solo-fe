@@ -5,196 +5,91 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
-{ #category : 'tests' }
-DistributionOfTilesTest >> test1WhenABoardIsCreatedThen2PercentOfSquaresAreAtomicBomb [
+{ #category : 'asserting' }
+DistributionOfTilesTest >> should:anErrorBlock raise:anErrorClass withMessegeText:errorMessage [
 
-
-    | aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice |
-    aGameSetUp := GameSetup new.
-    aGameSetUp withNumberOfPlayers: 2.
-		aDice := RiggedDice withNumberOfFaces: 10.
-    aDice setNumbersProvider: {5. 2. 5. 9 }.
-	
-	aGameSetUp withDices: {
-        aDice}.
-  
-
-    aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
-
-
-	 aGameSetUp withAdistribution.
-
-
-    aGameSetUp withMaximumLapsToWin: 100.
-    aGameSetUp createGameInstance.
-
-    aPlayer1 := aGameSetUp spaceShips first.
-	aPlayer2 := aGameSetUp spaceShips second.
-
-    aBoard := aGameSetUp board.
-    aWinnerSystem := aGameSetUp winnerSystem.
-    aBoard playOneRound.
-	
-
-	self assert: (aBoard percentageOf: AtomicBomb)equals:2.
-	
-	
-
-
-
-   
+self
+		should: anErrorBlock
+		raise: anErrorClass
+		withExceptionDo: [ :error |
+		self assert: error messageText equals: errorMessage ]
 ]
 
 { #category : 'tests' }
-DistributionOfTilesTest >> test2WhenABoardIsCreatedThen8PercentOfSquaresAreHyperJump [
+DistributionOfTilesTest >> test1WhenATileDistributionIsSetThenBoardIsCreatedWithTheFollowingDistribution [
+
+    | boardSize aTileDistribution tiles |
+
+    boardSize := 1500.
+    aTileDistribution := TileDistribution withABoardNumberOfSquares: boardSize.
+
+  aTileDistribution forNoEffect: 0.40.
+    aTileDistribution forBlackHole: 0.20.
+    aTileDistribution forHyperGravity: 0.20.
+    aTileDistribution forMoonWalk: 0.10.
+    aTileDistribution forHyperJump: 0.08.
+    aTileDistribution forAtomicBomb: 0.02.
+
+    tiles := aTileDistribution build.
+
+self assert: ((aTileDistribution percentageOf: NoEffect) between: 0.37 and: 0.43).
+self assert: ((aTileDistribution percentageOf: BlackHole) between: 0.18 and: 0.22).
+self assert: ((aTileDistribution percentageOf: HyperGravity) between: 0.18 and: 0.22).
+self assert: ((aTileDistribution percentageOf: MoonWalk) between: 0.08 and: 0.12).
+self assert: ((aTileDistribution percentageOf: HyperJump) between: 0.06 and: 0.10).
+self assert: ((aTileDistribution percentageOf: AtomicBomb) between: 0.01 and: 0.04).
 
 
-    | aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice |
-    aGameSetUp := GameSetup new.
-    aGameSetUp withNumberOfPlayers: 2.
-	aDice := RiggedDice withNumberOfFaces: 10.
-    aDice setNumbersProvider: {5. 2. 5. 9 }.
-	
-	aGameSetUp withDices: {
-        aDice}.
-   
-
-    aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
-
-	 aGameSetUp withAdistribution.
-
-
-    aGameSetUp withMaximumLapsToWin: 100.
-    aGameSetUp createGameInstance.
-
-    aPlayer1 := aGameSetUp spaceShips first.
-	aPlayer2 := aGameSetUp spaceShips second.
-
-    aBoard := aGameSetUp board.
-    aWinnerSystem := aGameSetUp winnerSystem.
-    aBoard playOneRound.
-	
-
-	self assert: (aBoard percentageOf: HyperJump )equals:8.
-	
-	
-
-
-
-   
 ]
 
 { #category : 'tests' }
-DistributionOfTilesTest >> test3WhenABoardIsCreatedThen10PercentOfSquaresAreMoonWalk [
+DistributionOfTilesTest >> test2WhenATileDistributionIsSetThenTheBoardCanHaveOneSpecialTile [
+
+    | boardSize aTileDistribution tiles |
+
+    boardSize := 1500.
+    aTileDistribution := TileDistribution withABoardNumberOfSquares: boardSize.
+
+  aTileDistribution forNoEffect: 0.
+    aTileDistribution forBlackHole: 1.
+    aTileDistribution forHyperGravity: 0.
+    aTileDistribution forMoonWalk: 0.
+    aTileDistribution forHyperJump: 0.
+    aTileDistribution forAtomicBomb: 0.
+
+    tiles := aTileDistribution build.
+
+self assert: ((aTileDistribution percentageOf: NoEffect) between: 0 and: 0).
+self assert: ((aTileDistribution percentageOf: BlackHole) between: 0.98 and: 1).
+self assert: ((aTileDistribution percentageOf: HyperGravity) between: 0 and: 0).
+self assert: ((aTileDistribution percentageOf: MoonWalk) between: 0 and: 0).
+self assert: ((aTileDistribution percentageOf: HyperJump) between: 0 and: 0).
+self assert: ((aTileDistribution percentageOf: AtomicBomb) between: 0 and: 0).
 
 
-    | aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice |
-    aGameSetUp := GameSetup new.
-    aGameSetUp withNumberOfPlayers: 2.
-
-  aDice := RiggedDice withNumberOfFaces: 10.
-    aDice setNumbersProvider: {5. 2. 5. 9 }.
-	
-	aGameSetUp withDices: {
-        aDice}.
-
-    aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
-
-	 aGameSetUp withAdistribution.
-
-
-    aGameSetUp withMaximumLapsToWin: 100.
-    aGameSetUp createGameInstance.
-
-    aPlayer1 := aGameSetUp spaceShips first.
-	aPlayer2 := aGameSetUp spaceShips second.
-
-    aBoard := aGameSetUp board.
-    aWinnerSystem := aGameSetUp winnerSystem.
-    aBoard playOneRound.
-	
-
-	self assert: (aBoard percentageOf: MoonWalk )equals:10.
-	
-	
-
-
-
-   
 ]
 
 { #category : 'tests' }
-DistributionOfTilesTest >> test4WhenABoardIsCreatedThen20PercentOfSquaresAreHyperGravity [
+DistributionOfTilesTest >> test3WhenTheSumOfProbabilitiesIsntOneThenTheCreationFails [
 
+    | boardSize aTileDistribution  |
 
-    | aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice |
-    aGameSetUp := GameSetup new.
-    aGameSetUp withNumberOfPlayers: 2.
-aDice := RiggedDice withNumberOfFaces: 10.
-    aDice setNumbersProvider: {5. 2. 5. 9 }.
-	
-	aGameSetUp withDices: {
-        aDice}.
+    boardSize := 1500.
+    aTileDistribution := TileDistribution withABoardNumberOfSquares: boardSize.
 
-    aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
-
-	 aGameSetUp withAdistribution.
-
-
-    aGameSetUp withMaximumLapsToWin: 100.
-    aGameSetUp createGameInstance.
-
-    aPlayer1 := aGameSetUp spaceShips first.
-	aPlayer2 := aGameSetUp spaceShips second.
-
-    aBoard := aGameSetUp board.
-    aWinnerSystem := aGameSetUp winnerSystem.
-    aBoard playOneRound.
-	
-
-	self assert: (aBoard percentageOf: HyperGravity )equals:20.
-	
-	
-
-
+  aTileDistribution forNoEffect: 0.
+    aTileDistribution forBlackHole: 0.
+    aTileDistribution forHyperGravity: 0.
+    aTileDistribution forMoonWalk: 0.
+    aTileDistribution forHyperJump: 0.
+    aTileDistribution forAtomicBomb: 0.
 
    
-]
-
-{ #category : 'tests' }
-DistributionOfTilesTest >> test5WhenABoardIsCreatedThen20PercentOfSquaresAreBlackHole [
-
-
-    | aGameSetUp aBoard aPlayer1 aPlayer2 aWinnerSystem aDice |
-    aGameSetUp := GameSetup new.
-    aGameSetUp withNumberOfPlayers: 2.
-
-aDice := RiggedDice withNumberOfFaces: 10.
-    aDice setNumbersProvider: {5. 2. 5. 9 }.
-	
-	aGameSetUp withDices: {
-        aDice}.
-
-    aGameSetUp withABoardNumberOfSquares: 100 andWithWormHoleFrom: 1 to: 1.
-
-	 aGameSetUp withAdistribution.
-
-
-    aGameSetUp withMaximumLapsToWin: 100.
-    aGameSetUp createGameInstance.
-
-    aPlayer1 := aGameSetUp spaceShips first.
-	aPlayer2 := aGameSetUp spaceShips second.
-
-    aBoard := aGameSetUp board.
-    aWinnerSystem := aGameSetUp winnerSystem.
-    aBoard playOneRound.
-	
-	self assert: (aBoard percentageOf: BlackHole )equals:20.
-	
-	
+self
+		should: [aTileDistribution build ]
+		raise: Error
+		withMessegeText: 'The Sum Of All Probabilities should be 1'
 
 
 
-   
 ]

@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : 'initialization' }
-HyperJump class >> in: aPosition parsecToMove: someParsecsToMove [
+HyperJump class >> in: aPosition toMove: someParsecsToMove [
 ^self new initializeHyperJumpIn: aPosition parsecToMove: someParsecsToMove.
 ]
 
@@ -30,6 +30,19 @@ squaresToMove:=aSpaceShip currentPosition + (self calculateParsecDistribution: a
 
 
 aSpaceShip moveTo:(squaresToMove)consuming: (self calculateParsecDistribution: aBoard).
+]
+
+{ #category : 'action' }
+HyperJump >> applyEffectToSpecific: spaceship on: board [
+
+| squaresToMove|
+
+aParsecToMove:= self getParsecToMove.
+
+squaresToMove:=spaceship currentPosition + (self calculateParsecDistribution: board).
+
+
+spaceship moveTo:(squaresToMove)consuming: (self calculateParsecDistribution: board).
 ]
 
 { #category : 'calculation' }
@@ -48,13 +61,12 @@ HyperJump >> getParsecToMove [
     nextParsec := parsecsToMove first.
     parsecsToMove removeFirst.
     parsecsToMove add: nextParsec.
-    ^ nextParsec
+    ^ (nextParsec distance)
 ]
 
 { #category : 'initialization' }
 HyperJump >> initializeHyperJumpIn: aPosition parsecToMove: someParsecsToMove [
 tilePosition:=aPosition .
 parsecsToMove :=OrderedCollection new.
-parsecsToMove addAll:((someParsecsToMove)sort: [:aParsec :anotherParsec | aParsec> anotherParsec]).
-
+parsecsToMove addAll:((someParsecsToMove)sort: [:aParsec :anotherParsec | (aParsec asParsecs )> (anotherParsec asParsecs)]).
 ]

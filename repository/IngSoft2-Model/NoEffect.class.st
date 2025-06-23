@@ -15,7 +15,11 @@ NoEffect class >> in:aPosition [
 
 { #category : 'action' }
 NoEffect >> applyConsequenceTo: allSpaceShips onBoardOfSize: aBoard [
+ 
+]
 
+{ #category : 'action' }
+NoEffect >> applyEffectToSpecific: spaceship on: board [
 ]
 
 { #category : 'initialization' }

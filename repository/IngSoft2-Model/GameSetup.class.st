@@ -5,26 +5,41 @@ Class {
 	#name : 'GameSetup',
 	#superclass : 'Object',
 	#instVars : [
-		'numberOfPlayers',
 		'boardSize',
-		'wormholeEntrance',
-		'wormholeExit',
 		'lapsToWin',
 		'board',
 		'spaceShips',
 		'winnerSystem',
 		'maximumRolledNumber',
 		'boardSizeInParsec',
-		'specialTiles',
-		'dices'
+		'dices',
+		'turnManager',
+		'deckOfCards',
+		'tiles'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'testing' }
+GameSetup >> assignsInOrder: aDeckOfCards [
+
+	deckOfCards := aDeckOfCards copy. 
+
+]
+
+{ #category : 'testing' }
+GameSetup >> assignsRandomly: aDeckOfCards [
+
+	aDeckOfCards shuffle.
+	deckOfCards := aDeckOfCards copy. 
+
+]
+
 { #category : 'accessing' }
 GameSetup >> board [
-    ^ board
+
+	^ board
 ]
 
 { #category : 'creation' }
@@ -35,44 +50,40 @@ GameSetup >> createBoardInstanceWith: aDices andWith: aSpaceShips andWith: aWinn
 	aBoard := BoardGame
 		          withNumberOfSquares: boardSize
 		          withSizeInParsec: boardSizeInParsec
-		          withWormHoleFrom: wormholeEntrance
-		          to: wormholeExit.
-	specialTiles ifNil: [ specialTiles := OrderedCollection new ].
+		          andTurnManager: turnManager
+		          andADeckOfCards: deckOfCards.
 
-	specialTiles add:( WormHole from:wormholeEntrance to:wormholeExit).
-	specialTiles add:( WormHole from:wormholeExit to:wormholeEntrance ).
-	
-	aBoard withDices: aDices .
+	tiles ifNil: [ tiles := OrderedCollection new ].
 
+	deckOfCards ifNil: [ deckOfCards := OrderedCollection new ].
+
+	aBoard withDices: aDices.
 	aCopyOfSpaceships := OrderedCollection new.
-	aCopyOfSpaceships addAll: (aSpaceShips collect: [ :player |
-			 | copyOfSpaceships |
-			 copyOfSpaceships := player copy.
-			 copyOfSpaceships originalSpaceShip: player.
-			 copyOfSpaceships ]).
+	
+	aCopyOfSpaceships := aSpaceShips collect: [ :each | each copy ].
+
 
 	aBoard has: aCopyOfSpaceships.
 	aBoard follows: aWinnerSystem.
-	
+
 	self fillEmptyPositionsWithNoEffectTile.
 
-	aBoard contains: specialTiles.
+	aBoard contains: tiles.
 	^ aBoard
 ]
 
 { #category : 'creation' }
 GameSetup >> createGameInstance [
 
-	| aBoard aSpaceShips aWinnerSystem |
-	aSpaceShips := self createSpaceShipsInstance.
+	| aBoard aWinnerSystem |
+	self createSpaceShipsInstance.
 	aWinnerSystem := WinnerSystem withMaximunLaps: lapsToWin.
 
 	aBoard := self
 		          createBoardInstanceWith: dices
-		          andWith: aSpaceShips
+		          andWith: spaceShips 
 		          andWith: aWinnerSystem.
 	board := aBoard.
-	spaceShips := aSpaceShips.
 	winnerSystem := aWinnerSystem.
 	self validateSpecialTileCreation
 ]
@@ -80,19 +91,31 @@ GameSetup >> createGameInstance [
 { #category : 'creation' }
 GameSetup >> createSpaceShipsInstance [
 
-	| aSpaceShips  |
-	
-	aSpaceShips := (1 to: numberOfPlayers) collectWithIndex: [ :i :index |
-		| spaceShip |
-		spaceShip := SpaceShip inInitialPosition: 0.
-		spaceShip initialFule: (maximumRolledNumber )*2.
-		spaceShip turnOrder: index.
-		spaceShip
+	deckOfCards ifNotNil: [
+		spaceShips do: [ :spaceShip |
+			| card1 card2 |
+			card1 := deckOfCards first.
+			deckOfCards remove: card1.
+			
+			card2 := deckOfCards first.
+			deckOfCards remove: card2.
+
+			spaceShip equipWith: card1.
+			spaceShip equipWith: card2.
+		]
 	].
-	
-	
-	
-	^ aSpaceShips 
+
+	spaceShips do: [ :spaceShip |
+		spaceShip has: (Fuel withAnAmount: maximumRolledNumber * 2) ].
+
+]
+
+{ #category : 'action' }
+GameSetup >> equip: aSpaceShip with: aCard [
+
+aSpaceShip equipWith: aCard.
+ 
+
 ]
 
 { #category : 'action' }
@@ -100,11 +123,11 @@ GameSetup >> fillEmptyPositionsWithNoEffectTile [
 	| occupiedPositions |
 	
 	
-	occupiedPositions := specialTiles collect: [ :tile | tile position ] as: Set.
+	occupiedPositions := tiles collect: [ :tile | tile position ] as: Set.
 	
 	0 to: boardSize  do: [ :pos |
 		(occupiedPositions includes: pos) ifFalse: [
-			specialTiles add: (NoEffect in: pos)
+			tiles add: (NoEffect in: pos)
 		]
 	].
 
@@ -119,15 +142,10 @@ GameSetup >> maximumRollFromDices [
 	^ total
 ]
 
-{ #category : 'accessing' }
-GameSetup >> spaceShips [
-^spaceShips
-]
-
 { #category : 'validating' }
 GameSetup >> validateSpecialTileCreation [
 
-specialTiles do:[:specialTile|specialTile validateCreationIn: boardSize and: maximumRolledNumber].
+tiles do:[:specialTile|specialTile validateCreationIn: boardSize and: maximumRolledNumber].
 ]
 
 { #category : 'accessing' }
@@ -136,67 +154,16 @@ GameSetup >> winnerSystem [
 ]
 
 { #category : 'initialization' }
-GameSetup >> withABoardNumberOfSquares: maximumSquares andWithWormHoleFrom: entry to: exit [
+GameSetup >> withABoardNumberOfSquares: numberOfSqueares andTurnManager: aTurnManager [
 
-	boardSize := maximumSquares.
-	wormholeEntrance := entry.
-	wormholeExit := exit.
+	boardSize := numberOfSqueares.
+	turnManager := aTurnManager.
 ]
 
 { #category : 'initialization' }
-GameSetup >> withAdistribution [ 
+GameSetup >> withBoardsLengthInMetric:aBoardSizeInParsec [
 
-| avaliblePosition atomicCount hyperJumpCount moonWalkCount hyperGravityCount blackHoleCount |
-
-avaliblePosition := OrderedCollection new.
-1 to: boardSize do: [:aNumber | avaliblePosition add: aNumber ].
-
-avaliblePosition := avaliblePosition shuffle .
-atomicCount := (boardSize * 0.02) floor.
-hyperJumpCount := (boardSize * 0.08) floor.
-moonWalkCount := (boardSize * 0.10) floor.
-hyperGravityCount := (boardSize * 0.20) floor.
-blackHoleCount := (boardSize * 0.20) floor.
-
-specialTiles := OrderedCollection new.
-
-1 to: atomicCount do: [:aCount |
-    | pos |
-    pos := avaliblePosition removeFirst.
-    specialTiles add: (AtomicBomb in: pos).
-].
-
-1 to: hyperJumpCount do: [:aCount |
-    | pos |
-    pos := avaliblePosition removeFirst.
-    specialTiles add: (HyperJump in: pos parsecToMove: {1. 9 .7}).
-].
-
-1 to: moonWalkCount do: [:aCount |
-    | pos |
-    pos := avaliblePosition removeFirst.
-    specialTiles add: (MoonWalk in: pos moveBack:aCount).
-].
-
-1 to: hyperGravityCount do: [:aCount |
-    | pos |
-    pos := avaliblePosition removeFirst.
-    specialTiles add: (HyperGravity in: pos requiringMinimumRoll:1 ).
-].
-1 to: blackHoleCount do: [:aCount |
-    | pos |
-    pos := avaliblePosition removeFirst.
-    specialTiles add: (BlackHole in: pos).
-].
-
-
-
-]
-
-{ #category : 'initialization' }
-GameSetup >> withBoardsLengthInParsec:aBoardSizeInParsec [
-
-boardSizeInParsec:=aBoardSizeInParsec.
+boardSizeInParsec:=aBoardSizeInParsec asParsecs .
 ]
 
 { #category : 'accessing' }
@@ -210,20 +177,17 @@ GameSetup >> withMaximumLapsToWin: aLapsToWin [
   lapsToWin := aLapsToWin.
 ]
 
-{ #category : 'initialization' }
-GameSetup >> withNumberOfPlayers: aNumber [
-	 numberOfPlayers := aNumber.
- 
+{ #category : 'creation' }
+GameSetup >> withPlayers: someSpaceShips [ 
+
+spaceShips:= someSpaceShips.
+
+
 
 ]
 
 { #category : 'initialization' }
-GameSetup >> withSpecialTiles:aSpecialTiles [
+GameSetup >> withTiles: someTiles [
 
-specialTiles := aSpecialTiles asOrderedCollection.
-
-
-
-
-
+	tiles := someTiles asOrderedCollection
 ]

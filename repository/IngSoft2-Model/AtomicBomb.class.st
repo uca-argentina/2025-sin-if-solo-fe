@@ -20,6 +20,13 @@ AtomicBomb >> applyConsequenceTo:allSpaceShips onBoardOfSize: aBoard [
 allSpaceShips do:[:spaceShip|spaceShip moveTo: 0 consuming: 0].
 
 
+
+]
+
+{ #category : 'action' }
+AtomicBomb >> applyEffectToSpecific: spaceship on: board [
+
+spaceship moveTo: 0 consuming: 0
 ]
 
 { #category : 'initialization' }

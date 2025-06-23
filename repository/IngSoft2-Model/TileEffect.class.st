@@ -16,14 +16,20 @@ TileEffect >> applyConsequenceTo: allSpaceShips onBoardOfSize: aBoard [
 	^ self subclassResponsibility
 ]
 
+{ #category : 'action' }
+TileEffect >> applyEffectToSpecific: spaceship on: board [
+
+^ self subclassResponsibility
+]
+
 { #category : 'testing' }
-TileEffect >> isType: aTile [
-^self class = aTile
+TileEffect >> includesA:position [
+^tilePosition =position.
 ]
 
 { #category : 'accessing' }
 TileEffect >> position [
-	^ tilePosition .
+^tilePosition .
 ]
 
 { #category : 'validating' }

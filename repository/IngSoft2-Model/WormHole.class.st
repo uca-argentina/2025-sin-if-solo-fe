@@ -6,7 +6,9 @@ Class {
 	#superclass : 'TileEffect',
 	#instVars : [
 		'wormHoleEntrance',
-		'wormHoleExit'
+		'wormHoleExit',
+		'distance',
+		'destination'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -20,8 +22,8 @@ WormHole class >> from:wormholeEntrance to:wormholeExit [
 { #category : 'action' }
 WormHole >> applyConsequenceTo: allSpaceShips onBoardOfSize: aBoard [
 
-	|aSpaceShip originalPosition destination distance |
-	aSpaceShip:= allSpaceShips detect:[:spaceShip | spaceShip currentPosition = tilePosition ].
+	|aSpaceShip originalPosition |
+	aSpaceShip:= allSpaceShips detect:[:spaceShip | spaceShip currentPosition = wormHoleEntrance or: spaceShip currentPosition = wormHoleExit].
 	originalPosition := aSpaceShip currentPosition.
 	originalPosition = wormHoleEntrance ifTrue: [
 		destination := wormHoleExit.
@@ -32,6 +34,17 @@ WormHole >> applyConsequenceTo: allSpaceShips onBoardOfSize: aBoard [
 	destination := wormHoleEntrance.
 	distance := aBoard distanceFrom: originalPosition to: destination.
 	aSpaceShip moveTo: destination consuming: distance
+]
+
+{ #category : 'action' }
+WormHole >> applyEffectToSpecific: spaceship on: board [
+
+spaceship moveTo: destination consuming:distance.
+]
+
+{ #category : 'testing' }
+WormHole >> includesA:position [
+ ^ position = wormHoleEntrance or: [ position = wormHoleExit ]
 ]
 
 { #category : 'initialization' }
@@ -47,5 +60,10 @@ WormHole >> validateCreationIn: boardSize and: maximumRolledNumber [
 (wormHoleEntrance > boardSize or: wormHoleExit >boardSize ) ifTrue: [
    Error signal: 'Tile position is out of board bounds.'.
 ].
+(wormHoleEntrance >wormHoleExit)ifTrue:[
+	Error signal:'The worm hole exit must be smaller than the number of squares' ].
+
+((wormHoleEntrance <0) or: (wormHoleExit <0))ifTrue:[
+	Error signal:'Should be a positive number'].
 
 ]
