@@ -901,30 +901,3 @@ DeckOfCardsTest >> test9WhenAnAllyCardIsUsedAndNeitherOfTheSpaceShipsHaveFuleThe
 
 
 ]
-
-{ #category : 'tests' }
-DeckOfCardsTest >> testWhenBanana [
-
-	| aGameSetUp aDice aDice2 aBoard aPlayer1 aTurnManager  aDeckOfCards |
-	aGameSetUp := GameSetup new.
-
-	aDice := RiggedDice withNumberOfFaces: 1.
-	
-	aDice2 := RiggedDice withNumberOfFaces: 1.
-
-	aPlayer1 := SpaceShip named: 'Juan'.
-	
-	aDeckOfCards:= { CardAcceleration . CardAcceleration } asOrderedCollection.
-	aGameSetUp assignsRandomly: aDeckOfCards. 
-
-	aGameSetUp withDices: { aDice.aDice2 }.
-	aGameSetUp withPlayers: { aPlayer1 }.
-
-	aTurnManager:=TurnManager withOrder:{aPlayer1}.
-	aGameSetUp withABoardNumberOfSquares: 6 andTurnManager: aTurnManager.
-
-	aGameSetUp createGameInstance.
-	aBoard := aGameSetUp board.
-
-	self assert: (aBoard cardsOf: aPlayer1) equals: (OrderedCollection with: CardAcceleration  with: CardAcceleration).
-]

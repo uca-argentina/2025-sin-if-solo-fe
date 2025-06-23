@@ -68,6 +68,5 @@ HyperJump >> getParsecToMove [
 HyperJump >> initializeHyperJumpIn: aPosition parsecToMove: someParsecsToMove [
 tilePosition:=aPosition .
 parsecsToMove :=OrderedCollection new.
-parsecsToMove addAll:((someParsecsToMove)sort: [:aParsec :anotherParsec | (aParsec distance)> (anotherParsec distance)]).
-
+parsecsToMove addAll:((someParsecsToMove)sort: [:aParsec :anotherParsec | (aParsec asParsecs )> (anotherParsec asParsecs)]).
 ]
