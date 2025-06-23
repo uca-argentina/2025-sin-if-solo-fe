@@ -26,13 +26,20 @@ spaceShipsInOrder:=aOrderOfSpaceShips.
 nextSpaceShip := spaceShipsInOrder at:1.
 ]
 
+{ #category : 'testing' }
+TurnManager >> isAboutToPlay:aSpaceshipToThrowCard [
+
+^aSpaceshipToThrowCard =(spaceShipsInOrder at:1).
+]
+
 { #category : 'accessing' }
 TurnManager >> spaceShipWhoseTurnItIsFrom: spaceShips [
 
-"| spaceShipToPlay |
-spaceShipToPlay := spaceShips first."
 
-^ spaceShips detect: [ :spaceShip | spaceShip name= nextSpaceShip name].
+
+^ spaceShips detect: [ :spaceShip | spaceShip= ((spaceShipsInOrder at:1) )].
+
+
 
 ]
 

@@ -21,7 +21,7 @@ AccelerationCard class >> withIncrement: aNumber [
 AccelerationCard >> applyEffectTo: spaceShip  with: dices in:aBoard [
 
 aBoard move: spaceShip forwardBy: accelerationIncrement.
-aBoard upDateLastCardPlayed:self.
+
 
 ]
 
@@ -34,11 +34,18 @@ AccelerationCard >> changeTo: anImplementation [
 AccelerationCard >> initializeAccelerationCard: aNumber [
 
 accelerationIncrement:= aNumber.
+
 ]
 
 { #category : 'testing' }
 AccelerationCard >> isInstantaneous [
 ^false.
+]
+
+{ #category : 'testing' }
+AccelerationCard >> isLastBeingPlayedIn:aBoard [
+
+aBoard upDateLastCardPlayed: self.
 ]
 
 { #category : 'testing' }

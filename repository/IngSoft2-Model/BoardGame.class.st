@@ -14,7 +14,8 @@ Class {
 		'turnManager',
 		'deckOfCards',
 		'cardsInGame',
-		'lastCardPlayed'
+		'lastCardPlayed',
+		'spaceShipMoving'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -42,27 +43,25 @@ BoardGame class >> withNumberOfSquares: aNumberOfSquares withSizeInParsec: aSize
 BoardGame >> applyRepeatEffectWith: anImplementation [
    | aCard |
    aCard := lastCardPlayed changeTo: anImplementation.
-   
-   cardsInGame add: aCard.
+	cardsInGame add: aCard.
+   aCard applyEffectTo: spaceShipMoving with:dicesInGameBoard  in: self.
+	
+  
   
 
-"aCard applyEffectTo: (turnManager spaceShipWhoseTurnItIsFrom: spaceShips) with: dicesInGameBoard in: self.
-| aCard |
-lastCardPlayed changeTo: anImplementation.""
-aCard:= lastCardPlayed changeTo: anImplementation.
-self playerThrows: aCard.
-|spaceShip|  
-spaceShip:=(spaceShips detect: [ :each | each = spaceShipToApplyEffect ]).
-
-lastCardPlayed applyEffectTo:spaceShip  with: dicesInGameBoard in: self."
 ]
 
 { #category : 'action' }
 BoardGame >> cardEffectIsPlayed [
-	|spaceShip|
-	spaceShip:= turnManager spaceShipWhoseTurnItIsFrom:spaceShips.
+
+	
 	cardsInGame do: [ :card |
-		card applyEffectTo: spaceShip  with: dicesInGameBoard in:self ].
+		card applyEffectTo: spaceShipMoving  with: dicesInGameBoard in:self ].
+
+	"|spaceShip|
+	spaceShip= turnManager spaceShipWhoseTurnItIsFrom:spaceShips.
+	cardsInGame do: [ :card |
+		card applyEffectTo: spaceShip  with: dicesInGameBoard in:self ]."
 ]
 
 { #category : 'accessing' }
@@ -137,6 +136,7 @@ BoardGame >> initializationBoardGame: aMaxiumSquares withSizeInParsec: aSizeInPa
 	sizeInParsec := aSizeInParsec.
 	turnManager := aTurnManager.
 	deckOfCards:= adeckOfCards.
+	
 	cardsInGame:= OrderedCollection new.
 ]
 
@@ -160,10 +160,12 @@ BoardGame >> move: aSpaceShip with: dices [
 	| rolledNumber |
 	winnerSystem thereIsAWinner ifTrue: [ ^ self ].
 	rolledNumber := self rolledNumberSumOf: dices.
+	spaceShipMoving :=aSpaceShip .
 
 	(aSpaceShip canMoveWith: rolledNumber)ifFalse: [ ^self ].
 	"self cardEffectIsPlayed."
 	self move: aSpaceShip forwardBy: rolledNumber.
+	
 	self cardEffectIsPlayed.
 	
 	(self specialTileAt: aSpaceShip currentPosition)
@@ -182,9 +184,9 @@ BoardGame >> numberOfSquares [
 BoardGame >> playNextTurn [
 
 	| spaceShip |
-	turnManager updateTurn: spaceShips.
+	
 	spaceShip := turnManager spaceShipWhoseTurnItIsFrom: spaceShips.
-
+turnManager updateTurn: spaceShips.
 	spaceShip verifyCanPlayAgain.
 
 	spaceShip canPlay
@@ -198,36 +200,6 @@ BoardGame >> playNextTurn [
 		
 ]
 
-{ #category : 'action' }
-BoardGame >> playerThrows: aCard [
-
-   " | spaceShip |
-    spaceShip := turnManager spaceShipWhoseTurnItIsFrom: spaceShips.
-
-    (spaceShip isEquipedWith: aCard) ifTrue: [
-        cardsInGame add: aCard.
-        spaceShip removeCard: aCard
-    ].
-
-""cardsInGame includes: aCard choosenCard""
-
-    ((aCard isInstantaneous) and: [aCard chosenOnIsIn:cardsInGame.]) 
-    ifTrue: [
-        aCard applyEffectTo: spaceShip with: dicesInGameBoard in: self
-    ]."
-
-   " self playNextTurn."
-
-"	| spaceShip |
-	
-	spaceShip := turnManager spaceShipWhoseTurnItIsFrom: spaceShips.
-	(spaceShip isEquipedWith: aCard) ifTrue: [cardsInGame add: aCard.  spaceShip removeCard: aCard.].
-	(aCard isInstantaneous)
-			ifTrue: [ aCard applyEffectTo: spaceShip with: dicesInGameBoard in: self.  ].
-	self playNextTurn ."
-		 
-]
-
 { #category : 'accessing' }
 BoardGame >> positionOf: aSpaceShip [
 
@@ -236,6 +208,8 @@ BoardGame >> positionOf: aSpaceShip [
 
 { #category : 'removing' }
 BoardGame >> remove: cardToCancel [
+
+ 
 
 cardsInGame remove: cardToCancel.
 ]
@@ -260,10 +234,12 @@ lapsDone := totalPosition quo: maximumSquares.
 { #category : 'action' }
 BoardGame >> skipNextTurn [
 | spaceShip |
+	spaceShip:=turnManager spaceShipWhoseTurnItIsFrom: spaceShips  .
 	turnManager updateTurn:spaceShips. 
-	spaceShip := turnManager spaceShipWhoseTurnItIsFrom: spaceShips .
+
 	spaceShip losesOneRound.
 	spaceShip  rechargeFule.
+	
 	
 ]
 
@@ -285,39 +261,31 @@ lastCardPlayed :=aCard.
 ]
 
 { #category : 'action' }
-BoardGame >> with: aSpaceship throws: aCard [ 
+BoardGame >> with: aSpaceship throws: aCard [
+
+	| spaceShip aSpaceshipToThrowCard|
+	aSpaceshipToThrowCard:= (spaceShips detect: [ :each | each = aSpaceship ]).
+	spaceShip := turnManager spaceShipWhoseTurnItIsFrom: spaceShips.
+	spaceShipMoving:=spaceShip.
+	
+	(spaceShip isEquipedWith: aCard   )ifTrue: [
+		(aCard isPermanent and:( turnManager isAboutToPlay:aSpaceshipToThrowCard)) ifTrue: [
+			cardsInGame add: aCard.
+			spaceShip removeCard: aCard.
+			aCard isLastBeingPlayedIn:self.
+			
+			 ].
+		 ].
+
+	(aCard isInstantaneous and: [ aCard chosenOnIsIn: cardsInGame ])
+		ifTrue: [
+			aCard isLastBeingPlayedIn:self.
+		aCard applyEffectTo: spaceShip with: dicesInGameBoard in: self ].
+	
+	((aCard isInstantaneous not) and: (aCard isPermanent not))
+    ifTrue: [  aCard addEffectRepetedTo: self by: spaceShip the: lastCardPlayed. ].
 
 
-   | spaceShip |
-    spaceShip := turnManager spaceShipWhoseTurnItIsFrom: spaceShips.
-
-    (spaceShip isEquipedWith: aCard) ifTrue: [
-        cardsInGame add: aCard.
-        spaceShip removeCard: aCard
-    ].
-
-    ((aCard isInstantaneous) and: [aCard chosenOnIsIn:cardsInGame.]) 
-    ifTrue: [
-        aCard applyEffectTo: spaceShip with: dicesInGameBoard in: self
-    ].
-
- " (aCard isPermanent )
-        ""and: [(aSpaceship) = (turnManager spaceShipWhoseTurnItIsFrom: spaceShips)]) ""
-(aSpaceship isEquipedWith: aCard) ifTrue: [         
-            cardsInGame add: aCard.
-            aSpaceship removeCard: aCard].
-   ifTrue: [
-        (aSpaceship isEquipedWith: aCard) ifTrue: [         
-            cardsInGame add: aCard.
-            aSpaceship removeCard: aCard
-        ].
-    ].""
-
-    ((aCard isInstantaneous) and: [aCard chosenOnIsIn: cardsInGame]) 
-    ifTrue: [
-        aCard applyEffectTo: aSpaceship with: dicesInGameBoard in: self
-    ].
-"
 ]
 
 { #category : 'accessing' }

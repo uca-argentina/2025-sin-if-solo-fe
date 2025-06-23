@@ -5,7 +5,7 @@ Class {
 	#name : 'RedoCard',
 	#superclass : 'Object',
 	#instVars : [
-		'spaceShipToApplyEffect'
+		'anInicialization'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -17,14 +17,19 @@ RedoCard class >> for: aSpaceShip [
 ^self new initializationFor:aSpaceShip.
 ]
 
-{ #category : 'action' }
-RedoCard >> applyEffectTo: spaceShip with: dices in: aBoard [
-   aBoard applyRepeatEffectWith: spaceShipToApplyEffect.
+{ #category : 'adding' }
+RedoCard >> addEffectRepetedTo:aBoard by:spaceShip the:lastCardPlay [
+
+|aCard|
+ aCard := lastCardPlay changeTo: anInicialization .
+
+spaceShip equipWith: aCard .
+aBoard with: spaceShip throws: aCard .
 ]
 
 { #category : 'action' }
 RedoCard >> changeTo: anImplementation [
-   spaceShipToApplyEffect := anImplementation.
+   anInicialization := anImplementation.
    ^self
 ]
 
@@ -36,7 +41,8 @@ RedoCard >> chosenOnIsIn:cardsInGame [
 { #category : 'initialization' }
 RedoCard >> initializationFor:aSpaceShip [
 
-spaceShipToApplyEffect:=aSpaceShip.
+anInicialization:=aSpaceShip.
+
 ]
 
 { #category : 'testing' }
@@ -46,6 +52,13 @@ RedoCard >> isInstantaneous [
 ]
 
 { #category : 'testing' }
+RedoCard >> isLastBeingPlayedIn:aBoard [
+
+aBoard upDateLastCardPlayed: self.
+]
+
+{ #category : 'testing' }
 RedoCard >> isPermanent [
 ^false.
+
 ]

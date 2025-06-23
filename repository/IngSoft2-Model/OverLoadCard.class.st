@@ -42,11 +42,18 @@ spaceShipToOverLoad := anImplementation
 { #category : 'initialization' }
 OverLoadCard >> initializeOverLoadFor:aSpaceShip [
 spaceShipToOverLoad:=aSpaceShip .
+
 ]
 
 { #category : 'testing' }
 OverLoadCard >> isInstantaneous [
 ^false.
+]
+
+{ #category : 'testing' }
+OverLoadCard >> isLastBeingPlayedIn:aBoard [
+
+aBoard upDateLastCardPlayed: self.
 ]
 
 { #category : 'testing' }

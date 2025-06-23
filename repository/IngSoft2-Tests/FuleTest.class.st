@@ -42,12 +42,11 @@ FuleTest >> test010WhenASpaceShipSkipsATurnThenTheNextSpaceShipPlays [
 	self assert: (aBoard currentFuleOf: aPlayer2) equals: 14.
 
 	aBoard skipNextTurn .
-	
-	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer1) equals: 5.
 	self assert: (aBoard currentFuleOf: aPlayer1) equals: 24.
+	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer2) equals: 14.
-	self assert: (aBoard currentFuleOf: aPlayer2) equals: 10
+	self assert: (aBoard currentFuleOf: aPlayer2) equals: 10.
 ]
 
 { #category : 'tests' }

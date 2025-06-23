@@ -21,14 +21,14 @@ CancellationCard class >> for: aCard [
 CancellationCard >> applyEffectTo: spaceShip  with: dices in:aBoard [
 
 aBoard remove: cardToCancel.
-aBoard upDateLastCardPlayed:self.
+
 
 ]
 
 { #category : 'action' }
 CancellationCard >> changeTo: anImplementation [
 
-cardToCancel := anImplementation .
+ ^ (self class) for: anImplementation.
 ]
 
 { #category : 'accessing' }
@@ -46,11 +46,18 @@ CancellationCard >> chosenOnIsIn:cardsInGame [
 CancellationCard >> initializationFor:aCard [
 
 cardToCancel:=aCard.
+
 ]
 
 { #category : 'testing' }
 CancellationCard >> isInstantaneous [
 ^true.
+]
+
+{ #category : 'testing' }
+CancellationCard >> isLastBeingPlayedIn:aBoard [
+
+aBoard upDateLastCardPlayed: self.
 ]
 
 { #category : 'testing' }

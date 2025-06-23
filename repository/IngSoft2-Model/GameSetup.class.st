@@ -154,10 +154,10 @@ GameSetup >> winnerSystem [
 ]
 
 { #category : 'initialization' }
-GameSetup >> withABoardNumberOfSquares: arg1 andTurnManager: arg2 [
+GameSetup >> withABoardNumberOfSquares: numberOfSqueares andTurnManager: aTurnManager [
 
-	boardSize := arg1.
-	turnManager := arg2
+	boardSize := numberOfSqueares.
+	turnManager := aTurnManager.
 ]
 
 { #category : 'initialization' }

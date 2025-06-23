@@ -19,10 +19,9 @@ AllyCard class >> teamsUpWith: aSpaceShip [
 
 { #category : 'action' }
 AllyCard >> applyEffectTo: spaceShip  with: dicesInGameBoard in:aBoard [
-"spaceShip sharesFuleWith:spaceShipToTeamUp .
-spaceShipToTeamUp sharesFuleWith:spaceShip ."
+
 aBoard hasAnAlianceFrom:spaceShip and:spaceShipToTeamUp.
-aBoard upDateLastCardPlayed:self.
+
 
 ]
 
@@ -35,11 +34,18 @@ spaceShipToTeamUp:= anImplementation .
 { #category : 'initialization' }
 AllyCard >> initializeAllyCardTeamsUpWith:aSpaceShip [
 spaceShipToTeamUp:=aSpaceShip .
+
 ]
 
 { #category : 'testing' }
 AllyCard >> isInstantaneous [
 ^false.
+]
+
+{ #category : 'testing' }
+AllyCard >> isLastBeingPlayedIn:aBoard [
+
+aBoard upDateLastCardPlayed: self.
 ]
 
 { #category : 'testing' }
