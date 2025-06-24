@@ -48,11 +48,14 @@ GameSetup >> createBoardInstanceWith: aDices andWith: aSpaceShips andWith: aWinn
 
 	| aBoard aCopyOfSpaceships |
 	boardSizeInParsec ifNil: [ boardSizeInParsec := boardSize ].
+	rewardDistribution ifNil:[rewardDistribution := RewardDistribution new.
+		 rewardDistribution forDecreaseFuel: 0. rewardDistribution forRestartFuel: 0].
 	aBoard := BoardGame
 		          withNumberOfSquares: boardSize
 		          withSizeInParsec: boardSizeInParsec
 		          andTurnManager: turnManager
-		          andADeckOfCards: deckOfCards.
+		          andADeckOfCards: deckOfCards
+					andRewardDistribution:rewardDistribution .
 
 	tiles ifNil: [ tiles := OrderedCollection new ].
 
@@ -159,6 +162,11 @@ GameSetup >> withABoardNumberOfSquares: numberOfSqueares andTurnManager: aTurnMa
 
 	boardSize := numberOfSqueares.
 	turnManager := aTurnManager.
+]
+
+{ #category : 'creation' }
+GameSetup >> withARewardDistribution:aRewardDistribution [
+rewardDistribution:=aRewardDistribution.
 ]
 
 { #category : 'initialization' }

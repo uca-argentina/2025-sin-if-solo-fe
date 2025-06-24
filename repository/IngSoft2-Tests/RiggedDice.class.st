@@ -37,6 +37,11 @@ RiggedDice >> maximumFace [
 ]
 
 { #category : 'accessing' }
+RiggedDice >> numberJustRolled [
+^numbersToBeRolles last.
+]
+
+{ #category : 'accessing' }
 RiggedDice >> numberOfFaces [
 
 	^ numberOfFaces

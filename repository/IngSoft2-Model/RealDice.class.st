@@ -36,6 +36,11 @@ RealDice >> maximumFace [
 ]
 
 { #category : 'accessing' }
+RealDice >> numberJustRolled [
+^rolledNumber .
+]
+
+{ #category : 'accessing' }
 RealDice >> numberOfFaces [
 ^numberOfFaces .
 ]
