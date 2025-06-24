@@ -153,8 +153,6 @@ FuleTest >> test3WhenASpaceShipDoesntHaveAnyFuleLeftThenItGoesBackToTheInitialPo
 			aDice.
 			aDice2 }.
 
-
-	
 	aTurnManager:=TurnManager withOrder:{aPlayer1 }.
 	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager .
 	aGameSetUp withTiles: { (WormHole from: 1 to: 1) }.

@@ -5,6 +5,16 @@ Class {
 	#package : 'IngSoft2-Tests'
 }
 
+{ #category : 'asserting' }
+DeckOfCardsTest >> should: anErrorBlock raise: anErrorClass withMessageText: errorMessage [
+
+	self
+		should: anErrorBlock
+		raise: anErrorClass
+		withExceptionDo: [ :error |
+		self assert: error messageText equals: errorMessage ]
+]
+
 { #category : 'tests' }
 DeckOfCardsTest >> test01WhenItsNotTheSpaceShipTurnThenItCantThrowAPermanentCardAndDosentApplyEffect [
 
@@ -621,4 +631,53 @@ DeckOfCardsTest >> test9WhenAnAllyCardIsUsedAndNeitherOfTheSpaceShipsHaveFuleThe
 
 
 
+]
+
+{ #category : 'tests' }
+DeckOfCardsTest >> testF1WhenTheBonusCardPositionIsNegativeThenTheCreationFails [ 
+
+	| aGameSetUp aDice aPlayer1 aPlayer2 aTurnManager  aDeckOfCards |
+	aGameSetUp := GameSetup new.
+
+	aDice := RiggedDice withNumberOfFaces: 6.
+	aDice setNumbersProvider: { 6. 3. 3. 4 }.
+
+	aPlayer1 := SpaceShip named: 'Juan'.
+		aPlayer2 := SpaceShip named: 'Martin'.
+	
+	aDeckOfCards:= { CardAcceleration . CardAcceleration . CardAcceleration. CardAcceleration.CardAcceleration} asOrderedCollection.
+	aGameSetUp assignsRandomly: aDeckOfCards. 
+
+	aGameSetUp withDices: { aDice }.
+	aGameSetUp withPlayers: { aPlayer1 .aPlayer2}.
+
+	aTurnManager:=TurnManager withOrder:{aPlayer1}.
+	aGameSetUp withABoardNumberOfSquares: 100 andTurnManager: aTurnManager.
+	
+		self
+		should: [ aGameSetUp withTiles: { (BonusCard in: -6) }. ]
+		raise: Error
+		withMessageText: 'A BonusCard has to be in a positive position'
+	
+	
+]
+
+{ #category : 'tests' }
+DeckOfCardsTest >> testF2WhenTheCardAccelerationHasANegativeIncrementThenTheCreationFails [
+
+	| aGameSetUp aDice aPlayer1 aPlayer2 anAccelerationCard |
+	aGameSetUp := GameSetup new.
+
+	aDice := RiggedDice withNumberOfFaces: 6.
+	aDice setNumbersProvider: { 6. 3. 3. 4 }.
+
+	aPlayer1 := SpaceShip named: 'Juan'.
+	aPlayer2 := SpaceShip named: 'Martin'.
+
+	
+
+	self
+		should: [anAccelerationCard := CardAcceleration withIncrement: -1. ]
+		raise: Error
+		withMessageText: 'A CardAcceleration has to have a positive increment'
 ]

@@ -648,7 +648,7 @@ aTurnManager := TurnManager withOrder: {
 ]
 
 { #category : 'tests' }
-TileTest >> testF1WhenAHyperGravityHasAGreaterRequiringRollThanTheMaximumRolledNumberThenTheGameCreationFails [
+TileTest >> testF1WhenTheBonusCardPositionIsNegativeThenTheCreationFails [
 
 	| aGameSetUp aDice  aPlayer1 aTurnManager |
 	aGameSetUp := GameSetup new.

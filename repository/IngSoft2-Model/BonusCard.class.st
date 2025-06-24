@@ -10,7 +10,15 @@ Class {
 
 { #category : 'evaluating' }
 BonusCard class >> in: aPosition [
+
+self isPositive: aPosition.
 ^self new initializeBonusCard: aPosition.
+]
+
+{ #category : 'testing' }
+BonusCard class >> isPositive: aPosition [
+
+(aPosition<0) ifTrue: [Error signal: 'A BonusCard has to be in a positive position' ] 
 ]
 
 { #category : 'action' }

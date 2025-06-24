@@ -11,8 +11,16 @@ Class {
 	#package : 'IngSoft2-Model'
 }
 
+{ #category : 'testing' }
+CardAcceleration class >> isPositive: aNumber [
+
+(aNumber<0) ifTrue: [ Error signal: 'A CardAcceleration has to have a positive increment'] 
+]
+
 { #category : 'initialization' }
 CardAcceleration class >> withIncrement: aNumber [
+
+self isPositive: aNumber.
 
 ^self new initializeAccelerationCard: aNumber.
 ]

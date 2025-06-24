@@ -7,7 +7,6 @@ Class {
 
 { #category : 'tests' }
 RewardTest >> test1FromASampleOfAnAmountOfRolledDicesThereAreAProbabilityOfHavingARewardOrNot [
-	"Lo que me se ocurre es primero hacer lo de las probabilidades, y despues la implementacion de los dados y als rewards, entonces para qeu no me rompan los anteriores test, (porque saco la tirada maxima pero no deberia restaurar el fule, simplemente lo pongo a las rewards 0 probabilidad de apareces y listo)"
 
     | rewardDistribution results  probabilitySampling|
 probabilitySampling:=1500.

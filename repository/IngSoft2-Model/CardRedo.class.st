@@ -29,8 +29,8 @@ aBoard with: spaceShip throws: aCard .
 
 { #category : 'action' }
 CardRedo >> changeTo: anImplementation [
-   anInicialization := anImplementation.
-   ^self
+   "anInicialization := anImplementation."
+   "^self"
 ]
 
 { #category : 'initialization' }
