@@ -47,6 +47,12 @@ blackHoleProbability := aProbability.
 ]
 
 { #category : 'initialization' }
+TileDistribution >> forBonusCard: aBonusCardProbability [
+
+bonusCardProbability:= aBonusCardProbability.
+]
+
+{ #category : 'initialization' }
 TileDistribution >> forHyperGravity: aProbability [
 
 hyperGravityProbability:= aProbability.
