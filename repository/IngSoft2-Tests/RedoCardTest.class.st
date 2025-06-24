@@ -310,8 +310,6 @@ RedoCardTest >> test7WhenARedoCardIsUsedAfterARedoThenItCopysTheImplementionsOfi
 
 	aGameSetUp createGameInstance.
 	aBoard := aGameSetUp board.
-	
-
 	aBoard with: aPlayer1 throws:anOverLoadCard.
 	aBoard playNextTurn. 
 	self assert: (aBoard positionOf: aPlayer1) equals: 10.

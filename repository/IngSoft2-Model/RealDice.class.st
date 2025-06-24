@@ -31,6 +31,11 @@ RealDice >> initializeNumberOfFaces: aNumber [
 ]
 
 { #category : 'accessing' }
+RealDice >> maximumFace [
+^numberOfFaces.
+]
+
+{ #category : 'accessing' }
 RealDice >> numberOfFaces [
 ^numberOfFaces .
 ]

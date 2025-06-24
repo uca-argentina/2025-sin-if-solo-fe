@@ -16,7 +16,8 @@ Class {
 		'cardsInGame',
 		'lastCardPlayed',
 		'spaceShipMoving',
-		'lastSpecialTileEffect'
+		'lastSpecialTileEffect',
+		'rewardAsignation'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
@@ -29,14 +30,14 @@ BoardGame class >> hasTheMinimumAmountOfSquares: aNumber [
 ]
 
 { #category : 'instance creation' }
-BoardGame class >> withNumberOfSquares: aNumberOfSquares withSizeInParsec: aSizeInParsec andTurnManager: aTurnManager andADeckOfCards: deckOfCards [
+BoardGame class >> withNumberOfSquares: aNumberOfSquares withSizeInParsec: aSizeInParsec andTurnManager: aTurnManager andADeckOfCards: deckOfCards andRewardDistribution:rewardDistribution [ 
 
 	self hasTheMinimumAmountOfSquares: aNumberOfSquares.
 	^ self new
 		  initializationBoardGame: aNumberOfSquares
 		  withSizeInParsec: aSizeInParsec
 		  andTurnManager: aTurnManager
-		andADeckOfCards: deckOfCards.
+		andADeckOfCards: deckOfCards andRewardDistribution:rewardDistribution .
 		
 ]
 
@@ -136,7 +137,7 @@ spaceShipToTeamUp sharesFuleWith:spaceShip .
 ]
 
 { #category : 'initialization' }
-BoardGame >> initializationBoardGame: aMaxiumSquares withSizeInParsec: aSizeInParsec andTurnManager: aTurnManager andADeckOfCards: adeckOfCards [
+BoardGame >> initializationBoardGame: aMaxiumSquares withSizeInParsec: aSizeInParsec andTurnManager: aTurnManager andADeckOfCards: adeckOfCards andRewardDistribution:rewardDistribution [ 
 
 	maximumSquares := aMaxiumSquares.
 	sizeInParsec := aSizeInParsec.
@@ -144,6 +145,7 @@ BoardGame >> initializationBoardGame: aMaxiumSquares withSizeInParsec: aSizeInPa
 	deckOfCards:= adeckOfCards.
 	lastSpecialTileEffect:=NoEffect new.
 	cardsInGame:= OrderedCollection new.
+	rewardAsignation:=rewardDistribution .
 	
 ]
 
@@ -166,18 +168,25 @@ BoardGame >> move: aSpaceShip with: dices [
 
 	| rolledNumber |
 	winnerSystem thereIsAWinner ifTrue: [ ^ self ].
+
 	rolledNumber := self rolledNumberSumOf: dices.
+		
+	
 	spaceShipMoving :=aSpaceShip .
 
 	(aSpaceShip canMoveWith: rolledNumber)ifFalse: [ ^self ].
 	
 	self move: aSpaceShip forwardBy: rolledNumber.
 	
+	
 	lastSpecialTileEffect:=(self specialTileAt: aSpaceShip currentPosition).
 	(lastSpecialTileEffect)
 		applyConsequenceTo: spaceShips
 		onBoardOfSize: self.
 	self cardEffectIsPlayed.
+	rewardAsignation for:aSpaceShip with:dices.
+	
+
 ]
 
 { #category : 'accessing' }

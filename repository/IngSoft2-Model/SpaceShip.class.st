@@ -58,6 +58,11 @@ SpaceShip >> cardsInHand [
 ^cardsInHand.
 ]
 
+{ #category : 'action' }
+SpaceShip >> consumesFule [
+fuelSistem consume:1.
+]
+
 { #category : 'accessing' }
 SpaceShip >> currentFule [
 ^fuelSistem current 

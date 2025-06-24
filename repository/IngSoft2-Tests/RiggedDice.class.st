@@ -31,6 +31,12 @@ RiggedDice >> initializeNumberOfFaces: aNumber [
 ]
 
 { #category : 'accessing' }
+RiggedDice >> maximumFace [
+^numberOfFaces.
+
+]
+
+{ #category : 'accessing' }
 RiggedDice >> numberOfFaces [
 
 	^ numberOfFaces

@@ -15,7 +15,8 @@ Class {
 		'dices',
 		'turnManager',
 		'deckOfCards',
-		'tiles'
+		'tiles',
+		'rewardDistribution'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'

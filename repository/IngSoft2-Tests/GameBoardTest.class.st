@@ -470,7 +470,7 @@ GameBoardTest >> test0WhenTheBoardIsInitializeItHasACertainNumberOfSquaresAndAWo
 	aTurnManager:=TurnManager withOrder:{aPlayer1}.
 	aBoard := BoardGame
 		          withNumberOfSquares: 64
-		          withSizeInParsec: 10 andTurnManager: aTurnManager andADeckOfCards: nil .
+		          withSizeInParsec: 10 andTurnManager: aTurnManager andADeckOfCards: nil andRewardDistribution:nil  .
 	aWinnerSystem := WinnerSystem withMaximunLaps: 1.
 	aBoard follows: aWinnerSystem.
 	self assert: aBoard numberOfSquares equals: 64
@@ -489,7 +489,7 @@ GameBoardTest >> test1WhenTheGameBeginsTheBoardKnowsTheSpaceShipsInitialPosition
 	fuel := 100.
 	aBoard := BoardGame
 		          withNumberOfSquares: 60
-		          withSizeInParsec: 10 andTurnManager: aTurnManager andADeckOfCards: nil.
+		          withSizeInParsec: 10 andTurnManager: aTurnManager andADeckOfCards: nil andRewardDistribution:nil.
 
 
 	self assert: aPlayer1 currentPosition equals: 0

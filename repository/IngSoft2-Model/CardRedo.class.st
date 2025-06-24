@@ -48,8 +48,8 @@ CardRedo >> isInstantaneous [
 
 { #category : 'testing' }
 CardRedo >> isLastBeingPlayedIn:aBoard [
-
-aBoard upDateLastCardPlayed: self.
+"
+aBoard upDateLastCardPlayed: self."
 ]
 
 { #category : 'testing' }
