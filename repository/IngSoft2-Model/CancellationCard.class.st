@@ -31,12 +31,6 @@ CancellationCard >> changeTo: anImplementation [
  ^ (self class) for: anImplementation.
 ]
 
-{ #category : 'accessing' }
-CancellationCard >> choosenCard [
-
-^cardToCancel.
-]
-
 { #category : 'verification' }
 CancellationCard >> chosenOnIsIn:cardsInGame [
 ^cardsInGame includes: cardToCancel.

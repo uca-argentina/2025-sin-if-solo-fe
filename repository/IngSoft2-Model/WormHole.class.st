@@ -39,6 +39,8 @@ WormHole >> applyConsequenceTo: allSpaceShips onBoardOfSize: aBoard [
 { #category : 'action' }
 WormHole >> applyEffectToSpecific: spaceship on: board [
 
+
+
 spaceship moveTo: destination consuming:distance.
 ]
 

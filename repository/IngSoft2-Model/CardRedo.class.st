@@ -33,11 +33,6 @@ CardRedo >> changeTo: anImplementation [
    ^self
 ]
 
-{ #category : 'verification' }
-CardRedo >> chosenOnIsIn:cardsInGame [
-^true.
-]
-
 { #category : 'initialization' }
 CardRedo >> initializationFor:aSpaceShip [
 

@@ -142,7 +142,7 @@ BoardGame >> initializationBoardGame: aMaxiumSquares withSizeInParsec: aSizeInPa
 	sizeInParsec := aSizeInParsec.
 	turnManager := aTurnManager.
 	deckOfCards:= adeckOfCards.
-	
+	lastSpecialTileEffect:=NoEffect new.
 	cardsInGame:= OrderedCollection new.
 	
 ]
