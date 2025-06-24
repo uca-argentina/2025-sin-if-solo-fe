@@ -27,12 +27,6 @@ spaceShip equipWith: aCard .
 aBoard with: spaceShip throws: aCard .
 ]
 
-{ #category : 'action' }
-CardRedo >> changeTo: anImplementation [
-   "anInicialization := anImplementation."
-   "^self"
-]
-
 { #category : 'initialization' }
 CardRedo >> initializationFor:aSpaceShip [
 
@@ -44,12 +38,6 @@ anInicialization:=aSpaceShip.
 CardRedo >> isInstantaneous [
 
 ^false.
-]
-
-{ #category : 'testing' }
-CardRedo >> isLastBeingPlayedIn:aBoard [
-"
-aBoard upDateLastCardPlayed: self."
 ]
 
 { #category : 'testing' }
