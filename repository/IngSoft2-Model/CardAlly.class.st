@@ -4,7 +4,7 @@ AllyCard
 "
 Class {
 	#name : 'CardAlly',
-	#superclass : 'Object',
+	#superclass : 'Card',
 	#instVars : [
 		'spaceShipToTeamUp'
 	],

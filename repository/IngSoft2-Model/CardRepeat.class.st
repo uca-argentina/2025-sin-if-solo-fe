@@ -4,7 +4,7 @@ Repeta Card
 "
 Class {
 	#name : 'CardRepeat',
-	#superclass : 'Object',
+	#superclass : 'Card',
 	#instVars : [
 		'spaceship'
 	],
@@ -25,12 +25,6 @@ CardRepeat >> applyEffectTo: aSpaceShip with: dicesInGameBoard inGame: game onAB
 
 
 	
-]
-
-{ #category : 'action' }
-CardRepeat >> changeTo: aSpaceShip [
-
-	^ self class for: aSpaceShip
 ]
 
 { #category : 'verification' }

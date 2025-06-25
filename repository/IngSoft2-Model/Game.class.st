@@ -137,6 +137,43 @@ Game >> playNextTurn [
 			spaceShip rechargeFule ]
 ]
 
+{ #category : 'action' }
+Game >> playsInstantaneousCard: aCard for: aSpaceship [
+    (aCard isInstantaneous and: [ aCard chosenOnIsIn: cardsInGame ])
+        ifTrue: [
+            aCard isLastBeingPlayedIn: self.
+            aCard applyEffectTo: aSpaceship
+                 with: dicesInGameBoard
+                 inGame: self
+                 onABoard: board.
+            ^ true
+        ].
+    ^ false
+
+]
+
+{ #category : 'action' }
+Game >> playsPermanentCard: aCard for: aSpaceship [
+    (aCard isPermanent and: [ turnManager isAboutToPlay: aSpaceship ])
+        ifTrue: [
+            cardsInGame add: aCard.
+            aSpaceship removeCard: aCard.
+            aCard isLastBeingPlayedIn: self.
+            ^ true
+        ].
+    ^ false
+
+]
+
+{ #category : 'action' }
+Game >> playsRepeatCard: aCard for: aSpaceship [
+
+	(aCard isInstantaneous not and: [ aCard isPermanent not ]) ifFalse: [
+		^ self ].
+	aCard addEffectRepetedTo: self by: aSpaceship the: lastCardPlayed.
+	aSpaceship removeCard: aCard
+]
+
 { #category : 'accessing' }
 Game >> positionOf: aSpaceShip [
 
@@ -185,24 +222,11 @@ Game >> with: aSpaceship throws: aCard [
 		                         each = aSpaceship ].
 	spaceShip := turnManager spaceShipWhoseTurnItIsFrom: spaceShips.
 	spaceShipMoving := spaceShip.
-	(spaceShip isEquipedWith: aCard) ifTrue: [
-		(aCard isPermanent and:
-			 (turnManager isAboutToPlay: aSpaceshipToThrowCard)) ifTrue: [
-			cardsInGame add: aCard.
-			spaceShip removeCard: aCard.
-			aCard isLastBeingPlayedIn: self ] ].
-	(aCard isInstantaneous and: [ aCard chosenOnIsIn: cardsInGame ])
-		ifTrue: [
-			aCard isLastBeingPlayedIn: self.
-			aCard
-				applyEffectTo: spaceShipMoving
-				with: dicesInGameBoard
-				inGame: self
-				onABoard: board ].
-	(aCard isInstantaneous not and: aCard isPermanent not) ifFalse: [
+
+	(self playsPermanentCard: aCard for: aSpaceshipToThrowCard) ifTrue: [
 		^ self ].
-	aCard addEffectRepetedTo: self by: spaceShip the: lastCardPlayed.
-	spaceShip removeCard: aCard
+	(self playsInstantaneousCard: aCard for: spaceShip) ifTrue: [ ^ self ].
+	self playsRepeatCard: aCard for: spaceShip
 ]
 
 { #category : 'accessing' }

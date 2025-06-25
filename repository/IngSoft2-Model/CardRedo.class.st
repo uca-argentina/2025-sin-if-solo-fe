@@ -3,7 +3,7 @@ RedoCard
 "
 Class {
 	#name : 'CardRedo',
-	#superclass : 'Object',
+	#superclass : 'Card',
 	#instVars : [
 		'anInicialization'
 	],

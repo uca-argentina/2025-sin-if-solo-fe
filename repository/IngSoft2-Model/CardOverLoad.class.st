@@ -4,7 +4,7 @@ OverLoad Card
 "
 Class {
 	#name : 'CardOverLoad',
-	#superclass : 'Object',
+	#superclass : 'Card',
 	#instVars : [
 		'spaceShipToOverLoad'
 	],

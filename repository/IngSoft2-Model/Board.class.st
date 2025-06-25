@@ -105,7 +105,7 @@ Board >> specialTileAt: position [
 
 	^ specialTiles
 		  detect: [ :tile | tile includesA: position ]
-		  ifNone: [ nil ]
+		  
 ]
 
 { #category : 'action' }

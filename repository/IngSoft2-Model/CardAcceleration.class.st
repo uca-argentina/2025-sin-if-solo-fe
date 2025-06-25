@@ -3,7 +3,7 @@ A
 "
 Class {
 	#name : 'CardAcceleration',
-	#superclass : 'Object',
+	#superclass : 'Card',
 	#instVars : [
 		'accelerationIncrement'
 	],
