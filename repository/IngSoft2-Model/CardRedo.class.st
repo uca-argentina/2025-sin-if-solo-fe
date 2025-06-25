@@ -14,34 +14,33 @@ Class {
 { #category : 'instance creation' }
 CardRedo class >> for: aSpaceShip [
 
-^self new initializationFor:aSpaceShip.
+	^ self new initializationFor: aSpaceShip
 ]
 
 { #category : 'adding' }
-CardRedo >> addEffectRepetedTo:aBoard by:spaceShip the:lastCardPlay [
+CardRedo >> addEffectRepetedTo: aBoard by: spaceShip the: lastCardPlay [
 
-|aCard|
- aCard := lastCardPlay changeTo: anInicialization .
+	| aCard |
+	aCard := lastCardPlay changeTo: anInicialization.
 
-spaceShip equipWith: aCard .
-aBoard with: spaceShip throws: aCard .
+	spaceShip equipWith: aCard.
+	aBoard with: spaceShip throws: aCard
 ]
 
 { #category : 'initialization' }
-CardRedo >> initializationFor:aSpaceShip [
+CardRedo >> initializationFor: aSpaceShip [
 
-anInicialization:=aSpaceShip.
-
+	anInicialization := aSpaceShip
 ]
 
 { #category : 'testing' }
 CardRedo >> isInstantaneous [
 
-^false.
+	^ false
 ]
 
 { #category : 'testing' }
 CardRedo >> isPermanent [
-^false.
 
+	^ false
 ]

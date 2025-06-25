@@ -9,8 +9,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-NoReward >> applyTo:aSpaceShip [
+NoReward >> applyTo: aSpaceShip [
 
-
-
+	
 ]

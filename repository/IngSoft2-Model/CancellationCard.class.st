@@ -18,43 +18,43 @@ CancellationCard class >> for: aCard [
 ]
 
 { #category : 'action' }
-CancellationCard >> applyEffectTo: spaceShip  with: dices in:aBoard [
+CancellationCard >> applyEffectTo: spaceShipMoving with: dicesInGameBoard inGame: game onABoard: aBoard [
 
-aBoard remove: cardToCancel.
-
-
+	game remove: cardToCancel
 ]
 
 { #category : 'action' }
 CancellationCard >> changeTo: anImplementation [
 
- ^ (self class) for: anImplementation.
+	^ self class for: anImplementation
 ]
 
 { #category : 'verification' }
-CancellationCard >> chosenOnIsIn:cardsInGame [
-^cardsInGame includes: cardToCancel.
+CancellationCard >> chosenOnIsIn: cardsInGame [
+
+	^ cardsInGame includes: cardToCancel
 ]
 
 { #category : 'initialization' }
-CancellationCard >> initializationFor:aCard [
+CancellationCard >> initializationFor: aCard [
 
-cardToCancel:=aCard.
-
+	cardToCancel := aCard
 ]
 
 { #category : 'testing' }
 CancellationCard >> isInstantaneous [
-^true.
+
+	^ true
 ]
 
 { #category : 'testing' }
-CancellationCard >> isLastBeingPlayedIn:aBoard [
+CancellationCard >> isLastBeingPlayedIn: aBoard [
 
-aBoard upDateLastCardPlayed: self.
+	aBoard upDateLastCardPlayed: self
 ]
 
 { #category : 'testing' }
 CancellationCard >> isPermanent [
-^false.
+
+	^ false
 ]

@@ -26,23 +26,26 @@ self hasAtLeastOneFace:aNumber.
 
 { #category : 'initialization' }
 RealDice >> initializeNumberOfFaces: aNumber [
-	
+
 	numberOfFaces := aNumber
 ]
 
 { #category : 'accessing' }
 RealDice >> maximumFace [
-^numberOfFaces.
+
+	^ numberOfFaces
 ]
 
 { #category : 'accessing' }
 RealDice >> numberJustRolled [
-^rolledNumber .
+
+	^ rolledNumber
 ]
 
 { #category : 'accessing' }
 RealDice >> numberOfFaces [
-^numberOfFaces .
+
+	^ numberOfFaces
 ]
 
 { #category : 'accessing' }

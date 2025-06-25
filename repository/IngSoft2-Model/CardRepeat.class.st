@@ -14,47 +14,51 @@ Class {
 
 { #category : 'instance creation' }
 CardRepeat class >> for: aSpaceShip [
-^self new initializationFor:aSpaceShip.
+
+	^ self new initializationFor: aSpaceShip
 ]
 
 { #category : 'action' }
-CardRepeat >> applyEffectTo: aSpaceShip with: dicesInGameBoard in: aBoard [
+CardRepeat >> applyEffectTo: aSpaceShip with: dicesInGameBoard inGame: game onABoard: aBoard [
 
-aBoard applyRepeatEffectWith: spaceship.
+	game applyRepeatEffectWith: spaceship
 
 
-"(board lastSpecialTileEffect) applyTo: spaceship on: aBoard."
+	
 ]
 
 { #category : 'action' }
 CardRepeat >> changeTo: aSpaceShip [
-^ (self class) for:aSpaceShip.
+
+	^ self class for: aSpaceShip
 ]
 
 { #category : 'verification' }
 CardRepeat >> chosenOnIsIn: cardsInGame [
-^true.
+
+	^ true
 ]
 
 { #category : 'initialization' }
-CardRepeat >> initializationFor:aSpaceship [
-spaceship:=aSpaceship .
+CardRepeat >> initializationFor: aSpaceship [
 
+	spaceship := aSpaceship
 ]
 
 { #category : 'testing' }
 CardRepeat >> isInstantaneous [
-^true.
+
+	^ true
 ]
 
 { #category : 'testing' }
-CardRepeat >> isLastBeingPlayedIn:aBoard [
+CardRepeat >> isLastBeingPlayedIn: aBoard [
 
-aBoard upDateLastCardPlayed: self.
+	aBoard upDateLastCardPlayed: self
 ]
 
 { #category : 'testing' }
 CardRepeat >> isPermanent [
-^false.
 
+	^ false
 ]

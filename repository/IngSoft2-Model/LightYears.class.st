@@ -12,24 +12,25 @@ Class {
 }
 
 { #category : 'accessing' }
-LightYears class >> distance:aDistance [
+LightYears class >> distance: aDistance [
 
-^self new initializeLightYears:aDistance .
+	^ self new initializeLightYears: aDistance
 ]
 
 { #category : 'action' }
 LightYears >> asParsecs [
-^(distance /3)floor.
 
+	^ (distance / 3) floor
 ]
 
 { #category : 'accessing' }
 LightYears >> distance [
-^distance .
 
+	^ distance
 ]
 
 { #category : 'initialization' }
-LightYears >> initializeLightYears:aDistance [
-distance:=aDistance .
+LightYears >> initializeLightYears: aDistance [
+
+	distance := aDistance
 ]

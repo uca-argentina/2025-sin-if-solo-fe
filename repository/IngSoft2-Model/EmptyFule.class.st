@@ -11,10 +11,11 @@ Class {
 { #category : 'action' }
 EmptyFule >> giveFuel: anAmount [
 
-^false.
+	^ false
 ]
 
 { #category : 'testing' }
 EmptyFule >> isBiggerThanCero [
-^false.
+
+	^ false
 ]

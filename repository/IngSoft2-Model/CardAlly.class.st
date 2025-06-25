@@ -14,41 +14,42 @@ Class {
 
 { #category : 'initialization' }
 CardAlly class >> teamsUpWith: aSpaceShip [
-^self new initializeAllyCardTeamsUpWith:aSpaceShip.
+
+	^ self new initializeAllyCardTeamsUpWith: aSpaceShip
 ]
 
 { #category : 'action' }
-CardAlly >> applyEffectTo: spaceShip  with: dicesInGameBoard in:aBoard [
+CardAlly >> applyEffectTo: spaceShip with: dicesInGameBoard inGame: game onABoard: aBoard [
 
-aBoard hasAnAlianceFrom:spaceShip and:spaceShipToTeamUp.
-
-
+	game hasAnAlianceFrom: spaceShip and: spaceShipToTeamUp
 ]
 
 { #category : 'action' }
 CardAlly >> changeTo: anImplementation [
 
-^ (self class) teamsUpWith:anImplementation.
+	^ self class teamsUpWith: anImplementation
 ]
 
 { #category : 'initialization' }
-CardAlly >> initializeAllyCardTeamsUpWith:aSpaceShip [
-spaceShipToTeamUp:=aSpaceShip .
+CardAlly >> initializeAllyCardTeamsUpWith: aSpaceShip [
 
+	spaceShipToTeamUp := aSpaceShip
 ]
 
 { #category : 'testing' }
 CardAlly >> isInstantaneous [
-^false.
+
+	^ false
 ]
 
 { #category : 'testing' }
-CardAlly >> isLastBeingPlayedIn:aBoard [
+CardAlly >> isLastBeingPlayedIn: aBoard [
 
-aBoard upDateLastCardPlayed: self.
+	aBoard upDateLastCardPlayed: self
 ]
 
 { #category : 'testing' }
 CardAlly >> isPermanent [
-^true.
+
+	^ true
 ]

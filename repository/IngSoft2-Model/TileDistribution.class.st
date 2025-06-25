@@ -27,81 +27,84 @@ TileDistribution class >> withABoardNumberOfSquares: aNumberOfTiles [
 
 { #category : 'building' }
 TileDistribution >> build [
-	self theSumIsOne.
- tiles := (1 to: numberOfTiles) collect: [ :i |
-        self tileFor: Random new next ].
-    ^tiles
 
+	self theSumIsOne.
+	tiles := (1 to: numberOfTiles) collect: [ :i |
+		         self tileFor: Random new next ].
+	^ tiles
 ]
 
 { #category : 'initialization' }
 TileDistribution >> forAtomicBomb: aProbability [
 
-atomicBombProability:= aProbability.
+	atomicBombProability := aProbability
 ]
 
 { #category : 'initialization' }
 TileDistribution >> forBlackHole: aProbability [
 
-blackHoleProbability := aProbability.
+	blackHoleProbability := aProbability
 ]
 
 { #category : 'initialization' }
 TileDistribution >> forBonusCard: aBonusCardProbability [
 
-bonusCardProbability:= aBonusCardProbability.
+	bonusCardProbability := aBonusCardProbability
 ]
 
 { #category : 'initialization' }
 TileDistribution >> forHyperGravity: aProbability [
 
-hyperGravityProbability:= aProbability.
+	hyperGravityProbability := aProbability
 ]
 
 { #category : 'initialization' }
 TileDistribution >> forHyperJump: aProbability [
 
-hyperJumpProbability:= aProbability.
+	hyperJumpProbability := aProbability
 ]
 
 { #category : 'initialization' }
 TileDistribution >> forMoonWalk: aProbability [
 
-moonWalkProbabilty:= aProbability.
+	moonWalkProbabilty := aProbability
 ]
 
 { #category : 'initialization' }
 TileDistribution >> forNoEffect: aProbability [
 
-noEffectProbability:= aProbability.
+	noEffectProbability := aProbability
 ]
 
 { #category : 'initialization' }
 TileDistribution >> initializeWithABoardSize: aNumberOfTiles [
 
-numberOfTiles:= aNumberOfTiles.
-noEffectProbability:=0.
-blackHoleProbability:=0 .
-hyperGravityProbability:=0 .
-moonWalkProbabilty:=0 .
-hyperJumpProbability:=0 .
-atomicBombProability:=0 .
-bonusCardProbability:=0.
+	numberOfTiles := aNumberOfTiles.
+	noEffectProbability := 0.
+	blackHoleProbability := 0.
+	hyperGravityProbability := 0.
+	moonWalkProbabilty := 0.
+	hyperJumpProbability := 0.
+	atomicBombProability := 0.
+	bonusCardProbability := 0
 ]
 
 { #category : 'accessing' }
 TileDistribution >> percentageOf: tile [
-    ^(tiles count: [ :atile | atile class = tile  ])/tiles size asFloat.
 
+	^ (tiles count: [ :atile | atile class = tile ]) / tiles size asFloat
 ]
 
 { #category : 'verification' }
 TileDistribution >> theSumIsOne [
 
-| sumOfProbabilites |
-sumOfProbabilites:=(noEffectProbability + blackHoleProbability + hyperGravityProbability + moonWalkProbabilty + hyperJumpProbability + atomicBombProability + bonusCardProbability)ceiling.
+	| sumOfProbabilites |
+	sumOfProbabilites := (noEffectProbability + blackHoleProbability
+	                      + hyperGravityProbability + moonWalkProbabilty
+	                      + hyperJumpProbability + atomicBombProability
+	                      + bonusCardProbability) ceiling.
 
-	(sumOfProbabilites = 1) ifFalse: [
+	sumOfProbabilites = 1 ifFalse: [
 		Error signal: 'The Sum Of All Probabilities should be 1' ]
 ]
 

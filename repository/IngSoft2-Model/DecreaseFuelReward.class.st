@@ -10,5 +10,6 @@ Class {
 
 { #category : 'operations' }
 DecreaseFuelReward >> applyTo: aSpaceShip [
-aSpaceShip consumesFule.
+
+	aSpaceShip consumesFule
 ]

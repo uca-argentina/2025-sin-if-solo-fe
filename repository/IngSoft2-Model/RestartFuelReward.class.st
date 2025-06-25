@@ -11,5 +11,5 @@ Class {
 { #category : 'operations' }
 RestartFuelReward >> applyTo: aSpaceShip [
 
-aSpaceShip rechargeFule.
+	aSpaceShip rechargeFule
 ]
