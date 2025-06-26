@@ -4,6 +4,10 @@ Abstract class for Cards
 Class {
 	#name : 'Card',
 	#superclass : 'Object',
+	#instVars : [
+		'permanent',
+		'instantaneous'
+	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
@@ -24,9 +28,10 @@ Card >> initializationFor: aSomething [
 	self subclassResponsibility
 ]
 
-{ #category : 'abstract' }
+{ #category : 'getState' }
 Card >> isInstantaneous [
-	self subclassResponsibility.
+
+	^ instantaneous.
 ]
 
 { #category : 'testing' }
@@ -34,7 +39,8 @@ Card >> isLastBeingPlayedIn: aBoard [
 	self subclassResponsibility.
 ]
 
-{ #category : 'abstract' }
+{ #category : 'getState' }
 Card >> isPermanent [
-	self subclassResponsibility.
+
+	^ permanent.
 ]

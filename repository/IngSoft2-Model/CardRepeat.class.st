@@ -42,23 +42,14 @@ CardRepeat >> chosenOnIsIn: cardsInGame [
 { #category : 'initialization' }
 CardRepeat >> initializationFor: aSpaceship [
 
+	permanent := false.
+	instantaneous := true.
+
 	spaceship := aSpaceship
-]
-
-{ #category : 'abstract' }
-CardRepeat >> isInstantaneous [
-
-	^ true.
 ]
 
 { #category : 'testing' }
 CardRepeat >> isLastBeingPlayedIn: aBoard [
 
 	aBoard upDateLastCardPlayed: self
-]
-
-{ #category : 'testing' }
-CardRepeat >> isPermanent [
-
-	^ false
 ]

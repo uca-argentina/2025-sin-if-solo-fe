@@ -39,24 +39,13 @@ CardRedo >> changeTo: anImplementation [
 
 { #category : 'initialization' }
 CardRedo >> initializationFor: aSpaceShip [
-
+	permanent := false.
+	instantaneous := false.
 	anInicialization := aSpaceShip
-]
-
-{ #category : 'abstract' }
-CardRedo >> isInstantaneous [
-
-	^ false
 ]
 
 { #category : 'testing' }
 CardRedo >> isLastBeingPlayedIn: aBoard [
 	
 	^ true.
-]
-
-{ #category : 'abstract' }
-CardRedo >> isPermanent [
-
-	^ false
 ]

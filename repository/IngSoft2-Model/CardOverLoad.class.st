@@ -34,28 +34,20 @@ CardOverLoad >> applyEffectTo: spaceShip with: dicesInGameBoard inGame: game onA
 { #category : 'action' }
 CardOverLoad >> changeTo: anImplementation [
 
-	^ self class for: anImplementation
+	^ self class for: anImplementation.
 ]
 
 { #category : 'initialization' }
 CardOverLoad >> initializationFor: aSpaceShip [
 
-	spaceShipToOverLoad := aSpaceShip
-]
+	permanent := true.
+	instantaneous := false.
 
-{ #category : 'abstract' }
-CardOverLoad >> isInstantaneous [
-	^ false.
+	spaceShipToOverLoad := aSpaceShip
 ]
 
 { #category : 'testing' }
 CardOverLoad >> isLastBeingPlayedIn: aBoard [
 
 	aBoard upDateLastCardPlayed: self
-]
-
-{ #category : 'testing' }
-CardOverLoad >> isPermanent [
-
-	^ true
 ]

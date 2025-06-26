@@ -27,28 +27,20 @@ CardAlly >> applyEffectTo: spaceShip with: dicesInGameBoard inGame: game onABoar
 { #category : 'action' }
 CardAlly >> changeTo: anImplementation [
 
-	^ self class teamsUpWith: anImplementation
+	^ self class teamsUpWith: anImplementation.
 ]
 
 { #category : 'initialization' }
 CardAlly >> initializationFor: aSpaceShip [
 
-	spaceShipToTeamUp := aSpaceShip
-]
+	permanent := true.
+	instantaneous := false.
 
-{ #category : 'abstract' }
-CardAlly >> isInstantaneous [
-	^ false.
+	spaceShipToTeamUp := aSpaceShip
 ]
 
 { #category : 'testing' }
 CardAlly >> isLastBeingPlayedIn: aBoard [
 
 	aBoard upDateLastCardPlayed: self
-]
-
-{ #category : 'testing' }
-CardAlly >> isPermanent [
-
-	^ true
 ]

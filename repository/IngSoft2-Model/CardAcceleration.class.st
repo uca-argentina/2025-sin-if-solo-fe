@@ -35,28 +35,20 @@ CardAcceleration >> applyEffectTo: spaceShip with: dicesInGameBoard inGame: game
 { #category : 'action' }
 CardAcceleration >> changeTo: anImplementation [
 
-	^ self class withIncrement: anImplementation
+	^ self class withIncrement: anImplementation.
 ]
 
 { #category : 'initialization' }
 CardAcceleration >> initializationFor: aNumber [
 
-	accelerationIncrement := aNumber
-]
+	permanent := true.
+	instantaneous := false.
 
-{ #category : 'abstract' }
-CardAcceleration >> isInstantaneous [
-	^ false.
+	accelerationIncrement := aNumber
 ]
 
 { #category : 'testing' }
 CardAcceleration >> isLastBeingPlayedIn: aBoard [
 
 	aBoard upDateLastCardPlayed: self 
-]
-
-{ #category : 'testing' }
-CardAcceleration >> isPermanent [
-
-	^ true
 ]
