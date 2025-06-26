@@ -19,32 +19,25 @@ MoonWalk class >> in:aPosition moveBack:anAmount [
 { #category : 'action' }
 MoonWalk >> applyConsequenceTo: allSpaceShips onBoardOfSize: aBoard [
 
-| affectedShips |
-
-	affectedShips := allSpaceShips reject: [ :ship | ship currentPosition = tilePosition ].
+	| affectedShips |
+	affectedShips := allSpaceShips reject: [ :ship |
+		                 ship currentPosition = tilePosition ].
 
 	affectedShips do: [ :ship |
-		ship goBack: amountToMoveBack onBoardOfSize: (aBoard numberOfSquares) ].
+		ship goBack: amountToMoveBack onBoardOfSize: aBoard numberOfSquares ]
+]
 
+{ #category : 'action' }
+MoonWalk >> applyEffectToSpecific: spaceship on: board [
+
+	spaceship
+		goBack: amountToMoveBack
+		onBoardOfSize: board numberOfSquares
 ]
 
 { #category : 'initialization' }
-MoonWalk >> initializeMoonWalkIn: aPosition moveBack:anAmount [
-tilePosition:=aPosition .
-amountToMoveBack:=anAmount.
+MoonWalk >> initializeMoonWalkIn: aPosition moveBack: anAmount [
 
-]
-
-{ #category : 'accessing' }
-MoonWalk >> position [
-^tilePosition .
-]
-
-{ #category : 'validating' }
-MoonWalk >> validateCreationIn: boardSize and: maximumRolledNumber [
-
-tilePosition > boardSize ifTrue: [
-   Error signal: 'Tile position is out of board bounds.'.
-].
-
+	tilePosition := aPosition.
+	amountToMoveBack := anAmount
 ]

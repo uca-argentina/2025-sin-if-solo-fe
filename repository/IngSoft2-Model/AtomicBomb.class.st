@@ -15,30 +15,19 @@ AtomicBomb class >> in: aPosition [
 ]
 
 { #category : 'action' }
-AtomicBomb >> applyConsequenceTo:allSpaceShips onBoardOfSize: aBoard [
+AtomicBomb >> applyConsequenceTo: allSpaceShips onBoardOfSize: aBoard [
 
-allSpaceShips do:[:spaceShip|spaceShip moveTo: 0 consuming: 0].
+	allSpaceShips do: [ :spaceShip | spaceShip moveTo: 0 consuming: 0 ]
+]
 
+{ #category : 'action' }
+AtomicBomb >> applyEffectToSpecific: spaceship on: board [
 
+	spaceship moveTo: 0 consuming: 0
 ]
 
 { #category : 'initialization' }
 AtomicBomb >> initializeAtomicBombIn: aPosition [
 
-tilePosition:= aPosition.
-]
-
-{ #category : 'accessing' }
-AtomicBomb >> position [
-^tilePosition .
-]
-
-{ #category : 'validating' }
-AtomicBomb >> validateCreationIn: boardSize and: maximumRolledNumber [
-
-
-tilePosition > boardSize ifTrue: [
-   Error signal: 'Tile position is out of board bounds.'.
-].
-
+	tilePosition := aPosition
 ]

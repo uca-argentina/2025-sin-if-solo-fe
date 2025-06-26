@@ -16,17 +16,25 @@ TileEffect >> applyConsequenceTo: allSpaceShips onBoardOfSize: aBoard [
 	^ self subclassResponsibility
 ]
 
+{ #category : 'action' }
+TileEffect >> applyEffectToSpecific: spaceship on: board [
+
+^ self subclassResponsibility
+]
+
 { #category : 'testing' }
-TileEffect >> isType: aTile [
-^self class = aTile
+TileEffect >> includesA:position [
+^tilePosition =position.
 ]
 
 { #category : 'accessing' }
 TileEffect >> position [
-	^ self subclassResponsibility
+^tilePosition .
 ]
 
 { #category : 'validating' }
 TileEffect >> validateCreationIn: boardSize and: maximumRolledNumber [ 
-	^ self subclassResponsibility
+	 tilePosition > boardSize ifTrue: [
+   Error signal: 'Tile position is out of board bounds.'.
+].
 ]

@@ -14,61 +14,65 @@ Class {
 }
 
 { #category : 'initialization' }
-HyperJump class >> in: aPosition parsecToMove: someParsecsToMove [
+HyperJump class >> in: aPosition toMove: someParsecsToMove [
 ^self new initializeHyperJumpIn: aPosition parsecToMove: someParsecsToMove.
 ]
 
 { #category : 'action' }
-HyperJump >> applyConsequenceTo:allSpaceShips onBoardOfSize: aBoard [
+HyperJump >> applyConsequenceTo: allSpaceShips onBoardOfSize: aBoard [
 
-|  aSpaceShip  squaresToMove|
-aParsecToMove:= self getParsecToMove.
+	| aSpaceShip squaresToMove |
+	aParsecToMove := self getParsecToMove.
 
-aSpaceShip:= allSpaceShips detect:[:spaceShip | spaceShip currentPosition = tilePosition ].
+	aSpaceShip := allSpaceShips detect: [ :spaceShip |
+		              spaceShip currentPosition = tilePosition ].
 
-squaresToMove:=aSpaceShip currentPosition + (self calculateParsecDistribution: aBoard).
+	squaresToMove := aSpaceShip currentPosition
+	                 + (self calculateParsecDistribution: aBoard).
 
 
-aSpaceShip moveTo:(squaresToMove)consuming: (self calculateParsecDistribution: aBoard).
+	aSpaceShip
+		moveTo: squaresToMove
+		consuming: (self calculateParsecDistribution: aBoard)
+]
+
+{ #category : 'action' }
+HyperJump >> applyEffectToSpecific: spaceship on: board [
+
+	| squaresToMove |
+	aParsecToMove := self getParsecToMove.
+
+	squaresToMove := spaceship currentPosition
+	                 + (self calculateParsecDistribution: board).
+
+
+	spaceship
+		moveTo: squaresToMove
+		consuming: (self calculateParsecDistribution: board)
 ]
 
 { #category : 'calculation' }
 HyperJump >> calculateParsecDistribution: aBoard [
-	
-	^ aBoard squaresInParsec:aParsecToMove.
-	
 
-	
+	^ aBoard squaresInParsec: aParsecToMove
 ]
 
 { #category : 'accessing' }
 HyperJump >> getParsecToMove [
 
- | nextParsec |
-    nextParsec := parsecsToMove first.
-    parsecsToMove removeFirst.
-    parsecsToMove add: nextParsec.
-    ^ nextParsec
+	| nextParsec |
+	nextParsec := parsecsToMove first.
+	parsecsToMove removeFirst.
+	parsecsToMove add: nextParsec.
+	^ nextParsec distance
 ]
 
 { #category : 'initialization' }
 HyperJump >> initializeHyperJumpIn: aPosition parsecToMove: someParsecsToMove [
-tilePosition:=aPosition .
-parsecsToMove :=OrderedCollection new.
-parsecsToMove addAll:((someParsecsToMove)sort: [:aParsec :anotherParsec | aParsec> anotherParsec]).
 
-]
-
-{ #category : 'accessing' }
-HyperJump >> position [
-^tilePosition .
-]
-
-{ #category : 'validating' }
-HyperJump >> validateCreationIn: boardSize and: maximumRolledNumber [
-
-tilePosition > boardSize ifTrue: [
-   Error signal: 'Tile position is out of board bounds.'.
-].
-
+	tilePosition := aPosition.
+	parsecsToMove := OrderedCollection new.
+	parsecsToMove addAll:
+		(someParsecsToMove sort: [ :aParsec :anotherParsec |
+			 aParsec asParsecs > anotherParsec asParsecs ])
 ]

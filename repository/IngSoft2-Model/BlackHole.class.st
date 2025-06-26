@@ -15,31 +15,21 @@ BlackHole class >> in: aPosition [
 
 { #category : 'action' }
 BlackHole >> applyConsequenceTo: allSpaceShips onBoardOfSize: aBoard [
-    
-| aSpaceShip|
-    
-    aSpaceShip := allSpaceShips detect: [ :spaceShip | spaceShip currentPosition = tilePosition ].
-	aSpaceShip goBack: 4 onBoardOfSize: (aBoard numberOfSquares ).
-  
+
+	| aSpaceShip |
+	aSpaceShip := allSpaceShips detect: [ :spaceShip |
+		              spaceShip currentPosition = tilePosition ].
+	aSpaceShip goBack: 4 onBoardOfSize: aBoard numberOfSquares
+]
+
+{ #category : 'action' }
+BlackHole >> applyEffectToSpecific: spaceship on: board [
+
+	spaceship goBack: 4 onBoardOfSize: board numberOfSquares
 ]
 
 { #category : 'initialization' }
 BlackHole >> initializeBlackHoleIn: aPosition [
 
-tilePosition:=aPosition.
-]
-
-{ #category : 'accessing' }
-BlackHole >> position [
-^tilePosition.
-]
-
-{ #category : 'validating' }
-BlackHole >> validateCreationIn: boardSize and: maximumRolledNumber [
-
-
-tilePosition > boardSize ifTrue: [
-   Error signal: 'Tile position is out of board bounds.'.
-].
-
+	tilePosition := aPosition
 ]

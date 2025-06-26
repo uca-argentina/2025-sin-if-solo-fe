@@ -21,52 +21,51 @@ WinnerSystem class >> withMaximunLaps: aNumberOfLaps [
 ]
 
 { #category : 'testing' }
-WinnerSystem >> hasReachedWinningLapCount:aLapCount [
+WinnerSystem >> hasReachedWinningLapCount: aLapCount [
 
-^(aLapCount =lapsToWin )
+	^ aLapCount = lapsToWin
 ]
 
 { #category : 'initialization' }
 WinnerSystem >> intializeWinnerSystemWith: aNumberOfLaps [
 
-lapsToWin := aNumberOfLaps .
+	lapsToWin := aNumberOfLaps
 ]
 
 { #category : 'sorting' }
 WinnerSystem >> ranking [
 
-	^ spaceShips sort: [ :spaceShip1 :spaceShip2 |
-		  spaceShip1 currentLap > spaceShip2 currentLap or: [
-			  spaceShip1 currentLap = spaceShip2 currentLap and: [
-				  spaceShip1 currentPosition > spaceShip2 currentPosition or: [
-					  spaceShip1 currentPosition = spaceShip2 currentPosition and: [
-						  spaceShip1 turnOrder < spaceShip2 turnOrder ] ] ] ] ]
+	^ spaceShips sort: [ :aSpaceShips :oponentSpaceship |
+		  aSpaceShips ranksHigherThan: oponentSpaceship ]
 ]
 
 { #category : 'accessing' }
 WinnerSystem >> theBronzeWinnerIs [
-^( self ranking third)asOriginalSpaceShip.
+
+	^ self ranking third
 ]
 
 { #category : 'accessing' }
 WinnerSystem >> theGoldWinnerIs [
-    ^ ( self ranking first) asOriginalSpaceShip.
+
+	^ self ranking first
 ]
 
 { #category : 'accessing' }
 WinnerSystem >> theSilverWinnerIs [
-^(self ranking second) asOriginalSpaceShip.
+
+	^ self ranking second
 ]
 
 { #category : 'validating' }
 WinnerSystem >> thereIsAWinner [
- ^ spaceShips anySatisfy: [:spaceShip | self hasReachedWinningLapCount:(spaceShip currentLap )]
+
+	^ spaceShips anySatisfy: [ :spaceShip |
+		  self hasReachedWinningLapCount: spaceShip currentLap ]
 ]
 
 { #category : 'assignments' }
 WinnerSystem >> withPotentialWinner: aSpaceShips [
 
-spaceShips:= aSpaceShips.
-
-
+	spaceShips := aSpaceShips
 ]

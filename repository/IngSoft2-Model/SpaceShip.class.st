@@ -8,55 +8,75 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'currentPosition',
-		'originalSpaceShip',
 		'laps',
-		'numberOfOrderToPlay',
-		'currentFule',
-		'numberOfLostTurns',
-		'initialFule',
-		'minimumRollRequired'
+		'minimumRollRequired',
+		'fuelSistem',
+		'name',
+		'lostTurns',
+		'cardsInHand',
+		'aPositionToMove'
 	],
 	#category : 'IngSoft2-Model',
 	#package : 'IngSoft2-Model'
 }
 
 { #category : 'initialization' }
-SpaceShip class >> inInitialPosition: aPosition [
+SpaceShip class >> named: aName [ 
+    ^ self new initializeWtihAName:aName.
+]
 
-	^ self new initializeSpaceShip: aPosition
+{ #category : 'comparing' }
+SpaceShip >> = anotherSpaceShip [
+
+	^ name = anotherSpaceShip name
+]
+
+{ #category : 'action' }
+SpaceShip >> actualLapsDone: lapsDone [
+
+	laps := lapsDone
 ]
 
 { #category : 'action' }
 SpaceShip >> adjustLapBy: anAmount [
-laps:=laps+anAmount.
-]
 
-{ #category : 'accessing' }
-SpaceShip >> asOriginalSpaceShip [
-^originalSpaceShip.
+	laps := laps + anAmount
 ]
 
 { #category : 'testing' }
 SpaceShip >> canMoveWith: rolledNumber [
 
-    ^ rolledNumber >= minimumRollRequired .
+	^ rolledNumber >= minimumRollRequired
 ]
 
 { #category : 'testing' }
 SpaceShip >> canPlay [
 
-    ^ currentFule > 0 and: [ numberOfLostTurns = 0 ]
+	^ fuelSistem hasFuelToPlay and: [ lostTurns = 0 ]
+]
 
+{ #category : 'accessing' }
+SpaceShip >> cardsInHand [
+
+	^ cardsInHand
+]
+
+{ #category : 'action' }
+SpaceShip >> consumesFule [
+
+	fuelSistem consume: 1
 ]
 
 { #category : 'accessing' }
 SpaceShip >> currentFule [
-^currentFule 
+
+	^ fuelSistem current
 ]
 
 { #category : 'accessing' }
 SpaceShip >> currentLap [
-^laps
+
+	^ laps
 ]
 
 { #category : 'accessing' }
@@ -65,10 +85,22 @@ SpaceShip >> currentPosition [
 	^ currentPosition
 ]
 
+{ #category : 'initialization' }
+SpaceShip >> equipWith: aCard [
+
+	cardsInHand add: aCard
+]
+
+{ #category : 'accessing' }
+SpaceShip >> fuelSystem [
+
+	^ fuelSistem
+]
+
 { #category : 'action' }
 SpaceShip >> goBack: amountToMoveBack onBoardOfSize: maximumSquares [
 
-	| aPositionToMove amountOfFuel |
+	| amountOfFuel |
 	amountOfFuel := amountToMoveBack.
 	aPositionToMove := self currentPosition - amountToMoveBack.
 
@@ -83,99 +115,97 @@ SpaceShip >> goBack: amountToMoveBack onBoardOfSize: maximumSquares [
 		self adjustLapBy: 1 ].
 
 	self moveTo: aPositionToMove consuming: amountOfFuel.
-	self validateCurrentFule
-]
-
-{ #category : 'accessing' }
-SpaceShip >> initialFule: ainitialFule [
-	currentFule := ainitialFule.
-	initialFule := ainitialFule.
-
-]
-
-{ #category : 'initialization' }
-SpaceShip >> initializeSpaceShip: aPosition [
-	laps:=0.
-	currentPosition := aPosition.
-	numberOfLostTurns:=0.
-	minimumRollRequired := 0.
+	fuelSistem validateCurrentFuleOf: self
 ]
 
 { #category : 'testing' }
-SpaceShip >> isCopyOf: aPlayer [
-    ^ originalSpaceShip == aPlayer.
+SpaceShip >> has: fuel [
+
+	fuelSistem := fuel
+]
+
+{ #category : 'testing' }
+SpaceShip >> hasFule [
+
+	^ fuelSistem validateCurrentFuleOf: self
+]
+
+{ #category : 'initialization' }
+SpaceShip >> initializeWtihAName: aName [
+
+	name := aName.
+	cardsInHand := OrderedCollection new.
+	currentPosition := 0.
+	aPositionToMove := 0.
+	fuelSistem := 0.
+	lostTurns := 0.
+	laps := 0.
+	minimumRollRequired := 0
 ]
 
 { #category : 'action' }
-SpaceShip >> losesRound [
-	
-	numberOfLostTurns := numberOfLostTurns + 1.
+SpaceShip >> losesOneRound [
 
+	lostTurns := 2
+]
+
+{ #category : 'action' }
+SpaceShip >> losesTwoRounds [
+
+	lostTurns := lostTurns + 1
 ]
 
 { #category : 'action' }
 SpaceShip >> moveTo: newPosition consuming: aDistance [
-	
-	currentFule := currentFule - aDistance.
+
+	fuelSistem consume: aDistance.
+
 	currentPosition := newPosition.
-	
-	(currentFule <=0) ifTrue: [self losesRound].
-]
-
-{ #category : 'action' }
-SpaceShip >> moveWith: rolledNumber onBoardOfSize: maximumSquares [
- | totalPosition lapsDone newPosition  |
-
-
-	totalPosition := currentPosition + rolledNumber.
-	lapsDone := totalPosition quo: maximumSquares.
-	laps := lapsDone.
-	
-	newPosition := (totalPosition - 1 rem: maximumSquares) + 1.
-	
-	self moveTo: newPosition consuming: rolledNumber.	
-	self validateCurrentFule.
+	fuelSistem hasFuelToPlay ifFalse: [ self losesTwoRounds ]
 ]
 
 { #category : 'accessing' }
-SpaceShip >> originalSpaceShip: aPlayer [
-    originalSpaceShip := aPlayer.
+SpaceShip >> name [
+
+	^ name
 ]
 
 { #category : 'action' }
 SpaceShip >> preventMovingUntilRollsAtLeast: aNumber [
-    minimumRollRequired := aNumber.
 
+	minimumRollRequired := aNumber
+]
+
+{ #category : 'action' }
+SpaceShip >> ranksHigherThan: oponentSpaceship [
+
+	^ self currentLap > oponentSpaceship currentLap or: [
+		  self currentLap = oponentSpaceship currentLap and: [
+			  self currentPosition > oponentSpaceship currentPosition or: [
+				  self currentPosition = oponentSpaceship currentPosition ] ] ]
 ]
 
 { #category : 'action' }
 SpaceShip >> rechargeFule [
-currentFule :=initialFule .
+
+	fuelSistem recharge
 ]
 
-{ #category : 'accessing' }
-SpaceShip >> turnOrder [
-^numberOfOrderToPlay
+{ #category : 'removing' }
+SpaceShip >> removeCard: aCard [
+
+	cardsInHand remove: aCard
 ]
 
-{ #category : 'assignments' }
-SpaceShip >> turnOrder: aNumberOfOrderToPlay [
-numberOfOrderToPlay:=aNumberOfOrderToPlay.
-]
+{ #category : 'action' }
+SpaceShip >> sharesFuleWith: anotherSpaceShip [
 
-{ #category : 'validating' }
-SpaceShip >> validateCurrentFule [
-
-(currentFule <= 0) ifFalse: [ ^ self ].
-    self moveTo: 0 consuming:0.
-    currentFule := 0.
-
+	fuelSistem sharesFuleWith: anotherSpaceShip fuelSystem
 ]
 
 { #category : 'action' }
 SpaceShip >> verifyCanPlayAgain [
-	numberOfLostTurns = 2 ifFalse: [ ^ self ].
-	numberOfLostTurns := 0.
-	
 
+	lostTurns = 2 ifFalse: [ ^ self ].
+	lostTurns := 0
 ]
