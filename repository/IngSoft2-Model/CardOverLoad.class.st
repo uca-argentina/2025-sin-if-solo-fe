@@ -4,7 +4,7 @@ OverLoad Card
 "
 Class {
 	#name : 'CardOverLoad',
-	#superclass : 'Card',
+	#superclass : 'Object',
 	#instVars : [
 		'spaceShipToOverLoad'
 	],
@@ -41,12 +41,6 @@ CardOverLoad >> changeTo: anImplementation [
 CardOverLoad >> initializeOverLoadFor: aSpaceShip [
 
 	spaceShipToOverLoad := aSpaceShip
-]
-
-{ #category : 'testing' }
-CardOverLoad >> isInstantaneous [
-
-	^ false
 ]
 
 { #category : 'testing' }

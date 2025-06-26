@@ -4,7 +4,7 @@ AllyCard
 "
 Class {
 	#name : 'CardAlly',
-	#superclass : 'Card',
+	#superclass : 'Object',
 	#instVars : [
 		'spaceShipToTeamUp'
 	],
@@ -34,12 +34,6 @@ CardAlly >> changeTo: anImplementation [
 CardAlly >> initializeAllyCardTeamsUpWith: aSpaceShip [
 
 	spaceShipToTeamUp := aSpaceShip
-]
-
-{ #category : 'testing' }
-CardAlly >> isInstantaneous [
-
-	^ false
 ]
 
 { #category : 'testing' }

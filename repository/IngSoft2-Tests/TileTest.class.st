@@ -481,7 +481,7 @@ TileTest >> test4WhenAHyperGravityPositionIsOutOfTheBoardMaximumSizeThenTheGameC
 TileTest >> test5WhenASpaceShipFallsToTheAtomicBombThenAllSpaceShipsMoveToTheStart [
 
 	| aGameSetUp aDice aBoard aPlayer1 aPlayer2 aWinnerSystem aTurnManager |
-	aGameSetUp := GameSetup new.
+	aGameSetUp := GameSetup new. 
 
 	aDice := RiggedDice withNumberOfFaces: 10.
 	aDice setNumbersProvider: { 2. 4. 5. 9 }.

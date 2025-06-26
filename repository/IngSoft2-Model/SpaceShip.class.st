@@ -143,12 +143,6 @@ SpaceShip >> initializeWtihAName: aName [
 	minimumRollRequired := 0
 ]
 
-{ #category : 'testing' }
-SpaceShip >> isEquipedWith: aCard [
-
-	^ cardsInHand includes: aCard
-]
-
 { #category : 'action' }
 SpaceShip >> losesOneRound [
 

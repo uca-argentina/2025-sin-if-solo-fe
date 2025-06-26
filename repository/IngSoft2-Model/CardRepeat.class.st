@@ -4,7 +4,7 @@ Repeta Card
 "
 Class {
 	#name : 'CardRepeat',
-	#superclass : 'Card',
+	#superclass : 'Object',
 	#instVars : [
 		'spaceship'
 	],
