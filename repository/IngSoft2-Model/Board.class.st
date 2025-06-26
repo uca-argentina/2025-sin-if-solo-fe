@@ -95,12 +95,6 @@ Board >> setLapsAndGetNewPositionFrom: totalPosition for: aSpaceShip [
 ]
 
 { #category : 'accessing' }
-Board >> size [
-
-	^ sizeInParsec
-]
-
-{ #category : 'accessing' }
 Board >> specialTileAt: position [
 
 	^ specialTiles

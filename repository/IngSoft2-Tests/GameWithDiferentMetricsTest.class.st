@@ -89,7 +89,7 @@ GameWithDiferentMetricsTest >> test3WhenABoardHasTheirMetricInLightYearsThenItUn
 
 	| aGameSetUp aPlayer1 aBoard aDice aTurnManager |
 	aGameSetUp := GameSetup new.
-
+ 
 
 	aDice := RiggedDice withNumberOfFaces: 8.
 	aDice setNumbersProvider: { 1. 5. 8. 2. 5. 5. 5. 5 }.
