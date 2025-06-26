@@ -53,7 +53,7 @@ CardAcceleration >> isInstantaneous [
 { #category : 'testing' }
 CardAcceleration >> isLastBeingPlayedIn: aBoard [
 
-	aBoard upDateLastCardPlayed: self
+	aBoard upDateLastCardPlayed: self 
 ]
 
 { #category : 'testing' }

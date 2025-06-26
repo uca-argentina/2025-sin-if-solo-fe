@@ -56,7 +56,7 @@ DistributionOfTilesTest >> test2WhenATileDistributionIsSetThenTheBoardCanHaveOne
 	boardSize := 1500.
 	aTileDistribution := TileDistribution withABoardNumberOfSquares:
 		                     boardSize.
-
+ 
 	aTileDistribution forNoEffect: 0.
 	aTileDistribution forBlackHole: 1.
 	aTileDistribution forHyperGravity: 0.
