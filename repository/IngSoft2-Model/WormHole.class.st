@@ -22,8 +22,10 @@ WormHole class >> from:wormholeEntrance to:wormholeExit [
 { #category : 'action' }
 WormHole >> applyConsequenceTo: allSpaceShips onBoardOfSize: aBoard [
 
-	|aSpaceShip originalPosition |
-	aSpaceShip:= allSpaceShips detect:[:spaceShip | spaceShip currentPosition = wormHoleEntrance or: spaceShip currentPosition = wormHoleExit].
+	| aSpaceShip originalPosition |
+	aSpaceShip := allSpaceShips detect: [ :spaceShip |
+		              spaceShip currentPosition = wormHoleEntrance or:
+			              spaceShip currentPosition = wormHoleExit ].
 	originalPosition := aSpaceShip currentPosition.
 	originalPosition = wormHoleEntrance ifTrue: [
 		destination := wormHoleExit.
@@ -39,31 +41,32 @@ WormHole >> applyConsequenceTo: allSpaceShips onBoardOfSize: aBoard [
 { #category : 'action' }
 WormHole >> applyEffectToSpecific: spaceship on: board [
 
-spaceship moveTo: destination consuming:distance.
+	spaceship moveTo: destination consuming: distance
 ]
 
 { #category : 'testing' }
-WormHole >> includesA:position [
- ^ position = wormHoleEntrance or: [ position = wormHoleExit ]
+WormHole >> includesA: position [
+
+	^ position = wormHoleEntrance or: [ position = wormHoleExit ]
 ]
 
 { #category : 'initialization' }
-WormHole >> initializeWormHoleFrom:aWormholeEntrance to:aWormholeExit [
-wormHoleEntrance:=aWormholeEntrance.
-wormHoleExit:=aWormholeExit .
-tilePosition:=aWormholeEntrance .
+WormHole >> initializeWormHoleFrom: aWormholeEntrance to: aWormholeExit [
+
+	wormHoleEntrance := aWormholeEntrance.
+	wormHoleExit := aWormholeExit.
+	tilePosition := aWormholeEntrance
 ]
 
 { #category : 'validating' }
 WormHole >> validateCreationIn: boardSize and: maximumRolledNumber [
 
-(wormHoleEntrance > boardSize or: wormHoleExit >boardSize ) ifTrue: [
-   Error signal: 'Tile position is out of board bounds.'.
-].
-(wormHoleEntrance >wormHoleExit)ifTrue:[
-	Error signal:'The worm hole exit must be smaller than the number of squares' ].
+	(wormHoleEntrance > boardSize or: wormHoleExit > boardSize) ifTrue: [
+		Error signal: 'Tile position is out of board bounds.' ].
+	wormHoleEntrance > wormHoleExit ifTrue: [
+		Error signal:
+			'The worm hole exit must be smaller than the number of squares' ].
 
-((wormHoleEntrance <0) or: (wormHoleExit <0))ifTrue:[
-	Error signal:'Should be a positive number'].
-
+	(wormHoleEntrance < 0 or: wormHoleExit < 0) ifTrue: [
+		Error signal: 'Should be a positive number' ]
 ]

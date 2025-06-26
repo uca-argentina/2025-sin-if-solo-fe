@@ -32,19 +32,21 @@ SpaceShip >> = anotherSpaceShip [
 ]
 
 { #category : 'action' }
-SpaceShip >> actualLapsDone: lapsDone [ 
-laps:=lapsDone .
+SpaceShip >> actualLapsDone: lapsDone [
+
+	laps := lapsDone
 ]
 
 { #category : 'action' }
 SpaceShip >> adjustLapBy: anAmount [
-laps:=laps+anAmount.
+
+	laps := laps + anAmount
 ]
 
 { #category : 'testing' }
 SpaceShip >> canMoveWith: rolledNumber [
 
-    ^ rolledNumber >= minimumRollRequired .
+	^ rolledNumber >= minimumRollRequired
 ]
 
 { #category : 'testing' }
@@ -55,17 +57,26 @@ SpaceShip >> canPlay [
 
 { #category : 'accessing' }
 SpaceShip >> cardsInHand [
-^cardsInHand.
+
+	^ cardsInHand
+]
+
+{ #category : 'action' }
+SpaceShip >> consumesFule [
+
+	fuelSistem consume: 1
 ]
 
 { #category : 'accessing' }
 SpaceShip >> currentFule [
-^fuelSistem current 
+
+	^ fuelSistem current
 ]
 
 { #category : 'accessing' }
 SpaceShip >> currentLap [
-^laps
+
+	^ laps
 ]
 
 { #category : 'accessing' }
@@ -77,18 +88,19 @@ SpaceShip >> currentPosition [
 { #category : 'initialization' }
 SpaceShip >> equipWith: aCard [
 
-cardsInHand add: aCard.
+	cardsInHand add: aCard
 ]
 
 { #category : 'accessing' }
 SpaceShip >> fuelSystem [
-^fuelSistem.
+
+	^ fuelSistem
 ]
 
 { #category : 'action' }
 SpaceShip >> goBack: amountToMoveBack onBoardOfSize: maximumSquares [
 
-	 |amountOfFuel |
+	| amountOfFuel |
 	amountOfFuel := amountToMoveBack.
 	aPositionToMove := self currentPosition - amountToMoveBack.
 
@@ -103,53 +115,44 @@ SpaceShip >> goBack: amountToMoveBack onBoardOfSize: maximumSquares [
 		self adjustLapBy: 1 ].
 
 	self moveTo: aPositionToMove consuming: amountOfFuel.
-	fuelSistem validateCurrentFuleOf: self 
+	fuelSistem validateCurrentFuleOf: self
 ]
 
 { #category : 'testing' }
 SpaceShip >> has: fuel [
 
-	fuelSistem := fuel.
+	fuelSistem := fuel
 ]
 
 { #category : 'testing' }
 SpaceShip >> hasFule [
 
-^(fuelSistem validateCurrentFuleOf: self ).
+	^ fuelSistem validateCurrentFuleOf: self
 ]
 
 { #category : 'initialization' }
-SpaceShip >> initializeWtihAName:aName [
+SpaceShip >> initializeWtihAName: aName [
 
-name:= aName.
-cardsInHand:= OrderedCollection new.
-currentPosition := 0.
-aPositionToMove:=0.
-fuelSistem := 0.
-lostTurns:=0.
-laps := 0.
-minimumRollRequired := 0.
-]
-
-{ #category : 'testing' }
-SpaceShip >> isEquipedWith: aCard [
-
-
-    ^(cardsInHand includes: aCard).
+	name := aName.
+	cardsInHand := OrderedCollection new.
+	currentPosition := 0.
+	aPositionToMove := 0.
+	fuelSistem := 0.
+	lostTurns := 0.
+	laps := 0.
+	minimumRollRequired := 0
 ]
 
 { #category : 'action' }
 SpaceShip >> losesOneRound [
-  lostTurns :=2.
-	
 
+	lostTurns := 2
 ]
 
 { #category : 'action' }
-SpaceShip >> losesTwoRounds [ 
-  lostTurns :=lostTurns +1.
+SpaceShip >> losesTwoRounds [
 
-
+	lostTurns := lostTurns + 1
 ]
 
 { #category : 'action' }
@@ -158,18 +161,19 @@ SpaceShip >> moveTo: newPosition consuming: aDistance [
 	fuelSistem consume: aDistance.
 
 	currentPosition := newPosition.
-	(fuelSistem hasFuelToPlay ) ifFalse: [ self losesTwoRounds ]
+	fuelSistem hasFuelToPlay ifFalse: [ self losesTwoRounds ]
 ]
 
 { #category : 'accessing' }
 SpaceShip >> name [
-^name.
+
+	^ name
 ]
 
 { #category : 'action' }
 SpaceShip >> preventMovingUntilRollsAtLeast: aNumber [
-    minimumRollRequired := aNumber.
 
+	minimumRollRequired := aNumber
 ]
 
 { #category : 'action' }
@@ -178,24 +182,25 @@ SpaceShip >> ranksHigherThan: oponentSpaceship [
 	^ self currentLap > oponentSpaceship currentLap or: [
 		  self currentLap = oponentSpaceship currentLap and: [
 			  self currentPosition > oponentSpaceship currentPosition or: [
-				  self currentPosition = oponentSpaceship currentPosition  ] ] ]
+				  self currentPosition = oponentSpaceship currentPosition ] ] ]
 ]
 
 { #category : 'action' }
-SpaceShip >> rechargeFule [ 
+SpaceShip >> rechargeFule [
 
-fuelSistem recharge 
+	fuelSistem recharge
 ]
 
 { #category : 'removing' }
-SpaceShip >> removeCard:aCard [
-cardsInHand remove:aCard.
+SpaceShip >> removeCard: aCard [
+
+	cardsInHand remove: aCard
 ]
 
 { #category : 'action' }
-SpaceShip >> sharesFuleWith:anotherSpaceShip [
+SpaceShip >> sharesFuleWith: anotherSpaceShip [
 
-fuelSistem sharesFuleWith: (anotherSpaceShip fuelSystem) .
+	fuelSistem sharesFuleWith: anotherSpaceShip fuelSystem
 ]
 
 { #category : 'action' }

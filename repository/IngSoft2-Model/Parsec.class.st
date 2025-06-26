@@ -19,17 +19,18 @@ Parsec class >> distance:aDistance [
 
 { #category : 'action' }
 Parsec >> asParsecs [
-^distance.
 
+	^ distance
 ]
 
 { #category : 'accessing' }
 Parsec >> distance [
-^distance .
+
+	^ distance
 ]
 
 { #category : 'initialization' }
-Parsec >> initializeParsec:aDistance [
-distance:=aDistance .
+Parsec >> initializeParsec: aDistance [
 
+	distance := aDistance
 ]

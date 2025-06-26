@@ -14,49 +14,43 @@ Class {
 
 { #category : 'instance creation' }
 CardOverLoad class >> for: aSpaceShip [
-^self new initializeOverLoadFor:aSpaceShip.
+
+	^ self new initializeOverLoadFor: aSpaceShip
 ]
 
 { #category : 'action' }
-CardOverLoad >> applyEffectTo: spaceShip with: dices in: aBoard [
+CardOverLoad >> applyEffectTo: spaceShip with: dicesInGameBoard inGame: game onABoard: aBoard [
 
-|rolledNumberAdjust |
-rolledNumberAdjust :=0.
-
-
-(spaceShip  = spaceShipToOverLoad )ifTrue:[spaceShip goBack: 2 onBoardOfSize: (aBoard numberOfSquares ).].
-
-aBoard upDateLastCardPlayed:self.
+	| rolledNumberAdjust |
+	rolledNumberAdjust := 0.
 
 
+	spaceShip = spaceShipToOverLoad ifTrue: [
+		spaceShip goBack: 2 onBoardOfSize: aBoard numberOfSquares ].
+
+	game upDateLastCardPlayed: self
 ]
 
 { #category : 'action' }
 CardOverLoad >> changeTo: anImplementation [
 
- ^ (self class) for: anImplementation.
-
-
+	^ self class for: anImplementation
 ]
 
 { #category : 'initialization' }
-CardOverLoad >> initializeOverLoadFor:aSpaceShip [
-spaceShipToOverLoad:=aSpaceShip .
+CardOverLoad >> initializeOverLoadFor: aSpaceShip [
 
+	spaceShipToOverLoad := aSpaceShip
 ]
 
 { #category : 'testing' }
-CardOverLoad >> isInstantaneous [
-^false.
-]
+CardOverLoad >> isLastBeingPlayedIn: aBoard [
 
-{ #category : 'testing' }
-CardOverLoad >> isLastBeingPlayedIn:aBoard [
-
-aBoard upDateLastCardPlayed: self.
+	aBoard upDateLastCardPlayed: self
 ]
 
 { #category : 'testing' }
 CardOverLoad >> isPermanent [
-^true.
+
+	^ true
 ]

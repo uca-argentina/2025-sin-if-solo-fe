@@ -22,33 +22,28 @@ TurnManager class >> withOrder: arg1 [
 
 { #category : 'initialization' }
 TurnManager >> initializeTurnManager: aOrderOfSpaceShips [
-spaceShipsInOrder:=aOrderOfSpaceShips. 
-nextSpaceShip := spaceShipsInOrder at:1.
+
+	spaceShipsInOrder := aOrderOfSpaceShips.
+	nextSpaceShip := spaceShipsInOrder at: 1
 ]
 
 { #category : 'testing' }
-TurnManager >> isAboutToPlay:aSpaceshipToThrowCard [
+TurnManager >> isAboutToPlay: aSpaceshipToThrowCard [
 
-^aSpaceshipToThrowCard =(spaceShipsInOrder at:1).
+	^ aSpaceshipToThrowCard = (spaceShipsInOrder at: 1)
 ]
 
 { #category : 'accessing' }
 TurnManager >> spaceShipWhoseTurnItIsFrom: spaceShips [
 
-
-
-^ spaceShips detect: [ :spaceShip | spaceShip= ((spaceShipsInOrder at:1) )].
-
-
-
+	^ spaceShips detect: [ :spaceShip |
+		  spaceShip = (spaceShipsInOrder at: 1) ]
 ]
 
 { #category : 'action' }
-TurnManager >> updateTurn:someSpaceShips [
+TurnManager >> updateTurn: someSpaceShips [
 
-    nextSpaceShip := spaceShipsInOrder first.
-    spaceShipsInOrder add: nextSpaceShip.
-    spaceShipsInOrder removeFirst.
-
-  
+	nextSpaceShip := spaceShipsInOrder first.
+	spaceShipsInOrder add: nextSpaceShip.
+	spaceShipsInOrder removeFirst
 ]

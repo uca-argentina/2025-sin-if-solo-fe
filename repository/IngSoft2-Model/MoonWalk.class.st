@@ -19,25 +19,25 @@ MoonWalk class >> in:aPosition moveBack:anAmount [
 { #category : 'action' }
 MoonWalk >> applyConsequenceTo: allSpaceShips onBoardOfSize: aBoard [
 
-| affectedShips |
-
-	affectedShips := allSpaceShips reject: [ :ship | ship currentPosition = tilePosition ].
+	| affectedShips |
+	affectedShips := allSpaceShips reject: [ :ship |
+		                 ship currentPosition = tilePosition ].
 
 	affectedShips do: [ :ship |
-		ship goBack: amountToMoveBack onBoardOfSize: (aBoard numberOfSquares) ].
-
+		ship goBack: amountToMoveBack onBoardOfSize: aBoard numberOfSquares ]
 ]
 
 { #category : 'action' }
 MoonWalk >> applyEffectToSpecific: spaceship on: board [
-	
-	spaceship goBack: amountToMoveBack onBoardOfSize: (board numberOfSquares)
 
+	spaceship
+		goBack: amountToMoveBack
+		onBoardOfSize: board numberOfSquares
 ]
 
 { #category : 'initialization' }
-MoonWalk >> initializeMoonWalkIn: aPosition moveBack:anAmount [
-tilePosition:=aPosition .
-amountToMoveBack:=anAmount.
+MoonWalk >> initializeMoonWalkIn: aPosition moveBack: anAmount [
 
+	tilePosition := aPosition.
+	amountToMoveBack := anAmount
 ]
