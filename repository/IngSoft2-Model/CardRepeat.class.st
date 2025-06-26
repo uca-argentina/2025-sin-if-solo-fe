@@ -45,10 +45,10 @@ CardRepeat >> initializationFor: aSpaceship [
 	spaceship := aSpaceship
 ]
 
-{ #category : 'testing' }
+{ #category : 'abstract' }
 CardRepeat >> isInstantaneous [
 
-	^ true
+	^ true.
 ]
 
 { #category : 'testing' }
