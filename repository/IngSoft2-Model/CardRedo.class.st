@@ -17,28 +17,18 @@ CardRedo class >> for: aSpaceShip [
 	^ self new initializationFor: aSpaceShip
 ]
 
-{ #category : 'adding' }
-CardRedo >> addEffectRepetedTo: aBoard by: spaceShip the: lastCardPlay [
-
-	| aCard |
-	aCard := lastCardPlay changeTo: anInicialization.
-
-	spaceShip equipWith: aCard.
-	aBoard with: spaceShip throws: aCard
-]
-
 { #category : 'abstract' }
 CardRedo >> applyEffectTo: aSpaceShip with: dicesInGameBoard inGame: game onABoard: aBoard [
 
 	| aCard lastCard |
 	lastCard := game lastCardPlayed.
-	lastCard 
-		ifNil: [ Error signal: 'First card played cannot be a redo card!' ] 
-		ifNotNil: [ aCard := lastCard changeTo: anInicialization.
-	
-	aSpaceShip equipWith: aCard.
-	aBoard with: aSpaceShip throws: aCard.
-	].
+	lastCard
+		ifNil: [ Error signal: 'First card played cannot be a redo card!' ]
+		ifNotNil: [
+			aCard := lastCard changeTo: anInicialization.
+
+			aSpaceShip equipWith: aCard.
+			aBoard with: aSpaceShip throws: aCard ]
 ]
 
 { #category : 'action' }
