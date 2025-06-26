@@ -3,7 +3,7 @@ A
 "
 Class {
 	#name : 'CardAcceleration',
-	#superclass : 'Object',
+	#superclass : 'Card',
 	#instVars : [
 		'accelerationIncrement'
 	],
@@ -42,6 +42,11 @@ CardAcceleration >> changeTo: anImplementation [
 CardAcceleration >> initializeAccelerationCard: aNumber [
 
 	accelerationIncrement := aNumber
+]
+
+{ #category : 'abstract' }
+CardAcceleration >> isInstantaneous [
+	^ false.
 ]
 
 { #category : 'testing' }

@@ -3,7 +3,7 @@ ccccancellationnn
 "
 Class {
 	#name : 'CancellationCard',
-	#superclass : 'Object',
+	#superclass : 'Card',
 	#instVars : [
 		'cardToCancel'
 	],

@@ -4,7 +4,7 @@ Repeta Card
 "
 Class {
 	#name : 'CardRepeat',
-	#superclass : 'Object',
+	#superclass : 'Card',
 	#instVars : [
 		'spaceship'
 	],
@@ -25,6 +25,11 @@ CardRepeat >> applyEffectTo: aSpaceShip with: dicesInGameBoard inGame: game onAB
 
 
 	
+]
+
+{ #category : 'action' }
+CardRepeat >> changeTo: anImplementation [
+	^ self class.
 ]
 
 { #category : 'verification' }
