@@ -36,6 +36,12 @@ Game >> applyRepeatEffectWith: aSpaceship [
 	board applyEffectOfLastTileTo: spaceShip on: self
 ]
 
+{ #category : 'accessing' }
+Game >> board [
+
+	^ board.
+]
+
 { #category : 'action' }
 Game >> cardEffectIsPlayed [
 
@@ -63,6 +69,12 @@ Game >> completedLapsBy: aSpaceShip [
 Game >> currentFuleOf: aSpaceShip [
 
 	^ (self spaceShipMatching: aSpaceShip) currentFule
+]
+
+{ #category : 'accessing' }
+Game >> dicesInGameBoard [
+	
+	^ dicesInGameBoard.
 ]
 
 { #category : 'accessing' }
@@ -95,6 +107,11 @@ Game >> initializationGameWithBoard: aBoard andTurnManager: aTurnManager andRewa
 
 	cardsInGame := OrderedCollection new.
 	rewardAsignation := rewardDistribution
+]
+
+{ #category : 'accessing' }
+Game >> lastCardPlayed [
+	^ lastCardPlayed.
 ]
 
 { #category : 'action' }
@@ -170,7 +187,7 @@ Game >> playsRepeatCard: aCard for: aSpaceship [
 
 	(aCard isInstantaneous not and: [ aCard isPermanent not ]) ifFalse: [
 		^ self ].
-	aCard addEffectRepetedTo: self by: aSpaceship the: lastCardPlayed.
+	aCard applyEffectTo: aSpaceship with: self dicesInGameBoard inGame: self onABoard: self.
 	aSpaceship removeCard: aCard
 ]
 

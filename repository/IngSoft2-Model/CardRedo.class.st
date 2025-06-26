@@ -3,7 +3,7 @@ RedoCard
 "
 Class {
 	#name : 'CardRedo',
-	#superclass : 'Object',
+	#superclass : 'Card',
 	#instVars : [
 		'anInicialization'
 	],
@@ -27,19 +27,45 @@ CardRedo >> addEffectRepetedTo: aBoard by: spaceShip the: lastCardPlay [
 	aBoard with: spaceShip throws: aCard
 ]
 
+{ #category : 'abstract' }
+CardRedo >> applyEffectTo: aSpaceShip with: dicesInGameBoard inGame: game onABoard: aBoard [
+
+	| aCard lastCard |
+	lastCard := game lastCardPlayed.
+	lastCard 
+		ifNil: [ Error signal: 'First card played cannot be a redo card!' ] 
+		ifNotNil: [ aCard := lastCard changeTo: anInicialization.
+	
+	aSpaceShip equipWith: aCard.
+	aBoard with: aSpaceShip throws: aCard.
+	].
+]
+
+{ #category : 'action' }
+CardRedo >> changeTo: anImplementation [
+	
+	^ self class for: anImplementation.
+]
+
 { #category : 'initialization' }
 CardRedo >> initializationFor: aSpaceShip [
 
 	anInicialization := aSpaceShip
 ]
 
-{ #category : 'testing' }
+{ #category : 'abstract' }
 CardRedo >> isInstantaneous [
 
 	^ false
 ]
 
 { #category : 'testing' }
+CardRedo >> isLastBeingPlayedIn: aBoard [
+	
+	^ true.
+]
+
+{ #category : 'abstract' }
 CardRedo >> isPermanent [
 
 	^ false

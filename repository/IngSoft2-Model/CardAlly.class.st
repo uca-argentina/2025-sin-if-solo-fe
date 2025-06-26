@@ -18,7 +18,7 @@ CardAlly class >> teamsUpWith: aSpaceShip [
 	^ self new initializeAllyCardTeamsUpWith: aSpaceShip
 ]
 
-{ #category : 'action' }
+{ #category : 'abstract' }
 CardAlly >> applyEffectTo: spaceShip with: dicesInGameBoard inGame: game onABoard: aBoard [
 
 	game hasAnAlianceFrom: spaceShip and: spaceShipToTeamUp

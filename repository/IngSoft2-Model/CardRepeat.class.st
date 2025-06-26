@@ -29,7 +29,8 @@ CardRepeat >> applyEffectTo: aSpaceShip with: dicesInGameBoard inGame: game onAB
 
 { #category : 'action' }
 CardRepeat >> changeTo: anImplementation [
-	^ self class.
+
+	^ self class for: anImplementation.
 ]
 
 { #category : 'verification' }
