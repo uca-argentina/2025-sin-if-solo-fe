@@ -18,6 +18,12 @@ Card >> changeTo: anImplementation [
 	self subclassResponsibility.
 ]
 
+{ #category : 'initialization' }
+Card >> initializationFor: aSomething [
+
+	self subclassResponsibility
+]
+
 { #category : 'abstract' }
 Card >> isInstantaneous [
 	self subclassResponsibility.

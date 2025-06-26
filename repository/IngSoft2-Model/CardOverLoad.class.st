@@ -15,7 +15,7 @@ Class {
 { #category : 'instance creation' }
 CardOverLoad class >> for: aSpaceShip [
 
-	^ self new initializeOverLoadFor: aSpaceShip
+	^ self new initializationFor: aSpaceShip
 ]
 
 { #category : 'action' }
@@ -38,7 +38,7 @@ CardOverLoad >> changeTo: anImplementation [
 ]
 
 { #category : 'initialization' }
-CardOverLoad >> initializeOverLoadFor: aSpaceShip [
+CardOverLoad >> initializationFor: aSpaceShip [
 
 	spaceShipToOverLoad := aSpaceShip
 ]

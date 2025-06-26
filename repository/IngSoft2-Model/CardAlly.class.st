@@ -15,7 +15,7 @@ Class {
 { #category : 'initialization' }
 CardAlly class >> teamsUpWith: aSpaceShip [
 
-	^ self new initializeAllyCardTeamsUpWith: aSpaceShip
+	^ self new initializationFor: aSpaceShip
 ]
 
 { #category : 'abstract' }
@@ -31,7 +31,7 @@ CardAlly >> changeTo: anImplementation [
 ]
 
 { #category : 'initialization' }
-CardAlly >> initializeAllyCardTeamsUpWith: aSpaceShip [
+CardAlly >> initializationFor: aSpaceShip [
 
 	spaceShipToTeamUp := aSpaceShip
 ]

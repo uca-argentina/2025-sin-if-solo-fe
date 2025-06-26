@@ -23,7 +23,7 @@ CardAcceleration class >> withIncrement: aNumber [
 
 	self isPositive: aNumber.
 
-	^ self new initializeAccelerationCard: aNumber
+	^ self new initializationFor: aNumber
 ]
 
 { #category : 'action' }
@@ -39,7 +39,7 @@ CardAcceleration >> changeTo: anImplementation [
 ]
 
 { #category : 'initialization' }
-CardAcceleration >> initializeAccelerationCard: aNumber [
+CardAcceleration >> initializationFor: aNumber [
 
 	accelerationIncrement := aNumber
 ]
