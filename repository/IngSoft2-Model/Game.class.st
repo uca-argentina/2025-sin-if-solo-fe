@@ -187,6 +187,7 @@ Game >> playsRepeatCard: aCard for: aSpaceship [
 
 	(aCard isInstantaneous not and: [ aCard isPermanent not ]) ifFalse: [
 		^ self ].
+	aCard isLastBeingPlayedIn: self lastCardPlayed.
 	aCard applyEffectTo: aSpaceship with: self dicesInGameBoard inGame: self onABoard: self.
 	aSpaceship removeCard: aCard
 ]
