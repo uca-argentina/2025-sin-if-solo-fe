@@ -4,7 +4,7 @@ Repeta Card
 "
 Class {
 	#name : 'CardRepeat',
-	#superclass : 'Object',
+	#superclass : 'Card',
 	#instVars : [
 		'spaceship'
 	],
@@ -27,6 +27,12 @@ CardRepeat >> applyEffectTo: aSpaceShip with: dicesInGameBoard inGame: game onAB
 	
 ]
 
+{ #category : 'action' }
+CardRepeat >> changeTo: anImplementation [
+
+	^ self class for: anImplementation.
+]
+
 { #category : 'verification' }
 CardRepeat >> chosenOnIsIn: cardsInGame [
 
@@ -36,23 +42,14 @@ CardRepeat >> chosenOnIsIn: cardsInGame [
 { #category : 'initialization' }
 CardRepeat >> initializationFor: aSpaceship [
 
+	permanent := false.
+	instantaneous := true.
+
 	spaceship := aSpaceship
-]
-
-{ #category : 'testing' }
-CardRepeat >> isInstantaneous [
-
-	^ true
 ]
 
 { #category : 'testing' }
 CardRepeat >> isLastBeingPlayedIn: aBoard [
 
 	aBoard upDateLastCardPlayed: self
-]
-
-{ #category : 'testing' }
-CardRepeat >> isPermanent [
-
-	^ false
 ]

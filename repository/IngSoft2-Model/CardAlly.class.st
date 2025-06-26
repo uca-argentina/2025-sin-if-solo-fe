@@ -4,7 +4,7 @@ AllyCard
 "
 Class {
 	#name : 'CardAlly',
-	#superclass : 'Object',
+	#superclass : 'Card',
 	#instVars : [
 		'spaceShipToTeamUp'
 	],
@@ -15,10 +15,10 @@ Class {
 { #category : 'initialization' }
 CardAlly class >> teamsUpWith: aSpaceShip [
 
-	^ self new initializeAllyCardTeamsUpWith: aSpaceShip
+	^ self new initializationFor: aSpaceShip
 ]
 
-{ #category : 'action' }
+{ #category : 'abstract' }
 CardAlly >> applyEffectTo: spaceShip with: dicesInGameBoard inGame: game onABoard: aBoard [
 
 	game hasAnAlianceFrom: spaceShip and: spaceShipToTeamUp
@@ -27,11 +27,14 @@ CardAlly >> applyEffectTo: spaceShip with: dicesInGameBoard inGame: game onABoar
 { #category : 'action' }
 CardAlly >> changeTo: anImplementation [
 
-	^ self class teamsUpWith: anImplementation
+	^ self class teamsUpWith: anImplementation.
 ]
 
 { #category : 'initialization' }
-CardAlly >> initializeAllyCardTeamsUpWith: aSpaceShip [
+CardAlly >> initializationFor: aSpaceShip [
+
+	permanent := true.
+	instantaneous := false.
 
 	spaceShipToTeamUp := aSpaceShip
 ]
@@ -40,10 +43,4 @@ CardAlly >> initializeAllyCardTeamsUpWith: aSpaceShip [
 CardAlly >> isLastBeingPlayedIn: aBoard [
 
 	aBoard upDateLastCardPlayed: self
-]
-
-{ #category : 'testing' }
-CardAlly >> isPermanent [
-
-	^ true
 ]

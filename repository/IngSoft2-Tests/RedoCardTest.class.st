@@ -338,3 +338,112 @@ RedoCardTest >> test7WhenARedoCardIsUsedAfterARedoThenItCopysTheImplementionsOfi
 	aBoard playNextTurn.
 	self assert: (aBoard positionOf: aPlayer2) equals: 12
 ]
+
+{ #category : 'tests' }
+RedoCardTest >> test8WhenARedoCardIsUsedFirst [
+
+| aGameSetUp aDice aDice2 aBoard aPlayer1 aPlayer2 aTurnManager aDeckOfCards aRedoCard anOverLoadCard aRedoCard1 aRedoCard2 |
+	aGameSetUp := GameSetup new.
+
+	aDice := RiggedDice withNumberOfFaces: 10.
+	aDice setNumbersProvider: { 5. 5 }.
+	aDice2 := RiggedDice withNumberOfFaces: 10.
+	aDice2 setNumbersProvider: { 5. 5 }.
+
+	aPlayer1 := SpaceShip named: 'Juan'.
+	aPlayer2 := SpaceShip named: 'Martin'.
+
+	aRedoCard := CardRedo for: aPlayer1.
+	aRedoCard1 := CardRedo for: aPlayer1.
+	anOverLoadCard := CardOverLoad for: aPlayer2.
+	aRedoCard2 := CardRedo for: aPlayer2.
+	
+
+
+	aDeckOfCards := { aRedoCard. aRedoCard1. anOverLoadCard. aRedoCard2 } asOrderedCollection.
+
+	aGameSetUp assignsInOrder: aDeckOfCards.
+
+
+	aGameSetUp withDices: {
+			aDice.
+			aDice2 }.
+	aGameSetUp withPlayers: {
+			aPlayer1.
+			aPlayer2 }.
+
+	aTurnManager := TurnManager withOrder: {
+			                aPlayer1.
+			                aPlayer2 }.
+
+
+	aGameSetUp
+		withABoardNumberOfSquares: 100
+		andTurnManager: aTurnManager.
+
+	aGameSetUp createGameInstance.
+	aBoard := aGameSetUp board.
+	self should: [aBoard with: aPlayer1 throws: aRedoCard ] raise: Error.
+	
+	aBoard playNextTurn.
+	aBoard with: aPlayer2 throws: anOverLoadCard.
+	aBoard playNextTurn.
+	self assert: (aBoard positionOf: aPlayer2 ) equals: 8.
+	
+]
+
+{ #category : 'tests' }
+RedoCardTest >> test9WhenARepeatCardIsUsedAfterARedoCard [
+
+	| aGameSetUp aDice aDice2 aBoard aPlayer1 aPlayer2 aTurnManager aDeckOfCards aRepeatCard aRedoCard aRedoCard1 aRedoCard2 |
+	aGameSetUp := GameSetup new.
+
+	aDice := RiggedDice withNumberOfFaces: 10.
+	aDice setNumbersProvider: { 5. 5. 3. 4 }.
+	aDice2 := RiggedDice withNumberOfFaces: 10.
+	aDice2 setNumbersProvider: { 5. 5. 3. 4 }.
+
+	aPlayer1 := SpaceShip named: 'Lucas'.
+	aPlayer2 := SpaceShip named: 'Martin'.
+
+	aRedoCard := CardRedo for: aPlayer2.
+	aRepeatCard := CardRepeat for: aPlayer1.
+	aRedoCard1 := CardRedo for: aPlayer2.
+	aRedoCard2 := CardRedo for: aPlayer1.
+
+	aDeckOfCards := {
+		                aRedoCard.
+		                aRepeatCard.
+		                aRedoCard1.
+		                aRedoCard2 } asOrderedCollection.
+
+	aGameSetUp assignsInOrder: aDeckOfCards.
+
+
+	aGameSetUp withDices: {
+			aDice.
+			aDice2 }.
+	aGameSetUp withPlayers: {
+			aPlayer1.
+			aPlayer2 }.
+
+	aTurnManager := TurnManager withOrder: {
+			                aPlayer1.
+			                aPlayer2 }.
+
+	aGameSetUp
+		withABoardNumberOfSquares: 100
+		andTurnManager: aTurnManager.
+
+	aGameSetUp createGameInstance.
+	aBoard := aGameSetUp board.
+	self should: [ aBoard with: aPlayer1 throws: aRedoCard ] raise: Error.
+	aBoard playNextTurn.
+	self assert: (aBoard positionOf: aPlayer1) equals: 10.
+	self should: [ aBoard with: aPlayer2 throws: aRedoCard ] raise: Error.
+	aBoard playNextTurn.
+	self assert: (aBoard positionOf: aPlayer2) equals: 10.
+	aBoard with: aPlayer1 throws: aRepeatCard.
+	aBoard playNextTurn.
+	self assert: (aBoard positionOf: aPlayer1) equals: 16.
+]

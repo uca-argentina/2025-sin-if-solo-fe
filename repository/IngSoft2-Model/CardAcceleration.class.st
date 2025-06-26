@@ -3,7 +3,7 @@ A
 "
 Class {
 	#name : 'CardAcceleration',
-	#superclass : 'Object',
+	#superclass : 'Card',
 	#instVars : [
 		'accelerationIncrement'
 	],
@@ -23,7 +23,7 @@ CardAcceleration class >> withIncrement: aNumber [
 
 	self isPositive: aNumber.
 
-	^ self new initializeAccelerationCard: aNumber
+	^ self new initializationFor: aNumber
 ]
 
 { #category : 'action' }
@@ -35,11 +35,14 @@ CardAcceleration >> applyEffectTo: spaceShip with: dicesInGameBoard inGame: game
 { #category : 'action' }
 CardAcceleration >> changeTo: anImplementation [
 
-	^ self class withIncrement: anImplementation
+	^ self class withIncrement: anImplementation.
 ]
 
 { #category : 'initialization' }
-CardAcceleration >> initializeAccelerationCard: aNumber [
+CardAcceleration >> initializationFor: aNumber [
+
+	permanent := true.
+	instantaneous := false.
 
 	accelerationIncrement := aNumber
 ]
@@ -48,10 +51,4 @@ CardAcceleration >> initializeAccelerationCard: aNumber [
 CardAcceleration >> isLastBeingPlayedIn: aBoard [
 
 	aBoard upDateLastCardPlayed: self 
-]
-
-{ #category : 'testing' }
-CardAcceleration >> isPermanent [
-
-	^ true
 ]

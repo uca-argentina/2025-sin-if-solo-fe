@@ -4,7 +4,7 @@ OverLoad Card
 "
 Class {
 	#name : 'CardOverLoad',
-	#superclass : 'Object',
+	#superclass : 'Card',
 	#instVars : [
 		'spaceShipToOverLoad'
 	],
@@ -15,7 +15,7 @@ Class {
 { #category : 'instance creation' }
 CardOverLoad class >> for: aSpaceShip [
 
-	^ self new initializeOverLoadFor: aSpaceShip
+	^ self new initializationFor: aSpaceShip
 ]
 
 { #category : 'action' }
@@ -34,11 +34,14 @@ CardOverLoad >> applyEffectTo: spaceShip with: dicesInGameBoard inGame: game onA
 { #category : 'action' }
 CardOverLoad >> changeTo: anImplementation [
 
-	^ self class for: anImplementation
+	^ self class for: anImplementation.
 ]
 
 { #category : 'initialization' }
-CardOverLoad >> initializeOverLoadFor: aSpaceShip [
+CardOverLoad >> initializationFor: aSpaceShip [
+
+	permanent := true.
+	instantaneous := false.
 
 	spaceShipToOverLoad := aSpaceShip
 ]
@@ -47,10 +50,4 @@ CardOverLoad >> initializeOverLoadFor: aSpaceShip [
 CardOverLoad >> isLastBeingPlayedIn: aBoard [
 
 	aBoard upDateLastCardPlayed: self
-]
-
-{ #category : 'testing' }
-CardOverLoad >> isPermanent [
-
-	^ true
 ]
